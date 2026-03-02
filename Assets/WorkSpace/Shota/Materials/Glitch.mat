@@ -69,8 +69,8 @@ Material:
     m_Floats:
     - _DivisionNum: 8
     - _EnableExternalAlpha: 0
-    - _GlitchDivision: 8
-    - _GlitchIntensity: 1
+    - _GlitchDivision: 10
+    - _GlitchIntensity: 0
     - _GlitchSpeed: 10.9
     - _QueueControl: 0
     - _QueueOffset: 0
