@@ -37,11 +37,14 @@ public class GameManager : MonoBehaviour
         else Destroy(this);
 
 
-
+        InputInit();
     }
 
 
+    private void Start()
+    {
 
+    }
 
 
 
