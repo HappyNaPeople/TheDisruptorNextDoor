@@ -67,10 +67,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ChromaticAberration: 0.01
     - _DivisionNum: 8
     - _EnableExternalAlpha: 0
     - _GlitchDivision: 10
-    - _GlitchIntensity: 0
+    - _GlitchIntensity: 1
     - _GlitchSpeed: 10.9
     - _QueueControl: 0
     - _QueueOffset: 0
