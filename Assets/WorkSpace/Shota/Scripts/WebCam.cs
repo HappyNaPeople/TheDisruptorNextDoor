@@ -22,14 +22,21 @@ public class WebCam : MonoBehaviour
 
     public void CameraInit()
     {
-        if (webCamTexture == null)
+        // 接続されているウェブカメラのデバイス一覧を取得
+        WebCamDevice[] devices = WebCamTexture.devices;
+
+        // デバイスが1つも見つからない場合の処理
+        if (devices.Length == 0)
         {
             Debug.Log("Webカメラが見つかりません");
             return;
         }
+
         // Webカメラの開始
         this.rawImage = GetComponent<RawImage>();
-        this.webCamTexture = new WebCamTexture(INPUT_SIZE, INPUT_SIZE, FPS);
+
+        // 最初のカメラデバイス(devices[0])を使用するように指定
+        this.webCamTexture = new WebCamTexture(devices[0].name, INPUT_SIZE, INPUT_SIZE, FPS);
         this.rawImage.texture = this.webCamTexture;
         this.webCamTexture.Play();
     }
