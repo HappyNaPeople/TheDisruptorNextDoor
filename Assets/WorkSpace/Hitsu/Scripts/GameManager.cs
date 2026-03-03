@@ -40,17 +40,15 @@ public class GameManager : MonoBehaviour
         InputInit();
         Camera.main.targetDisplay = 0;
 
-
         InputInit();
     }
-
 
     private void Start()
     {
         InputInit();
-        Camera.main.targetDisplay = 0;
     }
 
 
 
 }
+
