@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     private const int runnerDisplay = 0;
     private const int hunterDisplay = 1;
 
-
     private void InputInit()
     {
         inputDevice = new InputDevice();
@@ -38,7 +37,6 @@ public class GameManager : MonoBehaviour
         }
         else Destroy(this);
 
-
         InputInit();
         Camera.main.targetDisplay = 0;
 
@@ -49,7 +47,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
+        InputInit();
+        Camera.main.targetDisplay = 0;
     }
 
 
