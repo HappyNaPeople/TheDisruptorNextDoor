@@ -5,8 +5,14 @@ using UnityEngine.XR;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
     public static InputDevice inputDevice;
+
+    private const int runnerDisplay = 0;
+    private const int hunterDisplay = 1;
+
+
+
+
     private void InputInit()
     {
         inputDevice = new InputDevice();
@@ -25,8 +31,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-
-
     private void Awake()
     {
         if (Instance == null)
@@ -36,8 +40,8 @@ public class GameManager : MonoBehaviour
         }
         else Destroy(this);
 
-
-
+        InputInit();
+        Camera.main.targetDisplay = 0;
     }
 
 
