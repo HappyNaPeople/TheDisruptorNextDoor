@@ -30,6 +30,7 @@ public class InstallationTrap : Trap
 
         if (collision.gameObject.CompareTag(targetTag))
         {
+
             Debug.Log("Hit Runner");
         }
         else if ((collision.gameObject.CompareTag(tripTag)||collision.gameObject.CompareTag(mapTag)) && !isFallDone)

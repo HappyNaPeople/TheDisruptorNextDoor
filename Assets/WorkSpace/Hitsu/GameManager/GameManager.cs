@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static InputDevice inputDevice;
+    public HunterConTrollerPad hunterConTrollerPad;
+
 
     private const int runnerDisplay = 0;
     private const int hunterDisplay = 1;
@@ -38,7 +40,7 @@ public class GameManager : MonoBehaviour
         else Destroy(this);
 
         InputInit();
-        Camera.main.targetDisplay = 0;
+        //Camera.main.targetDisplay = 0;
 
         InputInit();
     }

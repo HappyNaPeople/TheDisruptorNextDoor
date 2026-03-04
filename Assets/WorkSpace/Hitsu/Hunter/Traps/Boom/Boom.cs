@@ -3,43 +3,33 @@ using System.Collections;
 
 public class Boom : TiggerTrap
 {
-    private const int flameExistTime = 2;
-    private const float beforeBoom = 0.5f;
-    private const float afterBoom = 1.0f;
-    private CircleCollider2D circleCollider;
+    public float fallSpeed;
+    public float waitForBoom;
+    public float boomArea;
 
-    public int fallSpeed = 1;
     public GameObject flame;
-
 
     private void Start()
     {
         Init();
+        SetUp();
     }
+
     public override void Init()
     {
         cost = 1;
-
-        circleCollider = GetComponent<CircleCollider2D>();
-        circleCollider.radius = beforeBoom;
-
         base.Init();
-
+        trapName = TrapName.Boom;
 
     }
-
     public override void SetUp()
     {
         base.SetUp();
+        StartCoroutine(TrapRule());
     }
 
     private bool fallDone = false;
     public override bool Condition() => fallDone;
-    
-    private void Flame()
-    {
-
-    }
 
     public override IEnumerator TrapRule()
     {
@@ -51,10 +41,12 @@ public class Boom : TiggerTrap
             yield return null;
 
         }
+        yield return new WaitForSeconds(waitForBoom);
+        gameObject.transform.localScale = new Vector3(boomArea * 2, boomArea * 2, 1);
+        yield return new WaitForEndOfFrame();
+        gameObject.transform.localScale = new Vector3(1, 1, 1);
 
-        gameObject.tag = mapTag;
-        Destroy(rb);
-        this.enabled = false;
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

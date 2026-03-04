@@ -230,9 +230,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ff247f4ce74da47b0e1d1d722faa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spikes
+  trapName: 0
   cost: 0
+  sprite_Cover: {fileID: 21300000, guid: da2176ef0629bfd42958a94b2bf225a4, type: 3}
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
+  isSetup: 0
 --- !u!61 &149052863065255251
 BoxCollider2D:
   m_ObjectHideFlags: 0

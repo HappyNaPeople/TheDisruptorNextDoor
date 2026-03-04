@@ -9,6 +9,8 @@ public class FallRock : TiggerTrap
     {
         cost = 1;
         base.Init();
+        trapName = TrapName.FallRock;
+
     }
 
     public override void SetUp()
