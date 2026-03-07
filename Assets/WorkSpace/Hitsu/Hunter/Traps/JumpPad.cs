@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// トゲトラップ。
-/// 設置後に空中から落下し、地面または他の Trap に接触すると設置完了となる。
-/// Runner が接触するとダメージを与えるタイプの Trap を想定している。
-/// </summary>
-public class Spikes : InstallationTrap
+public class JumpPad : InstallationTrap
 {
+    public Vector2 direction => transform.up;
+
+
     /// <summary>
     /// Trap 初期化
     /// </summary>
@@ -47,5 +45,7 @@ public class Spikes : InstallationTrap
             return;
         }
     }
+
+
 
 }

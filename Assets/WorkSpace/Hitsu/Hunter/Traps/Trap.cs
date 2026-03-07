@@ -5,9 +5,11 @@ using System.Collections.Generic;
 /// </summary>
 public enum TrapName
 {
-    Spikes,     // トゲトラップ
-    FallRock,   // 落石トラップ
-    Boom        // 爆発トラップ
+    Spikes,         // トゲトラップ
+    FallRock,       // 落石トラップ
+    Boom,           // 爆発トラップ
+    JumpPad
+
 }
 /// <summary>
 /// すべての Trap の基底クラス。
@@ -28,7 +30,7 @@ public abstract class Trap : MonoBehaviour
     /// <param name="collision">衝突した Collision2D</param>
     /// <param name="targetLayer">判定する Layer</param>
     /// <returns>同じ Layer の場合 true</returns>
-    public bool IsGameObjectLayer(Collision2D collision , int targetLayer) => collision.gameObject.layer == targetLayer;
+    public bool IsGameObjectLayer(Collider2D collision, int targetLayer) => collision.gameObject.layer == targetLayer;
 
     // Trap の種類
     public TrapName trapName;
@@ -59,7 +61,7 @@ public abstract class Trap : MonoBehaviour
     /// </summary>
     public virtual void SetUp()
     {
-        trapCollider.isTrigger = false;
+        trapCollider.isTrigger = true;
         isSetup = true;
 
     }

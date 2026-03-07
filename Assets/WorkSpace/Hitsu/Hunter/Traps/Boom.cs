@@ -103,7 +103,23 @@ public class Boom : TiggerTrap
     /// <summary>
     /// 衝突判定
     /// </summary>
-    private void OnCollisionEnter2D(Collision2D collision)
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (!isSetup) return;
+
+    //    if (!Condition())
+    //    {
+    //        if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
+    //        {
+    //            // Runner に衝突
+
+    //        }
+    //        // 地面に接触 → 落下完了
+    //        else if (IsGameObjectLayer(collision, UseLayerName.platformLayer)) fallDone = true;
+    //    }
+    //}
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isSetup) return;
 
@@ -118,5 +134,6 @@ public class Boom : TiggerTrap
             else if (IsGameObjectLayer(collision, UseLayerName.platformLayer)) fallDone = true;
         }
     }
+
 
 }
