@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public static class UseLayerName
@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
     public Player player01;
     public Player player02;
 
+    public Runner runner;
 
     private Camera TargetCamera(Player.Job targetJob)
     {
@@ -67,7 +68,6 @@ public class GameManager : MonoBehaviour
         {
             case Player.Job.Runner: return runnerCamera;
             case Player.Job.Hunter: return hunterCamera;
-
         }
         return null;
     }
@@ -123,8 +123,6 @@ public class GameManager : MonoBehaviour
             player01.PlayerInit(Player.Job.Runner, runnerDisplay, 0);
             player02.PlayerInit(Player.Job.Hunter, hunterDisplay, 0);
         }
-
-
     }
 
     private const int runnerDisplay = 0;
@@ -133,6 +131,12 @@ public class GameManager : MonoBehaviour
     {
         runnerCamera.targetDisplay = runnerDisplay;
         hunterCamera.targetDisplay = hunterDisplay;
+    }
+
+    private void RunnerInit()
+    {
+        runner.RunnerInit();
+        runner.ControllerCode = player01.controllerCode;
     }
 
     private void GameManager_Init()
@@ -146,11 +150,7 @@ public class GameManager : MonoBehaviour
         UseLayerName.UseLayerName_Init();
 
         PlayerInit();
-
-
-
-
-
+        RunnerInit();
     }
 
     private void JobSwitch()
@@ -166,6 +166,8 @@ public class GameManager : MonoBehaviour
 
         cam1.targetDisplay = player01.displayCode;
         cam2.targetDisplay = player02.displayCode;
+
+        runner.SwitchController();
     }
 
 

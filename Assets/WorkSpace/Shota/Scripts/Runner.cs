@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController2D))]
 public class Runner : MonoBehaviour
 {
-    [Min(0)] public int ControllerNumber = 0;
+    [Min(0)] public int ControllerCode = 0;
 
     [Header("プレイヤーのステータス")]
     public float runSpeed = 10f;
@@ -25,7 +25,7 @@ public class Runner : MonoBehaviour
 
     public void SwitchController()
     {
-        ControllerNumber = (ControllerNumber + 1) % 2;
+        ControllerCode = (ControllerCode + 1) % 2;
     }
 
     public void SetCanMove(bool state)
@@ -113,13 +113,13 @@ public class Runner : MonoBehaviour
         if (_inputDevice == null) return 0f;
 
         float horizontalInput = 0f;
-        if (_inputDevice.gamepad != null && _inputDevice.gamepad.Count > ControllerNumber)
+        if (_inputDevice.gamepad != null && _inputDevice.gamepad.Count > ControllerCode)
         {
-            horizontalInput = _inputDevice.gamepad[ControllerNumber].leftStick.x.ReadValue();
+            horizontalInput = _inputDevice.gamepad[ControllerCode].leftStick.x.ReadValue();
         }
         else
         {
-            Debug.Log($"Controller_{ControllerNumber} is not founded");
+            Debug.Log($"Controller_{ControllerCode} is not founded");
         }
 
 
@@ -141,14 +141,14 @@ public class Runner : MonoBehaviour
     {
         if (_inputDevice == null) return false;
 
-        if (_inputDevice.gamepad != null && _inputDevice.gamepad.Count > ControllerNumber)
+        if (_inputDevice.gamepad != null && _inputDevice.gamepad.Count > ControllerCode)
         {
-            if (_inputDevice.gamepad[ControllerNumber].buttonSouth.wasPressedThisFrame)
+            if (_inputDevice.gamepad[ControllerCode].buttonSouth.wasPressedThisFrame)
                 return true;
         }
         else
         {
-            Debug.Log($"Controller_{ControllerNumber} is not founded");
+            Debug.Log($"Controller_{ControllerCode} is not founded");
         }
 
 #if UNITY_EDITOR
