@@ -662,6 +662,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fbe855b9bb9564419fdfcfc920aac17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  runnerCamera: {fileID: 0}
+  hunterCamera: {fileID: 0}
+  hunterConTrollerPad: {fileID: 0}
+  player01: {fileID: 0}
+  player02: {fileID: 0}
+  test: 0
 --- !u!1 &934705764
 GameObject:
   m_ObjectHideFlags: 0
@@ -1431,6 +1437,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &2088120530 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1289749893834112753, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
+  m_PrefabInstance: {fileID: 925468582118404406}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2088120538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088120530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551cdb0cfe6caf44fb61ddbc11ee3697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RunnerController
+  ControllerNumber: 0
+  runSpeed: 10
+  jumpHeight: 2
+  gravity: -9.8
+  groundDamping: 20
+  inAirDamping: 5
 --- !u!1001 &925468582118404406
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1487,10 +1516,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5149018759869751457, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1289749893834112753, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 2088120538}
   m_SourcePrefab: {fileID: 100100000, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController2D))]
 public class RunnerController : MonoBehaviour
 {
+    [Min(0)]public int ControllerNumber = 0;
+
     [Header("プレイヤーのステータス")]
     public float runSpeed = 10f;
     public float jumpHeight = 2f;
@@ -87,9 +89,13 @@ public class RunnerController : MonoBehaviour
         if (_inputDevice == null) return 0f;
 
         float horizontalInput = 0f;
-        if (_inputDevice.gamepad != null && _inputDevice.gamepad.Count > 0)
+        if (_inputDevice.gamepad != null && _inputDevice.gamepad.Count > ControllerNumber)
         {
-            horizontalInput = _inputDevice.gamepad[0].leftStick.x.ReadValue();
+            horizontalInput = _inputDevice.gamepad[ControllerNumber].leftStick.x.ReadValue();
+        }
+        else
+        {
+            Debug.Log($"Controller_{ControllerNumber} is not founded");
         }
 
 
@@ -111,10 +117,14 @@ public class RunnerController : MonoBehaviour
     {
         if (_inputDevice == null) return false;
 
-        if (_inputDevice.gamepad != null && _inputDevice.gamepad.Count > 0)
+        if (_inputDevice.gamepad != null && _inputDevice.gamepad.Count > ControllerNumber)
         {
-            if (_inputDevice.gamepad[0].buttonSouth.wasPressedThisFrame)
+            if (_inputDevice.gamepad[ControllerNumber].buttonSouth.wasPressedThisFrame)
                 return true;
+        }
+        else
+        {
+            Debug.Log($"Controller_{ControllerNumber} is not founded");
         }
 
 #if UNITY_EDITOR
