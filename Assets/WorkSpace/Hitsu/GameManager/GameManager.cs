@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR;
 
 public static class UseLayerName
 {
@@ -62,7 +61,6 @@ public class GameManager : MonoBehaviour
     public Player player02;
 
 
-
     private Camera TargetCamera(Player.Job targetJob)
     {
         switch (targetJob)
@@ -72,6 +70,15 @@ public class GameManager : MonoBehaviour
 
         }
         return null;
+    }
+    public Gamepad TargetGamepad(int targetCode)
+    {
+        if(targetCode >= inputDevice.gamepad.Count)
+        {
+            Debug.LogError($"Not this Decives, The Max connenting Device max are : {inputDevice.gamepad.Count}" );
+            return null;
+        }
+        return inputDevice.gamepad[targetCode];
     }
 
     private void InputInit()
@@ -104,9 +111,19 @@ public class GameManager : MonoBehaviour
         player2.transform.parent = playerGroup.transform;
 
         player01 = player1.AddComponent<Player>();
-        player01.PlayerInit(Player.Job.Runner, runnerDisplay);
         player02 = player2.AddComponent<Player>();
-        player02.PlayerInit(Player.Job.Hunter, hunterDisplay);
+
+        if (inputDevice.gamepad.Count >= 2)
+        {
+            player01.PlayerInit(Player.Job.Runner, runnerDisplay,0);
+            player02.PlayerInit(Player.Job.Hunter, hunterDisplay,1);
+        }
+        else
+        {
+            player01.PlayerInit(Player.Job.Runner, runnerDisplay, 0);
+            player02.PlayerInit(Player.Job.Hunter, hunterDisplay, 0);
+        }
+
 
     }
 

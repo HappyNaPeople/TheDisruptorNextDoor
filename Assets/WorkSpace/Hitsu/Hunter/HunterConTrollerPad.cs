@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,9 @@ public class HunterConTrollerPad : MonoBehaviour
 {
     public static HunterConTrollerPad Instance;
     public Camera hunterCamera;
+    private Gamepad hunterUseController;
+    public void GamePadInit(Gamepad targetGamePad)=> hunterUseController = targetGamePad;
+
 
     public Transform putAreaLeftTop;
     public Transform putAreaRightDown;
@@ -40,10 +44,17 @@ public class HunterConTrollerPad : MonoBehaviour
             trapName = TrapName.FallRock,
             trapSprite = Resources.Load<Sprite>("Texture/Traps/FallRock")
         });
+        trapDataList.Add(new TrapData()
+        {
+            trapName = TrapName.Boom,
+            trapSprite = Resources.Load<Sprite>("Texture/Traps/Boom")
+        });
 
         trapObjectDictionary = new Dictionary<TrapName,string>();
         trapObjectDictionary[TrapName.Spikes] = "Prefabs/Traps/Spikes";
         trapObjectDictionary[TrapName.FallRock] = "Prefabs/Traps/FallRock";
+        trapObjectDictionary[TrapName.Boom] = "Prefabs/Traps/Boom";
+
     }
 
     public void HunterConTrollerPad_init()
@@ -53,6 +64,7 @@ public class HunterConTrollerPad : MonoBehaviour
         List<TrapName> useTrap = new List<TrapName>();
         useTrap.Add(TrapName.FallRock);
         useTrap.Add(TrapName.Spikes);
+        useTrap.Add(TrapName.Boom);
 
 
         //useTrap.Add(new FallRock());
@@ -147,6 +159,11 @@ public class HunterConTrollerPad : MonoBehaviour
         Reject();
         createTrap = StartCoroutine(PutTrap(TrapName.FallRock));
     }
+    public void Button_Boom()
+    {
+        Reject();
+        createTrap = StartCoroutine(PutTrap(TrapName.Boom));
+    }
 
     private Sprite TrapSprite(TrapName useTrap)
     {
@@ -178,6 +195,10 @@ public class HunterConTrollerPad : MonoBehaviour
 
                     case TrapName.FallRock:
                         trapButtonList[index].onClick.AddListener(Button_FallRock);
+                        break;
+
+                    case TrapName.Boom:
+                        trapButtonList[index].onClick.AddListener(Button_Boom);
                         break;
                 }
 
