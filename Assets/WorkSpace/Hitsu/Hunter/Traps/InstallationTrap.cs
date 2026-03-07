@@ -13,7 +13,7 @@ public abstract class InstallationTrap : Trap
     // 落下速度
     private const int fallSpeed = 5;
     // 落下完了フラグ
-    private bool isFallDone = false;
+    public bool isFallDone = false;
     /// <summary>
     /// Trap を落下させて設置するコルーチン
     /// </summary>
@@ -36,27 +36,6 @@ public abstract class InstallationTrap : Trap
         yield return null;
     }
 
-    /// <summary>
-    /// 衝突判定
-    /// </summary>
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // まだ設置されていない場合は処理しない
-        if (!isSetup) return;
 
-        // Runner に当たった場合
-        if (IsGameObjectLayer(collision,UseLayerName.runnerLayer))
-        {
-
-            Debug.Log("Hit Runner");
-        }
-        // 地面または Trap に当たった場合
-        else if ((IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.mapLayer)) && !isFallDone)
-        {
-            isFallDone = true;
-            rb.bodyType = RigidbodyType2D.Static;
-            return;
-        }
-    }
 
 }

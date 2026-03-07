@@ -228,7 +228,7 @@ public class HunterConTrollerPad : MonoBehaviour
     /// </summary>
     private bool IsOnMap()
     {
-        Collider2D col = Physics2D.OverlapPoint(mouseWorldPos, UseLayerName.mapLayer);
+        Collider2D col = Physics2D.OverlapPoint(mouseWorldPos, UseLayerName.platformLayer);
         return col != null;
     }
     // プレビュー中の Trap
