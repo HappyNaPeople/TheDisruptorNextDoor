@@ -1,28 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-/// <summary>
-/// ゲーム内で使用する Layer を名前から取得し、一括管理するクラス。
-/// Runner、Platform、Trap などの LayerID を取得して保持する。
-/// Layer が存在しない場合は Warning を出す。
-/// 初期化は UseLayerName_Init() を通して一度だけ実行される。
-/// </summary>
 public static class UseLayerName
 {
-    // RunnerController が使用する Layer
-    public static int runnerLayer;           // Runnerのレイヤー
-    public static int platformLayer;         // Runnerが乗れるレイヤー
-    public static int oneWayPlatformLayer;   // 下から乗れる足場
-    public static int triggersLayer;         // Runnerが入ったときに検知するレイヤー
-    // Map 用 Layer
-    public static int mapLayer;              // 通常のマップ Layer
-    // Hunter 用 Layer
-    public static int trapLayer;             // Trap の Layer
-    public static int runnerCantSeeLayer;    // Runner から見えない Layer
-    /// <summary>
-    /// Layer 名から LayerID を取得する。
-    /// 存在しない Layer の場合は Warning を表示する。
-    /// </summary>
+    //Runner Controller
+    public static int runnerLayer;
+    public static int platformLayer;
+    public static int oneWayPlatformLayer;
+    public static int triggersLayer;
+
+    //Map
+    public static int mapLayer;
+
+    //Hunter
+    public static int trapLayer;
+    public static int runnerCantSeeLayer;
     private static int GetLayer(string layerName)
     {
         int layer = LayerMask.NameToLayer(layerName);
@@ -34,12 +26,8 @@ public static class UseLayerName
 
         return layer;
     }
-    // Layer がすでに初期化されているかどうか
+
     private static bool isLayerSetUp = false;
-    /// <summary>
-    /// 使用する Layer を初期化する。
-    /// 初期化は一度だけ実行される。
-    /// </summary>
     public static void UseLayerName_Init()
     {
         if (isLayerSetUp) return;
@@ -58,38 +46,22 @@ public static class UseLayerName
 }
 
 
-/// <summary>
-/// ゲーム全体を管理するマネージャークラス。
-/// 
-/// 主な役割：
-/// ・入力デバイス（Keyboard / Mouse / Gamepad）の初期化
-/// ・プレイヤーオブジェクトの生成と初期化
-/// ・Runner / Hunter カメラの管理
-/// ・デュアルディスプレイ設定
-/// ・Layer 初期化
-/// ・プレイヤーの役職（Runner / Hunter）の切り替え
-/// 
-/// シングルトンとして動作し、シーン遷移後も保持される。
-/// </summary>
+
 public class GameManager : MonoBehaviour
 {
-    // シングルトンインスタンス
     public static GameManager Instance;
-    // 入力デバイス管理クラス
-    public static InputDevice inputDevice;     
-    // プレイヤーごとのカメラ
+    public static InputDevice inputDevice;
+
     public Camera runnerCamera;
     public Camera hunterCamera;
-    // Hunter 用 GamePad コントローラー
+
     public HunterConTrollerPad hunterConTrollerPad;
-    // プレイヤーインスタンス
+
     public Player player01;
     public Player player02;
 
-    //public Runner runner;
-    /// <summary>
-    /// 指定された Job に対応する Camera を取得する
-    /// </summary>
+    public Runner runner;
+
     private Camera TargetCamera(Player.Job targetJob)
     {
         switch (targetJob)
@@ -99,13 +71,8 @@ public class GameManager : MonoBehaviour
         }
         return null;
     }
-    /// <summary>
-    /// 指定された Gamepad を取得する
-    /// 接続されていない場合はエラーを出す
-    /// </summary>
     public Gamepad TargetGamepad(int targetCode)
     {
-        if (inputDevice.gamepad.Count == 0) return null;
         if(targetCode >= inputDevice.gamepad.Count)
         {
             Debug.LogError($"Not this Decives, The Max connenting Device max are : {inputDevice.gamepad.Count}" );
@@ -113,10 +80,7 @@ public class GameManager : MonoBehaviour
         }
         return inputDevice.gamepad[targetCode];
     }
-    /// <summary>
-    /// 入力デバイスの初期化
-    /// Keyboard / Mouse / Gamepad を取得する
-    /// </summary>
+
     private void InputInit()
     {
         inputDevice = new InputDevice();
@@ -134,9 +98,6 @@ public class GameManager : MonoBehaviour
         }
 
     }
-    /// <summary>
-    /// プレイヤーオブジェクトを生成して初期化する
-    /// </summary>
     private void PlayerInit()
     {
         GameObject playerGroup = new GameObject();
@@ -152,7 +113,6 @@ public class GameManager : MonoBehaviour
         player01 = player1.AddComponent<Player>();
         player02 = player2.AddComponent<Player>();
 
-        // Gamepad が2つある場合はそれぞれ割り当て
         if (inputDevice.gamepad.Count >= 2)
         {
             player01.PlayerInit(Player.Job.Runner, runnerDisplay,0);
@@ -164,49 +124,35 @@ public class GameManager : MonoBehaviour
             player02.PlayerInit(Player.Job.Hunter, hunterDisplay, 0);
         }
     }
-    // Display番号
+
     private const int runnerDisplay = 0;
     private const int hunterDisplay = 1;
-    /// <summary>
-    /// カメラの表示先ディスプレイを設定する
-    /// </summary>
     private void DisPlayInit()
     {
         runnerCamera.targetDisplay = runnerDisplay;
         hunterCamera.targetDisplay = hunterDisplay;
     }
 
-    /// <summary>
-    /// GameManager 全体の初期化処理
-    /// </summary>
-
     private void RunnerInit()
     {
-        //runner.RunnerInit();
-        //runner.ControllerCode = player01.controllerCode;
+        runner.RunnerInit();
+        runner.ControllerCode = player01.controllerCode;
     }
 
     private void GameManager_Init()
     {
         InputInit();
-        // デュアルディスプレイ対応
         if (Display.displays.Length > 1)
         {
             Display.displays[1].Activate();
         }
         DisPlayInit();
-
-        // Layer 初期化
         UseLayerName.UseLayerName_Init();
 
         PlayerInit();
-
         RunnerInit();
     }
 
-    /// <summary>
-    /// Runner と Hunter の役職を入れ替える
-    /// </summary>
     private void JobSwitch()
     {
         Player.Job job1 = player01.job;
@@ -221,14 +167,11 @@ public class GameManager : MonoBehaviour
         cam1.targetDisplay = player01.displayCode;
         cam2.targetDisplay = player02.displayCode;
 
-        hunterConTrollerPad.HunterSwitch((player01.job == Player.Job.Hunter ? player01 : player02));
-        //runner.SwitchController();
+        runner.SwitchController();
     }
 
 
-    /// <summary>
-    /// シングルトン初期化
-    /// </summary>
+
     private void Awake()
     {
         if (Instance == null)
@@ -245,7 +188,6 @@ public class GameManager : MonoBehaviour
         GameManager_Init();
     }
 
-    // デバッグ用
     public bool test;
     private void Update()
     {

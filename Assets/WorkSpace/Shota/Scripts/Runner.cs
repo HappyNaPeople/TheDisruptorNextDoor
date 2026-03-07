@@ -2,8 +2,10 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController2D))]
-public class RunnerController : MonoBehaviour
+public class Runner : MonoBehaviour
 {
+    [Min(0)] public int ControllerCode = 0;
+
     [Header("プレイヤーのステータス")]
     public float runSpeed = 10f;
     public float jumpHeight = 2f;
@@ -11,6 +13,8 @@ public class RunnerController : MonoBehaviour
     public float groundDamping = 20f;
     public float inAirDamping = 5f;
 
+    [Header("プレイヤーの状態")]
+    public bool canMove { get; private set; } = true;
 
     // private
     InputDevice _inputDevice;
@@ -18,7 +22,23 @@ public class RunnerController : MonoBehaviour
     Animator _animator;
     Vector3 _velocity = new Vector3();
 
+
+    public void SwitchController()
+    {
+        ControllerCode = (ControllerCode + 1) % 2;
+    }
+
+    public void SetCanMove(bool state)
+    {
+        canMove = state;
+    }
+
     void Start()
+    {
+        RunnerInit();
+    }
+
+    public void RunnerInit()
     {
         _controller = GetComponent<CharacterController2D>();
         _inputDevice = GameManager.inputDevice;
@@ -31,7 +51,7 @@ public class RunnerController : MonoBehaviour
     }
 
 
-    void Move()
+    public void Move()
     {
         float dt = Time.deltaTime;
 
@@ -41,7 +61,20 @@ public class RunnerController : MonoBehaviour
         // 重力加算
         _velocity.y += gravity * dt;
 
+        if (canMove)
+        {
+            InputMove();
+        }
 
+        // 位置更新
+        _controller.move(_velocity * dt);
+        _velocity = _controller.velocity;
+
+        _animator.SetBool("IsGrounded", _controller.isGrounded);
+    }
+
+    void InputMove()
+    {
         // 左右移動処理
         float horiInput = GetHorizontalInput();
         if (horiInput > 0f)
@@ -73,13 +106,6 @@ public class RunnerController : MonoBehaviour
             _velocity.y = Mathf.Sqrt(2f * jumpHeight * -gravity);
             _animator.SetTrigger("Jump");
         }
-
-
-        // 位置更新
-        _controller.move(_velocity * dt);
-        _velocity = _controller.velocity;
-
-        _animator.SetBool("IsGrounded", _controller.isGrounded);
     }
 
     float GetHorizontalInput()
@@ -87,9 +113,13 @@ public class RunnerController : MonoBehaviour
         if (_inputDevice == null) return 0f;
 
         float horizontalInput = 0f;
-        if (_inputDevice.gamepad != null && _inputDevice.gamepad.Count > 0)
+        if (_inputDevice.gamepad != null && _inputDevice.gamepad.Count > ControllerCode)
         {
-            horizontalInput = _inputDevice.gamepad[0].leftStick.x.ReadValue();
+            horizontalInput = _inputDevice.gamepad[ControllerCode].leftStick.x.ReadValue();
+        }
+        else
+        {
+            Debug.Log($"Controller_{ControllerCode} is not founded");
         }
 
 
@@ -111,10 +141,14 @@ public class RunnerController : MonoBehaviour
     {
         if (_inputDevice == null) return false;
 
-        if (_inputDevice.gamepad != null && _inputDevice.gamepad.Count > 0)
+        if (_inputDevice.gamepad != null && _inputDevice.gamepad.Count > ControllerCode)
         {
-            if (_inputDevice.gamepad[0].buttonSouth.wasPressedThisFrame)
+            if (_inputDevice.gamepad[ControllerCode].buttonSouth.wasPressedThisFrame)
                 return true;
+        }
+        else
+        {
+            Debug.Log($"Controller_{ControllerCode} is not founded");
         }
 
 #if UNITY_EDITOR

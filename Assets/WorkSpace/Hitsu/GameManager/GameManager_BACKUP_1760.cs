@@ -85,12 +85,17 @@ public class GameManager : MonoBehaviour
     // プレイヤーインスタンス
     public Player player01;
     public Player player02;
-
-    //public Runner runner;
+<<<<<<< HEAD
     /// <summary>
     /// 指定された Job に対応する Camera を取得する
     /// </summary>
+    public Camera TargetCamera(Player.Job targetJob)
+=======
+
+    public Runner runner;
+
     private Camera TargetCamera(Player.Job targetJob)
+>>>>>>> origin/Shota
     {
         switch (targetJob)
         {
@@ -176,16 +181,18 @@ public class GameManager : MonoBehaviour
         hunterCamera.targetDisplay = hunterDisplay;
     }
 
+<<<<<<< HEAD
     /// <summary>
     /// GameManager 全体の初期化処理
     /// </summary>
-
+=======
     private void RunnerInit()
     {
-        //runner.RunnerInit();
-        //runner.ControllerCode = player01.controllerCode;
+        runner.RunnerInit();
+        runner.ControllerCode = player01.controllerCode;
     }
 
+>>>>>>> origin/Shota
     private void GameManager_Init()
     {
         InputInit();
@@ -200,8 +207,11 @@ public class GameManager : MonoBehaviour
         UseLayerName.UseLayerName_Init();
 
         PlayerInit();
+<<<<<<< HEAD
 
+=======
         RunnerInit();
+>>>>>>> origin/Shota
     }
 
     /// <summary>
@@ -220,9 +230,13 @@ public class GameManager : MonoBehaviour
 
         cam1.targetDisplay = player01.displayCode;
         cam2.targetDisplay = player02.displayCode;
-
+<<<<<<< HEAD
         hunterConTrollerPad.HunterSwitch((player01.job == Player.Job.Hunter ? player01 : player02));
-        //runner.SwitchController();
+        
+=======
+
+        runner.SwitchController();
+>>>>>>> origin/Shota
     }
 
 
