@@ -115,7 +115,7 @@ public class Boom : TiggerTrap
 
             }
             // 地面に接触 → 落下完了
-            else if (IsGameObjectLayer(collision, UseLayerName.mapLayer)) fallDone = true;
+            else if (IsGameObjectLayer(collision, UseLayerName.platformLayer)) fallDone = true;
         }
     }
 

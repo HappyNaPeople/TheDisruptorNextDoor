@@ -11,11 +11,12 @@ public static class UseLayerName
 {
     // RunnerController が使用する Layer
     public static int runnerLayer;           // Runnerのレイヤー
-    public static int platformLayer;         // Runnerが乗れるレイヤー
+
     public static int oneWayPlatformLayer;   // 下から乗れる足場
     public static int triggersLayer;         // Runnerが入ったときに検知するレイヤー
+
     // Map 用 Layer
-    public static int mapLayer;              // 通常のマップ Layer
+    public static int platformLayer;         // Runnerが乗れるレイヤー
     // Hunter 用 Layer
     public static int trapLayer;             // Trap の Layer
     public static int runnerCantSeeLayer;    // Runner から見えない Layer
@@ -47,7 +48,6 @@ public static class UseLayerName
         platformLayer = GetLayer("Platform");
         oneWayPlatformLayer = GetLayer("OneWayPlatform");
         triggersLayer = GetLayer("Triggers");
-        mapLayer = GetLayer("Default");
         trapLayer = GetLayer("Trap");
         runnerCantSeeLayer = GetLayer("RunnerCantSee");
 
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
     public Player player01;
     public Player player02;
 
-    //public Runner runner;
+    public Runner runner;
     /// <summary>
     /// 指定された Job に対応する Camera を取得する
     /// </summary>
@@ -182,8 +182,8 @@ public class GameManager : MonoBehaviour
 
     private void RunnerInit()
     {
-        //runner.RunnerInit();
-        //runner.ControllerCode = player01.controllerCode;
+        runner.RunnerInit();
+        runner.ControllerCode = player01.controllerCode;
     }
 
     private void GameManager_Init()
@@ -222,7 +222,7 @@ public class GameManager : MonoBehaviour
         cam2.targetDisplay = player02.displayCode;
 
         hunterConTrollerPad.HunterSwitch((player01.job == Player.Job.Hunter ? player01 : player02));
-        //runner.SwitchController();
+        runner.SwitchController();
     }
 
 
@@ -234,7 +234,6 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this);
         }
         else Destroy(this);
 

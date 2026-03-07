@@ -51,7 +51,7 @@ public abstract class InstallationTrap : Trap
             Debug.Log("Hit Runner");
         }
         // 地面または Trap に当たった場合
-        else if ((IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.mapLayer)) && !isFallDone)
+        else if ((IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer)) && !isFallDone)
         {
             isFallDone = true;
             rb.bodyType = RigidbodyType2D.Static;

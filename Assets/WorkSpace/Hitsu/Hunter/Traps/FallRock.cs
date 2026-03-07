@@ -54,7 +54,7 @@ public class FallRock : TiggerTrap
         }
 
         // マップ扱いに変更
-        gameObject.layer = UseLayerName.mapLayer;
+        gameObject.layer = UseLayerName.platformLayer;
         // Rigidbody 削除
         Destroy(rb);
         // このスクリプトを停止
@@ -74,7 +74,7 @@ public class FallRock : TiggerTrap
                 // Runner に衝突
             }
             // 地面または Trap に衝突
-            else if (IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.mapLayer))
+            else if (IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer))
             {
 
                 fallDone = true;
