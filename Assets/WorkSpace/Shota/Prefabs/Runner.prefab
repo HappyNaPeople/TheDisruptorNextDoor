@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8043925653399610298}
   - component: {fileID: 9143218167058167305}
   - component: {fileID: 484153442634791267}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Runner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RunnerInputHandler
   runSpeed: 6
   jumpHeight: 3
-  gravity: -25
+  gravity: -35
   groundDamping: 25
   inAirDamping: 10
 --- !u!212 &7462958599122706501
@@ -184,7 +184,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.67, y: 1.2}
+  m_Size: {x: 0.6, y: 1.2}
   m_EdgeRadius: 0
 --- !u!114 &9143218167058167305
 MonoBehaviour:

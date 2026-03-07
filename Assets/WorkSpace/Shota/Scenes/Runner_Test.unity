@@ -1347,7 +1347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2080738041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1443,6 +1443,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Runner
       objectReference: {fileID: 0}
+    - target: {fileID: 5149018759869751457, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
+      propertyPath: gravity
+      value: -30
+      objectReference: {fileID: 0}
     - target: {fileID: 6635515369259165351, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.344
@@ -1482,10 +1486,6 @@ PrefabInstance:
     - target: {fileID: 6635515369259165351, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8043925653399610298, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
-      propertyPath: m_Size.x
-      value: 0.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
