@@ -1,4 +1,5 @@
 ﻿using Mono.Cecil;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController2D))]
@@ -43,6 +44,9 @@ public class Runner : MonoBehaviour
         _controller = GetComponent<CharacterController2D>();
         _inputDevice = GameManager.inputDevice;
         _animator = GetComponent<Animator>();
+
+        _controller.onTriggerEnterEvent += OnControllerTriggerEnter;
+        _controller.onTriggerExitEvent += OnControllerTriggerExit;
     }
 
     void Update()
@@ -50,7 +54,36 @@ public class Runner : MonoBehaviour
         Move();
     }
 
+    void OnControllerTriggerEnter(Collider2D col)
+    {
+        if (col.TryGetComponent<Trap>(out var trap))
+        {
+            CheckTrap(trap);
+        }
+    }
 
+    void CheckTrap(Trap trap)
+    {
+        switch (trap.trapName)
+        {
+            default:
+                Death();
+                break;
+        }
+    }
+
+    void OnControllerTriggerExit(Collider2D col)
+    {
+
+    }
+
+    void Death()
+    {
+        Debug.Log("Runner Dead");
+        _animator.SetTrigger("Hurt");
+    }
+
+    #region move
     public void Move()
     {
         float dt = Time.deltaTime;
@@ -117,10 +150,6 @@ public class Runner : MonoBehaviour
         {
             horizontalInput = _inputDevice.gamepad[ControllerCode].leftStick.x.ReadValue();
         }
-        else
-        {
-            Debug.Log($"Controller_{ControllerCode} is not founded");
-        }
 
 
 #if UNITY_EDITOR
@@ -146,10 +175,6 @@ public class Runner : MonoBehaviour
             if (_inputDevice.gamepad[ControllerCode].buttonSouth.wasPressedThisFrame)
                 return true;
         }
-        else
-        {
-            Debug.Log($"Controller_{ControllerCode} is not founded");
-        }
 
 #if UNITY_EDITOR
         if (_inputDevice.keyboard != null)
@@ -163,4 +188,6 @@ public class Runner : MonoBehaviour
 
         return false;
     }
+
+    #endregion
 }
