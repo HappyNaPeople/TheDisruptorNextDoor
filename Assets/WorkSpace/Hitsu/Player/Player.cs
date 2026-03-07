@@ -11,20 +11,17 @@ public class Player : MonoBehaviour
         Runner,
         Hunter
     }
-    public Job jop {  get; private set; }
-    public void SetJop(Job targetJop) => jop = targetJop;
+    public Job job;
+    public void SetJop(Job targetJop) => job = targetJop;
     public void PlayerInit(Job targetJop, int targetDisplay)
     {
-        jop = targetJop;
+        job = targetJop;
         displayCode = targetDisplay;
-
-
-
     }
 
     private void JopUpdate()
     {
-        switch (jop)
+        switch (job)
         {
             case Job.Runner:
 

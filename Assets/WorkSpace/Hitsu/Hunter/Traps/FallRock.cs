@@ -1,38 +1,32 @@
 using UnityEngine;
 using System.Collections;
-
-public class Boom : TiggerTrap
+public class FallRock : TiggerTrap
 {
-    public float fallSpeed;
-    public float waitForBoom;
-    public float boomArea;
-
-    public GameObject flame;
-
-    private void Start()
-    {
-        Init();
-        SetUp();
-    }
+    private const int fallCoolDown = 3;
+    public int fallSpeed = 1;
 
     public override void Init()
     {
         cost = 1;
         base.Init();
-        trapName = TrapName.Boom;
+        trapName = TrapName.FallRock;
 
     }
+
     public override void SetUp()
     {
         base.SetUp();
         StartCoroutine(TrapRule());
     }
 
+
     private bool fallDone = false;
     public override bool Condition() => fallDone;
 
     public override IEnumerator TrapRule()
     {
+        gameObject.layer = UseLayerName.trapLayer;
+        yield return new WaitForSeconds(fallCoolDown);
         rb.simulated = true;
 
         while (!Condition())
@@ -41,24 +35,34 @@ public class Boom : TiggerTrap
             yield return null;
 
         }
-        yield return new WaitForSeconds(waitForBoom);
-        gameObject.transform.localScale = new Vector3(boomArea * 2, boomArea * 2, 1);
-        yield return new WaitForEndOfFrame();
-        gameObject.transform.localScale = new Vector3(1, 1, 1);
 
-        Destroy(gameObject);
+        gameObject.layer = UseLayerName.mapLayer;
+        gameObject.tag = mapTag;
+        Destroy(rb);
+        this.enabled = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (!isSetup) return;
+
         if (!Condition())
         {
             if (collision.gameObject.CompareTag(targetTag))
             {
 
+                
             }
-            else if (collision.gameObject.CompareTag(mapTag)) fallDone = true;
+            else if ((collision.gameObject.CompareTag(tripTag) || collision.gameObject.CompareTag(mapTag)))
+            {
+                fallDone = true;
+                rb.bodyType = RigidbodyType2D.Static;
+            }
         }
     }
 
+
+
+
 }
+

@@ -11,34 +11,23 @@ struct TrapData
     public Sprite trapSprite;
 }
 
+
+
 public class HunterConTrollerPad : MonoBehaviour
 {
+    public static HunterConTrollerPad Instance;
     public Camera hunterCamera;
 
     public Transform putAreaLeftTop;
     public Transform putAreaRightDown;
 
     private HashSet<TrapData> trapDataList;
+    private Dictionary<TrapName,string> trapObjectDictionary;
+    private GameObject TarpObject(TrapName trapName) => Resources.Load<GameObject>(trapObjectDictionary[trapName]);
+
     public List<Button> trapButtonList;
 
-    private GameObject TargetTrap(TrapName trapName)
-    {
-        switch (trapName)
-        {
-            case TrapName.Spikes: return spikesPrefab;
-            case TrapName.FallRock: return fallRockPrefab;
-        }
-        return null;
-    }
-
-    public GameObject spikesPrefab;
-    public GameObject fallRockPrefab;
-
-    public LayerMask mapLayer;
-
-    
-
-    public void HunterConTrollerPad_init()
+    private void TrapDataListInit()
     {
         trapDataList = new HashSet<TrapData>();
         trapDataList.Add(new TrapData()
@@ -52,20 +41,28 @@ public class HunterConTrollerPad : MonoBehaviour
             trapSprite = Resources.Load<Sprite>("Texture/Traps/FallRock")
         });
 
+        trapObjectDictionary = new Dictionary<TrapName,string>();
+        trapObjectDictionary[TrapName.Spikes] = "Prefabs/Traps/Spikes";
+        trapObjectDictionary[TrapName.FallRock] = "Prefabs/Traps/FallRock";
+    }
+
+    public void HunterConTrollerPad_init()
+    {
+        TrapDataListInit();
+
         List<TrapName> useTrap = new List<TrapName>();
         useTrap.Add(TrapName.FallRock);
         useTrap.Add(TrapName.Spikes);
-        useTrap.Add(TrapName.Spikes);
-        useTrap.Add(TrapName.Spikes);
-        useTrap.Add(TrapName.Spikes);
-        useTrap.Add(TrapName.FallRock);
-        useTrap.Add(TrapName.Spikes);
-        useTrap.Add(TrapName.Spikes);
-        useTrap.Add(TrapName.Spikes);
-        useTrap.Add(TrapName.Spikes);
+
 
         //useTrap.Add(new FallRock());
         CanUseTrapInit(useTrap);
+    }
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(this);
     }
 
     private void Start()
@@ -84,7 +81,7 @@ public class HunterConTrollerPad : MonoBehaviour
     }
     private bool IsOnMap()
     {
-        Collider2D col = Physics2D.OverlapPoint(mouseWorldPos, mapLayer);
+        Collider2D col = Physics2D.OverlapPoint(mouseWorldPos, UseLayerName.mapLayer);
         return col != null;
     }
 
@@ -106,15 +103,15 @@ public class HunterConTrollerPad : MonoBehaviour
     }
     private IEnumerator PutTrap(TrapName trapName)
     {
-
-        if (TargetTrap(trapName) == null)
+        if (TarpObject(trapName) == null)
         {
             Debug.Log("No Trap");
             yield break;
         }
-        Debug.Log("Have Trap");
 
-        GameObject targetTrap = Instantiate(TargetTrap(trapName), mouseWorldPos, Quaternion.identity);
+        GameObject targetTrap = Instantiate(TarpObject(trapName), mouseWorldPos, Quaternion.identity);
+        targetTrap.layer = UseLayerName.runnerCantSeeLayer;
+
         choseTrap = targetTrap;
         //while (!GameManager.inputDevice.mouse.leftButton.isPressed)
         //    yield return null;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+
 public class InstallationTrap : Trap
 {
     private const int fallSpeed = 5;
@@ -11,15 +12,12 @@ public class InstallationTrap : Trap
 
         while (!isFallDone)
         {
-            //rb.linearVelocity = Vector2.down * fallSpeed;
-
             transform.position += Vector3.down * fallSpeed * Time.deltaTime;
             yield return null;
         }
 
-        //rb.linearVelocity = Vector2.zero;
+        gameObject.layer = UseLayerName.trapLayer;
         rb.bodyType = RigidbodyType2D.Static;
-
         Destroy(rb);
         yield return null;
     }
