@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController2D))]
-public class RunnerController : MonoBehaviour
+public class Runner : MonoBehaviour
 {
     [Min(0)]public int ControllerNumber = 0;
 
@@ -21,6 +21,11 @@ public class RunnerController : MonoBehaviour
     Vector3 _velocity = new Vector3();
 
     void Start()
+    {
+        RunnerInit();
+    }
+
+    void RunnerInit()
     {
         _controller = GetComponent<CharacterController2D>();
         _inputDevice = GameManager.inputDevice;
