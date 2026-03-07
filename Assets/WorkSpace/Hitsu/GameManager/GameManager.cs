@@ -182,8 +182,8 @@ public class GameManager : MonoBehaviour
 
     private void RunnerInit()
     {
-        runner.RunnerInit();
-        runner.ControllerCode = player01.controllerCode;
+        //runner.RunnerInit();
+        //runner.ControllerCode = player01.controllerCode;
     }
 
     private void GameManager_Init()
@@ -222,7 +222,7 @@ public class GameManager : MonoBehaviour
         cam2.targetDisplay = player02.displayCode;
 
         hunterConTrollerPad.HunterSwitch((player01.job == Player.Job.Hunter ? player01 : player02));
-        runner.SwitchController();
+        //runner.SwitchController();
     }
 
 
