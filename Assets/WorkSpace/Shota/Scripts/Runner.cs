@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController2D))]
 public class Runner : MonoBehaviour
 {
-    [Min(0)]public int ControllerNumber = 0;
+    [Min(0)] public int ControllerNumber = 0;
 
     [Header("プレイヤーのステータス")]
     public float runSpeed = 10f;
@@ -13,6 +13,8 @@ public class Runner : MonoBehaviour
     public float groundDamping = 20f;
     public float inAirDamping = 5f;
 
+    [Header("プレイヤーの状態")]
+    public bool canMove { get; private set; } = true;
 
     // private
     InputDevice _inputDevice;
@@ -20,12 +22,23 @@ public class Runner : MonoBehaviour
     Animator _animator;
     Vector3 _velocity = new Vector3();
 
+
+    public void SwitchController()
+    {
+        ControllerNumber = (ControllerNumber + 1) % 2;
+    }
+
+    public void SetCanMove(bool state)
+    {
+        canMove = state;
+    }
+
     void Start()
     {
         RunnerInit();
     }
 
-    void RunnerInit()
+    public void RunnerInit()
     {
         _controller = GetComponent<CharacterController2D>();
         _inputDevice = GameManager.inputDevice;
@@ -38,7 +51,7 @@ public class Runner : MonoBehaviour
     }
 
 
-    void Move()
+    public void Move()
     {
         float dt = Time.deltaTime;
 
@@ -48,7 +61,20 @@ public class Runner : MonoBehaviour
         // 重力加算
         _velocity.y += gravity * dt;
 
+        if (canMove)
+        {
+            InputMove();
+        }
 
+        // 位置更新
+        _controller.move(_velocity * dt);
+        _velocity = _controller.velocity;
+
+        _animator.SetBool("IsGrounded", _controller.isGrounded);
+    }
+
+    void InputMove()
+    {
         // 左右移動処理
         float horiInput = GetHorizontalInput();
         if (horiInput > 0f)
@@ -80,13 +106,6 @@ public class Runner : MonoBehaviour
             _velocity.y = Mathf.Sqrt(2f * jumpHeight * -gravity);
             _animator.SetTrigger("Jump");
         }
-
-
-        // 位置更新
-        _controller.move(_velocity * dt);
-        _velocity = _controller.velocity;
-
-        _animator.SetBool("IsGrounded", _controller.isGrounded);
     }
 
     float GetHorizontalInput()
