@@ -6,6 +6,9 @@ public class Player : MonoBehaviour
     public Hunter hunter;
 
     public int displayCode {  get; private set; }
+    public int controllerCode { get; private set; }
+
+
     public enum Job
     {
         Runner,
@@ -13,10 +16,11 @@ public class Player : MonoBehaviour
     }
     public Job job;
     public void SetJop(Job targetJop) => job = targetJop;
-    public void PlayerInit(Job targetJop, int targetDisplay)
+    public void PlayerInit(Job targetJop, int targetDisplay, int targetController)
     {
         job = targetJop;
         displayCode = targetDisplay;
+        controllerCode = targetController;
     }
 
     private void JopUpdate()

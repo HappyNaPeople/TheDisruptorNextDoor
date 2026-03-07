@@ -9,12 +9,6 @@ public class Boom : TiggerTrap
 
     public GameObject flame;
 
-    private void Start()
-    {
-        Init();
-        SetUp();
-    }
-
     public override void Init()
     {
         cost = 1;
@@ -24,6 +18,7 @@ public class Boom : TiggerTrap
     public override void SetUp()
     {
         base.SetUp();
+        gameObject.layer = UseLayerName.trapLayer;
         StartCoroutine(TrapRule());
     }
 
@@ -81,6 +76,8 @@ public class Boom : TiggerTrap
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (!isSetup) return;
+
         if (!Condition())
         {
             if (collision.gameObject.CompareTag(targetTag))
