@@ -133,7 +133,6 @@ public class Runner : MonoBehaviour
 
         // 3. X方向の速度（距離 ÷ 時間）
         float vx = vector.x / timeInAir;
-        Debug.Log($"Jump:{vector}");
         _jumpVector = new Vector2(vx, vy);
     }
 
@@ -171,7 +170,6 @@ public class Runner : MonoBehaviour
         {
             _velocity = Vector2.zero;
             _velocity += _jumpVector;
-            Debug.Log($"Jump: {_jumpVector}");
 
             isJumping = true;
 
