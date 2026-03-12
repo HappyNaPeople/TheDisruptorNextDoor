@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.LightTransport;
 
 
 /// <summary>
@@ -212,10 +213,40 @@ public class HunterConTrollerPad : MonoBehaviour
     {
         HunterConTrollerPad_init();
     }
+
+    // グリッドスナップを使用するかどうか
+    public bool isGrid = false;
+    // グリッドの1マスのサイズ
+    public float gridSize = 1f;
+
     /// <summary>
-    /// マウスのワールド座標を取得する
+    /// マウス位置をワールド座標で取得する。
+    /// isGrid が true の場合、グリッドにスナップした座標を返す。
     /// </summary>
-    Vector3 mouseWorldPos => hunterCamera.ScreenToWorldPoint(new Vector3(GameManager.inputDevice.mouse.position.ReadValue().x, GameManager.inputDevice.mouse.position.ReadValue().y, 10));
+    Vector3 mouseWorldPos
+    {
+        get
+        {
+            // マウスのスクリーン座標を取得（Input System）
+            Vector2 mousePos = GameManager.inputDevice.mouse.position.ReadValue();
+            // スクリーン座標 → ワールド座標に変換
+            Vector3 world = hunterCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 10f));
+
+            // グリッドスナップが有効な場合
+            if (isGrid)
+            {
+                // ワールド座標をグリッドサイズに合わせて丸める
+                world.x = Mathf.Round(world.x / gridSize) * gridSize;
+                world.y = Mathf.Round(world.y / gridSize) * gridSize;
+                // 2DゲームのためZ座標は0に固定
+                world.z = 0;
+            }
+
+            // 計算したワールド座標を返す
+            return world;
+        }
+    }
+
     /// <summary>
     /// Trap 設置エリア内かどうか判定する
     /// </summary>
@@ -269,7 +300,7 @@ public class HunterConTrollerPad : MonoBehaviour
             yield break;
         }
 
-        GameObject targetTrap = Instantiate(TarpObject(trapName), mouseWorldPos, Quaternion.identity);
+        GameObject targetTrap = Instantiate(TarpObject(trapName), mouseWorldPos, TarpObject(trapName).transform.rotation);
         targetTrap.layer = UseLayerName.runnerCantSeeLayer;
 
         choseTrap = targetTrap;
