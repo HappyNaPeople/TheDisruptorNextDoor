@@ -71,6 +71,7 @@ public class HunterConTrollerPad : MonoBehaviour
         trapDictionary[TrapName.Spikes]=new TrapData(){trapSprite = Resources.Load<Sprite>("Texture/Traps/Spike"),trapObject = Resources.Load<GameObject>("Prefabs/Traps/Spikes")};
         trapDictionary[TrapName.FallRock] = new TrapData() { trapSprite = Resources.Load<Sprite>("Texture/Traps/FallRock"), trapObject = Resources.Load<GameObject>("Prefabs/Traps/FallRock") };
         trapDictionary[TrapName.Boom] = new TrapData() { trapSprite = Resources.Load<Sprite>("Texture/Traps/Boom"), trapObject = Resources.Load<GameObject>("Prefabs/Traps/Boom") };
+        trapDictionary[TrapName.JumpPad] = new TrapData() { trapSprite = Resources.Load<Sprite>("Texture/Traps/JumpPad"), trapObject = Resources.Load<GameObject>("Prefabs/Traps/JumpPad") };
 
     }
 
@@ -152,6 +153,9 @@ public class HunterConTrollerPad : MonoBehaviour
                     case TrapName.Boom:
                         trapButtonList[index].onClick.AddListener(Button_Boom);
                         break;
+                    case TrapName.JumpPad:
+                        trapButtonList[index].onClick.AddListener(Button_JumpPad);
+                        break;
                 }
 
                 trapButtonList[index].image.sprite = TrapSprite(useTrap[index]);
@@ -179,6 +183,7 @@ public class HunterConTrollerPad : MonoBehaviour
         useTrap.Add(TrapName.FallRock);
         useTrap.Add(TrapName.Spikes);
         useTrap.Add(TrapName.Boom);
+        useTrap.Add(TrapName.JumpPad);
 
         TestCanUseTrapInit(useTrap);
     }
@@ -316,7 +321,11 @@ public class HunterConTrollerPad : MonoBehaviour
         createTrap = StartCoroutine(PutTrap(TrapName.Boom));
     }
 
-
+    public void Button_JumpPad()
+    {
+        Reject();
+        createTrap = StartCoroutine(PutTrap(TrapName.JumpPad));
+    }
 
 
 
