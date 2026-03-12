@@ -3,7 +3,7 @@
 public class JumpPad : InstallationTrap
 {
     public Vector2 direction => transform.up;
-
+    private Animator animator;
 
     /// <summary>
     /// Trap 初期化
@@ -11,9 +11,10 @@ public class JumpPad : InstallationTrap
     public override void Init()
     {
         base.Init();
-        trapName = TrapName.Spikes;
+        trapName = TrapName.JumpPad;
         // 設置コスト
         cost = 1;
+        animator = GetComponent<Animator>();
     }
     /// <summary>
     /// Trap 設置処理
@@ -35,8 +36,7 @@ public class JumpPad : InstallationTrap
         // Runner に当たった場合
         if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
         {
-
-            Debug.Log("Hit Runner");
+            animator.Play("JumpPad_GotActive");
         }
         // 地面または Trap に当たった場合
         else if ((IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer)) && !isFallDone)
