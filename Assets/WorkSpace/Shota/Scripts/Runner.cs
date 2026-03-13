@@ -13,13 +13,17 @@ public class Runner : MonoBehaviour
     public float groundDamping = 20f;
     public float inAirDamping = 5f;
 
-    [Header("プレイヤーの状態")]
-    public bool canMove { get; private set; } = true;
-    public bool isInKnockback { get; private set; } = false;
-    Vector2 _knockbackVector = Vector2.zero;
-    public bool isJumping { get; private set; } = false;
-    Vector2 _jumpVector = Vector2.zero;
-
+    // [Header("プレイヤーの状態")]
+    public enum PlayerState
+    {
+        Normal = 0,     // 通常（移動・ジャンプ可能）
+        Jumping = 1,    // ジャンプ中（移動可能）
+        Attacking = 2,  // 攻撃中（操作不能）
+        Knockback = 3,  // ノックバック中（操作不能）
+        Dead = 4,
+    }
+    public PlayerState currentState = PlayerState.Normal;
+    private bool _isPhysicsReserved = false;
 
     // private
     InputDevice _inputDevice;
@@ -37,21 +41,20 @@ public class Runner : MonoBehaviour
         ControllerCode = (ControllerCode + 1) % 2;
     }
 
-    public void SetCanMove(bool state)
+    public void ChangeState(PlayerState state)
     {
-        canMove = state;
+        currentState = state;
     }
 
-    public IEnumerator SleepMove(float duration)
+    public void ChangeState(int state)
     {
-        canMove = false;
-        yield return new WaitForSeconds(duration);
-        canMove = true;
+        currentState = (PlayerState)state;
     }
 
     void Start()
     {
         RunnerInit();
+
     }
 
     public void RunnerInit()
@@ -66,7 +69,7 @@ public class Runner : MonoBehaviour
 
     void Update()
     {
-        Move();
+        UpdateMove();
     }
 
     void OnControllerTriggerEnter(Collider2D col)
@@ -84,7 +87,7 @@ public class Runner : MonoBehaviour
             case TrapName.JumpPad:
                 if (trap.TryGetComponent<JumpPad>(out var jumpPad))
                 {
-                    ReserveJump(jumpPad.direction);
+                    ExecuteJump(jumpPad.direction);
                 }
                 break;
 
@@ -99,189 +102,175 @@ public class Runner : MonoBehaviour
 
     }
 
-    // vector.x = 横に飛ばしたいマス目（距離） 例: 左に10マスなら -10f
-    // vector.y = 浮かせたい高さ（必ず0より大きい値にする） 例: 3f
-    void ReserveKnockback(Vector2 vector)
+    public void ExecuteJump(Vector2 vector)
     {
-        // 高さ(Y)が0以下だとゼロ除算エラーになるため防ぐ
-        float height = Mathf.Max(0.1f, vector.y);
+        _velocity = CalculateInitialVelocity(vector);
+        _animator.SetTrigger("Jump");
+        ChangeState(PlayerState.Jumping);
 
-        // 1. Y方向の初速を計算
-        float vy = Mathf.Sqrt(2f * height * -gravity);
-
-        // 2. 空中にいる合計時間（頂点まで行く時間 vy / -gravity の2倍）
-        float timeInAir = (vy / -gravity) * 2f;
-
-        // 3. X方向の速度（距離 ÷ 時間）
-        float vx = vector.x / timeInAir;
-
-        Debug.Log($"Knockback:{vector}");
-        // 求めた速度を代入
-        _knockbackVector = new Vector2(vx, vy);
+        _isPhysicsReserved = true;
     }
 
-    void ReserveJump(Vector2 vector)
+    public void ExecuteKnockback(Vector2 vector)
     {
-        // 高さ(Y)が0以下だとゼロ除算エラーになるため防ぐ
-        float height = Mathf.Max(0.1f, vector.y);
+        _velocity = CalculateInitialVelocity(vector);
+        _animator.SetTrigger("Hit");
 
-        // 1. Y方向の初速を計算
-        float vy = Mathf.Sqrt(2f * height * -gravity);
+        ChangeState(PlayerState.Knockback);
 
-        // 2. 空中にいる合計時間（頂点まで行く時間 vy / -gravity の2倍）
-        float timeInAir = (vy / -gravity) * 2f;
-
-        // 3. X方向の速度（距離 ÷ 時間）
-        float vx = vector.x / timeInAir;
-        _jumpVector = new Vector2(vx, vy);
+        _isPhysicsReserved = true;
     }
 
     void Death()
     {
         Debug.Log("Runner Dead");
         _animator.SetTrigger("Hurt");
-        StartCoroutine(SleepMove(0.25f));
     }
 
     #region move
-    public void Move()
+
+    public void UpdateMove()
     {
         float dt = Time.deltaTime;
 
-        if (_controller.isGrounded)
-        {
-            if (isInKnockback) isInKnockback = false;
-            if (isJumping) isJumping = false;
+        // 1. 接地状態の更新とステート遷移
+        HandleGroundedState();
 
-            _velocity.y = 0f;
-        }
+        // 2. 現在のステートに基づいて X 速度を決定する
+        CheckMoveX(dt);
+        CheckJump();
+        CheckPunch();
 
-        if (Vector3.Dot(_knockbackVector, _knockbackVector) != 0f)
-        {
-            _velocity = Vector2.zero;
-            _velocity += _knockbackVector;
-
-            isInKnockback = true;
-
-            _animator.SetTrigger("Hit");
-            _knockbackVector = Vector2.zero;
-        }
-        if (Vector3.Dot(_jumpVector, _jumpVector) != 0f)
-        {
-            _velocity = Vector2.zero;
-            _velocity += _jumpVector;
-
-            isJumping = true;
-
-            _animator.SetTrigger("Jump");
-            _jumpVector = Vector2.zero;
-        }
-
-        // 重力加算
+        // 3. 重力を適用
         _velocity.y += gravity * dt;
 
-        if (canMove)
-        {
-            InputMove();
-        }
-        else if (!isInKnockback)
-        {
-            var smoothedMovementFactor = _controller.isGrounded ? groundDamping : inAirDamping;
-            _velocity.x = Mathf.Lerp(_velocity.x, 0, Time.deltaTime * smoothedMovementFactor);
-        }
-
-        // 位置更新
+        // 4. 最終的な移動実行（ここだけが「動かす」処理）
         _controller.move(_velocity * dt);
         _velocity = _controller.velocity;
 
+        // 5. アニメーター更新
         _animator.SetBool("IsGrounded", _controller.isGrounded);
+        _isPhysicsReserved = false;
     }
 
-    void InputMove()
+    // 接地時のリセット処理
+    void HandleGroundedState()
     {
-        // 左右移動処理
-        float horiInput = GetHorizontalInput();
-        if (horiInput > 0f)
+        if (_isPhysicsReserved) return;
+        if (_controller.isGrounded)
         {
-            if (transform.localScale.x < 0f)
-                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-            if (_controller.isGrounded)
-                _animator.SetBool("IsRunning", true);
+            // ノックバック中なら通常状態に戻す
+            if (currentState == PlayerState.Knockback || currentState == PlayerState.Jumping)
+            {
+                currentState = PlayerState.Normal;
+                return;
+            }
+
+            _velocity.y = 0f;
         }
-        else if (horiInput < 0f)
+    }
+
+    // ステートごとに X 速度をどう決めるか
+    void CheckMoveX(float dt)
+    {
+        switch (currentState)
         {
-            if (transform.localScale.x > 0f)
-                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-            if (_controller.isGrounded)
-                _animator.SetBool("IsRunning", true);
+            case PlayerState.Normal:
+            case PlayerState.Jumping:
+                // Move()の中で水平入力を _velocity.x に代入する形にする
+                ApplyInputMovement();
+                break;
+
+            case PlayerState.Knockback:
+                // 操作不能だが、空中での慣性などは適用しても良い
+                ApplyAirDamping(dt);
+                break;
+
+            case PlayerState.Attacking:
+                // 攻撃中は急に止まるか、少しだけ滑らせるか
+                ApplyFriction(dt);
+                break;
         }
-        else
+    }
+
+    void CheckJump()
+    {
+        if (_isPhysicsReserved) return;
+        if (!RunnerInput.GetJumpInput(_inputDevice, ControllerCode)) return;
+        // ジャンプ処理
+        if (_controller.isGrounded)
+        {
+            _velocity += CalculateInitialVelocity(new Vector2(0f, jumpHeight));
+            _animator.SetTrigger("Jump");
+
+            ChangeState(PlayerState.Jumping);
+        }
+    }
+
+    void CheckPunch()
+    {
+        if (_isPhysicsReserved) return;
+        if (!RunnerInput.GetPunchInput(_inputDevice, ControllerCode)) return;
+        // パンチ処理
+        if (_controller.isGrounded)
+        {
+            _animator.SetTrigger("Punch");
+
+            ChangeState(PlayerState.Attacking);
+        }
+    }
+
+    void ApplyInputMovement()
+    {
+        // 入力値（-1, 0, 1）を取得
+        float horizontalInput = RunnerInput.GetHorizontalInput(_inputDevice, ControllerCode);
+
+        // 加減速を滑らかにする（Lerpを使用）
+        float targetSpeed = horizontalInput * runSpeed;
+        float acceleration = _controller.isGrounded ? groundDamping : inAirDamping;
+
+        _velocity.x = Mathf.Lerp(_velocity.x, targetSpeed, Time.deltaTime * acceleration);
+
+        if(horizontalInput == 0f)
         {
             _animator.SetBool("IsRunning", false);
         }
-
-
-        if (!isInKnockback)
+        else if(horizontalInput == 1f)
         {
-            var smoothedMovementFactor = _controller.isGrounded ? groundDamping : inAirDamping; // how fast do we change direction?
-            _velocity.x = Mathf.Lerp(_velocity.x, horiInput * runSpeed, Time.deltaTime * smoothedMovementFactor);
+            Vector2 scale = transform.localScale;
+            transform.localScale = new Vector2(Mathf.Abs(scale.x), scale.y);
+            _animator.SetBool("IsRunning", true);
         }
-
-
-        // we can only jump whilst grounded
-        if (_controller.isGrounded && GetJumpInput() && !isInKnockback)
+        else
         {
-            _velocity.y += Mathf.Sqrt(2f * jumpHeight * -gravity);
-            _animator.SetTrigger("Jump");
+            Vector2 scale = transform.localScale;
+            transform.localScale = new Vector2(-Mathf.Abs(scale.x), scale.y);
+            _animator.SetBool("IsRunning", true);
         }
     }
 
-    float GetHorizontalInput()
+    void ApplyFriction(float dt)
     {
-        if (_inputDevice == null) return 0f;
-
-        float horizontalInput = 0f;
-        if (_inputDevice.gamepad != null && _inputDevice.gamepad.Count > ControllerCode)
-        {
-            horizontalInput = _inputDevice.gamepad[ControllerCode].leftStick.x.ReadValue();
-        }
-
-
-#if UNITY_EDITOR
-        if (_inputDevice.keyboard != null)
-        {
-            float aKey = _inputDevice.keyboard.aKey.ReadValue();
-            float dKey = _inputDevice.keyboard.dKey.ReadValue();
-
-            float kbInput = dKey - aKey;
-            if (Mathf.Abs(kbInput) > Mathf.Abs(horizontalInput)) horizontalInput = kbInput;
-        }
-#endif
-
-        return horizontalInput;
+        // 攻撃中などは急激に速度を0に近づける
+        // 摩擦係数を大きく設定（例: 20f）
+        _velocity.x = Mathf.Lerp(_velocity.x, 0, dt * groundDamping * 2f);
     }
 
-    bool GetJumpInput()
+    void ApplyAirDamping(float dt)
     {
-        if (_inputDevice == null) return false;
+        // 操作不能なのでtargetSpeedは0（自然に止まるのを待つ）
+        // ただし、ApplyInputMovementよりは緩やかに減速させる
+        _velocity.x = Mathf.Lerp(_velocity.x, 0, dt * inAirDamping);
+    }
 
-        if (_inputDevice.gamepad != null && _inputDevice.gamepad.Count > ControllerCode)
-        {
-            if (_inputDevice.gamepad[ControllerCode].buttonSouth.wasPressedThisFrame)
-                return true;
-        }
-
-#if UNITY_EDITOR
-        if (_inputDevice.keyboard != null)
-        {
-            if (_inputDevice.keyboard.spaceKey.wasPressedThisFrame)
-                return true;
-            if (_inputDevice.keyboard.wKey.wasPressedThisFrame)
-                return true;
-        }
-#endif
-
-        return false;
+    // 目的地（ベクトル）から必要な初速を計算する共通関数
+    Vector2 CalculateInitialVelocity(Vector2 vector)
+    {
+        float height = Mathf.Max(0.1f, vector.y);
+        float vy = Mathf.Sqrt(2f * height * -gravity);
+        float timeInAir = (vy / -gravity) * 2f;
+        float vx = vector.x / timeInAir;
+        return new Vector2(vx, vy);
     }
 
     #endregion

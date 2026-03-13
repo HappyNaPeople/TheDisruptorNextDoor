@@ -1822,21 +1822,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4719147811980597759, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
-      propertyPath: triggerMask.m_Bits
-      value: 1152
-      objectReference: {fileID: 0}
     - target: {fileID: 5558815207289041061, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
       propertyPath: m_Name
       value: Runner
       objectReference: {fileID: 0}
     - target: {fileID: 5980710469542844216, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.6439998
+      value: 2.023
       objectReference: {fileID: 0}
     - target: {fileID: 5980710469542844216, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.62
+      value: -1.015
       objectReference: {fileID: 0}
     - target: {fileID: 5980710469542844216, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
       propertyPath: m_LocalPosition.z
