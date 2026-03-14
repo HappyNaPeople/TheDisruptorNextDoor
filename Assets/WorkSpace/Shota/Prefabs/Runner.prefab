@@ -49,13 +49,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 551cdb0cfe6caf44fb61ddbc11ee3697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RunnerController
-  ControllerCode: 0
+  controllerCode: 0
+  isInvincible: 1
   runSpeed: 6
   jumpHeight: 3
   gravity: -30
   groundDamping: 20
   inAirDamping: 5
-  canMove: 1
+  currentState: 1
 --- !u!212 &5205268739818765375
 SpriteRenderer:
   serializedVersion: 2

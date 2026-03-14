@@ -4,7 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController2D))]
 public class Runner : MonoBehaviour
 {
-    [Min(0)] public int ControllerCode = 0;
+    [Header("デバッグ用")]
+    [Min(0)] public int controllerCode = 0;
+    public bool isInvincible = false;
+    public bool isVisibleGizmos = false;
+
 
     [Header("プレイヤーのステータス")]
     public float runSpeed = 10f;
@@ -12,18 +16,21 @@ public class Runner : MonoBehaviour
     public float gravity = -9.8f;
     public float groundDamping = 20f;
     public float inAirDamping = 5f;
+    public Vector2 attackBoxOffset = Vector2.zero;
+    public Vector2 attackBoxSize = Vector2.zero;
 
-    // [Header("プレイヤーの状態")]
+
     public enum PlayerState
     {
-        Normal = 0,     // 通常（移動・ジャンプ可能）
-        Jumping = 1,    // ジャンプ中（移動可能）
-        Attacking = 2,  // 攻撃中（操作不能）
-        Knockback = 3,  // ノックバック中（操作不能）
-        Dead = 4,
+        Dead = 0,
+        Normal = 1,     // 通常（移動・ジャンプ可能）
+        Jumping = 2,    // ジャンプ中（移動可能）
+        Attacking = 3,  // 攻撃中（操作不能）
+        Knockback = 4,  // ノックバック中（操作不能）
     }
+    [Header("プレイヤーの状態")]
     public PlayerState currentState = PlayerState.Normal;
-    private bool _isPhysicsReserved = false;
+    bool _isPhysicsReserved = false;
 
     // private
     InputDevice _inputDevice;
@@ -34,11 +41,11 @@ public class Runner : MonoBehaviour
 
     public void SetControllerCode(int code)
     {
-        ControllerCode = code;
+        controllerCode = code;
     }
     public void SwitchController()
     {
-        ControllerCode = (ControllerCode + 1) % 2;
+        controllerCode = (controllerCode + 1) % 2;
     }
 
     public void ChangeState(PlayerState state)
@@ -46,15 +53,9 @@ public class Runner : MonoBehaviour
         currentState = state;
     }
 
-    public void ChangeState(int state)
-    {
-        currentState = (PlayerState)state;
-    }
-
-    void Start()
+    private void Start()
     {
         RunnerInit();
-
     }
 
     public void RunnerInit()
@@ -79,6 +80,10 @@ public class Runner : MonoBehaviour
             CheckTrap(trap);
         }
     }
+    void OnControllerTriggerExit(Collider2D col)
+    {
+
+    }
 
     void CheckTrap(Trap trap)
     {
@@ -95,11 +100,6 @@ public class Runner : MonoBehaviour
                 Death();
                 break;
         }
-    }
-
-    void OnControllerTriggerExit(Collider2D col)
-    {
-
     }
 
     public void ExecuteJump(Vector2 vector)
@@ -121,16 +121,33 @@ public class Runner : MonoBehaviour
         _isPhysicsReserved = true;
     }
 
+    public void ExecutePunch()
+    {
+        var hitTraps = Physics2D.OverlapBoxAll(transform.position + GetAttackOffset(), attackBoxSize, 0f, 1 << UseLayerName.trapLayer);
+
+        foreach(var hit in hitTraps)
+        {
+            if (hit.TryGetComponent<TrapHp>(out var trapHp))
+            {
+                trapHp.TakeDamage(1, hit.ClosestPoint(transform.position));
+            }
+        }
+    }
+
     void Death()
     {
-        Debug.Log("Runner Dead");
         _animator.SetTrigger("Hurt");
+        if (isInvincible) return;
+
+        ChangeState(PlayerState.Dead);
     }
 
     #region move
 
     public void UpdateMove()
     {
+        if(currentState == PlayerState.Dead) return;
+
         float dt = Time.deltaTime;
 
         // 1. 接地状態の更新とステート遷移
@@ -196,7 +213,7 @@ public class Runner : MonoBehaviour
     void CheckJump()
     {
         if (_isPhysicsReserved) return;
-        if (!RunnerInput.GetJumpInput(_inputDevice, ControllerCode)) return;
+        if (!RunnerInput.GetJumpInput(_inputDevice, controllerCode)) return;
         // ジャンプ処理
         if (_controller.isGrounded)
         {
@@ -210,7 +227,7 @@ public class Runner : MonoBehaviour
     void CheckPunch()
     {
         if (_isPhysicsReserved) return;
-        if (!RunnerInput.GetPunchInput(_inputDevice, ControllerCode)) return;
+        if (!RunnerInput.GetPunchInput(_inputDevice, controllerCode)) return;
         // パンチ処理
         if (_controller.isGrounded)
         {
@@ -223,7 +240,7 @@ public class Runner : MonoBehaviour
     void ApplyInputMovement()
     {
         // 入力値（-1, 0, 1）を取得
-        float horizontalInput = RunnerInput.GetHorizontalInput(_inputDevice, ControllerCode);
+        float horizontalInput = RunnerInput.GetHorizontalInput(_inputDevice, controllerCode);
 
         // 加減速を滑らかにする（Lerpを使用）
         float targetSpeed = horizontalInput * runSpeed;
@@ -272,6 +289,18 @@ public class Runner : MonoBehaviour
         float vx = vector.x / timeInAir;
         return new Vector2(vx, vy);
     }
-
     #endregion
+
+    private void OnDrawGizmos()
+    {
+        if (!isVisibleGizmos) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position + GetAttackOffset(), attackBoxSize);
+    }
+
+    Vector3 GetAttackOffset()
+    {
+        var offset = new Vector3(attackBoxOffset.x * Mathf.Sign(transform.localScale.x), attackBoxOffset.y);
+        return offset;
+    }
 }
