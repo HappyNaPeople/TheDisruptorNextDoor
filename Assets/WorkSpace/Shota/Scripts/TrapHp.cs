@@ -24,5 +24,6 @@ public class TrapHp : MonoBehaviour
     public void Break()
     {
         broken = true;
+        Destroy(gameObject);
     }
 }

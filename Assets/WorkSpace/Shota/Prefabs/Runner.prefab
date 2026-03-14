@@ -51,11 +51,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RunnerController
   controllerCode: 0
   isInvincible: 1
+  isVisibleGizmos: 1
   runSpeed: 6
-  jumpHeight: 3
+  jumpHeight: 2.5
   gravity: -30
   groundDamping: 20
   inAirDamping: 5
+  attackBoxOffset: {x: 0.5, y: -0.15}
+  attackBoxSize: {x: 1.7, y: 1}
   currentState: 1
 --- !u!212 &5205268739818765375
 SpriteRenderer:
