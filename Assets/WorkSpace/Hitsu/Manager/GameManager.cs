@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// ゲーム内で使用する Layer を名前から取得し、一括管理するクラス。
@@ -56,8 +58,21 @@ public static class UseLayerName
     }
 
 }
+public class TrapInformation
+{
+    public Sprite icon;
+    public int cost;
+    public string information;
+    public GameObject prefab;
+}
 
+public static class CanUseTrap
+{
+    public static Dictionary<TrapName, TrapInformation> allTrap = new Dictionary<TrapName, TrapInformation>();
+}
 
+public enum DisPlayNumber{ DisPlay01, DisPlay02, None }
+public enum ControllerNumber{ Controller01, Controller02, None }
 /// <summary>
 /// ゲーム全体を管理するマネージャークラス。
 /// 
@@ -77,41 +92,24 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     // 入力デバイス管理クラス
     public static InputDevice inputDevice;     
-    // プレイヤーごとのカメラ
-    public Camera runnerCamera;
-    public Camera hunterCamera;
-    // Hunter 用 GamePad コントローラー
-    public HunterConTrollerPad hunterConTrollerPad;
+
     // プレイヤーインスタンス
     public Player player01;
     public Player player02;
 
-    public Runner runner;
-    /// <summary>
-    /// 指定された Job に対応する Camera を取得する
-    /// </summary>
-    private Camera TargetCamera(Player.Job targetJob)
-    {
-        switch (targetJob)
-        {
-            case Player.Job.Runner: return runnerCamera;
-            case Player.Job.Hunter: return hunterCamera;
-        }
-        return null;
-    }
     /// <summary>
     /// 指定された Gamepad を取得する
     /// 接続されていない場合はエラーを出す
     /// </summary>
-    public Gamepad TargetGamepad(int targetCode)
+    public Gamepad TargetGamepad(Player targetPlyer)
     {
         if (inputDevice.gamepad.Count == 0) return null;
-        if(targetCode >= inputDevice.gamepad.Count)
+        else if((int)targetPlyer.controllerCode >= inputDevice.gamepad.Count)
         {
-            Debug.LogError($"Not this Decives, The Max connenting Device max are : {inputDevice.gamepad.Count}" );
+            Debug.LogWarning($"Not this Decives, The Max connenting Device max are : {inputDevice.gamepad.Count}" );
             return null;
         }
-        return inputDevice.gamepad[targetCode];
+        return inputDevice.gamepad[(int)targetPlyer.controllerCode];
     }
     /// <summary>
     /// 入力デバイスの初期化
@@ -148,42 +146,64 @@ public class GameManager : MonoBehaviour
         player2.name = "Player02";
         player1.transform.parent = playerGroup.transform;
         player2.transform.parent = playerGroup.transform;
+        playerGroup.transform.parent = transform;
 
         player01 = player1.AddComponent<Player>();
         player02 = player2.AddComponent<Player>();
 
-        // Gamepad が2つある場合はそれぞれ割り当て
-        if (inputDevice.gamepad.Count >= 2)
+        player01.SetJop(Player.Job.None);
+        player02.SetJop(Player.Job.None);
+
+        if (GameManager.inputDevice.gamepad.Count >= 2)
         {
-            player01.PlayerInit(Player.Job.Runner, runnerDisplay,0);
-            player02.PlayerInit(Player.Job.Hunter, hunterDisplay,1);
+            player01.PlayerInit(DisPlayNumber.DisPlay01, ControllerNumber.Controller01);
+            player02.PlayerInit(DisPlayNumber.DisPlay02, ControllerNumber.Controller02);
         }
         else
         {
-            player01.PlayerInit(Player.Job.Runner, runnerDisplay, 0);
-            player02.PlayerInit(Player.Job.Hunter, hunterDisplay, 0);
+            player01.PlayerInit(DisPlayNumber.DisPlay01, ControllerNumber.Controller01);
+            player02.PlayerInit(DisPlayNumber.DisPlay02, ControllerNumber.Controller01);
         }
-    }
-    // Display番号
-    private const int runnerDisplay = 0;
-    private const int hunterDisplay = 1;
-    /// <summary>
-    /// カメラの表示先ディスプレイを設定する
-    /// </summary>
-    private void DisPlayInit()
-    {
-        runnerCamera.targetDisplay = runnerDisplay;
-        hunterCamera.targetDisplay = hunterDisplay;
-    }
 
-    /// <summary>
-    /// GameManager 全体の初期化処理
-    /// </summary>
-
-    private void RunnerInit()
+    }
+    private void TrapInit()
     {
-        //runner.RunnerInit();
-        //runner.ControllerCode = player01.controllerCode;
+        //foreach (TrapName trapName in Enum.GetValues(typeof(TrapName)))
+        //{
+        //    CanUseTrap.allTrap[trapName] = new TrapInformation();
+        //}
+
+        CanUseTrap.allTrap[TrapName.Spikes] = new TrapInformation()
+        {
+            icon = Resources.Load<Sprite>("Texture/Traps/Spike"),
+            cost = 2,
+            information = "Spikes",
+            prefab = Resources.Load<GameObject>("Prefabs/Traps/Spikes")
+        };
+        CanUseTrap.allTrap[TrapName.FallRock] = new TrapInformation()
+        {
+            icon = Resources.Load<Sprite>("Texture/Traps/FallRock"),
+            cost = 4,
+            information = "FallRock",
+            prefab = Resources.Load<GameObject>("Prefabs/Traps/FallRock")
+        };
+        CanUseTrap.allTrap[TrapName.Boom] = new TrapInformation()
+        {
+            icon = Resources.Load<Sprite>("Texture/Traps/Boom"),
+            cost = 8,
+            information = "Boom",
+            prefab = Resources.Load<GameObject>("Prefabs/Traps/Boom")
+        };
+        CanUseTrap.allTrap[TrapName.JumpPad] = new TrapInformation()
+        {
+            icon = Resources.Load<Sprite>("Texture/Traps/JumpPad"),
+            cost = 5,
+            information = "JumpPad",
+            prefab = Resources.Load<GameObject>("Prefabs/Traps/JumpPad")
+        };
+
+
+
     }
 
     private void GameManager_Init()
@@ -194,38 +214,12 @@ public class GameManager : MonoBehaviour
         {
             Display.displays[1].Activate();
         }
-        DisPlayInit();
 
         // Layer 初期化
         UseLayerName.UseLayerName_Init();
-
         PlayerInit();
-
-        RunnerInit();
+        TrapInit();
     }
-
-    /// <summary>
-    /// Runner と Hunter の役職を入れ替える
-    /// </summary>
-    private void JobSwitch()
-    {
-        Player.Job job1 = player01.job;
-        Player.Job job2 = player02.job;
-
-        player01.SetJop(job2);
-        player02.SetJop(job1);
-
-        Camera cam1 = TargetCamera(job2);
-        Camera cam2 = TargetCamera(job1);
-
-        cam1.targetDisplay = player01.displayCode;
-        cam2.targetDisplay = player02.displayCode;
-
-        hunterConTrollerPad.HunterSwitch((player01.job == Player.Job.Hunter ? player01 : player02));
-        //runner.SwitchController();
-    }
-
-
     /// <summary>
     /// シングルトン初期化
     /// </summary>
@@ -234,28 +228,18 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(this);
         }
         else Destroy(this);
 
-    }
-
-    private void Start()
-    {
         GameManager_Init();
     }
-
-    // デバッグ用
-    public bool test;
-    private void Update()
+    private void Start()
     {
-        if (test)
-        {
-            JobSwitch();
-            test = false;
-        }
-
 
     }
+
+
 
 }
 
