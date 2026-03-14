@@ -55,6 +55,7 @@ MonoBehaviour:
   gravity: -30
   groundDamping: 20
   inAirDamping: 5
+  canMove: 1
 --- !u!212 &5205268739818765375
 SpriteRenderer:
   serializedVersion: 2
@@ -206,7 +207,7 @@ MonoBehaviour:
     m_Bits: 512
   triggerMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1152
   oneWayPlatformMask:
     serializedVersion: 2
     m_Bits: 2048
