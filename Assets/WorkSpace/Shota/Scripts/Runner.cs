@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(CharacterController2D))]
 public class Runner : MonoBehaviour
@@ -30,14 +31,18 @@ public class Runner : MonoBehaviour
     }
     [Header("プレイヤーの状態")]
     public PlayerState currentState = PlayerState.Normal;
-    bool _isPhysicsReserved = false;
+
+
+    [Header("リスポーン設定")]
+    public Transform respawnPoint = null;
+
 
     // private
     InputDevice _inputDevice;
     CharacterController2D _controller;
     Animator _animator;
     Vector2 _velocity = new Vector2();
-
+    bool _isPhysicsReserved = false;
 
     public void SetControllerCode(int code)
     {
@@ -125,7 +130,7 @@ public class Runner : MonoBehaviour
     {
         var hitTraps = Physics2D.OverlapBoxAll(transform.position + GetAttackOffset(), attackBoxSize, 0f, 1 << UseLayerName.trapLayer);
 
-        foreach(var hit in hitTraps)
+        foreach (var hit in hitTraps)
         {
             if (hit.TryGetComponent<TrapHp>(out var trapHp))
             {
@@ -134,19 +139,33 @@ public class Runner : MonoBehaviour
         }
     }
 
-    void Death()
+    public void Death()
     {
         _animator.SetTrigger("Hurt");
         if (isInvincible) return;
 
         ChangeState(PlayerState.Dead);
+        _velocity = Vector2.zero;
+    }
+
+    public void Respawn()
+    {
+        if (isInvincible) return;
+
+        ChangeState(PlayerState.Normal);
+        _animator.SetTrigger("Respawn");
+        if (respawnPoint != null) transform.position = respawnPoint.position;
+        else transform.position = Vector2.zero;
+
+        var scale = transform.localScale;
+        transform.localScale = new Vector2(Mathf.Abs(scale.x), scale.y);
     }
 
     #region move
 
     public void UpdateMove()
     {
-        if(currentState == PlayerState.Dead) return;
+        if (currentState == PlayerState.Dead) return;
 
         float dt = Time.deltaTime;
 
@@ -248,11 +267,11 @@ public class Runner : MonoBehaviour
 
         _velocity.x = Mathf.Lerp(_velocity.x, targetSpeed, Time.deltaTime * acceleration);
 
-        if(horizontalInput == 0f)
+        if (horizontalInput == 0f)
         {
             _animator.SetBool("IsRunning", false);
         }
-        else if(horizontalInput == 1f)
+        else if (horizontalInput == 1f)
         {
             Vector2 scale = transform.localScale;
             transform.localScale = new Vector2(Mathf.Abs(scale.x), scale.y);
