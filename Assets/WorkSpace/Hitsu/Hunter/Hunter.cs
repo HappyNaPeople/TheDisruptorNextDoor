@@ -19,9 +19,9 @@ public class Backpack
     /// </summary>
     public void AddToBackpack(TrapName targetTrapName)
     {
-        if ((nowCost + CanUseTrap.allTrap[targetTrapName].cost) > maxCost) return;
+        if ((nowCost + GameManager.allTrap[targetTrapName].cost) > maxCost) return;
         trapsPack.Add(targetTrapName);
-        nowCost += CanUseTrap.allTrap[targetTrapName].cost;
+        nowCost += GameManager.allTrap[targetTrapName].cost;
     }
 
 }
@@ -32,14 +32,7 @@ public class Backpack
 /// </summary>
 public class Hunter
 {
-
     // Hunter が所持する Trap バッグ
     public Backpack backpack = new Backpack();
-    
-    public void Hunter_Init()
-    {
-
-    }
-
 
 }
