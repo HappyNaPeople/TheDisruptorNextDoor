@@ -1,8 +1,23 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class JumpPad : InstallationTrap
 {
-    public Vector2 direction;
+    /// <summary>
+    /// 押し出す力
+    /// </summary>
+    public int pushForce;
+
+    /// <summary>
+    /// Trap の向きに応じた押し出し方向
+    /// transform.up に pushForce を掛けたベクトル
+    /// </summary>
+    public Vector3 direction => (Vector2)transform.up * pushForce;
+
+    public Collider2D boxPart;
+    /// <summary>
+    /// Animator コンポーネント
+    /// </summary>
     private Animator animator;
 
     /// <summary>
@@ -16,6 +31,15 @@ public class JumpPad : InstallationTrap
         cost = 1;
         animator = GetComponent<Animator>();
     }
+
+    public override IEnumerator FallAndSetUp()
+    {
+        yield return StartCoroutine(base.FallAndSetUp());
+
+        boxPart.gameObject.layer = UseLayerName.platformLayer;
+    }
+
+
     /// <summary>
     /// Trap 設置処理
     /// </summary>
