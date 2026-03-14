@@ -891,6 +891,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 236258361527197801, guid: 9a59b43c9b453504cae0f9e6f379a9b8, type: 3}
+      propertyPath: m_Color.a
+      value: 0.4117647
+      objectReference: {fileID: 0}
     - target: {fileID: 932298891346519906, guid: 9a59b43c9b453504cae0f9e6f379a9b8, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -971,26 +975,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2420536067958014394, guid: 9a59b43c9b453504cae0f9e6f379a9b8, type: 3}
+      propertyPath: m_Color.a
+      value: 0.4117647
+      objectReference: {fileID: 0}
     - target: {fileID: 3109526945301790439, guid: 9a59b43c9b453504cae0f9e6f379a9b8, type: 3}
       propertyPath: m_Name
       value: Hunter_Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 3109526945301790439, guid: 9a59b43c9b453504cae0f9e6f379a9b8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4277841887808318998, guid: 9a59b43c9b453504cae0f9e6f379a9b8, type: 3}
-      propertyPath: m_Enabled
-      value: 0
+    - target: {fileID: 5892703896123401716, guid: 9a59b43c9b453504cae0f9e6f379a9b8, type: 3}
+      propertyPath: m_Color.a
+      value: 0.4117647
       objectReference: {fileID: 0}
     - target: {fileID: 7068133870487082029, guid: 9a59b43c9b453504cae0f9e6f379a9b8, type: 3}
       propertyPath: hunterCamera
       value: 
       objectReference: {fileID: 1604551323}
+    - target: {fileID: 7638507312303180217, guid: 9a59b43c9b453504cae0f9e6f379a9b8, type: 3}
+      propertyPath: m_Color.a
+      value: 0.4117647
+      objectReference: {fileID: 0}
     - target: {fileID: 8264224212073467169, guid: 9a59b43c9b453504cae0f9e6f379a9b8, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1604551323}
+    - target: {fileID: 9189892241424061786, guid: 9a59b43c9b453504cae0f9e6f379a9b8, type: 3}
+      propertyPath: m_Color.a
+      value: 0.4117647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

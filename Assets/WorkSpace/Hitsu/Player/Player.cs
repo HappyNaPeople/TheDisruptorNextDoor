@@ -13,23 +13,25 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // Hunter 用クラス
-    public Hunter hunter;
+    public Hunter hunter = new Hunter();
     // 表示するディスプレイ番号
-    public int displayCode {  get; private set; }
+    public DisPlayNumber displayCode = DisPlayNumber.None;
     // 使用するコントローラー番号
-    public int controllerCode { get; private set; }
+    public ControllerNumber controllerCode = ControllerNumber.None;
+
     /// <summary>
     /// プレイヤーの役職
     /// </summary>
     public enum Job
     {
+        None,
         Runner,
         Hunter
     }
     /// <summary>
     /// プレイヤーの役職を変更する
     /// </summary>
-    public Job job { get; private set; }
+    public Job job /*{ get; private set; }*/;
     /// <summary>
     /// プレイヤーの役職を変更する
     /// </summary>
@@ -37,9 +39,8 @@ public class Player : MonoBehaviour
     /// <summary>
     /// プレイヤーの初期化
     /// </summary>
-    public void PlayerInit(Job targetJop, int targetDisplay, int targetController)
+    public void PlayerInit(DisPlayNumber targetDisplay, ControllerNumber targetController)
     {
-        job = targetJop;
         displayCode = targetDisplay;
         controllerCode = targetController;
     }
