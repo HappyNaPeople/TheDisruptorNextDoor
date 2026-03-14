@@ -233,7 +233,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8397655225760754249}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -241,7 +241,7 @@ Transform:
   - {fileID: 6921415236126354154}
   - {fileID: 6379295504844528999}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!95 &7914485153210005441
 Animator:
   serializedVersion: 7
@@ -282,6 +282,7 @@ MonoBehaviour:
   trapCollider: {fileID: 0}
   isSetup: 0
   isFallDone: 0
+  direction: {x: 0, y: 0}
 --- !u!61 &2537101781036851832
 BoxCollider2D:
   m_ObjectHideFlags: 0
