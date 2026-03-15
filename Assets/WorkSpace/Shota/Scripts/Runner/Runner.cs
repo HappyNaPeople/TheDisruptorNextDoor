@@ -271,7 +271,7 @@ public class Runner : MonoBehaviour
         {
             _animator.SetBool("IsRunning", false);
         }
-        else if (horizontalInput == 1f)
+        else if (horizontalInput > 0f)
         {
             Vector2 scale = transform.localScale;
             transform.localScale = new Vector2(Mathf.Abs(scale.x), scale.y);
