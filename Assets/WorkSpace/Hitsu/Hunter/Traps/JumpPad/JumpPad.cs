@@ -20,6 +20,9 @@ public class JumpPad : InstallationTrap
     /// </summary>
     private Animator animator;
 
+    private readonly Vector2 colliderOffset = new Vector2(0, 0.4232323f);
+    private readonly Vector2 colliderSize = new Vector2(1, 0.1535354f);
+
     /// <summary>
     /// Trap 初期化
     /// </summary>
@@ -30,13 +33,18 @@ public class JumpPad : InstallationTrap
         // 設置コスト
         cost = 1;
         animator = GetComponent<Animator>();
+        boxPart.enabled = false;
     }
 
     public override IEnumerator FallAndSetUp()
     {
         yield return StartCoroutine(base.FallAndSetUp());
 
+        ((BoxCollider2D)trapCollider).offset = colliderOffset;
+        ((BoxCollider2D)trapCollider).size = colliderSize;
+
         boxPart.gameObject.layer = UseLayerName.platformLayer;
+        boxPart.enabled = true;
     }
 
 
