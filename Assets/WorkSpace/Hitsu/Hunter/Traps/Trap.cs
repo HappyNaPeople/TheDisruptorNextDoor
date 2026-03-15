@@ -66,6 +66,9 @@ public abstract class Trap : MonoBehaviour
 
     }
 
-
+    public virtual void BrakeTheTrap()
+    {
+        Destroy(gameObject);
+    }
 
 }

@@ -14,6 +14,7 @@ public abstract class InstallationTrap : Trap
     private const int fallSpeed = 5;
     // 落下完了フラグ
     public bool isFallDone = false;
+
     /// <summary>
     /// Trap を落下させて設置するコルーチン
     /// </summary>
