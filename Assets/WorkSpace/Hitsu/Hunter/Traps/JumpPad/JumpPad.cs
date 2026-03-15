@@ -2,7 +2,7 @@
 
 public class JumpPad : InstallationTrap
 {
-    public Vector2 direction => transform.up;
+    public Vector2 direction;
     private Animator animator;
 
     /// <summary>
