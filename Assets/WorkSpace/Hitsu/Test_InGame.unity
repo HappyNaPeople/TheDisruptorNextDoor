@@ -163,7 +163,10 @@ MonoBehaviour:
   hunterCamera: {fileID: 1222703507}
   hunterConTrollerPad: {fileID: 834460537}
   runner: {fileID: 32053056}
-  test: 0
+  timer: 0
+  turnSwitch: 0
+  nextTurn: 0
+  resetRound: 0
 --- !u!4 &53064590
 Transform:
   m_ObjectHideFlags: 0
@@ -374,7 +377,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 20287
+    m_Bits: 20415
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

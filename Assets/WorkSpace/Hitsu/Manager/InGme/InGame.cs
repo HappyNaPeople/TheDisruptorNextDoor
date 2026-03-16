@@ -161,20 +161,30 @@ public class InGame : MonoBehaviour
         //Testing
         _player01.SetJop(Player.Job.Runner);
         _player02.SetJop(Player.Job.Hunter);
+
         hunterConTrollerPad.HunterSwitch(_player02);
         RunnerInit();
     }
 
     // デバッグ用
-    public bool test;
+    public bool turnSwitch, nextTurn, resetRound;
     private void Update()
     {
-        if (test)
+        if (turnSwitch)
         {
             TurnSwitch();
-            test = false;
+            turnSwitch = false;
         }
-
+        if (nextTurn)
+        {
+            hunterConTrollerPad.NextTurn();
+            nextTurn = false;
+        }
+        if (resetRound)
+        {
+            hunterConTrollerPad.ResetRound();
+            resetRound = false;
+        }
 
     }
 

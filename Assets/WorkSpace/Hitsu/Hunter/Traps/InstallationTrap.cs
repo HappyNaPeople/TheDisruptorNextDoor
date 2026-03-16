@@ -30,6 +30,14 @@ public abstract class InstallationTrap : Trap
         }
         // Trap レイヤー設定
         gameObject.layer = UseLayerName.trapLayer;
+        if (gameObject.transform.childCount > 0)
+        {
+            for (int i = 0; i < gameObject.transform.childCount; i++)
+            {
+                gameObject.transform.GetChild(i).gameObject.layer = UseLayerName.trapLayer;
+            }
+        }
+
         // Rigidbody を固定
         rb.bodyType = RigidbodyType2D.Static;
         // Rigidbody を削除

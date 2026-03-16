@@ -66,9 +66,6 @@ public abstract class Trap : MonoBehaviour
 
     }
 
-    public virtual void BrakeTheTrap()
-    {
-        Destroy(gameObject);
-    }
+    public virtual void BrakeTheTrap() => InGame.Instance.hunterConTrollerPad.DestroyTrap(this);
 
 }

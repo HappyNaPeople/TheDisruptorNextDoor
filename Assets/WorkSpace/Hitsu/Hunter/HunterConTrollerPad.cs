@@ -7,10 +7,10 @@ using System.Linq;
 
 public class RoundTrap
 {
-    public GameObject trap {  get; private set; }
+    public Trap trap {  get; private set; }
     public int round {  get; private set; }
 
-    public RoundTrap(GameObject trap, int round)
+    public RoundTrap(Trap trap, int round)
     {
         this.trap = trap;
         this.round = round;
@@ -189,8 +189,9 @@ public class HunterConTrollerPad : MonoBehaviour
     /// </summary>
     private bool IsOnMap()
     {
-        Collider2D col = Physics2D.OverlapPoint(mouseWorldPos, UseLayerName.platformLayer);
-        return col != null;
+        int mask = UseLayerName.platformLayer | UseLayerName.trapLayer;
+
+        return Physics2D.OverlapPoint(mouseWorldPos, mask) != null;
     }
     // プレビュー中の Trap
     private GameObject choseTrap;
@@ -237,7 +238,7 @@ public class HunterConTrollerPad : MonoBehaviour
             Trap trap = targetTrap.GetComponent<Trap>();
             trap.Init();
             trap.SetUp();
-
+            AddToRoundTraps(trap);
         }
         else
         {
@@ -290,7 +291,7 @@ public class HunterConTrollerPad : MonoBehaviour
     // 現在のラウンド番号
     public int nowRound = 1;
     // 設置された Trap をラウンド情報付きで管理する Queue
-    private Queue<RoundTrap> roundTraps = new Queue<RoundTrap>();
+    private List<RoundTrap> roundTraps = new List<RoundTrap>();
     /// <summary>
     /// Trap をラウンド管理キューに追加する。
     /// 
@@ -301,50 +302,71 @@ public class HunterConTrollerPad : MonoBehaviour
     public void AddToRoundTraps(Trap targetTrap)
     {
         // 現在ラウンドと一緒に Trap を登録
-        roundTraps.Enqueue(new RoundTrap(targetTrap.gameObject, nowRound));
+        roundTraps.Add(new RoundTrap(targetTrap, nowRound));
         // 最大数を超えた場合、最も古い Trap を削除
-        if (roundTraps.Count > theMaxNumberTrapCanPut) Destroy(roundTraps.Dequeue().trap);
+        if (roundTraps.Count > theMaxNumberTrapCanPut) DestroyTrap(roundTraps[0].trap);
     }
-    /// <summary>
-    /// すべての Trap を削除する。
-    /// 
-    /// Queue に登録されている Trap をすべて取り出し、
-    /// GameObject を Destroy する。
-    /// </summary>
+
+
     private void ResetRoundTraps()
     {
-        // Queue が空になるまで Trap を削除
-        while (roundTraps.Count > 0) Destroy(roundTraps.Dequeue().trap);
+        foreach(RoundTrap roundTrap in roundTraps)
+        {
+            if(roundTrap.trap!=null) Destroy(roundTrap.trap.gameObject);
+        }
+        roundTraps.Clear();
     }
-    /// <summary>
-    /// 現在のラウンドの Trap を削除する。
-    /// 
-    /// Queue から Trap を取り出し、
-    /// 現在ラウンドの Trap は削除し、
-    /// それ以外は新しい Queue に保持する。
-    /// </summary>
-    private void ResetRound()
+
+    public void ResetRound()
     {
         // 次のラウンドに残す Trap を保存する Queue
         Queue<RoundTrap> stayRoundTraps = new Queue<RoundTrap>();
-        // すべての Trap をチェック
-        while (roundTraps.Count > 0)
+
+        for (int i = 0; i < roundTraps.Count; i++)
         {
-            RoundTrap roundTrap = roundTraps.Dequeue();
-            // 現在ラウンドの Trap は削除
-            if (roundTrap.round == nowRound) Destroy(roundTrap.trap);
-            // それ以外の Trap は保持
-            else stayRoundTraps.Enqueue(roundTrap);
+            if (roundTraps[i].round == nowRound && roundTraps[i].trap != null)
+            {
+                Destroy(roundTraps[i].trap.gameObject);
+            }
+            else stayRoundTraps.Enqueue(roundTraps[i]);
         }
-        // 残った Trap を更新
-        roundTraps = stayRoundTraps;
+
+        roundTraps.Clear();
+        while (stayRoundTraps.Count > 0)
+        {
+            roundTraps.Add(stayRoundTraps.Dequeue());
+        }
+
+
     }
     /// <summary>
     /// 次のラウンドへ進む。
     /// </summary>
-    private void NextTurn() => nowRound++;
+    public void NextTurn() => nowRound++;
+
+    public void DestroyTrap(Trap targetTrap)
+    {
+        RoundTrap roundTrap = roundTraps.Find(rt => rt.trap == targetTrap);
+        if (roundTrap == null) return;
+        Destroy(roundTrap.trap.gameObject);
+        roundTraps.Remove(roundTrap);
+    }
+
+    public bool test = false;
+    private void Update()
+    {
+        if (test)
+        {
+            Debug.Log(roundTraps.Count);
+            foreach (RoundTrap t in roundTraps)
+            {
+                Debug.Log($"{t.trap.gameObject.name} , {t.round}");
+            }
+            test = false;
+        } 
 
 
+    }
 
 
 }

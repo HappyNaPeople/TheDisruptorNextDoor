@@ -330,6 +330,7 @@ MonoBehaviour:
   isSetup: 0
   isFallDone: 0
   pushForce: 30
+  jumpPart: {fileID: 8030758842932786858}
   boxPart: {fileID: 3346834240279448763}
 --- !u!61 &2537101781036851832
 BoxCollider2D:

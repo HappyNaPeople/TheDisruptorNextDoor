@@ -96,7 +96,7 @@ public class Boom : TiggerTrap
         Explosion();
         yield return new WaitForEndOfFrame();
 
-        Destroy(gameObject);
+        BrakeTheTrap();
     }
 
 
