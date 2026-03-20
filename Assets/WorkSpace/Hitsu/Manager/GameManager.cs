@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using System;
@@ -21,6 +21,8 @@ public static class UseLayerName
 
     // Map 用 Layer
     public static int platformLayer;         // Runnerが乗れるレイヤー
+    public static int noPutAreaLayer;        // Ooshima: Added for StageGridManager (トラップ配置不可エリア)
+    
     // Hunter 用 Layer
     public static int trapLayer;             // Trap の Layer
     public static int runnerCantSeeLayer;    // Runner から見えない Layer
@@ -50,6 +52,7 @@ public static class UseLayerName
         if (isLayerSetUp) return;
         runnerLayer = GetLayer("Runner");
         platformLayer = GetLayer("Platform");
+        noPutAreaLayer = GetLayer("NoPutArea"); // Ooshima: Added for StageGridManager
         oneWayPlatformLayer = GetLayer("OneWayPlatform");
         triggersLayer = GetLayer("Triggers");
         trapLayer = GetLayer("Trap");
