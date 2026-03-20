@@ -5,20 +5,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-
-/// <summary>
-/// Trap の表示情報と生成用 Prefab をまとめたデータクラス。
-/// Trap UI で使用する Sprite と、
-/// 実際に生成する Trap オブジェクトを保持する。
-/// </summary>
-class TrapData
+public class RoundTrap
 {
-    // Trap ボタンに表示する Sprite
-    public Sprite trapSprite;
+    public Trap trap {  get; private set; }
+    public int round {  get; private set; }
 
-    // 生成する Trap Prefab
-    public GameObject trapObject;
-}
+    public RoundTrap(Trap trap, int round)
+    {
+        this.trap = trap;
+        this.round = round;
+    }
+
+
+} 
 
 /// <summary>
 /// Hunter が使用する Trap 設置コントローラー。
@@ -37,86 +36,71 @@ public class HunterConTrollerPad : MonoBehaviour
 {
     // Singleton インスタンス
     public static HunterConTrollerPad Instance;
-    // Hunter 用カメラ
+    // Hunter 用カメラ（マウス座標 → ワールド座標変換に使用）
     public Camera hunterCamera;
-    // 使用する Gamepad
+    // Hunter が操作する Gamepad
     private Gamepad hunterUseController;
+
     /// <summary>
     /// Hunter が使用する Gamepad を設定する
     /// </summary>
-    /// <param name="targetGamePad"></param>
+    /// <param name="targetGamePad">使用する Gamepad</param>
     public void GamePadInit(Gamepad targetGamePad)=> hunterUseController = targetGamePad;
-    // Trap 設置可能エリア
+
+    // Trap を設置できるエリアの左上座標
     public Transform putAreaLeftTop;
+    // Trap を設置できるエリアの右下座標
     public Transform putAreaRightDown;
-    // TrapName から TrapData を取得する Dictionary
-    private Dictionary<TrapName, TrapData> trapDictionary;
+
     /// <summary>
     /// TrapName から Trap Prefab を取得する
     /// </summary>
-    private GameObject TarpObject(TrapName trapName) => trapDictionary[trapName].trapObject;
+    private GameObject TarpObject(TrapName trapName) => GameManager.allTrap[trapName].prefab;
+
     /// <summary>
     /// TrapName から Trap Sprite を取得する
     /// </summary>
-    private Sprite TrapSprite(TrapName useTrap) => trapDictionary[useTrap].trapSprite;
-    // Trap UI ボタン
+    private Sprite TrapSprite(TrapName trapName) => GameManager.allTrap[trapName].icon;
+
+    // Trap UI ボタンリスト
     public List<Button> trapButtonList;
-    /// <summary>
-    /// Trap データを初期化する
-    /// Sprite と Prefab を Resources から読み込む
-    /// </summary>
-    private void TrapDataListInit()
-    {
-        trapDictionary = new Dictionary<TrapName, TrapData>();
-        trapDictionary[TrapName.Spikes]=new TrapData(){trapSprite = Resources.Load<Sprite>("Texture/Traps/Spike"),trapObject = Resources.Load<GameObject>("Prefabs/Traps/Spikes")};
-        trapDictionary[TrapName.FallRock] = new TrapData() { trapSprite = Resources.Load<Sprite>("Texture/Traps/FallRock"), trapObject = Resources.Load<GameObject>("Prefabs/Traps/FallRock") };
-        trapDictionary[TrapName.Boom] = new TrapData() { trapSprite = Resources.Load<Sprite>("Texture/Traps/Boom"), trapObject = Resources.Load<GameObject>("Prefabs/Traps/Boom") };
-        trapDictionary[TrapName.JumpPad] = new TrapData() { trapSprite = Resources.Load<Sprite>("Texture/Traps/JumpPad"), trapObject = Resources.Load<GameObject>("Prefabs/Traps/JumpPad") };
-
-    }
 
     /// <summary>
     /// 使用可能な Trap を UI ボタンに設定する
     /// </summary>
-    public void CanUseTrapInit(List<Trap> targetTrap)
+    /// <param name="targetTrap">使用可能な TrapName のリスト</param>
+    private void CanUseTrapInit(List<TrapName> targetTrap)
     {
-        List<TrapName> useTrap = new List<TrapName>();
-        foreach (Trap trap in targetTrap)
-        {
-            useTrap.Add(trap.trapName);
-        }
-        useTrap.Distinct().ToList();
+        // 重複する Trap を除外
+        targetTrap.Distinct().ToList();
         int index;
-        int trapTypeMax = useTrap.Count > trapButtonList.Count ? trapButtonList.Count : useTrap.Count;
 
+        // UI ボタン数と Trap 数の少ない方を使用
+        int trapTypeMax = targetTrap.Count > trapButtonList.Count ? trapButtonList.Count : targetTrap.Count;
+
+        // UI ボタンを初期化
         for (index = 0; index < trapButtonList.Count; index++)
         {
+            // 一旦すべて非表示
             trapButtonList[index].gameObject.SetActive(false);
+            // 既存のクリックイベントを削除
             trapButtonList[index].onClick.RemoveAllListeners();
 
+            // 使用可能 Trap が存在する場合
             if (index < trapTypeMax)
             {
-                switch (useTrap[index])
-                {
-                    case TrapName.Spikes:
-                        trapButtonList[index].onClick.AddListener(Button_CreateSpikes);
-                        break;
+                TrapName trap = targetTrap[index];
+                trapButtonList[index].onClick.AddListener(() => CreateTrap(trap));
 
-                    case TrapName.FallRock:
-                        trapButtonList[index].onClick.AddListener(Button_FallRock);
-                        break;
-
-                    case TrapName.Boom:
-                        trapButtonList[index].onClick.AddListener(Button_Boom);
-                        break;
-                }
-
-                trapButtonList[index].image.sprite = TrapSprite(useTrap[index]);
+                // Trap アイコンを設定
+                trapButtonList[index].image.sprite = TrapSprite(targetTrap[index]);
+                // ボタン表示
                 trapButtonList[index].gameObject.SetActive(true);
 
             }
             else
             {
+                // 使用しないボタンは非表示
                 trapButtonList[index].gameObject.SetActive(false);
             }
         }
@@ -125,77 +109,14 @@ public class HunterConTrollerPad : MonoBehaviour
     }
 
     /// <summary>
-    /// 使用可能な Trap を UI ボタンに設定する
+    /// Hunter プレイヤーが切り替わった時に呼ばれる
+    /// Backpack に登録されている Trap を UI に反映する
     /// </summary>
-    public void TestCanUseTrapInit(List<TrapName> targetTrap)
-    {
-        List<TrapName> useTrap = targetTrap.Distinct().ToList();
-        int index;
-        int trapTypeMax = useTrap.Count > trapButtonList.Count ? trapButtonList.Count : useTrap.Count;
-
-        for (index = 0; index < trapButtonList.Count; index++)
-        {
-            trapButtonList[index].gameObject.SetActive(false);
-            trapButtonList[index].onClick.RemoveAllListeners();
-
-            if (index < trapTypeMax)
-            {
-                switch (useTrap[index])
-                {
-                    case TrapName.Spikes:
-                        trapButtonList[index].onClick.AddListener(Button_CreateSpikes);
-                        break;
-
-                    case TrapName.FallRock:
-                        trapButtonList[index].onClick.AddListener(Button_FallRock);
-                        break;
-
-                    case TrapName.Boom:
-                        trapButtonList[index].onClick.AddListener(Button_Boom);
-                        break;
-                    case TrapName.JumpPad:
-                        trapButtonList[index].onClick.AddListener(Button_JumpPad);
-                        break;
-                }
-
-                trapButtonList[index].image.sprite = TrapSprite(useTrap[index]);
-                trapButtonList[index].gameObject.SetActive(true);
-
-            }
-            else
-            {
-                trapButtonList[index].gameObject.SetActive(false);
-            }
-        }
-
-
-    }
-
-    /// <summary>
-    /// HunterController の初期化処理
-    /// 使用可能な Trap を設定する
-    /// </summary>
-    public void HunterConTrollerPad_init()
-    {
-        TrapDataListInit();
-
-        List<TrapName> useTrap = new List<TrapName>();
-        useTrap.Add(TrapName.FallRock);
-        useTrap.Add(TrapName.Spikes);
-        useTrap.Add(TrapName.Boom);
-        useTrap.Add(TrapName.JumpPad);
-
-        TestCanUseTrapInit(useTrap);
-    }
-
     public void HunterSwitch(Player targetPlayer)
     {
-        GameManager.Instance.TargetGamepad(targetPlayer.controllerCode);
         CanUseTrapInit(targetPlayer.hunter.backpack.trapsPack);
-
+        ResetRoundTraps();
     }
-
-
 
     /// <summary>
     /// Singleton 初期化
@@ -205,45 +126,135 @@ public class HunterConTrollerPad : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(this);
     }
+
+    // グリッドスナップを使用するかどうか
+    public bool isGrid = false;
+    // グリッドの1マスのサイズ
+    public float gridSize = 1f;
+
     /// <summary>
-    /// 初期化処理
+    /// マウス位置をワールド座標で取得する
+    /// グリッドスナップが有効な場合はグリッドに合わせる
     /// </summary>
-    private void Start()
+    Vector3 mouseWorldPos
     {
-        HunterConTrollerPad_init();
+        get
+        {
+            // マウスのスクリーン座標取得
+            Vector2 mousePos = GameManager.inputDevice.mouse.position.ReadValue();
+            // スクリーン座標 → ワールド座標変換
+            Vector3 world = hunterCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 10f));
+
+            // グリッドスナップ
+            if (isGrid)
+            {
+                // ワールド座標をグリッドサイズに合わせて丸める
+                world.x = Mathf.Round(world.x / gridSize) * gridSize;
+                world.y = Mathf.Round(world.y / gridSize) * gridSize;
+                // 2DゲームのためZ座標は0に固定
+                world.z = 0;
+            }
+
+            // 計算したワールド座標を返す
+            return world;
+        }
     }
+
     /// <summary>
-    /// マウスのワールド座標を取得する
+    /// 指定された座標が設置可能エリア内にあるか判定する
     /// </summary>
-    Vector3 mouseWorldPos => hunterCamera.ScreenToWorldPoint(new Vector3(GameManager.inputDevice.mouse.position.ReadValue().x, GameManager.inputDevice.mouse.position.ReadValue().y, 10));
-    /// <summary>
-    /// Trap 設置エリア内かどうか判定する
-    /// </summary>
-    private bool IsInPutArea(Vector3 trap)
+    /// <param name="leftTop">設置エリア左上座標</param>
+    /// <param name="rightDown">設置エリア右下座標</param>
+    /// <param name="trap">判定対象の座標</param>
+    /// <returns>エリア内なら true</returns>
+    private bool IsInPutArea(Vector3 leftTop, Vector3 rightDown, Vector3 trap)
     {
-        if(trap.x > putAreaRightDown.position.x||
-            trap.x < putAreaLeftTop.position.x||
-            trap.y < putAreaRightDown.position.y||
-            trap.y > putAreaLeftTop.position.y) return false;
+        if(trap.x > rightDown.x||
+            trap.x < leftTop.x||
+            trap.y < rightDown.y||
+            trap.y > leftTop.y) return false;
 
         return true;
     }
     /// <summary>
-    /// マップ上に Trap を設置しようとしているか判定する
+    /// 指定された座標が Trap 設置可能エリア内か判定する。
+    /// putAreaLeftTop と putAreaRightDown を使用して判定する。
+    /// </summary>
+    /// <param name="trap">判定するワールド座標</param>
+    /// <returns>設置可能エリア内なら true</returns>
+    private bool IsInArea(Vector3 trap) => IsInPutArea(putAreaLeftTop.position, putAreaRightDown.position, trap);
+
+    /// <summary>
+    /// マップ上に Trap を設置しようとしているか判定
     /// </summary>
     private bool IsOnMap()
     {
-        Collider2D col = Physics2D.OverlapPoint(mouseWorldPos, UseLayerName.platformLayer);
-        return col != null;
+        int mask = UseLayerName.platformLayer | UseLayerName.trapLayer;
+
+        return Physics2D.OverlapPoint(mouseWorldPos, mask) != null;
     }
     // プレビュー中の Trap
     private GameObject choseTrap;
-    // Trap 作成 Coroutine
+    // Trap 設置 Coroutine
     private Coroutine createTrap;
+
+    /// <summary>
+    /// Trap 設置 Coroutine
+    /// マウスクリックされるまで Trap をマウス位置に追従させる
+    /// </summary>
+    private IEnumerator PutTrap(TrapName trapName)
+    {
+        // Prefab が存在しない場合は終了
+        if (TarpObject(trapName) == null)
+        {
+            Debug.Log("No Trap");
+            yield break;
+        }
+
+        // Trap を生成
+        GameObject targetTrap = Instantiate(TarpObject(trapName), mouseWorldPos, TarpObject(trapName).transform.rotation);
+        // Runner に見えない Layer に変更
+        targetTrap.layer = UseLayerName.runnerCantSeeLayer;
+        if (targetTrap.transform.childCount > 0) 
+        { 
+            for (int i = 0; i < targetTrap.transform.childCount; i++)
+            {
+                targetTrap.transform.GetChild(i).gameObject.layer = UseLayerName.runnerCantSeeLayer;
+            }
+
+        }
+
+        // プレビュー用 Trap
+        choseTrap = targetTrap;
+        // クリックされるまでマウス追従
+        while (!GameManager.inputDevice.mouse.leftButton.isPressed)
+        {
+            targetTrap.transform.position = mouseWorldPos;
+            yield return null;
+        }
+        // 設置可能エリアなら Trap 有効化
+        if (IsInArea(targetTrap.transform.position) && !IsOnMap())
+        {
+            Trap trap = targetTrap.GetComponent<Trap>();
+            trap.Init();
+            trap.SetUp();
+            AddToRoundTraps(trap);
+        }
+        else
+        {
+            // 設置不可なら削除
+            Destroy(targetTrap);
+        }
+
+        // 状態リセット
+        createTrap = null;
+        choseTrap = null;
+    }
+
     /// <summary>
     /// 現在の Trap 設置処理をキャンセルする
     /// </summary>
-    private void Reject() 
+    private void Reject()
     {
         if (choseTrap != null)
         {
@@ -257,77 +268,105 @@ public class HunterConTrollerPad : MonoBehaviour
             createTrap = null;
         }
     }
+
     /// <summary>
-    /// Trap を設置する Coroutine
-    /// マウスクリックまで Trap をプレビュー表示する
+    /// 指定された Trap を生成する。
+    /// 
+    /// 既にプレビュー中の Trap が存在する場合はキャンセルし、
+    /// 新しい Trap の設置 Coroutine を開始する。
     /// </summary>
-    private IEnumerator PutTrap(TrapName trapName)
+    /// <param name="trapName">
+    /// 生成する Trap の種類
+    /// </param>
+    private void CreateTrap(TrapName trapName)
     {
-        if (TarpObject(trapName) == null)
+        // 現在の Trap 設置処理をキャンセル
+        Reject();
+        // Trap 設置 Coroutine を開始
+        createTrap = StartCoroutine(PutTrap(trapName));
+    }
+
+    // 同時に設置できる Trap の最大数
+    private const int theMaxNumberTrapCanPut = 10;
+    // 現在のラウンド番号
+    public int nowRound = 1;
+    // 設置された Trap をラウンド情報付きで管理する Queue
+    private List<RoundTrap> roundTraps = new List<RoundTrap>();
+    /// <summary>
+    /// Trap をラウンド管理キューに追加する。
+    /// 
+    /// Trap を設置すると現在のラウンド番号と一緒に記録される。
+    /// 最大数を超えた場合、最も古い Trap を削除する。
+    /// </summary>
+    /// <param name="targetTrap">追加する Trap</param>
+    public void AddToRoundTraps(Trap targetTrap)
+    {
+        // 現在ラウンドと一緒に Trap を登録
+        roundTraps.Add(new RoundTrap(targetTrap, nowRound));
+        // 最大数を超えた場合、最も古い Trap を削除
+        if (roundTraps.Count > theMaxNumberTrapCanPut) DestroyTrap(roundTraps[0].trap);
+    }
+
+
+    private void ResetRoundTraps()
+    {
+        foreach(RoundTrap roundTrap in roundTraps)
         {
-            Debug.Log("No Trap");
-            yield break;
+            if(roundTrap.trap!=null) Destroy(roundTrap.trap.gameObject);
+        }
+        roundTraps.Clear();
+    }
+
+    public void ResetRound()
+    {
+        // 次のラウンドに残す Trap を保存する Queue
+        Queue<RoundTrap> stayRoundTraps = new Queue<RoundTrap>();
+
+        for (int i = 0; i < roundTraps.Count; i++)
+        {
+            if (roundTraps[i].round == nowRound && roundTraps[i].trap != null)
+            {
+                Destroy(roundTraps[i].trap.gameObject);
+            }
+            else stayRoundTraps.Enqueue(roundTraps[i]);
         }
 
-        GameObject targetTrap = Instantiate(TarpObject(trapName), mouseWorldPos, Quaternion.identity);
-        targetTrap.layer = UseLayerName.runnerCantSeeLayer;
-
-        choseTrap = targetTrap;
-        //while (!GameManager.inputDevice.mouse.leftButton.isPressed)
-        //    yield return null;
-
-        while (!GameManager.inputDevice.mouse.leftButton.isPressed)
+        roundTraps.Clear();
+        while (stayRoundTraps.Count > 0)
         {
-            targetTrap.transform.position = mouseWorldPos;
-            yield return null;
+            roundTraps.Add(stayRoundTraps.Dequeue());
         }
 
-        if (IsInPutArea(targetTrap.transform.position) && !IsOnMap())
+
+    }
+    /// <summary>
+    /// 次のラウンドへ進む。
+    /// </summary>
+    public void NextTurn() => nowRound++;
+
+    public void DestroyTrap(Trap targetTrap)
+    {
+        RoundTrap roundTrap = roundTraps.Find(rt => rt.trap == targetTrap);
+        if (roundTrap == null) return;
+        Destroy(roundTrap.trap.gameObject);
+        roundTraps.Remove(roundTrap);
+    }
+
+    public bool test = false;
+    private void Update()
+    {
+        if (test)
         {
-            Trap trap = targetTrap.GetComponent<Trap>();
-            trap.Init();
-            trap.SetUp();
-
-        }
-        else
-        {
-            Destroy(targetTrap);
-        }
-        createTrap = null;
-        choseTrap = null;
-    }
-    /// <summary>
-    /// Spikes Trap を生成する
-    /// </summary>
-    public void Button_CreateSpikes()
-    {
-        Reject();
-        createTrap = StartCoroutine(PutTrap(TrapName.Spikes));
-    }
-    /// <summary>
-    /// FallRock Trap を生成する
-    /// </summary>
-    public void Button_FallRock()
-    {
-        Reject();
-        createTrap = StartCoroutine(PutTrap(TrapName.FallRock));
-    }
-    /// <summary>
-    /// Boom Trap を生成する
-    /// </summary>
-    public void Button_Boom()
-    {
-        Reject();
-        createTrap = StartCoroutine(PutTrap(TrapName.Boom));
-    }
-
-    public void Button_JumpPad()
-    {
-        Reject();
-        createTrap = StartCoroutine(PutTrap(TrapName.JumpPad));
-    }
+            Debug.Log(roundTraps.Count);
+            foreach (RoundTrap t in roundTraps)
+            {
+                Debug.Log($"{t.trap.gameObject.name} , {t.round}");
+            }
+            test = false;
+        } 
 
 
+    }
 
 
 }

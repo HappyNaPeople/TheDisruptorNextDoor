@@ -12,16 +12,16 @@ public class Backpack
     // 現在使用しているコスト
     public int nowCost = 0;
     // 所持している Trap 一覧
-    public List<Trap> trapsPack = new List<Trap>();
+    public List<TrapName> trapsPack = new List<TrapName>();
     /// <summary>
     /// Trap をバックパックに追加する
     /// 最大コストを超える場合は追加しない
     /// </summary>
-    public void AddToBackpack(Trap target)
+    public void AddToBackpack(TrapName targetTrapName)
     {
-        if ((nowCost + target.cost) > maxCost) return;
-        trapsPack.Add(target);
-        nowCost += target.cost;
+        if ((nowCost + GameManager.allTrap[targetTrapName].cost) > maxCost) return;
+        trapsPack.Add(targetTrapName);
+        nowCost += GameManager.allTrap[targetTrapName].cost;
     }
 
 }
@@ -34,11 +34,5 @@ public class Hunter
 {
     // Hunter が所持する Trap バッグ
     public Backpack backpack = new Backpack();
-    
-    public void Hunter_Init()
-    {
-
-    }
-
 
 }

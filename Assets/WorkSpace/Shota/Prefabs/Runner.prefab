@@ -49,12 +49,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 551cdb0cfe6caf44fb61ddbc11ee3697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RunnerController
-  ControllerCode: 0
+  controllerCode: 0
+  isInvincible: 1
+  isVisibleGizmos: 1
   runSpeed: 6
-  jumpHeight: 3
+  jumpHeight: 2.5
   gravity: -30
   groundDamping: 20
   inAirDamping: 5
+  attackBoxOffset: {x: 0.5, y: -0.15}
+  attackBoxSize: {x: 1.7, y: 1}
+  currentState: 1
 --- !u!212 &5205268739818765375
 SpriteRenderer:
   serializedVersion: 2
@@ -206,7 +211,7 @@ MonoBehaviour:
     m_Bits: 512
   triggerMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1152
   oneWayPlatformMask:
     serializedVersion: 2
     m_Bits: 2048
