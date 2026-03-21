@@ -189,8 +189,7 @@ public class TitleUIManager : MonoBehaviour
         }
 
         // ƒQ[?ƒV[?‚ÖˆÚ“®(Testing)
-        SceneManager.LoadScene("InGame");
-
+        GameManager.Instance.ChangeScene(SceneState.InGame);
     }
 
     /// <summary>

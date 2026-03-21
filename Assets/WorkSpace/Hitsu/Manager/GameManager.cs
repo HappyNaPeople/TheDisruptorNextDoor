@@ -6,6 +6,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// ゲーム内で使用する Layer を名前から取得し、一括管理するクラス。
@@ -97,6 +98,10 @@ public class TrapInformation
 //    public static Dictionary<TrapName, TrapInformation> allTrap = new Dictionary<TrapName, TrapInformation>();
 //}
 
+public enum SceneState { GameTitle, InGame, None}
+
+
+
 /// <summary>
 /// プレイヤーの表示ディスプレイ番号
 /// </summary>
@@ -140,6 +145,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static Dictionary<TrapName, TrapInformation> allTrap { get; }
         = new Dictionary<TrapName, TrapInformation>();
+
+    [Header("シーン")]
+    public SceneState currentScene;
 
     [Header("プレイヤー")]
     // プレイヤーインスタンス
@@ -403,14 +411,49 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private IEnumerator SelectButtonWithDelay(MultiplayerEventSystem eventSystem, GameObject firstButton)
+
+
+    public IEnumerator ChangeScene(SceneState state)
     {
-        // 1フレームだけ待機して、EventSystemやUIの準備が完了するのを待つ
+        OnExitScene(currentScene);
+
+        var asyncLoad = SceneManager.LoadSceneAsync(state.ToString());
+
+        yield return asyncLoad;
+        currentScene = state;
+
+        // 1フレームまってstartを走らせる
         yield return null;
 
-        // 確実にフォーカスを当てるための小技（一度nullを入れてリセットしてから指定）
-        eventSystem.SetSelectedGameObject(null);
-        eventSystem.SetSelectedGameObject(firstButton);
+        OnEnterScene(currentScene);
+    }
+
+    private void OnExitScene(SceneState prevScene)
+    {
+        switch (prevScene)
+        {
+            case SceneState.GameTitle:
+
+                break;
+
+            case SceneState.InGame:
+
+                break;
+        }
+    }
+    private void OnEnterScene(SceneState newScene)
+    {
+        switch (newScene)
+        {
+            case SceneState.GameTitle:
+
+                break;
+
+            case SceneState.InGame:
+                Game_PlayerInputAssign(player01.inputData);
+                Game_PlayerInputAssign(player02.inputData);
+                break;
+        }
     }
 
     public void Title_PlayerInputAssign(PlayerInputData playerInputData)
@@ -441,6 +484,23 @@ public class GameManager : MonoBehaviour
                 playerInputData.StartCoroutine(SelectButtonWithDelay(playerInputData.multiplayerEventSystem, p2StartButton));
                 break;
         }
+    }
+
+
+    public void Game_PlayerInputAssign(PlayerInputData playerInputData)
+    {
+
+    }
+
+
+    private IEnumerator SelectButtonWithDelay(MultiplayerEventSystem eventSystem, GameObject firstButton)
+    {
+        // 1フレームだけ待機して、EventSystemやUIの準備が完了するのを待つ
+        yield return null;
+
+        // 確実にフォーカスを当てるための小技（一度nullを入れてリセットしてから指定）
+        eventSystem.SetSelectedGameObject(null);
+        eventSystem.SetSelectedGameObject(firstButton);
     }
 }
 
