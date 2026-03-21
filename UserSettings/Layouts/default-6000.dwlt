@@ -711,12 +711,12 @@ MonoBehaviour:
       displayed: 1
       id: Play Mode Controls
       index: 0
-      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":-950.0,"y":-36.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":3,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: -950, y: -36}
       snapOffsetDelta: {x: 0, y: 0}
-      snapCorner: 0
+      snapCorner: 3
       layout: 4
       size: {x: 0, y: 0}
       sizeOverridden: 0
@@ -1453,6 +1453,20 @@ MonoBehaviour:
       layout: 4
       size: {x: 0, y: 0}
       sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: unity-spline-inspector
+      index: 17
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
     m_ContainerData:
     - containerId: overlay-toolbar__top
       scrollOffset: 0
@@ -1496,9 +1510,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -0.32130402, y: 1.9378731, z: 2.2097557}
+    m_Target: {x: -3.1244218, y: 4.19949, z: 493.78522}
     speed: 2
-    m_Value: {x: 10, y: 0, z: 36.5}
+    m_Value: {x: -0.32130402, y: 1.9378731, z: 2.2097557}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1548,9 +1562,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 11.561022
+    m_Target: 11.484675
     speed: 2
-    m_Value: 54.683292
+    m_Value: 11.561022
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1847,26 +1861,31 @@ MonoBehaviour:
       m_Data: 72242
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 49258
-    - m_Data: 49260
-    - m_Data: 49262
-    - m_Data: 49264
-    - m_Data: 49266
-    - m_Data: 49268
-    - m_Data: 49270
-    - m_Data: 49272
-    - m_Data: 49274
-    - m_Data: 49276
-    - m_Data: 49278
-    - m_Data: 49280
-    - m_Data: 49282
-    - m_Data: 49284
-    - m_Data: 49286
-    - m_Data: 49288
-    - m_Data: 49290
-    - m_Data: 49292
-    - m_Data: 49294
-    - m_Data: 49296
+    - m_Data: 50850
+    - m_Data: 50852
+    - m_Data: 50854
+    - m_Data: 50856
+    - m_Data: 50858
+    - m_Data: 50860
+    - m_Data: 50862
+    - m_Data: 50864
+    - m_Data: 50866
+    - m_Data: 50868
+    - m_Data: 50870
+    - m_Data: 50872
+    - m_Data: 50874
+    - m_Data: 50876
+    - m_Data: 50878
+    - m_Data: 50880
+    - m_Data: 50882
+    - m_Data: 50884
+    - m_Data: 50886
+    - m_Data: 50888
+    - m_Data: 50890
+    - m_Data: 50892
+    - m_Data: 50894
+    - m_Data: 50896
+    - m_Data: 50898
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1900,26 +1919,31 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 49258
-    - m_Data: 49260
-    - m_Data: 49262
-    - m_Data: 49264
-    - m_Data: 49266
-    - m_Data: 49268
-    - m_Data: 49270
-    - m_Data: 49272
-    - m_Data: 49274
-    - m_Data: 49276
-    - m_Data: 49278
-    - m_Data: 49280
-    - m_Data: 49282
-    - m_Data: 49284
-    - m_Data: 49286
-    - m_Data: 49288
-    - m_Data: 49290
-    - m_Data: 49292
-    - m_Data: 49294
-    - m_Data: 49296
+    - m_Data: 50850
+    - m_Data: 50852
+    - m_Data: 50854
+    - m_Data: 50856
+    - m_Data: 50858
+    - m_Data: 50860
+    - m_Data: 50862
+    - m_Data: 50864
+    - m_Data: 50866
+    - m_Data: 50868
+    - m_Data: 50870
+    - m_Data: 50872
+    - m_Data: 50874
+    - m_Data: 50876
+    - m_Data: 50878
+    - m_Data: 50880
+    - m_Data: 50882
+    - m_Data: 50884
+    - m_Data: 50886
+    - m_Data: 50888
+    - m_Data: 50890
+    - m_Data: 50892
+    - m_Data: 50894
+    - m_Data: 50896
+    - m_Data: 50898
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -16,8 +16,9 @@ public class Player : MonoBehaviour
     public Hunter hunter = new Hunter();
     // 表示するディスプレイ番号
     public DisPlayNumber displayCode = DisPlayNumber.None;
-    // 使用するコントローラー番号
+
     public ControllerNumber controllerCode = ControllerNumber.None;
+    public PlayerInputData inputData;
 
     /// <summary>
     /// プレイヤーの役職

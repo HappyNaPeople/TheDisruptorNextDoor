@@ -1,9 +1,11 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
-using System.Collections.Generic;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 /// <summary>
 /// ゲーム内で使用する Layer を名前から取得し、一括管理するクラス。
@@ -401,7 +403,44 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private IEnumerator SelectButtonWithDelay(MultiplayerEventSystem eventSystem, GameObject firstButton)
+    {
+        // 1フレームだけ待機して、EventSystemやUIの準備が完了するのを待つ
+        yield return null;
 
+        // 確実にフォーカスを当てるための小技（一度nullを入れてリセットしてから指定）
+        eventSystem.SetSelectedGameObject(null);
+        eventSystem.SetSelectedGameObject(firstButton);
+    }
 
+    public void Title_PlayerInputAssign(PlayerInputData playerInputData)
+    {
+        if (TitleUIManager.Instance == null) return;
+
+        switch (playerInputData.playerIndex)
+        {
+            case 0:
+                playerInputData.playerInput.camera = TitleUIManager.Instance.player01Camera;
+                playerInputData.multiplayerEventSystem.playerRoot = TitleUIManager.Instance.player01TitlePlayerCanvas.gameObject;
+
+                var p1StartButton = TitleUIManager.Instance.player01TitlePlayerCanvas.startButton.gameObject;
+                playerInputData.multiplayerEventSystem.firstSelectedGameObject = p1StartButton;
+
+                // ★直接呼ばずに、コルーチンを開始する
+                playerInputData.StartCoroutine(SelectButtonWithDelay(playerInputData.multiplayerEventSystem, p1StartButton));
+                break;
+
+            case 1:
+                playerInputData.playerInput.camera = TitleUIManager.Instance.player02Camera;
+                playerInputData.multiplayerEventSystem.playerRoot = TitleUIManager.Instance.player02TitlePlayerCanvas.gameObject;
+
+                var p2StartButton = TitleUIManager.Instance.player02TitlePlayerCanvas.startButton.gameObject;
+                playerInputData.multiplayerEventSystem.firstSelectedGameObject = p2StartButton;
+
+                // ★直接呼ばずに、コルーチンを開始する
+                playerInputData.StartCoroutine(SelectButtonWithDelay(playerInputData.multiplayerEventSystem, p2StartButton));
+                break;
+        }
+    }
 }
 
