@@ -15,8 +15,6 @@ public class RoundTrap
         this.trap = trap;
         this.round = round;
     }
-
-
 } 
 
 /// <summary>
@@ -290,12 +288,6 @@ public class HunterConTrollerPad : MonoBehaviour
             trap.Init();
             trap.SetUp();
             AddToRoundTraps(trap);
-
-            // Ooshima: 設置したトラップを StageGridManager に登録
-            if (StageGridManager.Instance != null)
-            {
-                StageGridManager.Instance.RegisterTrap(targetTrap.transform.position);
-            }
         }
         else
         {
@@ -371,11 +363,6 @@ public class HunterConTrollerPad : MonoBehaviour
         {
             if(roundTrap.trap!=null) 
             {
-                // Ooshima: リセット時に StageGridManager から削除
-                if (StageGridManager.Instance != null)
-                {
-                    StageGridManager.Instance.UnregisterTrap(roundTrap.trap.transform.position);
-                }
                 Destroy(roundTrap.trap.gameObject);
             }
         }
@@ -391,11 +378,6 @@ public class HunterConTrollerPad : MonoBehaviour
         {
             if (roundTraps[i].round == nowRound && roundTraps[i].trap != null)
             {
-                // Ooshima: ラウンドリセット時に StageGridManager から削除
-                if (StageGridManager.Instance != null)
-                {
-                    StageGridManager.Instance.UnregisterTrap(roundTraps[i].trap.transform.position);
-                }
                 Destroy(roundTraps[i].trap.gameObject);
             }
             else stayRoundTraps.Enqueue(roundTraps[i]);
@@ -418,12 +400,6 @@ public class HunterConTrollerPad : MonoBehaviour
     {
         RoundTrap roundTrap = roundTraps.Find(rt => rt.trap == targetTrap);
         if (roundTrap == null) return;
-
-        // Ooshima: 破壊されたトラップを StageGridManager から削除
-        if (StageGridManager.Instance != null && roundTrap.trap != null)
-        {
-            StageGridManager.Instance.UnregisterTrap(roundTrap.trap.transform.position);
-        }
 
         Destroy(roundTrap.trap.gameObject);
         roundTraps.Remove(roundTrap);

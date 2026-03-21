@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UIElements;
 
@@ -36,30 +36,36 @@ public class FallRock : TiggerTrap
     /// Trap 発動条件
     /// </summary>
     public override bool Condition() => fallDone;
+    // 上昇速度
+    public float riseSpeed = 3f;
+    // 着地後に留まる時間
+    public float stayBottomTime = 1f;
+
     /// <summary>
     /// Trap の動作ルール
     /// </summary>
     public override IEnumerator TrapRule()
     {
         gameObject.layer = UseLayerName.trapLayer;
-        // 落下まで待機
-        yield return new WaitForSeconds(fallCoolDown);
         rb.simulated = true;
 
-        // 落下処理
-        while (!Condition())
+        while (true)
         {
-            transform.position += Vector3.down * fallSpeed * Time.deltaTime;
-            yield return null;
+            fallDone = false;
+            
+            // 落下まで待機
+            yield return new WaitForSeconds(fallCoolDown);
 
+            // 落下処理
+            yield return StartCoroutine(GridFallCoroutine(fallSpeed, () => fallDone = true));
+
+            // 着地後の待機
+            yield return new WaitForSeconds(stayBottomTime);
+
+            // 上昇処理 (最初の設置位置 originGridPos へ戻る。上に障害物があれば途中で止まる)
+            bool riseDone = false;
+            yield return StartCoroutine(GridRiseCoroutine(originGridPos, riseSpeed, () => riseDone = true));
         }
-
-        // マップ扱いに変更
-        gameObject.layer = UseLayerName.platformLayer;
-        // Rigidbody 削除
-        Destroy(rb);
-        // このスクリプトを停止
-        this.enabled = false;
     }
     /// <summary>
     /// 衝突判定
@@ -94,12 +100,11 @@ public class FallRock : TiggerTrap
             {
                 // Runner に衝突
             }
-            // 地面または Trap に衝突
             else if (IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer))
             {
-
-                fallDone = true;
-                rb.bodyType = RigidbodyType2D.Static;
+                // `GridFallCoroutine` で着地判定を行っているため、ここでは着地フラグのみを操作せず、将来の処理追加用として残しています
+                // fallDone = true;
+                // rb.bodyType = RigidbodyType2D.Static;
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 
@@ -23,11 +23,7 @@ public abstract class InstallationTrap : Trap
         // 物理演算を有効化
         rb.simulated = true;
         // 落下処理
-        while (!isFallDone)
-        {
-            transform.position += Vector3.down * fallSpeed * Time.deltaTime;
-            yield return null;
-        }
+        yield return StartCoroutine(GridFallCoroutine(fallSpeed, () => isFallDone = true));
         // Trap レイヤー設定
         gameObject.layer = UseLayerName.trapLayer;
         if (gameObject.transform.childCount > 0)
