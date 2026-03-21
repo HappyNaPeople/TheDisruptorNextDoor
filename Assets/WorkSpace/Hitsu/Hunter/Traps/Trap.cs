@@ -43,6 +43,8 @@ public abstract class Trap : MonoBehaviour
     // 設置完了状態
     public bool isSetup = false;
 
+
+
     /// <summary>
     /// Trap の初期化処理
     /// </summary>

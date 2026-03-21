@@ -2,35 +2,35 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// ゲーム中の進行管理クラス。
+/// ゲー??の進行管?ク?ス。
 ///
-/// 主な役割：
-/// ・Runner / Hunter の役職管理
-/// ・カメラ表示先の制御
-/// ・ターン切り替え処理
-/// ・ゲームタイマー管理
+/// 主な役?：
+/// ・Runner / Hunter の役職管?
+/// ・カ??表示先の制御
+/// ・ター?切り替え??
+/// ・ゲー?タイマー管?
 /// ・Hunter UI の更新
 ///
 /// GameManager から Player 情報を取得し、
-/// 各プレイヤーの役割と画面表示を管理する。
+/// 各プ?イ?ーの役?と画面表示を管?する。
 /// </summary>
 public class InGame : MonoBehaviour
 {
     /// <summary>
-    /// Singleton インスタンス
+    /// Singleton イ?スタ?ス
     /// </summary>
     public static InGame Instance;
 
-    // プレイヤーごとのカメラ
+    // プ?イ?ーごとのカ??
     public Camera runnerCamera;
     public Camera hunterCamera;
 
-    // Hunter 用 GamePad コントローラー
+    // Hunter 用 GamePad コ?ト?ー?ー
     public HunterConTrollerPad hunterConTrollerPad;
-    // Runner プレイヤー
+    // Runner プ?イ?ー
     public Runner runner;
 
-    // GameManager から取得するプレイヤーインスタンス
+    // GameManager から取得するプ?イ?ーイ?スタ?ス
     public Player _player01 => GameManager.Instance.player01;
     public Player _player02 => GameManager.Instance.player02;
 
@@ -40,12 +40,12 @@ public class InGame : MonoBehaviour
     private const float timerStart = 150.0f;
 
     /// <summary>
-    /// 現在の残り時間
+    /// 現在の残り?間
     /// </summary>
     public float timer;
 
     /// <summary>
-    /// タイムアップ判定
+    /// タイ?アップ判定
     /// </summary>
     public bool timesUp => timer <= 0;
 
@@ -53,15 +53,15 @@ public class InGame : MonoBehaviour
     private Coroutine timerCountDown;
 
     /// <summary>
-    /// タイマー開始処理
+    /// タイマー開始??
     /// </summary>
     private void TimerStart()
     {
         // 既存タイマー停止
         if (timerCountDown != null) StopCoroutine(timerCountDown);
-        // タイマー初期化
+        // タイマー?期化
         timer = timerStart;
-        // カウントダウン開始
+        // カウ?トダウ?開始
         timerCountDown = StartCoroutine(TimerCountDown());
     }
 
@@ -70,7 +70,7 @@ public class InGame : MonoBehaviour
     /// </summary>
     private IEnumerator TimerCountDown()
     {
-        // 時間が 0 になるまで減少
+        // ?間が 0 になるまで減少
         while (timer > 0)
         {
             timer -= Time.deltaTime;
@@ -79,7 +79,7 @@ public class InGame : MonoBehaviour
     }
 
     /// <summary>
-    /// 指定された Job に対応する Camera を取得する
+    /// 指定された Job に対?する Camera を取得する
     /// </summary>
     private Camera TargetCamera(Player.Job targetJob)
     {
@@ -93,7 +93,7 @@ public class InGame : MonoBehaviour
 
 
     /// <summary>
-    /// Runner 初期化処理
+    /// Runner ?期化??
     /// </summary>
     private void RunnerInit()
     {
@@ -115,11 +115,11 @@ public class InGame : MonoBehaviour
         _player01.SetJop(job2);
         _player02.SetJop(job1);
 
-        // Job に対応するカメラ取得
+        // Job に対?するカ??取得
         Camera cam1 = TargetCamera(job2);
         Camera cam2 = TargetCamera(job1);
 
-        // カメラの表示先ディスプレイ変更
+        // カ??の表示先ディスプ?イ変更
         cam1.targetDisplay = (int)_player01.displayCode;
         cam2.targetDisplay = (int)_player02.displayCode;
 
@@ -128,14 +128,14 @@ public class InGame : MonoBehaviour
 
         //runner.SwitchController();
 
-        // カメラの表示先ディスプレイを設定する
+        // カ??の表示先ディスプ?イを設定する
         DisPlayInit();
         // タイマー再スタート
         TimerStart();
     }
 
     /// <summary>
-    /// カメラの表示先ディスプレイを設定する
+    /// カ??の表示先ディスプ?イを設定する
     /// </summary>
     private void DisPlayInit()
     {
