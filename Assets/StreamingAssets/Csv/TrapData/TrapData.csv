@@ -1,0 +1,5 @@
+﻿罠の名前,写真(Path),コース,説明,プレハブ(Path)
+Spikes,Texture/Traps/Spike,1,Spikes,Prefabs/Traps/Spikes
+FallRock,Texture/Traps/FallRock,2,FallRock,Prefabs/Traps/FallRock
+Boom,Texture/Traps/Boom,3,Boom,Prefabs/Traps/Boom
+JumpPad,Texture/Traps/JumpPad,4,JumpPad,Prefabs/Traps/JumpPad
