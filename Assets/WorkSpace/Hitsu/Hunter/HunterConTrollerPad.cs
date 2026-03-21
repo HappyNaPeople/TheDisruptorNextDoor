@@ -3,12 +3,13 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using UnityEditor.Experimental.GraphView;
+using System;
 
 public class RoundTrap
 {
-    public Trap trap {  get; private set; }
-    public int round {  get; private set; }
+    public Trap trap { get; private set; }
+    public int round { get; private set; }
 
     public RoundTrap(Trap trap, int round)
     {
@@ -17,7 +18,43 @@ public class RoundTrap
     }
 
 
-} 
+}
+
+public class TrapCount
+{
+    public TrapName trap { get; private set; }
+    public int max { get; private set; }
+    public int now { get; private set; }
+
+    public TrapCount(TrapName target, int maxCount)
+    {
+        trap = target;
+        max = maxCount;
+        now = max;
+    }
+
+    public void Recovery() => now = now + 1 > max ? max : now + 1;
+    public void Reduce() => now = now - 1 < 0 ? 0 : now - 1;
+
+
+
+    public override bool Equals(object obj)
+    {
+        if (obj is TrapCount other)
+        {
+            return trap == other.trap;
+        }
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(trap);
+    }
+
+
+
+}
 
 /// <summary>
 /// Hunter が使用する Trap 設置コントローラー。
@@ -45,7 +82,7 @@ public class HunterConTrollerPad : MonoBehaviour
     /// Hunter が使用する Gamepad を設定する
     /// </summary>
     /// <param name="targetGamePad">使用する Gamepad</param>
-    public void GamePadInit(Gamepad targetGamePad)=> hunterUseController = targetGamePad;
+    public void GamePadInit(Gamepad targetGamePad) => hunterUseController = targetGamePad;
 
     // Trap を設置できるエリアの左上座標
     public Transform putAreaLeftTop;
@@ -65,14 +102,38 @@ public class HunterConTrollerPad : MonoBehaviour
     // Trap UI ボタンリスト
     public List<Button> trapButtonList;
 
+    private HashSet<TrapCount> trapCounts = new HashSet<TrapCount>();
+
+    private TrapCount TargetTrap(TrapName trapName)
+    {
+        foreach (TrapCount target in trapCounts)
+        {
+            if (target.trap == trapName) return target;
+        }
+
+        Debug.LogError("Why nonChose Trap in the button which is can put");
+        return null;
+    }
+
+    private bool CanUseTrap(TrapName trapName)
+    {
+        TrapCount target = TargetTrap(trapName);
+
+        if (target != null) return target.now < 0;
+
+        Debug.LogWarning("Why nonChose Trap in the button which is can put");
+
+        return false;
+    }
+
     /// <summary>
     /// 使用可能な Trap を UI ボタンに設定する
     /// </summary>
     /// <param name="targetTrap">使用可能な TrapName のリスト</param>
-    private void CanUseTrapInit(List<TrapName> targetTrap)
+    private void CanUseTrapInit(List<TrapCanUse> targetTrap)
     {
         // 重複する Trap を除外
-        targetTrap.Distinct().ToList();
+        //targetTrap.Distinct().ToList();
         int index;
 
         // UI ボタン数と Trap 数の少ない方を使用
@@ -89,11 +150,13 @@ public class HunterConTrollerPad : MonoBehaviour
             // 使用可能 Trap が存在する場合
             if (index < trapTypeMax)
             {
-                TrapName trap = targetTrap[index];
+                TrapName trap = targetTrap[index].trap;
+                trapCounts.Add(new TrapCount(trap, targetTrap[index].trapCount));
+
                 trapButtonList[index].onClick.AddListener(() => CreateTrap(trap));
 
                 // Trap アイコンを設定
-                trapButtonList[index].image.sprite = TrapSprite(targetTrap[index]);
+                trapButtonList[index].image.sprite = TrapSprite(targetTrap[index].trap);
                 // ボタン表示
                 trapButtonList[index].gameObject.SetActive(true);
 
@@ -128,7 +191,7 @@ public class HunterConTrollerPad : MonoBehaviour
     }
 
     // グリッドスナップを使用するかどうか
-    public bool isGrid = false;
+    public bool isGrid = true;
     // グリッドの1マスのサイズ
     public float gridSize = 1f;
 
@@ -142,30 +205,29 @@ public class HunterConTrollerPad : MonoBehaviour
         {
             // マウスのスクリーン座標取得
             Vector2 mousePos = GameManager.inputDevice.mouse.position.ReadValue();
-            // スクリーン座標 → ワールド座標変換
-            Vector3 world = hunterCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 10f));
 
-            // グリッドスナップ
-            // Ooshima: StageGridManager が存在する場合は、isGrid が false でも強制的にスナップする機能を追加
-            if (isGrid || StageGridManager.Instance != null)
-            {
-                // Ooshima: StageGridManager のグリッドに合わせてスナップするように変更
-                if (StageGridManager.Instance != null)
-                {
-                    Vector2Int gridPos = StageGridManager.Instance.WorldToGrid(world);
-                    world = StageGridManager.Instance.GridToWorld(gridPos);
-                }
-                else
-                {
-                    // ワールド座標をグリッドサイズに合わせて丸める
-                    world.x = Mathf.Round(world.x / gridSize) * gridSize;
-                    world.y = Mathf.Round(world.y / gridSize) * gridSize;
-                    // 2DゲームのためZ座標は0に固定
-                    world.z = 0;
-                }
-            }
+            // カメラとの距離を考慮してワールド座標へ変換
+            float distance = Mathf.Abs(hunterCamera.transform.position.z);
+            Vector3 world = hunterCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, distance));
 
-            // 計算したワールド座標を返す
+            Vector2Int grid = StageGridManager.Instance.WorldToGrid(world);
+
+            // グリッド → ワールド（スナップ後の正しい位置）
+            world = StageGridManager.Instance.GridToWorld(grid);
+
+
+            //if (isGrid)
+            //{
+            //    // ワールド → グリッド
+            //    Vector2Int grid = StageGridManager.Instance.WorldToGrid(world);
+
+            //    // グリッド → ワールド（スナップ後の正しい位置）
+            //    world = StageGridManager.Instance.GridToWorld(grid);
+            //}
+
+            // 2DなのでZは固定
+            world.z = 0;
+
             return world;
         }
     }
@@ -179,9 +241,9 @@ public class HunterConTrollerPad : MonoBehaviour
     /// <returns>エリア内なら true</returns>
     private bool IsInPutArea(Vector3 leftTop, Vector3 rightDown, Vector3 trap)
     {
-        if(trap.x > rightDown.x||
-            trap.x < leftTop.x||
-            trap.y < rightDown.y||
+        if (trap.x > rightDown.x ||
+            trap.x < leftTop.x ||
+            trap.y < rightDown.y ||
             trap.y > leftTop.y) return false;
 
         return true;
@@ -225,8 +287,8 @@ public class HunterConTrollerPad : MonoBehaviour
         GameObject targetTrap = Instantiate(TarpObject(trapName), mouseWorldPos, TarpObject(trapName).transform.rotation);
         // Runner に見えない Layer に変更
         targetTrap.layer = UseLayerName.runnerCantSeeLayer;
-        if (targetTrap.transform.childCount > 0) 
-        { 
+        if (targetTrap.transform.childCount > 0)
+        {
             for (int i = 0; i < targetTrap.transform.childCount; i++)
             {
                 targetTrap.transform.GetChild(i).gameObject.layer = UseLayerName.runnerCantSeeLayer;
@@ -236,66 +298,21 @@ public class HunterConTrollerPad : MonoBehaviour
 
         // プレビュー用 Trap
         choseTrap = targetTrap;
-
-        // Ooshima: 設置可能かどうかで色を変えるための準備（子要素の SpriteRenderer を全て取得）
-        SpriteRenderer[] renderers = targetTrap.GetComponentsInChildren<SpriteRenderer>();
-        Color normalColor = Color.white;
-        Color errorColor = new Color(1f, 0.5f, 0.5f, 0.8f); // 設置不可時の赤みのかかった半透明色
-
         // クリックされるまでマウス追従
         while (!GameManager.inputDevice.mouse.leftButton.isPressed)
         {
             targetTrap.transform.position = mouseWorldPos;
-
-            // Ooshima: リアルタイムで配置可能かチェックし、色を切り替える
-            bool canPlaceNow = false;
-            if (StageGridManager.Instance != null)
-            {
-                canPlaceNow = StageGridManager.Instance.CanPlaceTrapDataDriven(targetTrap.transform.position);
-            }
-            else
-            {
-                canPlaceNow = IsInArea(targetTrap.transform.position) && !IsOnMap();
-            }
-
-            foreach (var sr in renderers)
-            {
-                sr.color = canPlaceNow ? normalColor : errorColor;
-            }
-
             yield return null;
         }
-
-        // Ooshima: 色を元に戻す
-        foreach (var sr in renderers)
-        {
-            sr.color = normalColor;
-        }
-
         // 設置可能エリアなら Trap 有効化
-        // Ooshima: StageGridManager を使用した配置判定に変更
-        bool canPlace = false;
-        if (StageGridManager.Instance != null)
-        {
-            canPlace = StageGridManager.Instance.CanPlaceTrapDataDriven(targetTrap.transform.position);
-        }
-        else
-        {
-            canPlace = IsInArea(targetTrap.transform.position) && !IsOnMap();
-        }
-
-        if (canPlace)
+        if (IsInArea(targetTrap.transform.position) && !IsOnMap())
         {
             Trap trap = targetTrap.GetComponent<Trap>();
             trap.Init();
             trap.SetUp();
             AddToRoundTraps(trap);
+            TargetTrap(trap.trapName).Reduce();
 
-            // Ooshima: 設置したトラップを StageGridManager に登録
-            if (StageGridManager.Instance != null)
-            {
-                StageGridManager.Instance.RegisterTrap(targetTrap.transform.position);
-            }
         }
         else
         {
@@ -337,11 +354,15 @@ public class HunterConTrollerPad : MonoBehaviour
     /// </param>
     private void CreateTrap(TrapName trapName)
     {
+        //if (!CanUseTrap(trapName)) return;
+
         // 現在の Trap 設置処理をキャンセル
         Reject();
         // Trap 設置 Coroutine を開始
         createTrap = StartCoroutine(PutTrap(trapName));
     }
+
+
 
     // 同時に設置できる Trap の最大数
     private const int theMaxNumberTrapCanPut = 10;
@@ -367,17 +388,9 @@ public class HunterConTrollerPad : MonoBehaviour
 
     private void ResetRoundTraps()
     {
-        foreach(RoundTrap roundTrap in roundTraps)
+        foreach (RoundTrap roundTrap in roundTraps)
         {
-            if(roundTrap.trap!=null) 
-            {
-                // Ooshima: リセット時に StageGridManager から削除
-                if (StageGridManager.Instance != null)
-                {
-                    StageGridManager.Instance.UnregisterTrap(roundTrap.trap.transform.position);
-                }
-                Destroy(roundTrap.trap.gameObject);
-            }
+            if (roundTrap.trap != null) Destroy(roundTrap.trap.gameObject);
         }
         roundTraps.Clear();
     }
@@ -391,11 +404,6 @@ public class HunterConTrollerPad : MonoBehaviour
         {
             if (roundTraps[i].round == nowRound && roundTraps[i].trap != null)
             {
-                // Ooshima: ラウンドリセット時に StageGridManager から削除
-                if (StageGridManager.Instance != null)
-                {
-                    StageGridManager.Instance.UnregisterTrap(roundTraps[i].trap.transform.position);
-                }
                 Destroy(roundTraps[i].trap.gameObject);
             }
             else stayRoundTraps.Enqueue(roundTraps[i]);
@@ -418,14 +426,8 @@ public class HunterConTrollerPad : MonoBehaviour
     {
         RoundTrap roundTrap = roundTraps.Find(rt => rt.trap == targetTrap);
         if (roundTrap == null) return;
-
-        // Ooshima: 破壊されたトラップを StageGridManager から削除
-        if (StageGridManager.Instance != null && roundTrap.trap != null)
-        {
-            StageGridManager.Instance.UnregisterTrap(roundTrap.trap.transform.position);
-        }
-
         Destroy(roundTrap.trap.gameObject);
+        TargetTrap(roundTrap.trap.trapName).Recovery();
         roundTraps.Remove(roundTrap);
     }
 
@@ -440,7 +442,7 @@ public class HunterConTrollerPad : MonoBehaviour
                 Debug.Log($"{t.trap.gameObject.name} , {t.round}");
             }
             test = false;
-        } 
+        }
 
 
     }

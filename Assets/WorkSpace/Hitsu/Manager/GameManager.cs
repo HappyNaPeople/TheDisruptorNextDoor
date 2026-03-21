@@ -392,7 +392,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this);
         }
-        else Destroy(this);
+        else Destroy(gameObject);
 
         GameManager_Init();
     }
