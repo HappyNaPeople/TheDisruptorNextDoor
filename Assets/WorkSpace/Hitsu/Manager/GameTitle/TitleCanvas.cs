@@ -10,27 +10,27 @@ public class ChoseTrapData
 {
     // Trap の種類
     public TrapName trapName;
-    // 選択した個数
-    public uint trapCount;
+    // 選択した個?
+    public int trapCount;
 }
 
 /// <summary>
-/// プレイヤーがゲーム開始前に Trap を選択する UI 管理クラス。
+/// プ?イ?ーがゲー?開始前に Trap を選択する UI 管?ク?ス。
 ///
-/// 主な役割：
+/// 主な役?：
 /// ・Trap の選択 UI 表示
-/// ・選択した Trap の管理
+/// ・選択した Trap の管?
 /// ・Trap コスト計算
 /// ・Trap ページ切り替え
-/// ・プレイヤー準備タイマー管理
+/// ・プ?イ?ー?備タイマー管?
 /// ・選択した Trap を Backpack に登録
 /// </summary>
 public class TitleCanvas : MonoBehaviour
 {
-    [Header("プレイヤー情報")]
+    [Header("プ?イ?ー情報")]
 
     /// <summary>
-    /// この UI を使用するプレイヤー
+    /// この UI を使用するプ?イ?ー
     /// </summary>
     public Player targetPlayer;
 
@@ -40,12 +40,12 @@ public class TitleCanvas : MonoBehaviour
     public TMP_Text costText;
 
     /// <summary>
-    /// 準備時間タイマー表示
+    /// ?備?間タイマー表示
     /// </summary>
     public TMP_Text timerText;
 
     /// <summary>
-    /// プレイヤーが準備完了したか
+    /// プ?イ?ーが?備完了したか
     /// </summary>
     public bool isPlayerReady = false;
 
@@ -55,12 +55,12 @@ public class TitleCanvas : MonoBehaviour
     private int nowCost = Backpack.maxCost;
 
     /// <summary>
-    /// Trap 選択制限時間
+    /// Trap 選択制限?間
     /// </summary>
     private const int timerLimit = 10;
 
     /// <summary>
-    /// 現在の残り時間
+    /// 現在の残り?間
     /// </summary>
     private float timer = timerLimit;
 
@@ -71,13 +71,13 @@ public class TitleCanvas : MonoBehaviour
     {
         while (timer > 0)
         {
-            // 時間減少
+            // ?間減少
             timer -= Time.deltaTime;
             // UI 更新
             timerText.text = $"{(int)timer:D2}";
             yield return null;
         }
-        // 時間切れで準備完了
+        // ?間切れで?備完了
         isPlayerReady = true;
     }
 
@@ -96,7 +96,7 @@ public class TitleCanvas : MonoBehaviour
         // Backpack に追加
         foreach (ChoseTrapData trap in playerTrap)
         {
-            targetPlayer.hunter.backpack.AddToBackpack(trap.trapName);
+            targetPlayer.hunter.backpack.AddToBackpack(trap.trapName, trap.trapCount);
         }
 
         // 追加完了判定
@@ -111,12 +111,12 @@ public class TitleCanvas : MonoBehaviour
     public List<TrapUI> choseTrap = new List<TrapUI>();
 
     /// <summary>
-    /// プレイヤーが選択した Trap データ
+    /// プ?イ?ーが選択した Trap データ
     /// </summary>
     private List<ChoseTrapData> playerTrap = new List<ChoseTrapData>();
 
     /// <summary>
-    /// 選択 Trap UI のページ数
+    /// 選択 Trap UI のページ?
     /// </summary>
     private int showChoseTrapPageLimit => playerTrap.Count / choseTrap.Count;
 
@@ -140,7 +140,7 @@ public class TitleCanvas : MonoBehaviour
             // UI 非表示
             choseTrap[index].gameObject.SetActive(false);
 
-            // Trap が存在する場合表示
+            // Trap が存在する場?表示
             if (trapIndex < playerTrap.Count)
             {
                 choseTrap[index].SetTrap(playerTrap[trapIndex]);
@@ -152,7 +152,7 @@ public class TitleCanvas : MonoBehaviour
     }
 
     /// <summary>
-    /// Trap をプレイヤー選択リストに追加
+    /// Trap をプ?イ?ー選択?ストに追加
     /// </summary>
     private void AddToPlayerTrap(TrapName targetTrap)
     {
@@ -163,7 +163,7 @@ public class TitleCanvas : MonoBehaviour
         // コスト更新
         nowCost = checkCost;
 
-        // 既に選択されている Trap を検索
+        // 既に選択されている Trap を?索
         ChoseTrapData trap = playerTrap.Find(t => t.trapName == targetTrap);
         if (trap == null)
         {
@@ -174,7 +174,7 @@ public class TitleCanvas : MonoBehaviour
                 trapCount = 1
             });
         }
-        // 個数増加
+        // 個??加
         else trap.trapCount += 1;
 
         // UI 更新
@@ -200,79 +200,79 @@ public class TitleCanvas : MonoBehaviour
     [Header("選べる罠")]
 
     /// <summary>
-    /// Trap 選択ボタン
+    /// Trap 選択ボタ?
     /// </summary>
     public List<TrapButtonUI> chooseTrapButtons = new List<TrapButtonUI>();
 
     /// <summary>
-    /// 次ページボタン
+    /// ?ページボタ?
     /// </summary>
     public GameObject CanChooseTrapNextPage;
 
     /// <summary>
-    /// 前ページボタン
+    /// 前ページボタ?
     /// </summary>
     public GameObject CanChooseTrapBackPage;
 
     /// <summary>
-    /// 現在表示中のページ
+    /// 現在表示?のページ
     /// </summary>
     private int canChooseTrapNowPage = 0;
 
     /// <summary>
-    /// 最大ページ数
+    /// 最大ページ?
     /// </summary>
     private int showCanChooseTrapPageLimit => Mathf.CeilToInt((float)GameManager.allTrap.Count / chooseTrapButtons.Count) - 1;
 
     /// <summary>
-    /// 選択可能な Trap ボタン UI を更新する。
+    /// 選択可能な Trap ボタ? UI を更新する。
     ///
-    /// 処理内容：
-    /// ・現在のページに応じて Trap を表示
-    /// ・ボタンイベントを設定
-    /// ・次ページ / 前ページボタンの表示更新
+    /// ??内容：
+    /// ・現在のページに?じて Trap を表示
+    /// ・ボタ?イベ?トを設定
+    /// ・?ページ / 前ページボタ?の表示更新
     /// </summary>
     private void UpdateCanChooseTrap()
     {
-        // 現在ページの先頭 Trap インデックス
+        // 現在ページの先頭 Trap イ?デックス
         int trapIndex = canChooseTrapNowPage * chooseTrapButtons.Count;
         for (int index = 0; index < chooseTrapButtons.Count; index++)
         {
             // いったん UI を非表示
             chooseTrapButtons[index].gameObject.SetActive(false);
 
-            // 以前設定されていたイベントを削除
+            // 以前設定されていたイベ?トを削?
             chooseTrapButtons[index].button.onClick.RemoveAllListeners();
 
-            // 表示できる Trap がまだある場合
+            // 表示できる Trap がまだ?る場?
             if (trapIndex < GameManager.allTrap.Count)
             {
                 // TrapName を取得
                 TrapName targetTrap = (TrapName)trapIndex;
-                // ボタン押下時に Trap を追加
+                // ボタ??下?に Trap を追加
                 chooseTrapButtons[index].button.onClick.AddListener(() => AddToPlayerTrap(targetTrap));
                 // Trap 情報を UI に設定
                 chooseTrapButtons[index].SetTrap(GameManager.allTrap[targetTrap]);
-                // ボタン表示
+                // ボタ?表示
                 chooseTrapButtons[index].gameObject.SetActive(true);
-                // 次の Trap へ
+                // ?の Trap へ
                 trapIndex++;
             }
 
         }
 
-        // 次ページボタン表示制御
+        // ?ページボタ?表示制御
         if (canChooseTrapNowPage >= showCanChooseTrapPageLimit) CanChooseTrapNextPage.SetActive(false);
         else CanChooseTrapNextPage.SetActive(true);
 
-        // 前ページボタン表示制御
+        // 前ページボタ?表示制御
         if (canChooseTrapNowPage <= 0) CanChooseTrapBackPage.SetActive(false);
         else CanChooseTrapBackPage.SetActive(true);
 
     }
 
     /// <summary>
-    /// 次ページへ移動
+    /// ?ページへ移動
     /// </summary>
     public void Button_CanChooseTrapNextPage()
     {
@@ -294,7 +294,7 @@ public class TitleCanvas : MonoBehaviour
     }
 
     /// <summary>
-    /// TitleCanvas 初期化
+    /// TitleCanvas ?期化
     /// </summary>
     public void TitleCanvas_Init()
     {

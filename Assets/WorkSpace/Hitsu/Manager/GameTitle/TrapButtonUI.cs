@@ -3,13 +3,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Trap 選択ボタン UI を管理するクラス。
+/// Trap 選択ボタ? UI を管?するク?ス。
 ///
-/// 主な役割：
-/// ・Trap のアイコン表示
+/// 主な役?：
+/// ・Trap のアイコ?表示
 /// ・Trap のコスト表示
 /// ・Trap の説明文表示
-/// ・ボタンコンポーネントの保持
+/// ・ボタ?コ?ポーネ?トの保?
 ///
 /// TitleCanvas から呼び出され、
 /// TrapInformation のデータを UI に反映する。
@@ -17,12 +17,12 @@ using UnityEngine.UI;
 public class TrapButtonUI : MonoBehaviour
 {
     /// <summary>
-    /// Trap を選択するボタン
+    /// Trap を選択するボタ?
     /// </summary>
     public Button button;
 
     /// <summary>
-    /// Trap アイコン画像
+    /// Trap アイコ?画?
     /// </summary>
     public Image icon;
 
@@ -42,7 +42,7 @@ public class TrapButtonUI : MonoBehaviour
     /// <param name="trapInformation">表示する Trap の情報</param>
     public void SetTrap(TrapInformation trapInformation)
     {
-        // Trap アイコン設定
+        // Trap アイコ?設定
         icon.sprite = trapInformation.icon;
         // Trap コスト表示
         cost.text = $"{trapInformation.cost}";

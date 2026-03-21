@@ -210,8 +210,8 @@ public class HunterConTrollerPad : MonoBehaviour
             float distance = Mathf.Abs(hunterCamera.transform.position.z);
             Vector3 world = hunterCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, distance));
 
+            
             Vector2Int grid = StageGridManager.Instance.WorldToGrid(world);
-
             // グリッド → ワールド（スナップ後の正しい位置）
             world = StageGridManager.Instance.GridToWorld(grid);
 

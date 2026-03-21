@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UIElements;
 
@@ -13,6 +13,21 @@ public class FallRock : TiggerTrap
     private const int fallCoolDown = 3;
     // 落下速度　
     public int fallSpeed = 1;
+    private enum Directions { Down, Up };
+    private Directions directions;
+    private Vector3 Direction(Directions direction)
+    {
+        switch (direction)
+        {
+            case Directions.Down: return Vector3.down;
+            case Directions.Up: return Vector3.up;
+
+        }
+        return Vector3.zero;
+    }
+    private float setUpVector3Y;
+    private bool IsSetUpVector3() => (Mathf.Abs(transform.position.y - setUpVector3Y) < 0.1f);
+
     /// <summary>
     /// Trap 初期化
     /// </summary>
@@ -31,15 +46,28 @@ public class FallRock : TiggerTrap
         StartCoroutine(TrapRule());
     }
     // 落下完了フラグ
-    private bool fallDone = false;
+    public bool actionDone = false;
     /// <summary>
     /// Trap 発動条件
     /// </summary>
-    public override bool Condition() => fallDone;
-    // 上昇速度
-    public float riseSpeed = 3f;
-    // 着地後に留まる時間
-    public float stayBottomTime = 1f;
+    public override bool Condition() => directions == Directions.Down ? actionDone : IsSetUpVector3();
+
+    private IEnumerator Move()
+    {
+        Vector3 direction = Direction(directions);
+        yield return new WaitForSeconds(fallCoolDown);
+        while (!Condition())
+        {
+            transform.position += direction * fallSpeed * Time.deltaTime;
+            yield return null;
+
+        }
+        directions = directions == Directions.Down? Directions.Up : Directions.Down;
+        if(directions == Directions.Down) actionDone = false;
+
+    }
+
+
 
     /// <summary>
     /// Trap の動作ルール
@@ -47,66 +75,52 @@ public class FallRock : TiggerTrap
     public override IEnumerator TrapRule()
     {
         gameObject.layer = UseLayerName.trapLayer;
+        setUpVector3Y = this.transform.position.y;
+        directions = Directions.Down;
         rb.simulated = true;
 
         while (true)
         {
-            fallDone = false;
-            
-            // 落下まで待機
-            yield return new WaitForSeconds(fallCoolDown);
-
-            // 落下処理
-            yield return StartCoroutine(GridFallCoroutine(fallSpeed, () => fallDone = true));
-
-            // 着地後の待機
-            yield return new WaitForSeconds(stayBottomTime);
-
-            // 上昇処理 (最初の設置位置 originGridPos へ戻る。上に障害物があれば途中で止まる)
-            bool riseDone = false;
-            yield return StartCoroutine(GridRiseCoroutine(originGridPos, riseSpeed, () => riseDone = true));
+            yield return Move();
         }
+
+        //// 落下まで待機
+        //yield return new WaitForSeconds(fallCoolDown);
+
+        //// 落下処理
+        //while (!Condition())
+        //{
+        //    transform.position += Vector3.down * fallSpeed * Time.deltaTime;
+        //    yield return null;
+
+        //}
+
+        //// マップ扱いに変更
+        //gameObject.layer = UseLayerName.platformLayer;
+        //// Rigidbody 削除
+        //Destroy(rb);
+        //// このスクリプトを停止
+        //this.enabled = false;
     }
-    /// <summary>
-    /// 衝突判定
-    /// </summary>
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (!isSetup) return;
-
-    //    if (!Condition())
-    //    {
-    //        if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
-    //        {
-    //            // Runner に衝突
-    //        }
-    //        // 地面または Trap に衝突
-    //        else if (IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer))
-    //        {
-
-    //            fallDone = true;
-    //            rb.bodyType = RigidbodyType2D.Static;
-    //        }
-    //    }
-    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isSetup) return;
 
-        if (!Condition())
-        {
+        //if (!Condition())
+        //{
             if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
             {
                 // Runner に衝突
             }
+            // 地面または Trap に衝突
             else if (IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer))
             {
-                // `GridFallCoroutine` で着地判定を行っているため、ここでは着地フラグのみを操作せず、将来の処理追加用として残しています
-                // fallDone = true;
-                // rb.bodyType = RigidbodyType2D.Static;
+
+                actionDone = true;
+                //rb.bodyType = RigidbodyType2D.Static;
             }
-        }
+        //}
     }
 
 

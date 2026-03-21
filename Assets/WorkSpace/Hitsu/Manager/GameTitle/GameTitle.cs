@@ -3,22 +3,22 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 /// <summary>
-/// 参考用のタイトル
-/// タイトルシーンを管理するクラス。
+/// 参考用のタイト?
+/// タイト?シー?を管?するク?ス。
 ///
-/// 主な役割：
-/// ・プレイヤーごとの TitleCanvas 初期化
-/// ・カメラの表示ディスプレイ設定
-/// ・Trap 選択の完了監視
-/// ・Trap 選択完了後に InGame シーンへ遷移
+/// 主な役?：
+/// ・プ?イ?ーごとの TitleCanvas ?期化
+/// ・カ??の表示ディスプ?イ設定
+/// ・Trap 選択の完了監?
+/// ・Trap 選択完了後に InGame シー?へ遷移
 ///
-/// 2人のプレイヤーが Trap を選択し終わると、
-/// 自動的にゲームシーンへ移動する。
+/// 2人のプ?イ?ーが Trap を選択し終わると、
+/// 自動的にゲー?シー?へ移動する。
 /// </summary>
 public class GameTitle : MonoBehaviour
 {
     /// <summary>
-    /// Singleton インスタンス
+    /// Singleton イ?スタ?ス
     /// </summary>
     public static GameTitle Instance;
 
@@ -32,7 +32,7 @@ public class GameTitle : MonoBehaviour
     public Player _player01 => GameManager.Instance.player01;
 
     /// <summary>
-    /// Player01 用カメラ
+    /// Player01 用カ??
     /// </summary>
     public Camera player01Camera;
 
@@ -52,7 +52,7 @@ public class GameTitle : MonoBehaviour
     public Player _player02 => GameManager.Instance.player02;
 
     /// <summary>
-    /// Player02 用カメラ
+    /// Player02 用カ??
     /// </summary>
     public Camera player02Camera;
 
@@ -63,7 +63,7 @@ public class GameTitle : MonoBehaviour
 
 
     /// <summary>
-    /// プレイヤーごとの Canvas 初期化
+    /// プ?イ?ーごとの Canvas ?期化
     /// </summary>
     private void PlayerCanvas_Init()
     {
@@ -75,22 +75,22 @@ public class GameTitle : MonoBehaviour
         player02Canvas.targetPlayer = _player02;
         player02Camera.targetDisplay = (int)_player02.displayCode;
 
-        // TitleCanvas 初期化
+        // TitleCanvas ?期化
         player01Canvas.TitleCanvas_Init();
         player02Canvas.TitleCanvas_Init();
     }
 
     /// <summary>
-    /// 両プレイヤーが Trap 選択完了したか判定
+    /// 両プ?イ?ーが Trap 選択完了したか判定
     /// </summary>
     private bool IsEndChooseTrap() => player01Canvas.isPlayerReady && player02Canvas.isPlayerReady;
 
     /// <summary>
-    /// Trap 選択終了処理 Coroutine
+    /// Trap 選択終了?? Coroutine
     /// </summary>
     private IEnumerator EndProcess()
     {
-        // 両プレイヤーが準備完了するまで待つ
+        // 両プ?イ?ーが?備完了するまで待つ
         while (!IsEndChooseTrap())
         {
             yield return null;
@@ -106,20 +106,20 @@ public class GameTitle : MonoBehaviour
             Debug.LogWarning($"Player01 id chose Trap : {player01Done} , Player01 id chose Trap : {player02Done}");
         }
 
-        // ゲームシーンへ移動(Testing)
-        SceneManager.LoadScene("Test_InGame");
+        // ゲー?シー?へ移動(Testing)
+        SceneManager.LoadScene("InGame");
 
     }
 
     /// <summary>
-    /// GameTitle 初期化
+    /// GameTitle ?期化
     /// </summary>
     private void GameTitle_Init()
     {
-        // プレイヤー UI 初期化
+        // プ?イ?ー UI ?期化
         PlayerCanvas_Init();
 
-        // プレイヤー UI 初期化
+        // プ?イ?ー UI ?期化
         StartCoroutine(EndProcess());
     }
 

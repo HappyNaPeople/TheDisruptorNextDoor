@@ -48,6 +48,8 @@ public abstract class Trap : MonoBehaviour
     // 初期の配置座標（上昇処理などで記憶しておく用）
     public Vector2Int originGridPos;
 
+
+
     /// <summary>
     /// Trap の初期化処理
     /// </summary>
