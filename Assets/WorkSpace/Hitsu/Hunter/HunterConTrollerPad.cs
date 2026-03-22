@@ -259,9 +259,45 @@ public class HunterConTrollerPad : MonoBehaviour
     /// </summary>
     private bool IsOnMap()
     {
-        int mask = UseLayerName.platformLayer | UseLayerName.trapLayer;
+        int mask = (1 << UseLayerName.platformLayer) | (1 << UseLayerName.trapLayer);
 
         return Physics2D.OverlapPoint(mouseWorldPos, mask) != null;
+    }
+
+    /// <summary>
+    /// 指定位置の周囲に壁や床があるか判定し、スパイクの回転を決定する
+    /// </summary>
+    private bool CheckSpikePlacement(Vector3 pos, out Quaternion rotation)
+    {
+        rotation = Quaternion.identity;
+        float checkDist = gridSize; 
+        int layerMask = 1 << UseLayerName.platformLayer;
+        
+        // 下に床があれば上向き
+        if (Physics2D.OverlapPoint(pos + Vector3.down * checkDist, layerMask))
+        {
+            rotation = Quaternion.Euler(0, 0, 0);
+            return true;
+        }
+        // 上に天井があれば下向き
+        if (Physics2D.OverlapPoint(pos + Vector3.up * checkDist, layerMask))
+        {
+            rotation = Quaternion.Euler(0, 0, 180);
+            return true;
+        }
+        // 右に壁があれば左向き
+        if (Physics2D.OverlapPoint(pos + Vector3.right * checkDist, layerMask))
+        {
+            rotation = Quaternion.Euler(0, 0, 90);
+            return true;
+        }
+        // 左に壁があれば右向き
+        if (Physics2D.OverlapPoint(pos + Vector3.left * checkDist, layerMask))
+        {
+            rotation = Quaternion.Euler(0, 0, -90);
+            return true;
+        }
+        return false;
     }
     // プレビュー中の Trap
     private GameObject choseTrap;
@@ -281,8 +317,23 @@ public class HunterConTrollerPad : MonoBehaviour
             yield break;
         }
 
+        bool isBlackHole = (trapName == TrapName.BlackHole);
+        Vector3 blackHolePos = Vector3.zero;
+        if (isBlackHole)
+        {
+            float playerX = 0f;
+            if (InGame.Instance != null && InGame.Instance.runner != null)
+                playerX = InGame.Instance.runner.transform.position.x;
+            
+            float stageY = 0f;
+            if (StageGridManager.Instance != null && StageGridManager.Instance.scanAreaLeftTop != null && StageGridManager.Instance.scanAreaRightDown != null)
+                stageY = (StageGridManager.Instance.scanAreaLeftTop.position.y + StageGridManager.Instance.scanAreaRightDown.position.y) / 2f;
+
+            blackHolePos = new Vector3(playerX - 20f, stageY, 0f);
+        }
+
         // Trap を生成
-        GameObject targetTrap = Instantiate(TarpObject(trapName), mouseWorldPos, TarpObject(trapName).transform.rotation);
+        GameObject targetTrap = Instantiate(TarpObject(trapName), isBlackHole ? blackHolePos : mouseWorldPos, TarpObject(trapName).transform.rotation);
         // Runner に見えない Layer に変更
         targetTrap.layer = UseLayerName.runnerCantSeeLayer;
         if (targetTrap.transform.childCount > 0)
@@ -296,14 +347,52 @@ public class HunterConTrollerPad : MonoBehaviour
 
         // プレビュー用 Trap
         choseTrap = targetTrap;
+
+        SpriteRenderer[] renderers = targetTrap.GetComponentsInChildren<SpriteRenderer>();
+        Color[] originalColors = new Color[renderers.Length];
+        for (int i = 0; i < renderers.Length; i++) originalColors[i] = renderers[i].color;
+
         // クリックされるまでマウス追従
         while (!GameManager.inputDevice.mouse.leftButton.isPressed)
         {
-            targetTrap.transform.position = mouseWorldPos;
+            Vector3 mPos = isBlackHole ? blackHolePos : mouseWorldPos;
+            targetTrap.transform.position = mPos;
+            
+            bool canPlacePreview = isBlackHole || (IsInArea(mPos) && !IsOnMap());
+            
+            if (trapName == TrapName.Spikes)
+            {
+                if (CheckSpikePlacement(mPos, out Quaternion rot))
+                {
+                    targetTrap.transform.rotation = rot;
+                }
+                else
+                {
+                    canPlacePreview = false;
+                }
+            }
+
+            for (int i = 0; i < renderers.Length; i++)
+            {
+                renderers[i].color = canPlacePreview ? originalColors[i] : new Color(1f, 0f, 0f, 0.5f);
+            }
+
             yield return null;
         }
+        
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            renderers[i].color = originalColors[i];
+        }
+
+        bool canPlace = isBlackHole || (IsInArea(targetTrap.transform.position) && !IsOnMap());
+        if (trapName == TrapName.Spikes)
+        {
+            canPlace = canPlace && CheckSpikePlacement(targetTrap.transform.position, out _);
+        }
+
         // 設置可能エリアなら Trap 有効化
-        if (IsInArea(targetTrap.transform.position) && !IsOnMap())
+        if (canPlace)
         {
             Trap trap = targetTrap.GetComponent<Trap>();
             trap.Init();

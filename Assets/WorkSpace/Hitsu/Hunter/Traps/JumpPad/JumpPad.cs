@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class JumpPad : InstallationTrap
@@ -71,11 +71,11 @@ public class JumpPad : InstallationTrap
             animator.Play("JumpPad_GotActive");
         }
         // 地面または Trap に当たった場合
-        else if ((IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer)) && !isFallDone)
-        {
-            isFallDone = true;
-            return;
-        }
+        // else if ((IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer)) && !isFallDone)
+        // {
+        //     isFallDone = true;
+        //     return;
+        // }
     }
 
 
