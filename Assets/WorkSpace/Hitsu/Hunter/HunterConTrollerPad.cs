@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System.Collections;
@@ -156,20 +156,22 @@ public class HunterConTrollerPad : MonoBehaviour
     /// </summary>
     private IEnumerator ButtionActicve()
     {
-        while (true)
-        {
-            foreach(TrapButtonUI targetCost in trapButtonList)
-            {
-                // 非表示オブジェクトはスキップ
-                if (targetCost.gameObject.activeSelf == false) continue;
+        //while (true)
+        //{
+        //    foreach(TrapButtonUI targetCost in trapButtonList)
+        //    {
+        //        // 非表示オブジェクトはスキップ
+        //        if (targetCost.gameObject.activeSelf == false) continue;
 
-                // コスト不足なら無効化
-                if (TrapCost(targetCost.trapName) < nowCostCanUse) Action(targetCost, false);
-                else Action(targetCost, true);
-            }
+        //        // コスト不足なら無効化
+        //        if (TrapCost(targetCost.trapName) < nowCostCanUse) Action(targetCost, false);
+        //        else Action(targetCost, true);
+        //    }
 
-            yield return null;
-        }
+        //    yield return null;
+        //}
+        yield return null;
+
     }
 
     /// <summary>

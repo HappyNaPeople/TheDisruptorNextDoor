@@ -424,6 +424,10 @@ public class GameManager : MonoBehaviour
 
         // 5フレームまってstartを走らせる
         yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
 
         OnEnterScene(currentScene);
     }
@@ -492,9 +496,9 @@ public class GameManager : MonoBehaviour
         var hunterPlayer = player01.job == Player.Job.Hunter ? player01 : player02;
 
         runnerPlayer.inputData.playerInput.defaultActionMap = "Runner";
-        hunterPlayer.inputData.playerInput.defaultActionMap = "Hunter";
+        //hunterPlayer.inputData.playerInput.defaultActionMap = "Hunter";
         runnerPlayer.inputData.playerInput.SwitchCurrentActionMap("Runner");
-        hunterPlayer.inputData.playerInput.SwitchCurrentActionMap("Hunter");
+        //hunterPlayer.inputData.playerInput.SwitchCurrentActionMap("Hunter");
 
         runnerPlayer.inputData.playerInput.camera = InGame.Instance.runnerCamera;
         hunterPlayer.inputData.playerInput.camera = InGame.Instance.hunterCamera;
