@@ -11,7 +11,8 @@ public enum TrapName
     Boom,           // 爆発トラップ
     JumpPad,
     ChaseEnemy,
-    BlackHole
+    BlackHole,
+    Shell
 }
 /// <summary>
 /// すべての Trap の基底クラス。
