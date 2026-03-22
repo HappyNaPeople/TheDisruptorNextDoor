@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System.Collections;
@@ -75,14 +75,12 @@ public class HunterConTrollerPad : MonoBehaviour
     public static HunterConTrollerPad Instance;
     // Hunter 用カメラ（マウス座標 → ワールド座標変換に使用）
     public Camera hunterCamera;
-    // Hunter が操作する Gamepad
-    private Gamepad hunterUseController;
+    public Canvas hunterCanvas;
 
     /// <summary>
     /// Hunter が使用する Gamepad を設定する
     /// </summary>
     /// <param name="targetGamePad">使用する Gamepad</param>
-    public void GamePadInit(Gamepad targetGamePad) => hunterUseController = targetGamePad;
 
     // Trap を設置できるエリアの左上座標
     public Transform putAreaLeftTop;

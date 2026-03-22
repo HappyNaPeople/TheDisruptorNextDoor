@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +25,7 @@ public static class UseLayerName
     // Map 用 Layer
     public static int platformLayer;         // Runnerが乗れるレイヤー
     public static int noPutAreaLayer;        // Ooshima: Added for StageGridManager (トラップ配置不可エリア)
-    
+
     // Hunter 用 Layer
     public static int trapLayer;             // Trap の Layer
     public static int runnerCantSeeLayer;    // Runner から見えない Layer
@@ -98,19 +98,19 @@ public class TrapInformation
 //    public static Dictionary<TrapName, TrapInformation> allTrap = new Dictionary<TrapName, TrapInformation>();
 //}
 
-public enum SceneState { GameTitle, InGame, None}
+public enum SceneState { GameTitle, InGame, None }
 
 
 
 /// <summary>
 /// プレイヤーの表示ディスプレイ番号
 /// </summary>
-public enum DisPlayNumber{ DisPlay01, DisPlay02, None }
+public enum DisPlayNumber { DisPlay01, DisPlay02, None }
 
 /// <summary>
 /// 使用するコントローラー番号
 /// </summary>
-public enum ControllerNumber{ Controller01, Controller02, None }
+public enum ControllerNumber { Controller01, Controller02, None }
 
 /// <summary>
 /// ゲーム全体を管理するマネージャークラス。
@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
         // 指定番号の Gamepad が存在しない
         else if ((int)targetPlyer.controllerCode >= inputDevice.gamepad.Count)
         {
-            Debug.LogWarning($"Not this Decives, The Max connenting Device max are : {inputDevice.gamepad.Count}" );
+            Debug.LogWarning($"Not this Decives, The Max connenting Device max are : {inputDevice.gamepad.Count}");
             return null;
         }
 
@@ -220,8 +220,8 @@ public class GameManager : MonoBehaviour
         player02 = player2.AddComponent<Player>();
 
         // Job 初期化
-        player01.SetJop(Player.Job.None);
-        player02.SetJop(Player.Job.None);
+        player01.SetJob(Player.Job.None);
+        player02.SetJob(Player.Job.None);
 
         // Controller 割り当て
         if (GameManager.inputDevice.gamepad.Count >= 2)
@@ -273,7 +273,7 @@ public class GameManager : MonoBehaviour
         if (!File.Exists(path))
         {
             Debug.LogWarning("文件不存在: " + path);
-            return; 
+            return;
         }
 
         // CSV 読み込み
@@ -422,7 +422,11 @@ public class GameManager : MonoBehaviour
         yield return asyncLoad;
         currentScene = state;
 
-        // 1フレームまってstartを走らせる
+        // 5フレームまってstartを走らせる
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
         yield return null;
 
         OnEnterScene(currentScene);
@@ -450,8 +454,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case SceneState.InGame:
-                Game_PlayerInputAssign(player01.inputData);
-                Game_PlayerInputAssign(player02.inputData);
+                Game_PlayerInputAssign();
                 break;
         }
     }
@@ -481,15 +484,29 @@ public class GameManager : MonoBehaviour
                 playerInputData.multiplayerEventSystem.firstSelectedGameObject = p2StartButton;
 
                 // ★直接呼ばずに、コルーチンを開始する
-                playerInputData.StartCoroutine(SelectButtonWithDelay(playerInputData.multiplayerEventSystem, p2StartButton));
+                StartCoroutine(SelectButtonWithDelay(playerInputData.multiplayerEventSystem, p2StartButton));
                 break;
         }
     }
 
 
-    public void Game_PlayerInputAssign(PlayerInputData playerInputData)
+    public void Game_PlayerInputAssign()
     {
+        var runnerPlayer = player01.job == Player.Job.Runner ? player01 : player02;
+        var hunterPlayer = player01.job == Player.Job.Hunter ? player01 : player02;
 
+        runnerPlayer.inputData.playerInput.defaultActionMap = "Player";
+        hunterPlayer.inputData.playerInput.defaultActionMap = "UI";
+        runnerPlayer.inputData.playerInput.SwitchCurrentActionMap("Player");
+        hunterPlayer.inputData.playerInput.SwitchCurrentActionMap("UI");
+
+        runnerPlayer.inputData.playerInput.camera = InGame.Instance.runnerCamera;
+        hunterPlayer.inputData.playerInput.camera = InGame.Instance.hunterCamera;
+
+        InGame.Instance.runner.inputData = runnerPlayer.inputData;
+        hunterPlayer.inputData.multiplayerEventSystem.playerRoot = InGame.Instance.hunterConTrollerPad.hunterCanvas.gameObject;
+        hunterPlayer.inputData.multiplayerEventSystem.firstSelectedGameObject = InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject;
+        StartCoroutine(SelectButtonWithDelay(hunterPlayer.inputData.multiplayerEventSystem, InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject));
     }
 
 
