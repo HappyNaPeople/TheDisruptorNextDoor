@@ -424,10 +424,6 @@ public class GameManager : MonoBehaviour
 
         // 5フレームまってstartを走らせる
         yield return null;
-        yield return null;
-        yield return null;
-        yield return null;
-        yield return null;
 
         OnEnterScene(currentScene);
     }

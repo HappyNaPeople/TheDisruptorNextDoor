@@ -89,14 +89,14 @@ MonoBehaviour:
   costImage: {fileID: 5291003618754141555}
   costText: {fileID: 4723978267244364168}
   trapButtonList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 4119863805902493625}
+  - {fileID: 5740316098861815023}
+  - {fileID: 1024841814628627372}
+  - {fileID: 2230957807119225634}
+  - {fileID: 4033473549924851550}
+  - {fileID: 6190968195595990116}
+  - {fileID: 8058008693879045552}
+  - {fileID: 4959813546679273278}
   putAreaLeftTop: {fileID: 7714407465413586590}
   putAreaRightDown: {fileID: 8563844004287401764}
   isGrid: 1
@@ -687,6 +687,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5177118490711935874, guid: 70b05853ed888484593423376a945797, type: 3}
   m_PrefabInstance: {fileID: 894013975741568530}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8058008693879045552 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7186584812946516898, guid: 70b05853ed888484593423376a945797, type: 3}
+  m_PrefabInstance: {fileID: 894013975741568530}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae10d9f4f459d3499640063bffd7248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrapButtonUI
 --- !u!1001 &2841539281247923356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -784,6 +795,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70b05853ed888484593423376a945797, type: 3}
+--- !u!114 &4959813546679273278 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7186584812946516898, guid: 70b05853ed888484593423376a945797, type: 3}
+  m_PrefabInstance: {fileID: 2841539281247923356}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae10d9f4f459d3499640063bffd7248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrapButtonUI
 --- !u!224 &6969317389580379934 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5177118490711935874, guid: 70b05853ed888484593423376a945797, type: 3}
@@ -898,6 +920,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70b05853ed888484593423376a945797, type: 3}
+--- !u!114 &5740316098861815023 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7186584812946516898, guid: 70b05853ed888484593423376a945797, type: 3}
+  m_PrefabInstance: {fileID: 3175692890415939405}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae10d9f4f459d3499640063bffd7248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrapButtonUI
 --- !u!224 &7767163503156425935 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5177118490711935874, guid: 70b05853ed888484593423376a945797, type: 3}
@@ -1000,6 +1033,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70b05853ed888484593423376a945797, type: 3}
+--- !u!114 &6190968195595990116 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7186584812946516898, guid: 70b05853ed888484593423376a945797, type: 3}
+  m_PrefabInstance: {fileID: 3914010751225405382}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae10d9f4f459d3499640063bffd7248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrapButtonUI
 --- !u!224 &8181226174381577284 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5177118490711935874, guid: 70b05853ed888484593423376a945797, type: 3}
@@ -1107,6 +1151,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5177118490711935874, guid: 70b05853ed888484593423376a945797, type: 3}
   m_PrefabInstance: {fileID: 6071457155285824764}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4033473549924851550 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7186584812946516898, guid: 70b05853ed888484593423376a945797, type: 3}
+  m_PrefabInstance: {fileID: 6071457155285824764}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae10d9f4f459d3499640063bffd7248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrapButtonUI
 --- !u!1001 &6527776903635041307
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1209,6 +1264,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5177118490711935874, guid: 70b05853ed888484593423376a945797, type: 3}
   m_PrefabInstance: {fileID: 6527776903635041307}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4119863805902493625 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7186584812946516898, guid: 70b05853ed888484593423376a945797, type: 3}
+  m_PrefabInstance: {fileID: 6527776903635041307}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae10d9f4f459d3499640063bffd7248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrapButtonUI
 --- !u!1001 &7891178446922127374
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1318,6 +1384,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70b05853ed888484593423376a945797, type: 3}
+--- !u!114 &1024841814628627372 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7186584812946516898, guid: 70b05853ed888484593423376a945797, type: 3}
+  m_PrefabInstance: {fileID: 7891178446922127374}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae10d9f4f459d3499640063bffd7248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrapButtonUI
 --- !u!224 &3052254357031408524 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5177118490711935874, guid: 70b05853ed888484593423376a945797, type: 3}
@@ -1432,6 +1509,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70b05853ed888484593423376a945797, type: 3}
+--- !u!114 &2230957807119225634 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7186584812946516898, guid: 70b05853ed888484593423376a945797, type: 3}
+  m_PrefabInstance: {fileID: 9029176849789171840}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae10d9f4f459d3499640063bffd7248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrapButtonUI
 --- !u!224 &4221778682171159298 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5177118490711935874, guid: 70b05853ed888484593423376a945797, type: 3}
