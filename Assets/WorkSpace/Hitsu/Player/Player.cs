@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// プレイヤーの役職を変更する
     /// </summary>
-    public void SetJop(Job targetJop) => job = targetJop;
+    public void SetJob(Job targetJop) => job = targetJop;
     /// <summary>
     /// プレイヤーの初期化
     /// </summary>

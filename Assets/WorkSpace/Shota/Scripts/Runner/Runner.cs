@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class Runner : MonoBehaviour
 {
     [Header("デバッグ用")]
-    [Min(0)] public int controllerCode = 0;
+    public PlayerInputData inputData;
     public bool isInvincible = false;
     public bool isVisibleGizmos = false;
 
@@ -44,13 +44,9 @@ public class Runner : MonoBehaviour
     Vector2 _velocity = new Vector2();
     bool _isPhysicsReserved = false;
 
-    public void SetControllerCode(int code)
+    public void SetPlayerInputData(PlayerInputData data)
     {
-        controllerCode = code;
-    }
-    public void SwitchController()
-    {
-        controllerCode = (controllerCode + 1) % 2;
+        inputData = data;
     }
 
     public void ChangeState(PlayerState state)
@@ -165,6 +161,10 @@ public class Runner : MonoBehaviour
 
     public void UpdateMove()
     {
+        if (inputData == null)
+        {
+            return;
+        }
         if (currentState == PlayerState.Dead) return;
 
         float dt = Time.deltaTime;
@@ -232,7 +232,7 @@ public class Runner : MonoBehaviour
     void CheckJump()
     {
         if (_isPhysicsReserved) return;
-        if (!RunnerInput.GetJumpInput(_inputDevice, controllerCode)) return;
+        if (!inputData.isJumpPressed) return;
         // ジャンプ処理
         if (_controller.isGrounded)
         {
@@ -246,7 +246,7 @@ public class Runner : MonoBehaviour
     void CheckPunch()
     {
         if (_isPhysicsReserved) return;
-        if (!RunnerInput.GetPunchInput(_inputDevice, controllerCode)) return;
+        if (!inputData.isPunchPressed) return;
         // パンチ処理
         if (_controller.isGrounded)
         {
@@ -259,7 +259,7 @@ public class Runner : MonoBehaviour
     void ApplyInputMovement()
     {
         // 入力値（-1, 0, 1）を取得
-        float horizontalInput = RunnerInput.GetHorizontalInput(_inputDevice, controllerCode);
+        float horizontalInput = inputData.moveInput.x;
 
         // 加減速を滑らかにする（Lerpを使用）
         float targetSpeed = horizontalInput * runSpeed;
@@ -322,4 +322,6 @@ public class Runner : MonoBehaviour
         var offset = new Vector3(attackBoxOffset.x * Mathf.Sign(transform.localScale.x), attackBoxOffset.y);
         return offset;
     }
+
+    
 }

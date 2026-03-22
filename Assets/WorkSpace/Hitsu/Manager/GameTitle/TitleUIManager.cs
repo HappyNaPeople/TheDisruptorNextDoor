@@ -1,26 +1,27 @@
+ï»¿using System.Collections;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
-using System.Runtime.InteropServices;
 using UnityEngine.UI;
+using static Player;
 
 /// <summary>
-/// Ql—p‚Ìƒ^ƒCƒg?
-/// ƒ^ƒCƒg?ƒV[?‚ğŠÇ?‚·‚éƒN?ƒXB
+/// å‚è€ƒç”¨ã®ã‚¿ã‚¤ãƒˆ?
+/// ã‚¿ã‚¤ãƒˆ?ã‚·ãƒ¼?ã‚’ç®¡?ã™ã‚‹ã‚¯?ã‚¹ã€‚
 ///
-/// å‚È–ğ?F
-/// Eƒv?ƒC?[‚²‚Æ‚Ì TitleCanvas ?Šú‰»
-/// EƒJ??‚Ì•\¦ƒfƒBƒXƒv?ƒCİ’è
-/// ETrap ‘I‘ğ‚ÌŠ®—¹ŠÄ?
-/// ETrap ‘I‘ğŠ®—¹Œã‚É InGame ƒV[?‚Ö‘JˆÚ
+/// ä¸»ãªå½¹?ï¼š
+/// ãƒ»ãƒ—?ã‚¤?ãƒ¼ã”ã¨ã® TitleCanvas ?æœŸåŒ–
+/// ãƒ»ã‚«??ã®è¡¨ç¤ºãƒ‡ã‚£ã‚¹ãƒ—?ã‚¤è¨­å®š
+/// ãƒ»Trap é¸æŠã®å®Œäº†ç›£?
+/// ãƒ»Trap é¸æŠå®Œäº†å¾Œã« InGame ã‚·ãƒ¼?ã¸é·ç§»
 ///
-/// 2l‚Ìƒv?ƒC?[‚ª Trap ‚ğ‘I‘ğ‚µI‚í‚é‚ÆA
-/// ©“®“I‚ÉƒQ[?ƒV[?‚ÖˆÚ“®‚·‚éB
+/// 2äººã®ãƒ—?ã‚¤?ãƒ¼ãŒ Trap ã‚’é¸æŠã—çµ‚ã‚ã‚‹ã¨ã€
+/// è‡ªå‹•çš„ã«ã‚²ãƒ¼?ã‚·ãƒ¼?ã¸ç§»å‹•ã™ã‚‹ã€‚
 /// </summary>
 public class TitleUIManager : MonoBehaviour
 {
     /// <summary>
-    /// Singleton ƒC?ƒXƒ^?ƒX
+    /// Singleton ã‚¤?ã‚¹ã‚¿?ã‚¹
     /// </summary>
     public static TitleUIManager Instance;
 
@@ -29,17 +30,17 @@ public class TitleUIManager : MonoBehaviour
     // ==============================
 
     /// <summary>
-    /// Player01 æ“¾iGameManager ‚©‚çj
+    /// Player01 å–å¾—ï¼ˆGameManager ã‹ã‚‰ï¼‰
     /// </summary>
     public Player _player01 => GameManager.Instance.player01;
 
     /// <summary>
-    /// Player01 —pƒJ??
+    /// Player01 ç”¨ã‚«??
     /// </summary>
     public Camera player01Camera;
 
     /// <summary>
-    /// Player01 Trap ‘I‘ğ UI
+    /// Player01 Trap é¸æŠ UI
     /// </summary>
     public TitlePlayerCanvas player01TitlePlayerCanvas;
 
@@ -49,17 +50,17 @@ public class TitleUIManager : MonoBehaviour
     // ==============================
 
     /// <summary>
-    /// Player02 æ“¾
+    /// Player02 å–å¾—
     /// </summary>
     public Player _player02 => GameManager.Instance.player02;
 
     /// <summary>
-    /// Player02 —pƒJ??
+    /// Player02 ç”¨ã‚«??
     /// </summary>
     public Camera player02Camera;
 
     /// <summary>
-    /// Player02 Trap ‘I‘ğ UI
+    /// Player02 Trap é¸æŠ UI
     /// </summary>
     public TitlePlayerCanvas player02TitlePlayerCanvas;
 
@@ -70,19 +71,19 @@ public class TitleUIManager : MonoBehaviour
 
 
     /// <summary>
-    /// ƒv?ƒC?[‚²‚Æ‚Ì Canvas ?Šú‰»
+    /// ãƒ—?ã‚¤?ãƒ¼ã”ã¨ã® Canvas ?æœŸåŒ–
     /// </summary>
     private void PlayerCanvas_Init()
     {
-        // Player01 Canvas İ’è
+        // Player01 Canvas è¨­å®š
         player01TitlePlayerCanvas.targetPlayer = _player01;
         player01Camera.targetDisplay = (int)_player01.displayCode;
 
-        // Player02 Canvas İ’è
+        // Player02 Canvas è¨­å®š
         player02TitlePlayerCanvas.targetPlayer = _player02;
         player02Camera.targetDisplay = (int)_player02.displayCode;
 
-        // TitleCanvas ?Šú‰»
+        // TitleCanvas ?æœŸåŒ–
         //player01TitlePlayerCanvas.TitleTrapCanvas_Init();
         //player02TitlePlayerCanvas.TitleTrapCanvas_Init();
     }
@@ -93,21 +94,21 @@ public class TitleUIManager : MonoBehaviour
         && player02TitlePlayerCanvas.playerState == TitlePlayerCanvas.TitlePlayerState.WaitingStart;
 
     /// <summary>
-    /// —¼ƒv?ƒC?[‚ª Trap ‘I‘ğŠ®—¹‚µ‚½‚©”»’è
+    /// ä¸¡ãƒ—?ã‚¤?ãƒ¼ãŒ Trap é¸æŠå®Œäº†ã—ãŸã‹åˆ¤å®š
     /// </summary>
     private bool IsEndChooseTrap() 
         => player01TitlePlayerCanvas.playerState == TitlePlayerCanvas.TitlePlayerState.IsReady 
         && player02TitlePlayerCanvas.playerState == TitlePlayerCanvas.TitlePlayerState.IsReady;
 
     /// <summary>
-    /// Trap ‘I‘ğI—¹?? Coroutine
+    /// Trap é¸æŠçµ‚äº†?? Coroutine
     /// </summary>
     private IEnumerator TitleProcess()
     {
         player01TitlePlayerCanvas.AddStartButtonListener();
         player02TitlePlayerCanvas.AddStartButtonListener();
 
-        // ƒXƒ^[ƒg‘Ò‚¿
+        // ã‚¹ã‚¿ãƒ¼ãƒˆå¾…ã¡
         while (!IsBothPlayersPressedStart())
         {
             yield return null;
@@ -118,7 +119,7 @@ public class TitleUIManager : MonoBehaviour
             title.gameObject.SetActive(false);
         }
 
-        // æs‚ğ??ƒ_?‚É?’è
+        // å…ˆè¡Œã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«æ±ºå®š
         foreach (var turn in TurnSelect)
         {
             turn.gameObject.SetActive(true);
@@ -127,8 +128,12 @@ public class TitleUIManager : MonoBehaviour
         player02TitlePlayerCanvas.ChangeState(TitlePlayerCanvas.TitlePlayerState.SelectingSide);
 
         var rnd = Random.Range(0, 2);
-        player01TitlePlayerCanvas.sideTmp.text = rnd == 0 ? $"?‚È‚½‚ÍæsiƒS[?‚ğ–Úw‚·j" : $"?‚È‚½‚ÍŒãUi–WŠQj";
-        player02TitlePlayerCanvas.sideTmp.text = rnd == 1 ? $"?‚È‚½‚ÍæsiƒS[?‚ğ–Úw‚·j" : $"?‚È‚½‚ÍŒãUi–WŠQj";
+        player01TitlePlayerCanvas.sideTmp.text = rnd == 0 ? $"ã‚ãªãŸã¯å…ˆè¡Œï¼ˆã‚´ãƒ¼ãƒ«ã‚’ç›®æŒ‡ã™ï¼‰" : $"ã‚ãªãŸã¯å¾Œæ”»ï¼ˆå¦¨å®³ï¼‰";
+        player02TitlePlayerCanvas.sideTmp.text = rnd == 1 ? $"ã‚ãªãŸã¯å…ˆè¡Œï¼ˆã‚´ãƒ¼ãƒ«ã‚’ç›®æŒ‡ã™ï¼‰" : $"ã‚ãªãŸã¯å¾Œæ”»ï¼ˆå¦¨å®³ï¼‰";
+        var player01Job = rnd == 0 ? Job.Runner : Job.Hunter;
+        var player02Job = rnd == 1 ? Job.Runner : Job.Hunter;
+        _player01.SetJob(player01Job);
+        _player02.SetJob(player02Job);
 
         yield return new WaitForSeconds(3f);
 
@@ -137,7 +142,7 @@ public class TitleUIManager : MonoBehaviour
             turn.gameObject.SetActive(false);
         }
 
-        // ƒg?ƒbƒv‘I‘ğ
+        // ãƒˆãƒ©ãƒƒãƒ—é¸æŠ
         foreach (var trap in TrapSelect)
         {
             trap.gameObject.SetActive(true);
@@ -146,61 +151,61 @@ public class TitleUIManager : MonoBehaviour
         player01TitlePlayerCanvas.ChangeState(TitlePlayerCanvas.TitlePlayerState.SelectingTrap);
         player02TitlePlayerCanvas.ChangeState(TitlePlayerCanvas.TitlePlayerState.SelectingTrap);
 
-        // --- C³Œã ---
+        // --- ä¿®æ­£å¾Œ ---
 
-        // 1. ‚Ü‚¸UI‚Ì?Šú‰»iƒ{ƒ^?‚Ì?g‚Ì¶¬‚â•\¦İ’èj‚ğæ‚És‚¤
+        // 1. ã¾ãšUIã®åˆæœŸåŒ–ï¼ˆãƒœã‚¿ãƒ³ã®ä¸­èº«ã®ç”Ÿæˆã‚„è¡¨ç¤ºè¨­å®šï¼‰ã‚’å…ˆã«è¡Œã†
         player01TitlePlayerCanvas.TitleTrapCanvas_Init();
         player02TitlePlayerCanvas.TitleTrapCanvas_Init();
 
-        // 2. UI‚Ì¶¬Š®—¹‚ğ1ƒt?[?‚¾‚¯‘Ò‚Âi’´d—vj
+        // 2. UIã®ç”Ÿæˆå®Œäº†ã‚’1ãƒ•ãƒ¬ãƒ¼ãƒ ã ã‘å¾…ã¤ï¼ˆè¶…é‡è¦ï¼‰
         yield return null;
 
-        // 3. UI‚Ì?”õ‚ªŠ®‘S‚ÉI‚í‚Á‚Ä‚©‚çƒtƒH[ƒJƒX‚ğ?‚Ä‚é
+        // 3. UIã®æº–å‚™ãŒå®Œå…¨ã«çµ‚ã‚ã£ã¦ã‹ã‚‰ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’å½“ã¦ã‚‹
         if (player01TitlePlayerCanvas.chooseTrapButtons.Count > 0)
         {
             var button = player01TitlePlayerCanvas.chooseTrapButtons[0].gameObject.GetComponentInChildren<Button>();
-            _player01.inputData.multiplayerEventSystem.SetSelectedGameObject(null); // ˆê“x?ƒZƒbƒg
+            _player01.inputData.multiplayerEventSystem.SetSelectedGameObject(null); // ä¸€åº¦ãƒªã‚»ãƒƒãƒˆ
             _player01.inputData.multiplayerEventSystem.SetSelectedGameObject(button.gameObject);
         }
 
         if (player02TitlePlayerCanvas.chooseTrapButtons.Count > 0)
         {
             var button = player02TitlePlayerCanvas.chooseTrapButtons[0].gameObject.GetComponentInChildren<Button>();
-            _player02.inputData.multiplayerEventSystem.SetSelectedGameObject(null); // ˆê“x?ƒZƒbƒg
+            _player02.inputData.multiplayerEventSystem.SetSelectedGameObject(null); // ä¸€åº¦ãƒªã‚»ãƒƒãƒˆ
             _player02.inputData.multiplayerEventSystem.SetSelectedGameObject(button.gameObject);
         }
 
         // -----------------
 
-        // —¼ƒv?ƒC?[‚ª?”õŠ®—¹‚·‚é‚Ü‚Å‘Ò‚Â
+        // ä¸¡ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæº–å‚™å®Œäº†ã™ã‚‹ã¾ã§å¾…ã¤
         while (!IsEndChooseTrap())
         {
             yield return null;
         }
 
-        // Trap ‚ğ Backpack ‚É“o˜^
+        // Trap ã‚’ Backpack ã«ç™»éŒ²
         player01TitlePlayerCanvas.ChoseTrapToBackpack(out bool player01Done);
         player02TitlePlayerCanvas.ChoseTrapToBackpack(out bool player02Done);
 
-        // “o˜^¸”sƒ`ƒFƒbƒN
+        // ç™»éŒ²å¤±æ•—ãƒã‚§ãƒƒã‚¯
         if (!player01Done|| !player02Done)
         {
             Debug.LogWarning($"Player01 id chose Trap : {player01Done} , Player01 id chose Trap : {player02Done}");
         }
 
-        // ƒQ[?ƒV[?‚ÖˆÚ“®(Testing)
-        GameManager.Instance.ChangeScene(SceneState.InGame);
+        // ã‚²ãƒ¼?ã‚·ãƒ¼?ã¸ç§»å‹•(Testing)
+        GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.InGame));
     }
 
     /// <summary>
-    /// GameTitle ?Šú‰»
+    /// GameTitle ?æœŸåŒ–
     /// </summary>
     private void TitleUI_Init()
     {
-        // ƒv?ƒC?[ UI ?Šú‰»
+        // ãƒ—?ã‚¤?ãƒ¼ UI ?æœŸåŒ–
         PlayerCanvas_Init();
 
-        // ƒv?ƒC?[ UI ?Šú‰»
+        // ãƒ—?ã‚¤?ãƒ¼ UI ?æœŸåŒ–
         StartCoroutine(TitleProcess());
     }
 
