@@ -79,17 +79,14 @@ public class PlayerInputData : MonoBehaviour
         if (context.action.name == "Move")
         {
             moveInput = context.ReadValue<Vector2>();
-            Debug.Log($"OnMove: {moveInput}");
         }
         else if (context.action.name == "Jump")
         {
             isJumpPressed = context.ReadValueAsButton();
-            Debug.Log($"OnJump: {isJumpPressed}");
         }
         else if (context.action.name == "Punch")
         {
             isPunchPressed = context.ReadValueAsButton();
-            Debug.Log($"OnPunch: {isPunchPressed}");
         }
     }
 }

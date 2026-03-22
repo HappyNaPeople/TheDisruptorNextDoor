@@ -1,6 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -31,8 +30,7 @@ public class HunterConTrollerPad : MonoBehaviour
     /// Hunter が使用する Gamepad を設定する
     /// </summary>
     /// <param name="targetGamePad">使用する Gamepad</param>
-
-
+    
     #region Cost
     [Header("Cost")]
     /// <summary>
@@ -42,17 +40,22 @@ public class HunterConTrollerPad : MonoBehaviour
     /// </summary>
 
     // 最大コスト（チェックポイントに応じて増加）
-    private float maxCostCanUse => 20.0f + (5.0f * InGame.Instance.passCheckPoint);
+    private int maxCostCanUse => 20 + (5 * InGame.Instance.passCheckPoint);
     // 初期コスト
-    private const float startCostCanUse = 5.0f;
+    private const int startCostCanUse = 5;
     // 秒ごとのコスト回復量（チェックポイント依存）
-    private float costRecoveryPerSec => (1.0f + InGame.Instance.passCheckPoint) / 3;
+    private int costRecovery => 1 + InGame.Instance.passCheckPoint;
     // 現在のコスト値
-    private float nowCostCanUse = 0.0f;
+    private int nowCostCanUse = 0;
+
     // コスト回復用コルーチン
     private Coroutine costRecover;
+    private const float recoverCountDown = 3;
+    private float recoverTimer = 0;
+
+
     // ボタン状態更新用コルーチン
-    private Coroutine buttionActicve;
+    private Coroutine buttonActive;
     // コストゲージUI
     public Image costImage;
     // コスト表示テキスト
@@ -60,28 +63,6 @@ public class HunterConTrollerPad : MonoBehaviour
     // 現在コストを2桁表示（例：05）
     private string NowCost() => Convert.ToInt32(nowCostCanUse).ToString("D2");
 
-    /// <summary>
-    /// コスト回復処理の初期化
-    /// ・既存コルーチン停止
-    /// ・初期コスト設定
-    /// ・回復処理開始
-    /// </summary>
-    private void RecoveryInit()
-    {
-        // 既に回復処理が動いている場合は停止
-        if (costRecover != null) StopCoroutine(costRecover);
-        costRecover = null;
-        // ボタン更新処理が動いている場合は停止
-        if (buttionActicve != null) StopCoroutine(buttionActicve);
-        buttionActicve = null;
-
-        // 初期コスト設定
-        nowCostCanUse = startCostCanUse;
-        // 回復処理開始
-        costRecover = StartCoroutine(CostRecover());
-        // ボタン状態更新処理開始
-        buttionActicve = StartCoroutine(ButtionActicve());
-    }
 
     /// <summary>
     /// コストを時間経過で回復する処理
@@ -96,36 +77,66 @@ public class HunterConTrollerPad : MonoBehaviour
             if (nowCostCanUse >= maxCostCanUse)
             {
                 nowCostCanUse = maxCostCanUse;
-
                 // ゲージを満タンに
                 costImage.fillAmount = 1;
                 // テキスト更新
                 costText.text = NowCost();
+
+                recoverTimer = recoverCountDown;
+
+                yield return new WaitUntil(() => nowCostCanUse < maxCostCanUse);
             }
             else
             {
-                // コスト回復
-                nowCostCanUse += costRecoveryPerSec * Time.deltaTime;
+                recoverTimer += Time.deltaTime;
                 // ゲージ進行（一定時間で1周）
-                costImage.fillAmount += Time.deltaTime / 3;
+
+                costImage.fillAmount = recoverTimer / recoverCountDown;
+
                 // ゲージ1周ごとに数値更新
-                if (costImage.fillAmount >= 1)
+                if (recoverTimer >= recoverCountDown)
                 {
-                    costImage.fillAmount = 0;
+                    costImage.fillAmount -= recoverCountDown;
+                    nowCostCanUse += costRecovery;
+
+                    nowCostCanUse = nowCostCanUse > maxCostCanUse ? maxCostCanUse : nowCostCanUse;
                     costText.text = NowCost();
+                    ButtonActive();
+
+                    recoverTimer -= recoverCountDown;
                 }
+
+                yield return null;
             }
 
-            yield return null;
+
 
         }
 
     }
 
-    // 非アクティブ時の色
-    private const string nonActiveColor = "FFFFFF";
-    // アクティブ時の色
-    private const string activeColor = "707070";
+
+    // 非アクティブ時の色（白）
+    private const string activeColorCode = "#FFFFFF";
+    private Color activeColor;
+    // アクティブ時の色（グレー）
+    private const string nonActiveColorCode = "#707070";
+    private Color nonActiveColor;
+
+    /// <summary>
+    /// ボタンのアクティブ / 非アクティブ時に使用するカラーを初期化
+    /// ・HTMLカラーコードを Color に変換
+    /// ・一度だけ実行して再利用することでパフォーマンスを向
+    private void ColorInit()
+    {
+        // アクティブ時のカラーを取得
+        ColorUtility.TryParseHtmlString(activeColorCode, out Color active);
+        // 非アクティブ時のカラーを取得
+        ColorUtility.TryParseHtmlString(nonActiveColorCode, out Color nonActive);
+
+        activeColor = active;
+        nonActiveColor = nonActive;
+    }
 
     /// <summary>
     /// ボタンの有効 / 無効状態を切り替える
@@ -134,18 +145,14 @@ public class HunterConTrollerPad : MonoBehaviour
     private void Action(TrapButtonUI targetButton, bool isActive)
     {
         // ボタンの操作可否
-        targetButton.button.enabled = isActive;
+        targetButton.button.interactable = isActive;
 
         // 状態に応じた色を設定
-        string targetColor = isActive ? activeColor : nonActiveColor;
-
-        // HTMLカラー → Color変換
-        ColorUtility.TryParseHtmlString(targetColor, out Color fromHex);
+        Color targetColor = isActive ? activeColor : nonActiveColor;
 
         // UIに反映
-        targetButton.button.image.color = fromHex;
-        targetButton.icon.color = fromHex;
-
+        targetButton.button.image.color = targetColor;
+        targetButton.icon.color = targetColor;
 
     }
 
@@ -154,28 +161,54 @@ public class HunterConTrollerPad : MonoBehaviour
     /// ・コストに応じて使用可能かを判定
     /// ・使用不可の場合はボタンを無効化
     /// </summary>
-    private IEnumerator ButtionActicve()
+    private void ButtonActive()
     {
-        while (true)
+        foreach (TrapButtonUI targetCost in trapButtonList)
         {
-            foreach(TrapButtonUI targetCost in trapButtonList)
-            {
-                // 非表示オブジェクトはスキップ
-                if (targetCost.gameObject.activeSelf == false) continue;
+            // 非表示オブジェクトはスキップ
+            if (!targetCost.gameObject.activeSelf) continue;
 
-                // コスト不足なら無効化
-                if (TrapCost(targetCost.trapName) < nowCostCanUse) Action(targetCost, false);
-                else Action(targetCost, true);
-            }
-
-            yield return null;
+            Action(targetCost, nowCostCanUse >= TrapCost(targetCost.trapName));
         }
+
     }
+
+    /// <summary>
+    /// コスト回復処理の初期化
+    /// ・既存の回復コルーチンを停止
+    /// ・初期コストとUIを設定
+    /// ・回復タイマーをリセット
+    /// ・回復処理を再開
+    /// </summary>
+    private void RecoveryInit()
+    {
+        // 既に回復処理が動いている場合は停止
+        if (costRecover != null)
+        {
+            StopCoroutine(costRecover);
+            costRecover = null;
+        }
+
+        // 初期コスト設定
+        nowCostCanUse = startCostCanUse;
+        // コスト表示テキスト更新
+        costText.text = NowCost();
+        // 回復タイマーをリセット（最初からカウント開始）
+        recoverTimer = 0;
+        // ボタン状態更新（初期コストに応じて有効/無効を切り替え）
+        ButtonActive();
+
+        // 回復処理開始
+        costRecover = StartCoroutine(CostRecover());
+
+
+    }
+
 
     /// <summary>
     /// トラップが使用可能か判定
     /// </summary>
-    private bool CanUseTrap(TrapName trap) => (Convert.ToInt32(nowCostCanUse) - TrapCost(trap)) > 0;
+    private bool CanUseTrap(TrapName trap) => (nowCostCanUse - TrapCost(trap)) >= 0;
     
     /// <summary>
     /// トラップ使用時のコスト消費処理
@@ -184,8 +217,11 @@ public class HunterConTrollerPad : MonoBehaviour
     {
         // コスト減少
         nowCostCanUse -= TrapCost(trap);
+
         // UI更新
         costText.text = NowCost();
+
+        ButtonActive();
     }
 
 
@@ -473,7 +509,6 @@ public class HunterConTrollerPad : MonoBehaviour
         RecoveryInit();
     }
 
-
     /// <summary>
     /// Singleton 初期化
     /// </summary>
@@ -481,20 +516,16 @@ public class HunterConTrollerPad : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(this);
+
+        ColorInit();
     }
 
-
     public bool test = false;
+
     private void Update()
     {
         if (test)
         {
-            if (CanUseTrap(TrapName.FallRock))
-            {
-                UseCost(TrapName.FallRock);
-            }
-
-
             test = false;
         }
 
