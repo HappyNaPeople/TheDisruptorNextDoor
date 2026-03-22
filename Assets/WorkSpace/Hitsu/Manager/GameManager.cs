@@ -510,7 +510,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private IEnumerator SelectButtonWithDelay(MultiplayerEventSystem eventSystem, GameObject firstButton)
+    public static IEnumerator SelectButtonWithDelay(MultiplayerEventSystem eventSystem, GameObject firstButton)
     {
         // 1フレームだけ待機して、EventSystemやUIの準備が完了するのを待つ
         yield return null;

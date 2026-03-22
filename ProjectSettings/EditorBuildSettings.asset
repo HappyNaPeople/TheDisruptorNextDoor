@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/GameTitle.unity
     guid: 5ca44b1410eb6e44c88645f600b44c19
   - enabled: 1
+    path: Assets/WorkSpace/Shota/Scenes/InGame.unity
+    guid: 2d824c8137296ba4a9af546aadceb89e
+  - enabled: 0
     path: Assets/Scenes/InGame.unity
     guid: 561fb6730d0db9048891f2fe80e482c0
   m_configObjects:
