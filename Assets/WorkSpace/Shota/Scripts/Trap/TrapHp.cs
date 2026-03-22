@@ -24,6 +24,14 @@ public class TrapHp : MonoBehaviour
     public void Break()
     {
         broken = true;
-        Destroy(gameObject);
+        Trap trap = GetComponent<Trap>();
+        if (trap != null)
+        {
+            trap.BrakeTheTrap();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

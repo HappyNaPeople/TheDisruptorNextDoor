@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UIElements;
 
@@ -13,21 +13,6 @@ public class FallRock : TiggerTrap
     private const int fallCoolDown = 3;
     // 落下速度　
     public int fallSpeed = 1;
-    private enum Directions { Down, Up };
-    private Directions directions;
-    private Vector3 Direction(Directions direction)
-    {
-        switch (direction)
-        {
-            case Directions.Down: return Vector3.down;
-            case Directions.Up: return Vector3.up;
-
-        }
-        return Vector3.zero;
-    }
-    private float setUpVector3Y;
-    private bool IsSetUpVector3() => (Mathf.Abs(transform.position.y - setUpVector3Y) < 0.1f);
-
     /// <summary>
     /// Trap 初期化
     /// </summary>
@@ -46,38 +31,16 @@ public class FallRock : TiggerTrap
         StartCoroutine(TrapRule());
     }
 
-
-    private bool isFallDown = false;
+    // 落下完了フラグ
+    private bool fallDone = false;
     /// <summary>
     /// Trap 発動条件
     /// </summary>
-    public override bool Condition()=> directions == Directions.Down ? isFallDown : IsSetUpVector3();
-
-    private IEnumerator Move()
-    {
-        Vector3 direction = Direction(directions);
-        if (directions == Directions.Down) isFallDown = false;
-        yield return new WaitForSeconds(fallCoolDown);
-
-        while (!Condition())
-        {
-            Vector2Int nextPoint = new Vector2Int((int)(transform.position.x + direction.x), (int)(transform.position.y + direction.y));
-            if (!StageGridManager.Instance.CanPlaceTrapDataDriven(nextPoint)) break;
-
-            while(Mathf.Abs(transform.position.y - nextPoint.y) > 0.1f)
-            {
-                transform.position += direction * fallSpeed * Time.deltaTime;
-                yield return null;
-            }
-            transform.position = new Vector3(nextPoint.x, nextPoint.y,transform.position.z);
-
-        }
-
-        directions = directions == Directions.Down? Directions.Up : Directions.Down;
-
-    }
-
-
+    public override bool Condition() => fallDone;
+    // 上昇速度
+    public float riseSpeed = 3f;
+    // 着地後に留まる時間
+    public float stayBottomTime = 1f;
 
     /// <summary>
     /// Trap の動作ルール
@@ -85,35 +48,24 @@ public class FallRock : TiggerTrap
     public override IEnumerator TrapRule()
     {
         gameObject.layer = UseLayerName.trapLayer;
-        setUpVector3Y = this.transform.position.y;
-        directions = Directions.Down;
         rb.simulated = true;
 
         while (true)
         {
-            yield return Move();
+            fallDone = false;
+
+            // 落下まで待機
+            yield return new WaitForSeconds(fallCoolDown);
+
+            // 落下処理
+            yield return StartCoroutine(GridFallCoroutine(fallSpeed, () => fallDone = true));
+
+            // 着地後の待機
+            yield return new WaitForSeconds(stayBottomTime);
+
+            // 上昇処理 (最初の設置位置 originGridPos へ戻る。上に障害物があれば途中で止まる)
+            bool riseDone = false;
+            yield return StartCoroutine(GridRiseCoroutine(originGridPos, riseSpeed, () => riseDone = true));
         }
-
-
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!isSetup) return;
-
-        if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
-        {
-            // Runner に衝突
-        }
-        // 地面または Trap に衝突
-        else if (IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer))
-        {
-
-            //rb.bodyType = RigidbodyType2D.Static;
-        }
-
-    }
-
-
 }
-

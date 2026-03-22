@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -84,12 +84,7 @@ public class Boom : TiggerTrap
         gameObject.layer = UseLayerName.trapLayer;
         rb.simulated = true;
         // 落下処理
-        while (!Condition())
-        {
-            transform.position += Vector3.down * fallSpeed * Time.deltaTime;
-            yield return null;
-
-        }
+        yield return StartCoroutine(GridFallCoroutine(fallSpeed, () => fallDone = true));
         // 爆発前演出
         yield return StartCoroutine(Shaking());
         // 爆発
@@ -130,8 +125,8 @@ public class Boom : TiggerTrap
                 // Runner に衝突
 
             }
-            // 地面に接触 → 落下完了
-            else if (IsGameObjectLayer(collision, UseLayerName.platformLayer)) fallDone = true;
+            //  GridFallCoroutine で着地判定を行っています
+            // else if (IsGameObjectLayer(collision, UseLayerName.platformLayer)) fallDone = true;
         }
     }
 
