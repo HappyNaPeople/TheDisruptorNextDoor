@@ -38,6 +38,7 @@ public abstract class InstallationTrap : Trap
         rb.bodyType = RigidbodyType2D.Static;
         // Rigidbody を削除
         Destroy(rb);
+        gameObject.layer = UseLayerName.trapLayer;
         yield return null;
     }
 

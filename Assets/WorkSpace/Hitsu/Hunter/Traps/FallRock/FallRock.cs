@@ -83,7 +83,6 @@ public class FallRock : TiggerTrap
     //        // 地面または Trap に衝突
     //        else if (IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer))
     //        {
-
     //            fallDone = true;
     //            rb.bodyType = RigidbodyType2D.Static;
     //        }

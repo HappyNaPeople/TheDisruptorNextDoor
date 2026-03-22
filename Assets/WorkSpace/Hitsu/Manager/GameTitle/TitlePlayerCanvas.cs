@@ -61,7 +61,7 @@ public class TitlePlayerCanvas : MonoBehaviour
     /// <summary>
     /// 現在使用可能なコスト
     /// </summary>
-    private int nowCost = Backpack.maxCost;
+    private int nowCost = Backpack.maxTrapCount;
 
     /// <summary>
     /// Trap 選択制限?間
@@ -105,7 +105,7 @@ public class TitlePlayerCanvas : MonoBehaviour
         // Backpack に追加
         foreach (ChoseTrapData trap in playerTrap)
         {
-            targetPlayer.hunter.backpack.AddToBackpack(trap.trapName, trap.trapCount);
+            targetPlayer.hunter.backpack.AddToBackpack(trap.trapName);
         }
 
         // 追加完了判定

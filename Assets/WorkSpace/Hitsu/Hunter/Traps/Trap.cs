@@ -183,4 +183,18 @@ public abstract class Trap : MonoBehaviour
 
     public virtual void BrakeTheTrap() => InGame.Instance.hunterConTrollerPad.DestroyTrap(this);
 
+    public bool debug = false;
+    private void Update()
+    {
+        if (debug)
+        {
+            Init();
+            SetUp();
+            debug = false;
+        }
+
+
+    }
+
+
 }

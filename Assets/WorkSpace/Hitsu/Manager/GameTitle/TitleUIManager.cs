@@ -119,7 +119,6 @@ public class TitleUIManager : MonoBehaviour
             title.gameObject.SetActive(false);
         }
 
-        // 先行をランダムに決定
         foreach (var turn in TurnSelect)
         {
             turn.gameObject.SetActive(true);
@@ -141,8 +140,6 @@ public class TitleUIManager : MonoBehaviour
         {
             turn.gameObject.SetActive(false);
         }
-
-        // トラップ選択
         foreach (var trap in TrapSelect)
         {
             trap.gameObject.SetActive(true);
