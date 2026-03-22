@@ -495,10 +495,10 @@ public class GameManager : MonoBehaviour
         var runnerPlayer = player01.job == Player.Job.Runner ? player01 : player02;
         var hunterPlayer = player01.job == Player.Job.Hunter ? player01 : player02;
 
-        runnerPlayer.inputData.playerInput.defaultActionMap = "Player";
-        hunterPlayer.inputData.playerInput.defaultActionMap = "UI";
-        runnerPlayer.inputData.playerInput.SwitchCurrentActionMap("Player");
-        hunterPlayer.inputData.playerInput.SwitchCurrentActionMap("UI");
+        runnerPlayer.inputData.playerInput.defaultActionMap = "Runner";
+        hunterPlayer.inputData.playerInput.defaultActionMap = "Hunter";
+        runnerPlayer.inputData.playerInput.SwitchCurrentActionMap("Runner");
+        hunterPlayer.inputData.playerInput.SwitchCurrentActionMap("Hunter");
 
         runnerPlayer.inputData.playerInput.camera = InGame.Instance.runnerCamera;
         hunterPlayer.inputData.playerInput.camera = InGame.Instance.hunterCamera;
@@ -510,7 +510,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private IEnumerator SelectButtonWithDelay(MultiplayerEventSystem eventSystem, GameObject firstButton)
+    public static IEnumerator SelectButtonWithDelay(MultiplayerEventSystem eventSystem, GameObject firstButton)
     {
         // 1フレームだけ待機して、EventSystemやUIの準備が完了するのを待つ
         yield return null;
