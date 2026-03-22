@@ -16,6 +16,8 @@ using UnityEngine.UI;
 /// </summary>
 public class TrapButtonUI : MonoBehaviour
 {
+
+    public TrapName trapName;
     /// <summary>
     /// Trap ‚ð‘I‘ð‚·‚éƒ{ƒ^?
     /// </summary>
