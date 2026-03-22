@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// トゲトラップ。
@@ -23,8 +23,22 @@ public class Spikes : InstallationTrap
     public override void SetUp()
     {
         base.SetUp();
-        // 落下して設置
-        StartCoroutine(FallAndSetUp());
+        // Spikes は壁/床にくっついて落下しないので FallAndSetUp は呼ばず、即座にLayerと物理設定を確定する
+        gameObject.layer = UseLayerName.trapLayer;
+        if (gameObject.transform.childCount > 0)
+        {
+            for (int i = 0; i < gameObject.transform.childCount; i++)
+            {
+                gameObject.transform.GetChild(i).gameObject.layer = UseLayerName.trapLayer;
+            }
+        }
+        if (rb != null)
+        {
+            rb.simulated = true;
+            rb.bodyType = RigidbodyType2D.Static;
+            Destroy(rb);
+        }
+        isFallDone = true;
     }
 
     /// <summary>

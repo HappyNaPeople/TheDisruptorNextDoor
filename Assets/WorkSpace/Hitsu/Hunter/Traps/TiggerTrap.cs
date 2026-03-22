@@ -12,6 +12,7 @@ using System.Collections;
 /// </summary>
 public abstract class TiggerTrap : Trap
 {
+
     /// <summary>
     /// Trap の発動条件を判定する
     /// </summary>

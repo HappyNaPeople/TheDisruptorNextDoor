@@ -129,9 +129,45 @@ public class StageGridManager : MonoBehaviour
     public void RegisterTrap(Vector3 worldPos)
     {
         Vector2Int gridCoord = WorldToGrid(worldPos);
+        RegisterTrap(gridCoord);
+    }
+
+    public void RegisterTrap(Vector2Int gridCoord)
+    {
         if (gridMap.ContainsKey(gridCoord))
         {
             gridMap[gridCoord] = GridState.Trap;
+        }
+    }
+
+    public void MoveTrap(Vector2Int fromGrid, Vector2Int toGrid)
+    {
+        if (fromGrid == toGrid) return;
+        
+        if (gridMap.ContainsKey(fromGrid))
+        {
+            if (gridMap[fromGrid] == GridState.Trap)
+            {
+                gridMap[fromGrid] = GridState.Empty;
+            }
+        }
+        
+        if (gridMap.ContainsKey(toGrid))
+        {
+            // Only occupy the destination if it's currently Empty
+            // (Don't overwrite Platform or NoPutArea with a moving trap)
+            if (gridMap[toGrid] == GridState.Empty)
+            {
+                gridMap[toGrid] = GridState.Trap;
+            }
+        }
+    }
+
+    public void ChangeGridState(Vector2Int gridCoord, GridState newState)
+    {
+        if (gridMap.ContainsKey(gridCoord))
+        {
+            gridMap[gridCoord] = newState;
         }
     }
 

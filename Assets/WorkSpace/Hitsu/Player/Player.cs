@@ -16,8 +16,9 @@ public class Player : MonoBehaviour
     public Hunter hunter = new Hunter();
     // 表示するディスプレイ番号
     public DisPlayNumber displayCode = DisPlayNumber.None;
-    // 使用するコントローラー番号
+
     public ControllerNumber controllerCode = ControllerNumber.None;
+    public PlayerInputData inputData;
 
     /// <summary>
     /// プレイヤーの役職
@@ -35,7 +36,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// プレイヤーの役職を変更する
     /// </summary>
-    public void SetJop(Job targetJop) => job = targetJop;
+    public void SetJob(Job targetJop) => job = targetJop;
     /// <summary>
     /// プレイヤーの初期化
     /// </summary>
