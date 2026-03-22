@@ -11,6 +11,7 @@ public enum TrapName
     JumpPad
 
 }
+
 /// <summary>
 /// すべての Trap の基底クラス。
 /// 
@@ -24,8 +25,6 @@ public enum TrapName
 /// </summary>
 public abstract class Trap : MonoBehaviour
 {
-
-
     // Trap の種類
     public TrapName trapName;
     // Trap のコスト

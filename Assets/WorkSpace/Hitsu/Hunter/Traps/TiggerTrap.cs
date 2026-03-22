@@ -13,6 +13,13 @@ using System.Collections;
 public abstract class TiggerTrap : Trap
 {
     /// <summary>
+    /// 衝突した GameObject が指定した Layer かどうかを判定する
+    /// </summary>
+    /// <param name="collision">衝突した Collision2D</param>
+    /// <param name="targetLayer">判定する Layer</param>
+    /// <returns>同じ Layer の場合 true</returns>
+    public bool IsGameObjectLayer(Collider2D collision, int targetLayer) => collision.gameObject.layer == targetLayer;
+    /// <summary>
     /// Trap の発動条件を判定する
     /// </summary>
     /// <returns>発動可能な場合 true</returns>
