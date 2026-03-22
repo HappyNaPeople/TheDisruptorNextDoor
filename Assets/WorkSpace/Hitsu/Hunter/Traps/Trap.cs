@@ -9,8 +9,8 @@ public enum TrapName
     Spikes,         // トゲトラップ
     FallRock,       // 落石トラップ
     Boom,           // 爆発トラップ
-    JumpPad
-
+    JumpPad,
+    ChaseEnemy
 }
 /// <summary>
 /// すべての Trap の基底クラス。
