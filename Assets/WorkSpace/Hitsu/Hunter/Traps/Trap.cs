@@ -10,7 +10,8 @@ public enum TrapName
     FallRock,       // 落石トラップ
     Boom,           // 爆発トラップ
     JumpPad,
-    ChaseEnemy
+    ChaseEnemy,
+    BlackHole
 }
 /// <summary>
 /// すべての Trap の基底クラス。

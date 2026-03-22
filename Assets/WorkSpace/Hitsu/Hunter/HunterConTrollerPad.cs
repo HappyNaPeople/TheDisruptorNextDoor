@@ -319,8 +319,23 @@ public class HunterConTrollerPad : MonoBehaviour
             yield break;
         }
 
+        bool isBlackHole = (trapName == TrapName.BlackHole);
+        Vector3 blackHolePos = Vector3.zero;
+        if (isBlackHole)
+        {
+            float playerX = 0f;
+            if (InGame.Instance != null && InGame.Instance.runner != null)
+                playerX = InGame.Instance.runner.transform.position.x;
+            
+            float stageY = 0f;
+            if (StageGridManager.Instance != null && StageGridManager.Instance.scanAreaLeftTop != null && StageGridManager.Instance.scanAreaRightDown != null)
+                stageY = (StageGridManager.Instance.scanAreaLeftTop.position.y + StageGridManager.Instance.scanAreaRightDown.position.y) / 2f;
+
+            blackHolePos = new Vector3(playerX - 20f, stageY, 0f);
+        }
+
         // Trap を生成
-        GameObject targetTrap = Instantiate(TarpObject(trapName), mouseWorldPos, TarpObject(trapName).transform.rotation);
+        GameObject targetTrap = Instantiate(TarpObject(trapName), isBlackHole ? blackHolePos : mouseWorldPos, TarpObject(trapName).transform.rotation);
         // Runner に見えない Layer に変更
         targetTrap.layer = UseLayerName.runnerCantSeeLayer;
         if (targetTrap.transform.childCount > 0)
@@ -342,10 +357,10 @@ public class HunterConTrollerPad : MonoBehaviour
         // クリックされるまでマウス追従
         while (!GameManager.inputDevice.mouse.leftButton.isPressed)
         {
-            Vector3 mPos = mouseWorldPos;
+            Vector3 mPos = isBlackHole ? blackHolePos : mouseWorldPos;
             targetTrap.transform.position = mPos;
             
-            bool canPlacePreview = IsInArea(mPos) && !IsOnMap();
+            bool canPlacePreview = isBlackHole || (IsInArea(mPos) && !IsOnMap());
             
             if (trapName == TrapName.Spikes)
             {
@@ -372,7 +387,7 @@ public class HunterConTrollerPad : MonoBehaviour
             renderers[i].color = originalColors[i];
         }
 
-        bool canPlace = IsInArea(targetTrap.transform.position) && !IsOnMap();
+        bool canPlace = isBlackHole || (IsInArea(targetTrap.transform.position) && !IsOnMap());
         if (trapName == TrapName.Spikes)
         {
             canPlace = canPlace && CheckSpikePlacement(targetTrap.transform.position, out _);
