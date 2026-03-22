@@ -10,13 +10,7 @@ using System.Collections;
 /// </summary>
 public abstract class InstallationTrap : Trap
 {
-    /// <summary>
-    /// 衝突した GameObject が指定した Layer かどうかを判定する
-    /// </summary>
-    /// <param name="collision">衝突した Collision2D</param>
-    /// <param name="targetLayer">判定する Layer</param>
-    /// <returns>同じ Layer の場合 true</returns>
-    public bool IsGameObjectLayer(Collider2D collision, int targetLayer) => collision.gameObject.layer == targetLayer;
+
     // 落下速度
     private const int fallSpeed = 5;
     // 落下完了フラグ
