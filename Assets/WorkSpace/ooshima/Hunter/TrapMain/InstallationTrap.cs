@@ -8,7 +8,7 @@ using System.Collections;
 /// Trap を空中から落下させ、
 /// 地面または他の Trap に接触したら設置を完了する。
 /// </summary>
-public abstract class InstallationTrap : Trap
+public abstract class InstallationTrap : GridMovingTrap
 {
 
     // 落下速度

@@ -7,7 +7,7 @@ using System.Collections;
 /// 地面や壁、他のトラップに当たると進行方向を反転する。
 /// 移動中に足元の地面がなくなると再度落下する。
 /// </summary>
-public class ShellTrap : Trap
+public class ShellTrap : GridMovingTrap
 {
     [Header("移動設定")]
     public float fallSpeed = 8f;

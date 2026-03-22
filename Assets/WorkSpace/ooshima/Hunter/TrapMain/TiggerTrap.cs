@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -10,7 +10,7 @@ using System.Collections;
 /// 派生クラスでは Condition() で発動条件を定義し、
 /// TrapRule() で実際の Trap 挙動を実装する。
 /// </summary>
-public abstract class TiggerTrap : Trap
+public abstract class TiggerTrap : GridMovingTrap
 {
 
     /// <summary>
