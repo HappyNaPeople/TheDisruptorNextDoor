@@ -35,45 +35,159 @@ public class HunterConTrollerPad : MonoBehaviour
 
     #region Cost
     [Header("Cost")]
+    /// <summary>
+    /// ・時間経過でコスト回復
+    /// ・最大コストはチェックポイント数に応じて増加
+    /// ・UI（ゲージ・テキスト）を更新
+    /// </summary>
+
+    // 最大コスト（チェックポイントに応じて増加）
     private float maxCostCanUse => 20.0f + (5.0f * InGame.Instance.passCheckPoint);
+    // 初期コスト
     private const float startCostCanUse = 5.0f;
-
+    // 秒ごとのコスト回復量（チェックポイント依存）
     private float costRecoveryPerSec => (1.0f + InGame.Instance.passCheckPoint) / 3;
+    // 現在のコスト値
     private float nowCostCanUse = 0.0f;
-
+    // コスト回復用コルーチン
     private Coroutine costRecover;
-
+    // ボタン状態更新用コルーチン
+    private Coroutine buttionActicve;
+    // コストゲージUI
     public Image costImage;
-    private float FillAmount() => nowCostCanUse / maxCostCanUse;
-
+    // コスト表示テキスト
     public TMP_Text costText;
+    // 現在コストを2桁表示（例：05）
     private string NowCost() => Convert.ToInt32(nowCostCanUse).ToString("D2");
 
+    /// <summary>
+    /// コスト回復処理の初期化
+    /// ・既存コルーチン停止
+    /// ・初期コスト設定
+    /// ・回復処理開始
+    /// </summary>
     private void RecoveryInit()
     {
+        // 既に回復処理が動いている場合は停止
         if (costRecover != null) StopCoroutine(costRecover);
+        costRecover = null;
+        // ボタン更新処理が動いている場合は停止
+        if (buttionActicve != null) StopCoroutine(buttionActicve);
+        buttionActicve = null;
+
+        // 初期コスト設定
         nowCostCanUse = startCostCanUse;
+        // 回復処理開始
         costRecover = StartCoroutine(CostRecover());
+        // ボタン状態更新処理開始
+        buttionActicve = StartCoroutine(ButtionActicve());
     }
 
+    /// <summary>
+    /// コストを時間経過で回復する処理
+    /// ・最大値に到達した場合は固定
+    /// ・UI（ゲージ・テキスト）を更新
+    /// </summary>
     private IEnumerator CostRecover()
     {
         while (true)
         {
-            if (nowCostCanUse >= maxCostCanUse) nowCostCanUse = maxCostCanUse;
-            else if (nowCostCanUse < 0) nowCostCanUse = 0;
-            else nowCostCanUse += costRecoveryPerSec * Time.deltaTime;
+            // 最大値に到達した場合
+            if (nowCostCanUse >= maxCostCanUse)
+            {
+                nowCostCanUse = maxCostCanUse;
 
-            costImage.fillAmount = FillAmount();
-            costText.text = NowCost();
+                // ゲージを満タンに
+                costImage.fillAmount = 1;
+                // テキスト更新
+                costText.text = NowCost();
+            }
+            else
+            {
+                // コスト回復
+                nowCostCanUse += costRecoveryPerSec * Time.deltaTime;
+                // ゲージ進行（一定時間で1周）
+                costImage.fillAmount += Time.deltaTime / 3;
+                // ゲージ1周ごとに数値更新
+                if (costImage.fillAmount >= 1)
+                {
+                    costImage.fillAmount = 0;
+                    costText.text = NowCost();
+                }
+            }
+
             yield return null;
 
         }
 
     }
 
+    // 非アクティブ時の色
+    private const string nonActiveColor = "FFFFFF";
+    // アクティブ時の色
+    private const string activeColor = "707070";
+
+    /// <summary>
+    /// ボタンの有効 / 無効状態を切り替える
+    /// ・色と操作可否を変更
+    /// </summary>
+    private void Action(TrapButtonUI targetButton, bool isActive)
+    {
+        // ボタンの操作可否
+        targetButton.button.enabled = isActive;
+
+        // 状態に応じた色を設定
+        string targetColor = isActive ? activeColor : nonActiveColor;
+
+        // HTMLカラー → Color変換
+        ColorUtility.TryParseHtmlString(targetColor, out Color fromHex);
+
+        // UIに反映
+        targetButton.button.image.color = fromHex;
+        targetButton.icon.color = fromHex;
+
+
+    }
+
+    /// <summary>
+    /// 各トラップボタンの状態更新
+    /// ・コストに応じて使用可能かを判定
+    /// ・使用不可の場合はボタンを無効化
+    /// </summary>
+    private IEnumerator ButtionActicve()
+    {
+        while (true)
+        {
+            foreach(TrapButtonUI targetCost in trapButtonList)
+            {
+                // 非表示オブジェクトはスキップ
+                if (targetCost.gameObject.activeSelf == false) continue;
+
+                // コスト不足なら無効化
+                if (TrapCost(targetCost.trapName) < nowCostCanUse) Action(targetCost, false);
+                else Action(targetCost, true);
+            }
+
+            yield return null;
+        }
+    }
+
+    /// <summary>
+    /// トラップが使用可能か判定
+    /// </summary>
     private bool CanUseTrap(TrapName trap) => (Convert.ToInt32(nowCostCanUse) - TrapCost(trap)) > 0;
-    private void UseCost(TrapName trap) => nowCostCanUse -= TrapCost(trap);
+    
+    /// <summary>
+    /// トラップ使用時のコスト消費処理
+    /// </summary>
+    private void UseCost(TrapName trap)
+    {
+        // コスト減少
+        nowCostCanUse -= TrapCost(trap);
+        // UI更新
+        costText.text = NowCost();
+    }
+
 
     #endregion
 
@@ -159,6 +273,7 @@ public class HunterConTrollerPad : MonoBehaviour
             {
                 TrapName trap = useTrapName[index];
 
+                trapButtonList[index].trapName = trap;
                 trapButtonList[index].button.onClick.AddListener(() => CreateTrap(trap));
                 trapButtonList[index].icon.sprite = TrapSprite(trap);
                 trapButtonList[index].cost.text = TrapCost(trap).ToString();
