@@ -12,7 +12,8 @@ public enum TrapName
     JumpPad,
     ChaseEnemy,
     BlackHole,
-    Shell
+    Shell,
+    FireBar
 }
 /// <summary>
 /// すべての Trap の基底クラス。
