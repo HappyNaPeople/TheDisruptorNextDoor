@@ -34,6 +34,8 @@ public class InGame : MonoBehaviour
     public Player _player01 => GameManager.Instance.player01;
     public Player _player02 => GameManager.Instance.player02;
 
+    public int passCheckPoint = 1;
+
     /// <summary>
     /// タイマー開始値
     /// </summary>
@@ -167,7 +169,7 @@ public class InGame : MonoBehaviour
     }
 
     // デバッグ用
-    public bool turnSwitch, nextTurn, resetRound;
+    public bool turnSwitch;
     private void Update()
     {
         if (turnSwitch)
@@ -175,16 +177,7 @@ public class InGame : MonoBehaviour
             TurnSwitch();
             turnSwitch = false;
         }
-        if (nextTurn)
-        {
-            hunterConTrollerPad.NextTurn();
-            nextTurn = false;
-        }
-        if (resetRound)
-        {
-            hunterConTrollerPad.ResetRound();
-            resetRound = false;
-        }
+
 
     }
 

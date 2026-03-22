@@ -45,25 +45,35 @@ public class FallRock : TiggerTrap
         base.SetUp();
         StartCoroutine(TrapRule());
     }
-    // 落下完了フラグ
-    public bool actionDone = false;
+
+
+    private bool isFallDown = false;
     /// <summary>
     /// Trap 発動条件
     /// </summary>
-    public override bool Condition() => directions == Directions.Down ? actionDone : IsSetUpVector3();
+    public override bool Condition()=> directions == Directions.Down ? isFallDown : IsSetUpVector3();
 
     private IEnumerator Move()
     {
         Vector3 direction = Direction(directions);
+        if (directions == Directions.Down) isFallDown = false;
         yield return new WaitForSeconds(fallCoolDown);
+
         while (!Condition())
         {
-            transform.position += direction * fallSpeed * Time.deltaTime;
-            yield return null;
+            Vector2Int nextPoint = new Vector2Int((int)(transform.position.x + direction.x), (int)(transform.position.y + direction.y));
+            if (!StageGridManager.Instance.CanPlaceTrapDataDriven(nextPoint)) break;
+
+            while(Mathf.Abs(transform.position.y - nextPoint.y) > 0.1f)
+            {
+                transform.position += direction * fallSpeed * Time.deltaTime;
+                yield return null;
+            }
+            transform.position = new Vector3(nextPoint.x, nextPoint.y,transform.position.z);
 
         }
+
         directions = directions == Directions.Down? Directions.Up : Directions.Down;
-        if(directions == Directions.Down) actionDone = false;
 
     }
 
@@ -84,43 +94,24 @@ public class FallRock : TiggerTrap
             yield return Move();
         }
 
-        //// 落下まで待機
-        //yield return new WaitForSeconds(fallCoolDown);
 
-        //// 落下処理
-        //while (!Condition())
-        //{
-        //    transform.position += Vector3.down * fallSpeed * Time.deltaTime;
-        //    yield return null;
-
-        //}
-
-        //// マップ扱いに変更
-        //gameObject.layer = UseLayerName.platformLayer;
-        //// Rigidbody 削除
-        //Destroy(rb);
-        //// このスクリプトを停止
-        //this.enabled = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isSetup) return;
 
-        //if (!Condition())
-        //{
-            if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
-            {
-                // Runner に衝突
-            }
-            // 地面または Trap に衝突
-            else if (IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer))
-            {
+        if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
+        {
+            // Runner に衝突
+        }
+        // 地面または Trap に衝突
+        else if (IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer))
+        {
 
-                actionDone = true;
-                //rb.bodyType = RigidbodyType2D.Static;
-            }
-        //}
+            //rb.bodyType = RigidbodyType2D.Static;
+        }
+
     }
 
 

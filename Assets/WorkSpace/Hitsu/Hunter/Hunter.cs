@@ -2,17 +2,6 @@
 using UnityEngine;
 
 
-public class TrapCanUse
-{
-    public TrapName trap {  get; private set; }
-    public int trapCount { get; private set; }
-
-    public TrapCanUse(TrapName trapName, int trapCount)
-    {
-        this.trap = trapName;
-        this.trapCount = trapCount;
-    }
-}
 
 /// <summary>
 /// Hunter が使用するバックパック。
@@ -21,16 +10,17 @@ public class TrapCanUse
 public class Backpack
 {
     // バックパックの最大コスト
-    public const int maxCost = 30;
-    // 現在使用しているコスト
-    public int nowCost = 0;
+    public const int maxTrapCount = 30;
     // 所持している Trap 一覧
-    public List<TrapCanUse> trapsPack = new List<TrapCanUse>();
+    public List<TrapName> trapsPack = new List<TrapName>();
+    // 現在使用しているコスト
+    public int nowTrapCount => trapsPack.Count;
+
     /// <summary>
     /// Trap をバックパックに追加する
     /// 最大コストを超える場合は追加しない
     /// </summary>
-    public void AddToBackpack(TrapName targetTrapName, int count) => trapsPack.Add(new TrapCanUse(targetTrapName, count));
+    public void AddToBackpack(TrapName targetTrapName) => trapsPack.Add(targetTrapName);
 
 }
 

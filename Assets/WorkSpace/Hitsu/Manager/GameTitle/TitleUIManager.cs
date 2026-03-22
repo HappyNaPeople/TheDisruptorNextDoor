@@ -118,7 +118,7 @@ public class TitleUIManager : MonoBehaviour
             title.gameObject.SetActive(false);
         }
 
-        // 先行をランダムに決定
+        // 先行を??ダ?に?定
         foreach (var turn in TurnSelect)
         {
             turn.gameObject.SetActive(true);
@@ -127,8 +127,8 @@ public class TitleUIManager : MonoBehaviour
         player02TitlePlayerCanvas.ChangeState(TitlePlayerCanvas.TitlePlayerState.SelectingSide);
 
         var rnd = Random.Range(0, 2);
-        player01TitlePlayerCanvas.sideTmp.text = rnd == 0 ? $"あなたは先行（ゴールを目指す）" : $"あなたは後攻（妨害）";
-        player02TitlePlayerCanvas.sideTmp.text = rnd == 1 ? $"あなたは先行（ゴールを目指す）" : $"あなたは後攻（妨害）";
+        player01TitlePlayerCanvas.sideTmp.text = rnd == 0 ? $"?なたは先行（ゴー?を目指す）" : $"?なたは後攻（妨害）";
+        player02TitlePlayerCanvas.sideTmp.text = rnd == 1 ? $"?なたは先行（ゴー?を目指す）" : $"?なたは後攻（妨害）";
 
         yield return new WaitForSeconds(3f);
 
@@ -137,7 +137,7 @@ public class TitleUIManager : MonoBehaviour
             turn.gameObject.SetActive(false);
         }
 
-        // トラップ選択
+        // ト?ップ選択
         foreach (var trap in TrapSelect)
         {
             trap.gameObject.SetActive(true);
@@ -148,31 +148,31 @@ public class TitleUIManager : MonoBehaviour
 
         // --- 修正後 ---
 
-        // 1. まずUIの初期化（ボタンの中身の生成や表示設定）を先に行う
+        // 1. まずUIの?期化（ボタ?の?身の生成や表示設定）を先に行う
         player01TitlePlayerCanvas.TitleTrapCanvas_Init();
         player02TitlePlayerCanvas.TitleTrapCanvas_Init();
 
-        // 2. UIの生成完了を1フレームだけ待つ（超重要）
+        // 2. UIの生成完了を1フ?ー?だけ待つ（超重要）
         yield return null;
 
-        // 3. UIの準備が完全に終わってからフォーカスを当てる
+        // 3. UIの?備が完全に終わってからフォーカスを?てる
         if (player01TitlePlayerCanvas.chooseTrapButtons.Count > 0)
         {
             var button = player01TitlePlayerCanvas.chooseTrapButtons[0].gameObject.GetComponentInChildren<Button>();
-            _player01.inputData.multiplayerEventSystem.SetSelectedGameObject(null); // 一度リセット
+            _player01.inputData.multiplayerEventSystem.SetSelectedGameObject(null); // 一度?セット
             _player01.inputData.multiplayerEventSystem.SetSelectedGameObject(button.gameObject);
         }
 
         if (player02TitlePlayerCanvas.chooseTrapButtons.Count > 0)
         {
             var button = player02TitlePlayerCanvas.chooseTrapButtons[0].gameObject.GetComponentInChildren<Button>();
-            _player02.inputData.multiplayerEventSystem.SetSelectedGameObject(null); // 一度リセット
+            _player02.inputData.multiplayerEventSystem.SetSelectedGameObject(null); // 一度?セット
             _player02.inputData.multiplayerEventSystem.SetSelectedGameObject(button.gameObject);
         }
 
         // -----------------
 
-        // 両プレイヤーが準備完了するまで待つ
+        // 両プ?イ?ーが?備完了するまで待つ
         while (!IsEndChooseTrap())
         {
             yield return null;
