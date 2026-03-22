@@ -30,7 +30,6 @@ public class FallRock : TiggerTrap
         base.SetUp();
         StartCoroutine(TrapRule());
     }
-
     // 落下完了フラグ
     private bool fallDone = false;
     /// <summary>
@@ -53,7 +52,7 @@ public class FallRock : TiggerTrap
         while (true)
         {
             fallDone = false;
-
+            
             // 落下まで待機
             yield return new WaitForSeconds(fallCoolDown);
 
@@ -68,4 +67,49 @@ public class FallRock : TiggerTrap
             yield return StartCoroutine(GridRiseCoroutine(originGridPos, riseSpeed, () => riseDone = true));
         }
     }
+    /// <summary>
+    /// 衝突判定
+    /// </summary>
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (!isSetup) return;
+
+    //    if (!Condition())
+    //    {
+    //        if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
+    //        {
+    //            // Runner に衝突
+    //        }
+    //        // 地面または Trap に衝突
+    //        else if (IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer))
+    //        {
+    //            fallDone = true;
+    //            rb.bodyType = RigidbodyType2D.Static;
+    //        }
+    //    }
+    //}
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+      //  if (!isSetup) return;
+
+     //   if (!Condition())
+     //   {
+     //       if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
+            //{
+      //          // Runner に衝突
+         //   }
+            // 地面または Trap に衝突
+       //     else if (IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer))
+       //     {
+
+       //         fallDone = true;
+         //       rb.bodyType = RigidbodyType2D.Static;
+                // `GridFallCoroutine` で着地判定を行っているため、ここでは着地フラグのみを操作せず、将来の処理追加用として残しています
+                // fallDone = true;
+                // rb.bodyType = RigidbodyType2D.Static;
+          //  }
+      //  }
+  //  }
+
 }
