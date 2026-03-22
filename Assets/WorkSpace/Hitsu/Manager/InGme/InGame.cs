@@ -106,6 +106,12 @@ public class InGame : MonoBehaviour
         Player.Job job1 = _player01.job;
         Player.Job job2 = _player02.job;
 
+        if (job1 == Player.Job.None && job2 == Player.Job.None)
+        {
+            _player01.SetJob(Player.Job.Runner);
+            _player02.SetJob(Player.Job.Hunter);
+        }
+
         Camera cam1 = TargetCamera(job2);
         Camera cam2 = TargetCamera(job1);
 
@@ -132,9 +138,18 @@ public class InGame : MonoBehaviour
         Player.Job job1 = _player01.job;
         Player.Job job2 = _player02.job;
 
-        // Job を交換
-        _player01.SetJob(job2);
-        _player02.SetJob(job1);
+        if (job1 == Player.Job.None && job2 == Player.Job.None)
+        {
+            _player01.SetJob(Player.Job.Runner);
+            _player02.SetJob(Player.Job.Hunter);
+        }
+        else
+        {
+            // Job を交換
+            _player01.SetJob(job2);
+            _player02.SetJob(job1);
+        }
+
 
         // Job に対?するカ??取得
         Camera cam1 = TargetCamera(job2);
@@ -181,7 +196,6 @@ public class InGame : MonoBehaviour
     {
         InGame_Init();
 
-        hunterConTrollerPad.HunterSwitch(_player02);
         RunnerInit();
     }
 
