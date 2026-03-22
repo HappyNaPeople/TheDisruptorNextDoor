@@ -15,6 +15,7 @@ public enum TrapName
     Shell,
     FireBar
 }
+
 /// <summary>
 /// すべての Trap の基底クラス。
 /// 
@@ -28,8 +29,6 @@ public enum TrapName
 /// </summary>
 public abstract class Trap : MonoBehaviour
 {
-
-
     // Trap の種類
     public TrapName trapName;
     // Trap のコスト
