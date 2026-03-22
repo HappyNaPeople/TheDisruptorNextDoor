@@ -10,7 +10,10 @@ public enum TrapName
     FallRock,       // 落石トラップ
     Boom,           // 爆発トラップ
     JumpPad,
-    ChaseEnemy
+    ChaseEnemy,
+    BlackHole,
+    Shell,
+    FireBar
 }
 
 /// <summary>
