@@ -24,13 +24,7 @@ public enum TrapName
 /// </summary>
 public abstract class Trap : MonoBehaviour
 {
-    /// <summary>
-    /// 衝突した GameObject が指定した Layer かどうかを判定する
-    /// </summary>
-    /// <param name="collision">衝突した Collision2D</param>
-    /// <param name="targetLayer">判定する Layer</param>
-    /// <returns>同じ Layer の場合 true</returns>
-    public bool IsGameObjectLayer(Collider2D collision, int targetLayer) => collision.gameObject.layer == targetLayer;
+
 
     // Trap の種類
     public TrapName trapName;
@@ -43,12 +37,10 @@ public abstract class Trap : MonoBehaviour
     // 設置完了状態
     public bool isSetup = false;
 
-
-
     /// <summary>
     /// Trap の初期化処理
     /// </summary>
-    public virtual void Init() 
+    public virtual void Init()
     {
         trapCollider = GetComponent<Collider2D>();
 
@@ -63,25 +55,11 @@ public abstract class Trap : MonoBehaviour
     /// </summary>
     public virtual void SetUp()
     {
-        trapCollider.isTrigger = true;
+        //trapCollider.isTrigger = true;
         isSetup = true;
 
     }
 
     public virtual void BrakeTheTrap() => InGame.Instance.hunterConTrollerPad.DestroyTrap(this);
-
-    public bool debug = false;
-    private void Update()
-    {
-        if (debug)
-        {
-            Init();
-            SetUp();
-            debug = false;
-        }
-
-
-    }
-
 
 }
