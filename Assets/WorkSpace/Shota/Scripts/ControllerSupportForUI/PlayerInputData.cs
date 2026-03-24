@@ -48,33 +48,51 @@ public class PlayerInputData : MonoBehaviour
         playerIndex = playerInput.playerIndex;
 
 
-        if (!PlayOneInputForDebug.instance.DebugOn)
+        if (!PlayOneInputForDebug.isOnDebug)
         {
             multiplayerEventSystem = GetComponent<MultiplayerEventSystem>();
         }
         inputSystemUIInputModule = GetComponent<InputSystemUIInputModule>();
 
 
-        gameObject.name = $"PlayerInput_Player_{(playerIndex + 1).ToString("00")}";
-
-        if (GameManager.Instance.player01.inputData == null)
+        if (PlayOneInputForDebug.isOnDebug)
         {
             GameManager.Instance.player01.inputData = this;
-        }
-        else if (GameManager.Instance.player02.inputData == null)
-        {
             GameManager.Instance.player02.inputData = this;
+
+            gameObject.name = $"PlayerInput_ForDebug";
+
+            Debug.Log($"Player{1} is assigned");
+            Debug.Log($"Player{2} is assigned");
+            
+            if(GameManager.Instance.currentScene == SceneState.InGame)
+            {
+                GameManager.Instance.Game_PlayerInputAssign();
+            }
         }
         else
         {
-            // ここに入るとオブジェクトが破棄され、入力は一切効かなくなります
-            Debug.LogWarning("PlayerInputが多すぎるため破棄されました");
-            Destroy(gameObject);
-            return;
+            if (GameManager.Instance.player01.inputData == null)
+            {
+                GameManager.Instance.player01.inputData = this;
+            }
+            else if (GameManager.Instance.player02.inputData == null)
+            {
+                GameManager.Instance.player02.inputData = this;
+            }
+            else
+            {
+                // ここに入るとオブジェクトが破棄され、入力は一切効かなくなります
+                Debug.LogWarning("PlayerInputが多すぎるため破棄されました");
+                Destroy(gameObject);
+                return;
+            }
+            GameManager.Instance.Title_PlayerInputAssign(this, playerIndex);
+            gameObject.name = $"PlayerInput_Player_{(playerIndex + 1).ToString("00")}";
+            Debug.Log($"Player{playerIndex + 1} is assigned");
         }
 
-        GameManager.Instance.Title_PlayerInputAssign(this);
-        Debug.Log($"Player{playerIndex + 1} is assigned");
+
     }
 
     public void SetFirstSelect(GameObject obj)
@@ -100,13 +118,21 @@ public class PlayerInputData : MonoBehaviour
     public void SetActionMap(string name)
     {
         if (playerInput == null) return;
-        if (PlayOneInputForDebug.instance.DebugOn) return;
+
+        playerInput.defaultActionMap = name;
         playerInput.SwitchCurrentActionMap(name);
+    }
+
+    public void SetSelect(GameObject obj)
+    {
+        if (multiplayerEventSystem == null) return;
+        multiplayerEventSystem.SetSelectedGameObject(obj);
     }
 
     // --- 入力があった時に呼ばれる統合メソッド ---
     private void OnActionTriggered(InputAction.CallbackContext context)
     {
+
         // アクション名（文字列）で判定して処理を振り分けます
         if (context.action.name == "Move")
         {
@@ -114,11 +140,13 @@ public class PlayerInputData : MonoBehaviour
         }
         else if (context.action.name == "Jump")
         {
-            isJumpPressed = context.ReadValueAsButton();
+            if (context.phase == InputActionPhase.Performed) isJumpPressed = true;
+            if (context.phase == InputActionPhase.Canceled) isJumpPressed = false;
         }
         else if (context.action.name == "Punch")
         {
-            isPunchPressed = context.ReadValueAsButton();
+            if (context.phase == InputActionPhase.Performed) isPunchPressed = true;
+            if (context.phase == InputActionPhase.Canceled) isPunchPressed = false;
         }
     }
 }

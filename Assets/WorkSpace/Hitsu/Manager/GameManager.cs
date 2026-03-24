@@ -459,11 +459,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Title_PlayerInputAssign(PlayerInputData playerInputData)
+    public void Title_PlayerInputAssign(PlayerInputData playerInputData, int index)
     {
         if (TitleUIManager.Instance == null) return;
-
-        var index = playerInputData.playerIndex;
 
         var camera = index == 0 ? TitleUIManager.Instance.player01Camera : TitleUIManager.Instance.player02Camera;
         var playerRoot = index == 0 ? TitleUIManager.Instance.player01TitlePlayerCanvas.gameObject : TitleUIManager.Instance.player02TitlePlayerCanvas.gameObject;
@@ -474,7 +472,7 @@ public class GameManager : MonoBehaviour
 
         playerInputData.SetFirstSelect(firstSelect);
         // ★直接呼ばずに、コルーチンを開始する
-        StartCoroutine(SelectButtonWithDelay(playerInputData.multiplayerEventSystem, firstSelect));
+        StartCoroutine(SelectButtonWithDelay(playerInputData, firstSelect));
     }
 
 
@@ -483,7 +481,11 @@ public class GameManager : MonoBehaviour
         var runnerPlayer = player01.job == Player.Job.Runner ? player01 : player02;
         var hunterPlayer = player01.job == Player.Job.Hunter ? player01 : player02;
 
-        runnerPlayer.inputData.SetActionMap("Runner");
+        if (!PlayOneInputForDebug.isOnDebug)
+        {
+            runnerPlayer.inputData.SetActionMap("Runner");
+            hunterPlayer.inputData.SetActionMap("Hunter");
+        }
 
         runnerPlayer.inputData.SetInputCamera(InGame.Instance.runnerCamera);
         hunterPlayer.inputData.SetInputCamera(InGame.Instance.hunterCamera);
@@ -491,18 +493,18 @@ public class GameManager : MonoBehaviour
         InGame.Instance.runner.inputData = runnerPlayer.inputData;
         hunterPlayer.inputData.SetPlayerRoot(InGame.Instance.hunterConTrollerPad.hunterCanvas.gameObject);
         hunterPlayer.inputData.SetFirstSelect(InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject);
-        StartCoroutine(SelectButtonWithDelay(hunterPlayer.inputData.multiplayerEventSystem, InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject));
+        StartCoroutine(SelectButtonWithDelay(hunterPlayer.inputData, InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject));
     }
 
 
-    public static IEnumerator SelectButtonWithDelay(MultiplayerEventSystem eventSystem, GameObject firstButton)
+    public static IEnumerator SelectButtonWithDelay(PlayerInputData inputData, GameObject firstButton)
     {
         // 1フレームだけ待機して、EventSystemやUIの準備が完了するのを待つ
         yield return null;
 
         // 確実にフォーカスを当てるための小技（一度nullを入れてリセットしてから指定）
-        eventSystem.SetSelectedGameObject(null);
-        eventSystem.SetSelectedGameObject(firstButton);
+        inputData.SetSelect(null);
+        inputData.SetSelect(firstButton);
     }
 }
 

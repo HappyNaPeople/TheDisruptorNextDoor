@@ -3,13 +3,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 
-[RequireComponent(typeof(PlayerInputData))]
 public class PlayOneInputForDebug : MonoBehaviour
 {
     public static PlayOneInputForDebug instance;
-    public bool DebugOn = false;
+    public static bool isOnDebug = false;
+    [SerializeField] bool DebugOn = false;
     public GameObject playerInputManager;
-    public GameObject playOneInput;
 
     PlayerInputData playerInputData;
 
@@ -21,12 +20,21 @@ public class PlayOneInputForDebug : MonoBehaviour
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);
-        playerInputManager.SetActive(!DebugOn);
-        playOneInput.SetActive(DebugOn);
 
-        playerInputData.playerInput = playOneInput.GetComponent<PlayerInput>();
-        playerInputData.inputSystemUIInputModule = playOneInput.GetComponent<InputSystemUIInputModule>();
+        isOnDebug = DebugOn;
+        if (DebugOn)
+        {
+            if(playerInputManager != null)
+            {
+                Destroy(playerInputManager);
+            }
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        playerInputData = GetComponent<PlayerInputData>();
     }
-
 }

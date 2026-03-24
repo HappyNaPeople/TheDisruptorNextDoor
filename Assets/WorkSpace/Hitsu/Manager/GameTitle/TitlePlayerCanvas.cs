@@ -296,7 +296,7 @@ public class TitlePlayerCanvas : MonoBehaviour
         else canChooseTrapNowPage = nextPage;
         
         UpdateCanChooseTrap();
-        StartCoroutine(GameManager.SelectButtonWithDelay(targetPlayer.inputData.multiplayerEventSystem, CanChooseTrapBackPage));
+        StartCoroutine(GameManager.SelectButtonWithDelay(targetPlayer.inputData, CanChooseTrapBackPage));
     }
 
     /// <summary>
@@ -308,7 +308,7 @@ public class TitlePlayerCanvas : MonoBehaviour
         if (backPage < 0) return;
         else canChooseTrapNowPage = backPage;
         UpdateCanChooseTrap();
-        StartCoroutine(GameManager.SelectButtonWithDelay(targetPlayer.inputData.multiplayerEventSystem, CanChooseTrapNextPage));
+        StartCoroutine(GameManager.SelectButtonWithDelay(targetPlayer.inputData, CanChooseTrapNextPage));
     }
 
     public void AddStartButtonListener()
