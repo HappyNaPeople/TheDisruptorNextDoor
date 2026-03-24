@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 
 [RequireComponent(typeof(PlayerInput))]
-[RequireComponent(typeof(MultiplayerEventSystem))]
 [RequireComponent(typeof(InputSystemUIInputModule))]
 public class PlayerInputData : MonoBehaviour
 {
@@ -46,10 +45,16 @@ public class PlayerInputData : MonoBehaviour
 
     void Assign()
     {
-        multiplayerEventSystem = GetComponent<MultiplayerEventSystem>();
+        playerIndex = playerInput.playerIndex;
+
+
+        if (!PlayOneInputForDebug.instance.DebugOn)
+        {
+            multiplayerEventSystem = GetComponent<MultiplayerEventSystem>();
+        }
         inputSystemUIInputModule = GetComponent<InputSystemUIInputModule>();
 
-        playerIndex = playerInput.playerIndex;
+
         gameObject.name = $"PlayerInput_Player_{(playerIndex + 1).ToString("00")}";
 
         if (GameManager.Instance.player01.inputData == null)
@@ -70,6 +75,33 @@ public class PlayerInputData : MonoBehaviour
 
         GameManager.Instance.Title_PlayerInputAssign(this);
         Debug.Log($"Player{playerIndex + 1} is assigned");
+    }
+
+    public void SetFirstSelect(GameObject obj)
+    {
+        if (multiplayerEventSystem == null) return;
+
+        multiplayerEventSystem.firstSelectedGameObject = obj;
+    }
+
+    public void SetPlayerRoot(GameObject obj)
+    {
+        if (multiplayerEventSystem == null) return;
+
+        multiplayerEventSystem.playerRoot = obj;
+    }
+
+    public void SetInputCamera(Camera cam)
+    {
+        if (playerInput == null) return;
+        playerInput.camera = cam;
+    }
+
+    public void SetActionMap(string name)
+    {
+        if (playerInput == null) return;
+        if (PlayOneInputForDebug.instance.DebugOn) return;
+        playerInput.SwitchCurrentActionMap(name);
     }
 
     // --- 入力があった時に呼ばれる統合メソッド ---

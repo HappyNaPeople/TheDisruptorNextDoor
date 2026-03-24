@@ -463,30 +463,18 @@ public class GameManager : MonoBehaviour
     {
         if (TitleUIManager.Instance == null) return;
 
-        switch (playerInputData.playerIndex)
-        {
-            case 0:
-                playerInputData.playerInput.camera = TitleUIManager.Instance.player01Camera;
-                playerInputData.multiplayerEventSystem.playerRoot = TitleUIManager.Instance.player01TitlePlayerCanvas.gameObject;
+        var index = playerInputData.playerIndex;
 
-                var p1StartButton = TitleUIManager.Instance.player01TitlePlayerCanvas.startButton.gameObject;
-                playerInputData.multiplayerEventSystem.firstSelectedGameObject = p1StartButton;
+        var camera = index == 0 ? TitleUIManager.Instance.player01Camera : TitleUIManager.Instance.player02Camera;
+        var playerRoot = index == 0 ? TitleUIManager.Instance.player01TitlePlayerCanvas.gameObject : TitleUIManager.Instance.player02TitlePlayerCanvas.gameObject;
+        var firstSelect = index == 0 ? TitleUIManager.Instance.player01TitlePlayerCanvas.startButton.gameObject : TitleUIManager.Instance.player02TitlePlayerCanvas.startButton.gameObject;
 
-                // ★直接呼ばずに、コルーチンを開始する
-                playerInputData.StartCoroutine(SelectButtonWithDelay(playerInputData.multiplayerEventSystem, p1StartButton));
-                break;
+        playerInputData.SetInputCamera(camera);
+        playerInputData.SetPlayerRoot(playerRoot);
 
-            case 1:
-                playerInputData.playerInput.camera = TitleUIManager.Instance.player02Camera;
-                playerInputData.multiplayerEventSystem.playerRoot = TitleUIManager.Instance.player02TitlePlayerCanvas.gameObject;
-
-                var p2StartButton = TitleUIManager.Instance.player02TitlePlayerCanvas.startButton.gameObject;
-                playerInputData.multiplayerEventSystem.firstSelectedGameObject = p2StartButton;
-
-                // ★直接呼ばずに、コルーチンを開始する
-                StartCoroutine(SelectButtonWithDelay(playerInputData.multiplayerEventSystem, p2StartButton));
-                break;
-        }
+        playerInputData.SetFirstSelect(firstSelect);
+        // ★直接呼ばずに、コルーチンを開始する
+        StartCoroutine(SelectButtonWithDelay(playerInputData.multiplayerEventSystem, firstSelect));
     }
 
 
@@ -495,17 +483,14 @@ public class GameManager : MonoBehaviour
         var runnerPlayer = player01.job == Player.Job.Runner ? player01 : player02;
         var hunterPlayer = player01.job == Player.Job.Hunter ? player01 : player02;
 
-        runnerPlayer.inputData.playerInput.defaultActionMap = "Runner";
-        //hunterPlayer.inputData.playerInput.defaultActionMap = "Hunter";
-        runnerPlayer.inputData.playerInput.SwitchCurrentActionMap("Runner");
-        //hunterPlayer.inputData.playerInput.SwitchCurrentActionMap("Hunter");
+        runnerPlayer.inputData.SetActionMap("Runner");
 
-        runnerPlayer.inputData.playerInput.camera = InGame.Instance.runnerCamera;
-        hunterPlayer.inputData.playerInput.camera = InGame.Instance.hunterCamera;
+        runnerPlayer.inputData.SetInputCamera(InGame.Instance.runnerCamera);
+        hunterPlayer.inputData.SetInputCamera(InGame.Instance.hunterCamera);
 
         InGame.Instance.runner.inputData = runnerPlayer.inputData;
-        hunterPlayer.inputData.multiplayerEventSystem.playerRoot = InGame.Instance.hunterConTrollerPad.hunterCanvas.gameObject;
-        hunterPlayer.inputData.multiplayerEventSystem.firstSelectedGameObject = InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject;
+        hunterPlayer.inputData.SetPlayerRoot(InGame.Instance.hunterConTrollerPad.hunterCanvas.gameObject);
+        hunterPlayer.inputData.SetFirstSelect(InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject);
         StartCoroutine(SelectButtonWithDelay(hunterPlayer.inputData.multiplayerEventSystem, InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject));
     }
 
