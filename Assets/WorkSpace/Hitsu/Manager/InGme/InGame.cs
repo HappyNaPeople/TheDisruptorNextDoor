@@ -114,8 +114,8 @@ public class InGame : MonoBehaviour
             _player02.SetJob(Player.Job.Hunter);
         }
 
-        Camera cam1 = TargetCamera(job2);
-        Camera cam2 = TargetCamera(job1);
+        Camera cam1 = TargetCamera(_player01.job);
+        Camera cam2 = TargetCamera(_player02.job);
 
         cam1.targetDisplay = (int)_player01.displayCode;
         cam2.targetDisplay = (int)_player02.displayCode;
@@ -157,6 +157,7 @@ public class InGame : MonoBehaviour
         Camera cam1 = TargetCamera(job2);
         Camera cam2 = TargetCamera(job1);
 
+        Debug.Log(_player01.displayCode);
         // カ??の表示先ディスプ?イ変更
         cam1.targetDisplay = (int)_player01.displayCode;
         cam2.targetDisplay = (int)_player02.displayCode;

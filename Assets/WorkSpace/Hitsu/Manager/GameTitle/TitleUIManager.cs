@@ -161,15 +161,15 @@ public class TitleUIManager : MonoBehaviour
         if (player01TitlePlayerCanvas.chooseTrapButtons.Count > 0)
         {
             var button = player01TitlePlayerCanvas.chooseTrapButtons[0].gameObject.GetComponentInChildren<Button>();
-            _player01.inputData.multiplayerEventSystem.SetSelectedGameObject(null); // 一度リセット
-            _player01.inputData.multiplayerEventSystem.SetSelectedGameObject(button.gameObject);
+            _player01.inputData.SetSelect(null); // 一度リセット
+            _player01.inputData.SetSelect(button.gameObject);
         }
 
         if (player02TitlePlayerCanvas.chooseTrapButtons.Count > 0)
         {
             var button = player02TitlePlayerCanvas.chooseTrapButtons[0].gameObject.GetComponentInChildren<Button>();
-            _player02.inputData.multiplayerEventSystem.SetSelectedGameObject(null); // 一度リセット
-            _player02.inputData.multiplayerEventSystem.SetSelectedGameObject(button.gameObject);
+            _player02.inputData.SetSelect(null); // 一度リセット
+            _player02.inputData.SetSelect(button.gameObject);
         }
 
         // -----------------
