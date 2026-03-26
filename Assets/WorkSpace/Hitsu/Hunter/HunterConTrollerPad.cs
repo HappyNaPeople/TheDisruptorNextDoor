@@ -25,12 +25,13 @@ public class HunterConTrollerPad : MonoBehaviour
     // Hunter 用カメラ（マウス座標 → ワールド座標変換に使用）
     public Camera hunterCamera;
     public Canvas hunterCanvas;
+    public TimeAndProgressBar timeAndProgressBar;
 
     /// <summary>
     /// Hunter が使用する Gamepad を設定する
     /// </summary>
     /// <param name="targetGamePad">使用する Gamepad</param>
-    
+
     #region Cost
     [Header("Cost")]
     /// <summary>
@@ -498,6 +499,8 @@ public class HunterConTrollerPad : MonoBehaviour
 
     #endregion
 
+
+
     /// <summary>
     /// Hunter プレイヤーが切り替わった時に呼ばれる
     /// Backpack に登録されている Trap を UI に反映する
@@ -507,6 +510,7 @@ public class HunterConTrollerPad : MonoBehaviour
         CanUseTrapInit(targetPlayer.hunter.backpack.trapsPack);
         ResetRoundTraps();
         RecoveryInit();
+        timeAndProgressBar.ProgressBarInit();
     }
 
     /// <summary>
