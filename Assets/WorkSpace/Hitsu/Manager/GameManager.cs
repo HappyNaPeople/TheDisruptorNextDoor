@@ -154,6 +154,15 @@ public class GameManager : MonoBehaviour
     public Player player01;
     public Player player02;
 
+    public float player01RanValue { get; private set; }
+    public float player02RanValue { get; private set; }
+    public void PlayerResult(float result01, float result02)
+    {
+        player01RanValue = result01;
+        player02RanValue = result02;
+    }
+
+
     /// <summary>
     /// 指定された Gamepad を取得する
     /// 接続されていない場合はエラーを出す

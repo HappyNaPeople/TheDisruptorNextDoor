@@ -81,6 +81,8 @@ public abstract class Trap : MonoBehaviour
         if (isSetup && StageGridManager.Instance != null)
         {
             StageGridManager.Instance.UnregisterTrap(currentGridPos);
+            InGame.Instance.RemoveTrap(this.gameObject);
+            //HunterConTrollerPad.Instance.UpdateSetupTrapText();
         }
     }
 
