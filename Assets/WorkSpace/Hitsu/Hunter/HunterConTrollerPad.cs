@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using System;
+using UnityEngine.Rendering;
 
 /// <summary>
 /// Hunter が使用する Trap 設置コントローラー。
@@ -242,6 +243,10 @@ public class HunterConTrollerPad : MonoBehaviour
 
     private int TrapCost(TrapName trapName) => GameManager.allTrap[trapName].cost;
 
+    //[Header("Setup Trap Count")]
+    //public TMP_Text setupTrapText;
+    //public void UpdateSetupTrapText() => setupTrapText.text = $"Traps Setup : {InGame.Instance.allTheTrap.Count.ToString("D2")} / {InGame.trapMax.ToString("D2")}";
+
     [Header("Trap Choose Button")]
     // Trap UI ボタンリスト
     public List<TrapButtonUI> trapButtonList;
@@ -311,11 +316,17 @@ public class HunterConTrollerPad : MonoBehaviour
                 TrapName trap = useTrapName[index];
 
                 trapButtonList[index].trapName = trap;
+                //trapButtonList[index].button.onClick.AddListener(() => CreateTrap(trap));
+
                 trapButtonList[index].button.onClick.AddListener(() => CreateTrap(trap));
+
                 trapButtonList[index].icon.sprite = TrapSprite(trap);
                 trapButtonList[index].cost.text = TrapCost(trap).ToString();
                 // ボタン表示
                 trapButtonList[index].gameObject.SetActive(true);
+
+
+
 
             }
             else
@@ -325,8 +336,30 @@ public class HunterConTrollerPad : MonoBehaviour
             }
         }
 
+        testing_CanUseTrap = useTrapName;
+    }
+
+
+    private List<TrapName> testing_CanUseTrap = new List<TrapName>();
+
+
+    private void test_RandomButton(int trapButtonUICode, TrapName usedTrap)
+    {
+        TrapName newTrap = testing_CanUseTrap[UnityEngine.Random.Range(0, testing_CanUseTrap.Count)];
+        while (newTrap == usedTrap) { newTrap = testing_CanUseTrap[UnityEngine.Random.Range(0, testing_CanUseTrap.Count)]; }
+
+        trapButtonList[trapButtonUICode].trapName = newTrap;
+        //trapButtonList[index].button.onClick.AddListener(() => CreateTrap(trap));
+
+        trapButtonList[trapButtonUICode].button.onClick.AddListener(() => test_CreateTrap(trapButtonUICode,newTrap));
+
+        trapButtonList[trapButtonUICode].icon.sprite = TrapSprite(newTrap);
+        trapButtonList[trapButtonUICode].cost.text = TrapCost(newTrap).ToString();
+        // ボタン表示
+        trapButtonList[trapButtonUICode].gameObject.SetActive(true);
 
     }
+
 
     #endregion
 
@@ -449,6 +482,7 @@ public class HunterConTrollerPad : MonoBehaviour
             trapList.Add(trap);
             UseCost(trap.trapName);
             Destroy(placer); // 設置後は不要なので削除
+            InGame.Instance.AddTrap(trap.gameObject);
         }
         else
         {
@@ -496,6 +530,16 @@ public class HunterConTrollerPad : MonoBehaviour
         createTrap = StartCoroutine(PutTrap(trapName));
     }
 
+    private void test_CreateTrap(int trapButtonUI, TrapName trapName)
+    {
+        // 現在の Trap 設置処理をキャンセル
+        Reject();
+        // Trap 設置 Coroutine を開始
+        createTrap = StartCoroutine(PutTrap(trapName));
+    }
+
+
+
 
     #endregion
 
@@ -507,6 +551,7 @@ public class HunterConTrollerPad : MonoBehaviour
     /// </summary>
     public void HunterSwitch(Player targetPlayer)
     {
+        //UpdateSetupTrapText();
         CanUseTrapInit(targetPlayer.hunter.backpack.trapsPack);
         ResetRoundTraps();
         RecoveryInit();
