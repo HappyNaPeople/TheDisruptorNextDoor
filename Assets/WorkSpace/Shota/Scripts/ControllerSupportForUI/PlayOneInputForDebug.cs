@@ -6,7 +6,7 @@ using UnityEngine.InputSystem.UI;
 public class PlayOneInputForDebug : MonoBehaviour
 {
     public static PlayOneInputForDebug instance;
-    public static bool isOnDebug = false;
+    public static bool isOnDebug = true;
     [SerializeField] bool DebugOn = false;
     public GameObject playerInputManager;
 
@@ -14,9 +14,10 @@ public class PlayOneInputForDebug : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null && instance != this)
+        if (instance != null && instance != this || !isOnDebug)
         {
             Destroy(gameObject);
+            Debug.Log("Destroyed PlayOneInputForDebug");
             return;
         }
         instance = this;
@@ -31,6 +32,7 @@ public class PlayOneInputForDebug : MonoBehaviour
         }
         else
         {
+            isOnDebug = false;
             Destroy(gameObject);
             return;
         }
