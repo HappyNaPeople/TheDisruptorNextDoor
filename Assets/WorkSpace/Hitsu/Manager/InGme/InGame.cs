@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using System.Linq;
-using Unity.Android.Gradle;
 
 /// <summary>
 /// ゲー??の進行管?ク?ス。
