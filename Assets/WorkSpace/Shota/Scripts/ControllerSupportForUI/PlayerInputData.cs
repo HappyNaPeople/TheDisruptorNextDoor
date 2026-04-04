@@ -118,8 +118,7 @@ public class PlayerInputData : MonoBehaviour
     public void SetActionMap(string name)
     {
         if (playerInput == null) return;
-
-        playerInput.defaultActionMap = name;
+        Debug.Log($"ActionMapを '{name}' に切り替えました！ 現在のマップ: {playerInput.currentActionMap.name}");
         playerInput.SwitchCurrentActionMap(name);
     }
 

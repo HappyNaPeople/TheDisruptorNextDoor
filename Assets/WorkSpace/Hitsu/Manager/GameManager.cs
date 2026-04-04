@@ -433,10 +433,6 @@ public class GameManager : MonoBehaviour
 
         // 5フレームまってstartを走らせる
         yield return null;
-        yield return null;
-        yield return null;
-        yield return null;
-        yield return null;
 
         OnEnterScene(currentScene);
     }
@@ -459,7 +455,8 @@ public class GameManager : MonoBehaviour
         switch (newScene)
         {
             case SceneState.GameTitle:
-
+                Title_PlayerInputAssign(player01.inputData, player01.inputData.playerIndex);
+                Title_PlayerInputAssign(player02.inputData, player02.inputData.playerIndex);
                 break;
 
             case SceneState.InGame:
@@ -490,11 +487,9 @@ public class GameManager : MonoBehaviour
         var runnerPlayer = player01.job == Player.Job.Runner ? player01 : player02;
         var hunterPlayer = player01.job == Player.Job.Hunter ? player01 : player02;
 
-        if (!PlayOneInputForDebug.isOnDebug)
-        {
-            runnerPlayer.inputData.SetActionMap("Runner");
-            hunterPlayer.inputData.SetActionMap("Hunter");
-        }
+        runnerPlayer.inputData.SetActionMap(PlayOneInputForDebug.isOnDebug ? "Debug" : "Runner");
+        hunterPlayer.inputData.SetActionMap(PlayOneInputForDebug.isOnDebug ? "Debug" : "Hunter");
+
 
         runnerPlayer.inputData.SetInputCamera(InGame.Instance.runnerCamera);
         hunterPlayer.inputData.SetInputCamera(InGame.Instance.hunterCamera);
