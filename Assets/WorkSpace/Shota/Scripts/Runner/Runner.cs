@@ -247,6 +247,8 @@ public class Runner : MonoBehaviour
     {
         if (_isPhysicsReserved) return;
         if (!inputData.isPunchPressed) return;
+        if (currentState == PlayerState.Attacking) return;
+
         // パンチ処理
         if (_controller.isGrounded)
         {
