@@ -441,6 +441,8 @@ public class InGame : MonoBehaviour
         // --- Job 交換 ---
         _player01.SetJob(job2);
         _player02.SetJob(job1);
+
+        GameManager.Instance.Game_PlayerInputAssign();
         // --- 初始化 ---
         TurnInit();
 
