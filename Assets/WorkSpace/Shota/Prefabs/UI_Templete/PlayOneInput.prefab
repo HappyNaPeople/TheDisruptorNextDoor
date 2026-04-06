@@ -69,6 +69,7 @@ MonoBehaviour:
   moveInput: {x: 0, y: 0}
   isJumpPressed: 0
   isPunchPressed: 0
+  isPutPressed: 0
 --- !u!114 &1958086387341282452
 MonoBehaviour:
   m_ObjectHideFlags: 0

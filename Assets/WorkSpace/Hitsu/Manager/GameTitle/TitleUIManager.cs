@@ -64,6 +64,7 @@ public class TitleUIManager : MonoBehaviour
     /// </summary>
     public TitlePlayerCanvas player02TitlePlayerCanvas;
 
+    public float trapSelectTime = 10f;
 
     public CanvasGroup[] Titles = new CanvasGroup[2];
     public CanvasGroup[] TurnSelect = new CanvasGroup[2];

@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using System;
-using UnityEngine.Rendering;
 
 /// <summary>
 /// Hunter が使用する Trap 設置コントローラー。
@@ -27,6 +26,8 @@ public class HunterConTrollerPad : MonoBehaviour
     public Camera hunterCamera;
     public Canvas hunterCanvas;
     public TimeAndProgressBar timeAndProgressBar;
+    public HunterCursor hunterCursor;
+    public PlayerInputData inputData;
 
     /// <summary>
     /// Hunter が使用する Gamepad を設定する
@@ -378,16 +379,11 @@ public class HunterConTrollerPad : MonoBehaviour
     /// マウス位置をワールド座標で取得する
     /// グリッドスナップが有効な場合はグリッドに合わせる
     /// </summary>
-    Vector3 mouseWorldPos
+    Vector3 cursorPos
     {
         get
         {
-            // マウスのスクリーン座標取得
-            Vector2 mousePos = GameManager.inputDevice.mouse.position.ReadValue();
-
-            // カメラとの距離を考慮してワールド座標へ変換
-            float distance = Mathf.Abs(hunterCamera.transform.position.z);
-            Vector3 world = hunterCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, distance));
+            Vector3 world = hunterCursor.worldPos;
 
 
             Vector2Int grid = StageGridManager.Instance.WorldToGrid(world);
@@ -422,7 +418,7 @@ public class HunterConTrollerPad : MonoBehaviour
     /// <summary>
     /// マップ上に Trap を設置しようとしているか判定
     /// </summary>
-    private bool IsOnMap() => Physics2D.OverlapPoint(mouseWorldPos, mask) != null;
+    private bool IsOnMap() => Physics2D.OverlapPoint(cursorPos, mask) != null;
 
     // プレビュー中の Trap
     private GameObject choseTrap;
@@ -443,7 +439,7 @@ public class HunterConTrollerPad : MonoBehaviour
         }
 
         // Trap を生成
-        GameObject targetTrap = Instantiate(TarpObject(trapName), mouseWorldPos, TarpObject(trapName).transform.rotation);
+        GameObject targetTrap = Instantiate(TarpObject(trapName), cursorPos, TarpObject(trapName).transform.rotation);
         
         // TrapPlacer を取得またはアタッチ
         TrapPlacer placer = targetTrap.GetComponent<TrapPlacer>();
@@ -461,9 +457,9 @@ public class HunterConTrollerPad : MonoBehaviour
         choseTrap = targetTrap;
 
         // クリックされるまでマウス追従
-        while (!GameManager.inputDevice.mouse.leftButton.isPressed)
+        while (!inputData.isPutPressed)
         {
-            placer.UpdatePreviewPosition(mouseWorldPos);
+            placer.UpdatePreviewPosition(cursorPos);
             bool canPlacePreview = placer.ValidatePlacement();
             placer.UpdatePreviewColor(canPlacePreview);
 
@@ -556,6 +552,11 @@ public class HunterConTrollerPad : MonoBehaviour
         ResetRoundTraps();
         RecoveryInit();
         timeAndProgressBar.ProgressBarInit();
+    }
+
+    public void HunterInit()
+    {
+        hunterCursor.Init(this);
     }
 
     /// <summary>

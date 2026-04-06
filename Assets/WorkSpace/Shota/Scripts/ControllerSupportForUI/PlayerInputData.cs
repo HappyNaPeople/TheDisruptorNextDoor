@@ -14,6 +14,7 @@ public class PlayerInputData : MonoBehaviour
     public Vector2 moveInput;
     public bool isJumpPressed;
     public bool isPunchPressed;
+    public bool isPutPressed;
 
     private void Awake()
     {
@@ -64,8 +65,8 @@ public class PlayerInputData : MonoBehaviour
 
             Debug.Log($"Player{1} is assigned");
             Debug.Log($"Player{2} is assigned");
-            
-            if(GameManager.Instance.currentScene == SceneState.InGame)
+
+            if (GameManager.Instance.currentScene == SceneState.InGame)
             {
                 GameManager.Instance.Game_PlayerInputAssign();
             }
@@ -90,6 +91,7 @@ public class PlayerInputData : MonoBehaviour
             GameManager.Instance.Title_PlayerInputAssign(this, playerIndex);
             gameObject.name = $"PlayerInput_Player_{(playerIndex + 1).ToString("00")}";
             Debug.Log($"Player{playerIndex + 1} is assigned");
+            Debug.Log($"Player{playerIndex + 1} scheme is {playerInput.currentControlScheme}");
         }
 
 
@@ -118,8 +120,12 @@ public class PlayerInputData : MonoBehaviour
     public void SetActionMap(string name)
     {
         if (playerInput == null) return;
-        Debug.Log($"ActionMapを '{name}' に切り替えました！ 現在のマップ: {playerInput.currentActionMap.name}");
+
+        playerInput.defaultActionMap = name;
         playerInput.SwitchCurrentActionMap(name);
+        Debug.Log($"ActionMapを '{name}' に切り替えました！ 現在のマップ: {playerInput.currentActionMap.name}");
+
+        inputSystemUIInputModule.move = InputActionReference.Create(playerInput.actions[$"{name}/Navigate"]);
     }
 
     public void SetSelect(GameObject obj)
@@ -146,6 +152,11 @@ public class PlayerInputData : MonoBehaviour
         {
             if (context.phase == InputActionPhase.Performed) isPunchPressed = true;
             if (context.phase == InputActionPhase.Canceled) isPunchPressed = false;
+        }
+        else if (context.action.name == "Put")
+        {
+            if (context.phase == InputActionPhase.Performed) isPutPressed = true;
+            if (context.phase == InputActionPhase.Canceled) isPutPressed = false;
         }
     }
 }
