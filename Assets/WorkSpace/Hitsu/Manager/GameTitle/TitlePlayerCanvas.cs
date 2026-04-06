@@ -63,21 +63,18 @@ public class TitlePlayerCanvas : MonoBehaviour
     /// </summary>
     private int nowCost = Backpack.maxTrapCount;
 
-    /// <summary>
-    /// Trap 選択制限?間
-    /// </summary>
-    private const int timerLimit = 15;
 
     /// <summary>
     /// 現在の残り?間
     /// </summary>
-    private float timer = timerLimit;
+    private float timer = 0;
 
     /// <summary>
     /// Trap 選択タイマー Coroutine
     /// </summary>
     private IEnumerator Timer()
     {
+        timer = TitleUIManager.Instance.trapSelectTime;
         while (timer > 0)
         {
             // ?間減少

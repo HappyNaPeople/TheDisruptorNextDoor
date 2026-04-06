@@ -495,6 +495,7 @@ public class GameManager : MonoBehaviour
         hunterPlayer.inputData.SetInputCamera(InGame.Instance.hunterCamera);
 
         InGame.Instance.runner.inputData = runnerPlayer.inputData;
+        InGame.Instance.hunterConTrollerPad.inputData = hunterPlayer.inputData;
         hunterPlayer.inputData.SetPlayerRoot(InGame.Instance.hunterConTrollerPad.hunterCanvas.gameObject);
         hunterPlayer.inputData.SetFirstSelect(InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject);
         StartCoroutine(SelectButtonWithDelay(hunterPlayer.inputData, InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject));

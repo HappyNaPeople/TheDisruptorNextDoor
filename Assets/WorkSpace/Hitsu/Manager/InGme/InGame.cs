@@ -349,6 +349,10 @@ public class InGame : MonoBehaviour
         //runner.ControllerCode = player01.controllerCode;
     }
 
+    private void HunterInit()
+    {
+        hunterConTrollerPad.HunterInit();
+    }
 
     /// <summary>
     /// カメラの表示先ディスプレイを設定する
@@ -458,6 +462,7 @@ public class InGame : MonoBehaviour
     {
         InGame_Init();
         RunnerInit();
+        HunterInit();
     }
 
     // デバッグ用
