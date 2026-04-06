@@ -252,32 +252,32 @@ public class HunterConTrollerPad : MonoBehaviour
     // Trap UI ボタンリスト
     public List<TrapButtonUI> trapButtonList;
 
-    private HashSet<Trap> trapList = new HashSet<Trap>();
+    //private HashSet<Trap> trapList = new HashSet<Trap>();
 
-    private void DestroyTrapFromList(Trap target)
-    {
-        if (!trapList.Contains(target))
-        {
-            Debug.LogWarning("Why there have unrecord Trap");
-            return;
-        }
-        trapList.Remove(target);
-    }
+    //private void DestroyTrapFromList(Trap target)
+    //{
+    //    if (!trapList.Contains(target))
+    //    {
+    //        Debug.LogWarning("Why there have unrecord Trap");
+    //        return;
+    //    }
+    //    trapList.Remove(target);
+    //}
 
-    public void DestroyTrap(Trap targetTrap)
-    {
-        DestroyTrapFromList(targetTrap);
-        Destroy(targetTrap.gameObject);
-    }
+    //public void DestroyTrap(Trap targetTrap)
+    //{
+    //    DestroyTrapFromList(targetTrap);
+    //    Destroy(targetTrap.gameObject);
+    //}
 
-    private void ResetRoundTraps()
-    {
-        foreach (Trap traps in trapList)
-        {
-            if (traps.gameObject != null) DestroyTrap(traps);
-        }
-        trapList.Clear();
-    }
+    //private void ResetRoundTraps()
+    //{
+    //    foreach (Trap traps in trapList)
+    //    {
+    //        if (traps.gameObject != null) DestroyTrap(traps);
+    //    }
+    //    trapList.Clear();
+    //}
 
     /// <summary>
     /// 使用可能な Trap を UI ボタンに設定する
@@ -340,7 +340,6 @@ public class HunterConTrollerPad : MonoBehaviour
         testing_CanUseTrap = useTrapName;
     }
 
-
     private List<TrapName> testing_CanUseTrap = new List<TrapName>();
 
 
@@ -384,7 +383,6 @@ public class HunterConTrollerPad : MonoBehaviour
         get
         {
             Vector3 world = hunterCursor.worldPos;
-
 
             Vector2Int grid = StageGridManager.Instance.WorldToGrid(world);
             // グリッド → ワールド（スナップ後の正しい位置）
@@ -475,7 +473,7 @@ public class HunterConTrollerPad : MonoBehaviour
             Trap trap = targetTrap.GetComponent<Trap>();
             trap.Init();
             trap.SetUp();
-            trapList.Add(trap);
+            //trapList.Add(trap);
             UseCost(trap.trapName);
             Destroy(placer); // 設置後は不要なので削除
             InGame.Instance.AddTrap(trap.gameObject);
@@ -549,7 +547,7 @@ public class HunterConTrollerPad : MonoBehaviour
     {
         //UpdateSetupTrapText();
         CanUseTrapInit(targetPlayer.hunter.backpack.trapsPack);
-        ResetRoundTraps();
+        //ResetRoundTraps();
         RecoveryInit();
         timeAndProgressBar.ProgressBarInit();
     }
