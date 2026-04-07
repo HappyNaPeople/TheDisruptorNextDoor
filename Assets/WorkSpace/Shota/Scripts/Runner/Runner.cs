@@ -36,6 +36,8 @@ public class Runner : MonoBehaviour
     [Header("プレイヤーの状態")]
     public PlayerState currentState = PlayerState.Normal;
 
+    public bool IsGrounded => _controller != null && _controller.isGrounded;
+
     // --- モディファイア（干渉物）リスト ---
     public System.Collections.Generic.List<IPlayerMovementModifier> activeModifiers = new System.Collections.Generic.List<IPlayerMovementModifier>();
 
