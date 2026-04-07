@@ -47,25 +47,7 @@ public abstract class TrapPlacer : MonoBehaviour
         }
     }
 
-    protected bool IsOnMap(Vector3 pos)
-    {
-        int mask = (1 << UseLayerName.platformLayer) | (1 << UseLayerName.trapLayer);
-        return Physics2D.OverlapPoint(pos, mask) != null;
-    }
 
-    protected bool IsInPutArea(Vector3 pos)
-    {
-        if (HunterConTrollerPad.Instance == null) return false;
-        var leftTop = HunterConTrollerPad.Instance.putAreaLeftTop;
-        var rightDown = HunterConTrollerPad.Instance.putAreaRightDown;
-        
-        if (pos.x > rightDown.position.x ||
-            pos.x < leftTop.position.x ||
-            pos.y < rightDown.position.y ||
-            pos.y > leftTop.position.y) return false;
-
-        return true;
-    }
 }
 
 public class StandardTrapPlacer : TrapPlacer
@@ -77,7 +59,8 @@ public class StandardTrapPlacer : TrapPlacer
 
     public override bool ValidatePlacement()
     {
-        return IsInPutArea(transform.position) && !IsOnMap(transform.position);
+        if (StageGridManager.Instance == null) return false;
+        return StageGridManager.Instance.CanPlaceTrapDataDriven(transform.position);
     }
 }
 
@@ -95,7 +78,8 @@ public class WallTrapPlacer : TrapPlacer
 
     public override bool ValidatePlacement()
     {
-        if (!IsInPutArea(transform.position) || IsOnMap(transform.position)) return false;
+        if (StageGridManager.Instance == null) return false;
+        if (!StageGridManager.Instance.CanPlaceTrapDataDriven(transform.position)) return false;
         return CheckSpikePlacement(transform.position, out _);
     }
 

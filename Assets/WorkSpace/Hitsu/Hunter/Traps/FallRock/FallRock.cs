@@ -89,27 +89,24 @@ public class FallRock : TiggerTrap
     //    }
     //}
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-      //  if (!isSetup) return;
+    public override void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isSetup) return;
 
-     //   if (!Condition())
-     //   {
-     //       if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
-            //{
-      //          // Runner に衝突
-         //   }
+        if (!Condition())
+        {
+            if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
+            {
+                // Runner に衝突
+                base.OnTriggerEnter2D(collision);
+            }
             // 地面または Trap に衝突
-       //     else if (IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer))
-       //     {
-
-       //         fallDone = true;
-         //       rb.bodyType = RigidbodyType2D.Static;
-                // `GridFallCoroutine` で着地判定を行っているため、ここでは着地フラグのみを操作せず、将来の処理追加用として残しています
-                // fallDone = true;
-                // rb.bodyType = RigidbodyType2D.Static;
-          //  }
-      //  }
-  //  }
+            // else if (IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer))
+            // {
+            //     fallDone = true;
+            //     rb.bodyType = RigidbodyType2D.Static;
+            // }
+        }
+    }
 
 }

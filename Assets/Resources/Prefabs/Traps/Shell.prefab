@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4440677689254905480}
   - component: {fileID: 7377751932399009394}
+  - component: {fileID: -166139883674898479}
   - component: {fileID: 1270979435120208615}
   - component: {fileID: -1061156403143304860}
   - component: {fileID: 7624651770658853353}
@@ -94,6 +95,21 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &-166139883674898479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5035210420668669555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a28eaf68e6482148aee42bbfa7e1e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrapHp
+  hp: 10
+  defenseMultiplier: 1
+  broken: 0
 --- !u!70 &1270979435120208615
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -95,4 +95,18 @@ public abstract class Trap : MonoBehaviour
     /// <param name="targetLayer">判定する Layer</param>
     /// <returns>同じ Layer の場合 true</returns>
     public bool IsGameObjectLayer(Collider2D collision, int targetLayer) => collision.gameObject.layer == targetLayer;
+
+    public virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isSetup) return;
+
+        // Runnerに当たった場合のデフォルト動作：死亡させる
+        if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
+        {
+            if (collision.TryGetComponent<Runner>(out var runner))
+            {
+                runner.Death();
+            }
+        }
+    }
 }

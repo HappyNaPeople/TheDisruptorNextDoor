@@ -2,10 +2,36 @@ using UnityEngine;
 
 public class TrapHp : MonoBehaviour
 {
-    public int hp = 3;
-    [SerializeField] bool broken = false;
+    [Tooltip("この罠の寿命（秒）。1HP = 1秒")]
+    public float hp = 10f;
+    
+    [Tooltip("防御倍率。1.0で標準ダメージ、0.5でダメージ半減（硬い）、2.0で2倍（脆い）")]
+    public float defenseMultiplier = 1.0f;
 
-    public void TakeDamage(int value, Vector2? hitPos = null)
+    [SerializeField] bool broken = false;
+    
+    private Trap _trap;
+
+    private void Start()
+    {
+        _trap = GetComponent<Trap>();
+    }
+
+    private void Update()
+    {
+        if (broken) return;
+        
+        // 落下完了などの設置準備が整ってから寿命カウントダウン開始
+        if (_trap != null && !_trap.isSetup) return;
+
+        hp -= Time.deltaTime;
+        if (hp <= 0)
+        {
+            Break();
+        }
+    }
+
+    public void TakeDamage(float value, Vector2? hitPos = null)
     {
         if (broken) return;
 
@@ -14,7 +40,7 @@ public class TrapHp : MonoBehaviour
             var hitEffect = Instantiate(Resources.Load("Prefabs/Particles/FX_Hit_01"), (Vector3)hitPos, Quaternion.identity);
         }
         
-        hp -= value;
+        hp -= (value * defenseMultiplier);
         if(hp <= 0)
         {
             Break();
@@ -24,10 +50,9 @@ public class TrapHp : MonoBehaviour
     public void Break()
     {
         broken = true;
-        Trap trap = GetComponent<Trap>();
-        if (trap != null)
+        if (_trap != null)
         {
-            trap.BrakeTheTrap();
+            _trap.BrakeTheTrap();
         }
         else
         {

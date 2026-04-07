@@ -114,7 +114,7 @@ public class Boom : TiggerTrap
     //    }
     //}
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isSetup) return;
 
@@ -122,8 +122,8 @@ public class Boom : TiggerTrap
         {
             if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
             {
-                // Runner に衝突
-
+                // Runner に衝突したら死亡させる
+                base.OnTriggerEnter2D(collision);
             }
             //  GridFallCoroutine で着地判定を行っています
             // else if (IsGameObjectLayer(collision, UseLayerName.platformLayer)) fallDone = true;

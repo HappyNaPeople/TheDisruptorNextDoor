@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -19,6 +19,9 @@ public class Runner : MonoBehaviour
     public float inAirDamping = 5f;
     public Vector2 attackBoxOffset = Vector2.zero;
     public Vector2 attackBoxSize = Vector2.zero;
+    
+    [Tooltip("パンチの威力（罠の寿命を何秒削るか）")]
+    public float punchDamage = 5f;
 
 
     public enum PlayerState
@@ -28,9 +31,29 @@ public class Runner : MonoBehaviour
         Jumping = 2,    // ジャンプ中（移動可能）
         Attacking = 3,  // 攻撃中（操作不能）
         Knockback = 4,  // ノックバック中（操作不能）
+        Grabbed = 5,    // 捕獲・拘束中（操作不能、干渉により移動）
     }
     [Header("プレイヤーの状態")]
     public PlayerState currentState = PlayerState.Normal;
+
+    // --- モディファイア（干渉物）リスト ---
+    public System.Collections.Generic.List<IPlayerMovementModifier> activeModifiers = new System.Collections.Generic.List<IPlayerMovementModifier>();
+
+    public void AddModifier(IPlayerMovementModifier modifier)
+    {
+        if (!activeModifiers.Contains(modifier))
+        {
+            activeModifiers.Add(modifier);
+        }
+    }
+
+    public void RemoveModifier(IPlayerMovementModifier modifier)
+    {
+        if (activeModifiers.Contains(modifier))
+        {
+            activeModifiers.Remove(modifier);
+        }
+    }
 
 
     [Header("リスポーン設定")]
@@ -64,6 +87,8 @@ public class Runner : MonoBehaviour
         _controller = GetComponent<CharacterController2D>();
         _inputDevice = GameManager.inputDevice;
         _animator = GetComponent<Animator>();
+        
+        activeModifiers.Clear();
 
         _controller.onTriggerEnterEvent += OnControllerTriggerEnter;
         _controller.onTriggerExitEvent += OnControllerTriggerExit;
@@ -76,31 +101,11 @@ public class Runner : MonoBehaviour
 
     void OnControllerTriggerEnter(Collider2D col)
     {
-        if (col.TryGetComponent<Trap>(out var trap))
-        {
-            CheckTrap(trap);
-        }
+        // 罠などの判定は罠側かモディファイアで行うため、Runner側では感知不要
     }
     void OnControllerTriggerExit(Collider2D col)
     {
 
-    }
-
-    void CheckTrap(Trap trap)
-    {
-        switch (trap.trapName)
-        {
-            case TrapName.JumpPad:
-                if (trap.TryGetComponent<JumpPad>(out var jumpPad))
-                {
-                    ExecuteJump(jumpPad.direction);
-                }
-                break;
-
-            default:
-                Death();
-                break;
-        }
     }
 
     public void ExecuteJump(Vector2 vector)
@@ -130,7 +135,7 @@ public class Runner : MonoBehaviour
         {
             if (hit.TryGetComponent<TrapHp>(out var trapHp))
             {
-                trapHp.TakeDamage(1, hit.ClosestPoint(transform.position));
+                trapHp.TakeDamage(punchDamage, hit.ClosestPoint(transform.position));
             }
         }
     }
@@ -142,6 +147,7 @@ public class Runner : MonoBehaviour
 
         ChangeState(PlayerState.Dead);
         _velocity = Vector2.zero;
+        activeModifiers.Clear();
     }
 
     public void Respawn()
@@ -155,6 +161,7 @@ public class Runner : MonoBehaviour
 
         var scale = transform.localScale;
         transform.localScale = new Vector2(Mathf.Abs(scale.x), scale.y);
+        activeModifiers.Clear();
     }
 
     #region move
@@ -178,13 +185,24 @@ public class Runner : MonoBehaviour
         CheckPunch();
 
         // 3. 重力を適用
-        _velocity.y += gravity * dt;
+        float currentGravity = gravity;
+        foreach (var mod in activeModifiers)
+        {
+            currentGravity = mod.ModifyGravity(currentGravity);
+        }
+        _velocity.y += currentGravity * dt;
 
-        // 4. 最終的な移動実行（ここだけが「動かす」処理）
+        // 4. モディファイアによる最終速度の上書き・ベクトル干渉（引き寄せやくっつき等）
+        foreach (var mod in activeModifiers)
+        {
+            mod.ModifyVelocity(ref _velocity, dt);
+        }
+
+        // 5. 最終的な移動実行（ここだけが「動かす」処理）
         _controller.move(_velocity * dt);
         _velocity = _controller.velocity;
 
-        // 5. アニメーター更新
+        // 6. アニメーター更新
         _animator.SetBool("IsGrounded", _controller.isGrounded);
         _isPhysicsReserved = false;
     }
@@ -226,17 +244,28 @@ public class Runner : MonoBehaviour
                 // 攻撃中は急に止まるか、少しだけ滑らせるか
                 ApplyFriction(dt);
                 break;
+                
+            case PlayerState.Grabbed:
+                // 捕獲中（自力移動不可・モディファイアが勝手に velocity を書き換える）
+                break;
         }
     }
 
     void CheckJump()
     {
         if (_isPhysicsReserved) return;
+        if (currentState == PlayerState.Grabbed) return; // 捕獲中はジャンプ不可
         if (!inputData.isJumpPressed) return;
         // ジャンプ処理
         if (_controller.isGrounded)
         {
-            _velocity += CalculateInitialVelocity(new Vector2(0f, jumpHeight));
+            float currentJumpHeight = jumpHeight;
+            foreach (var mod in activeModifiers)
+            {
+                currentJumpHeight = mod.ModifyJumpHeight(currentJumpHeight);
+            }
+
+            _velocity += CalculateInitialVelocity(new Vector2(0f, currentJumpHeight));
             _animator.SetTrigger("Jump");
 
             ChangeState(PlayerState.Jumping);
@@ -246,6 +275,7 @@ public class Runner : MonoBehaviour
     void CheckPunch()
     {
         if (_isPhysicsReserved) return;
+        if (currentState == PlayerState.Grabbed) return; // 捕獲中はパンチ不可
         if (!inputData.isPunchPressed) return;
         if (currentState == PlayerState.Attacking) return;
 
@@ -263,11 +293,19 @@ public class Runner : MonoBehaviour
         // 入力値（-1, 0, 1）を取得
         float horizontalInput = inputData.moveInput.x;
 
-        // 加減速を滑らかにする（Lerpを使用）
-        float targetSpeed = horizontalInput * runSpeed;
-        float acceleration = _controller.isGrounded ? groundDamping : inAirDamping;
+        float currentSpeed = runSpeed;
+        float currentDamping = _controller.isGrounded ? groundDamping : inAirDamping;
 
-        _velocity.x = Mathf.Lerp(_velocity.x, targetSpeed, Time.deltaTime * acceleration);
+        foreach (var mod in activeModifiers)
+        {
+            currentSpeed = mod.ModifyRunSpeed(currentSpeed);
+            currentDamping = mod.ModifyDamping(currentDamping);
+        }
+
+        // 加減速を滑らかにする（Lerpを使用）
+        float targetSpeed = horizontalInput * currentSpeed;
+
+        _velocity.x = Mathf.Lerp(_velocity.x, targetSpeed, Time.deltaTime * currentDamping);
 
         if (horizontalInput == 0f)
         {

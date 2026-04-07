@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7869790805147259585}
+  - component: {fileID: -3852607037879112266}
   - component: {fileID: 4399644938475421022}
   - component: {fileID: 767499712744212835}
   - component: {fileID: 6340390934987212442}
@@ -35,6 +36,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-3852607037879112266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5335722494462236538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a28eaf68e6482148aee42bbfa7e1e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrapHp
+  hp: 20
+  defenseMultiplier: 1
+  broken: 0
 --- !u!114 &4399644938475421022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,7 +68,11 @@ MonoBehaviour:
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
+  currentGridPos: {x: 0, y: 0}
+  originGridPos: {x: 0, y: 0}
   fallSpeed: 8
+  riseSpeed: 3
+  stayBottomTime: 1
 --- !u!212 &767499712744212835
 SpriteRenderer:
   serializedVersion: 2
