@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1470197238404938414}
+  - component: {fileID: -5038290525856360240}
   - component: {fileID: 152550564319404108}
   - component: {fileID: 4126768115288998832}
   - component: {fileID: 1439648983088521836}
@@ -36,6 +37,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &-5038290525856360240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2809853050627946278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a28eaf68e6482148aee42bbfa7e1e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrapHp
+  hp: 30
+  defenseMultiplier: 0
+  broken: 0
 --- !u!198 &152550564319404108
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4899,6 +4915,7 @@ MonoBehaviour:
   maxPullForce: 50
   acceleration: 5
   damageHitboxRadius: 1
+  maxTravelDistance: 70
   warningParticles: {fileID: 152550564319404108}
   coreParticles: {fileID: 152550564319404108}
 --- !u!50 &6496700216214343239

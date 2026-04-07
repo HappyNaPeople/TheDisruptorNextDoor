@@ -19,6 +19,9 @@ public class Runner : MonoBehaviour
     public float inAirDamping = 5f;
     public Vector2 attackBoxOffset = Vector2.zero;
     public Vector2 attackBoxSize = Vector2.zero;
+    
+    [Tooltip("パンチの威力（罠の寿命を何秒削るか）")]
+    public float punchDamage = 5f;
 
 
     public enum PlayerState
@@ -132,7 +135,7 @@ public class Runner : MonoBehaviour
         {
             if (hit.TryGetComponent<TrapHp>(out var trapHp))
             {
-                trapHp.TakeDamage(1, hit.ClosestPoint(transform.position));
+                trapHp.TakeDamage(punchDamage, hit.ClosestPoint(transform.position));
             }
         }
     }
