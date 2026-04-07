@@ -44,14 +44,14 @@ public class Spikes : InstallationTrap
     /// <summary>
     /// 衝突判定
     /// </summary>
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isSetup) return;
 
         // Runner に当たった場合
         if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
         {
-
+            base.OnTriggerEnter2D(collision);
             Debug.Log("Hit Runner");
         }
         // 地面または Trap に当たった場合
