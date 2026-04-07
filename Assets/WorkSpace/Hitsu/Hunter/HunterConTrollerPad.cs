@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -366,11 +366,6 @@ public class HunterConTrollerPad : MonoBehaviour
     #region PuttingTrap
 
     [Header("PuttingTrap")]
-    // Trap を設置できるエリアの左上座標
-    public Transform putAreaLeftTop;
-    // Trap を設置できるエリアの右下座標
-    public Transform putAreaRightDown;
-
     // グリッドスナップを使用するかどうか
     public bool isGrid = true;
 
@@ -394,29 +389,7 @@ public class HunterConTrollerPad : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 指定された座標が設置可能エリア内にあるか判定する
-    /// </summary>
-    /// <param name="leftTop">設置エリア左上座標</param>
-    /// <param name="rightDown">設置エリア右下座標</param>
-    /// <param name="trap">判定対象の座標</param>
-    /// <returns>エリア内なら true</returns>
-    private bool IsInPutArea(Vector3 trap)
-    {
-        if (trap.x > putAreaRightDown.position.x ||
-            trap.x < putAreaLeftTop.position.x ||
-            trap.y < putAreaRightDown.position.y ||
-            trap.y > putAreaLeftTop.position.y) return false;
 
-        return true;
-    }
-
-    private int mask = UseLayerName.platformLayer | UseLayerName.trapLayer | UseLayerName.noPutAreaLayer;
-
-    /// <summary>
-    /// マップ上に Trap を設置しようとしているか判定
-    /// </summary>
-    private bool IsOnMap() => Physics2D.OverlapPoint(cursorPos, mask) != null;
 
     // プレビュー中の Trap
     private GameObject choseTrap;
