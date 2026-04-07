@@ -70,6 +70,7 @@ MonoBehaviour:
   isSetup: 0
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
+  setupLagTime: 0.5
   fallSpeed: 8
   riseSpeed: 3
   stayBottomTime: 1

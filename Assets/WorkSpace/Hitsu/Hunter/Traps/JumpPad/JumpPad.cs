@@ -49,12 +49,15 @@ public class JumpPad : InstallationTrap
 
 
     /// <summary>
-    /// Trap 設置処理
-    /// </summary>
     public override void SetUp()
     {
         base.SetUp();
-        // 落下して設置
+        // 設置指示を出す（フェードイン開始）
+    }
+
+    protected override void OnSetupComplete()
+    {
+        // 実体化完了後に落下開始
         StartCoroutine(FallAndSetUp());
     }
 

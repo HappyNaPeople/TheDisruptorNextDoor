@@ -24,14 +24,15 @@ public class Boom : TiggerTrap
         base.Init();
         trapName = TrapName.Boom;
     }
-    /// <summary>
-    /// Trap 設置処理
-    /// </summary>
     public override void SetUp()
     {
         base.SetUp();
-        gameObject.layer = UseLayerName.trapLayer;
-        // Trap 動作開始
+        // Trap 動作開始の指示（フェードイン開始）
+    }
+
+    protected override void OnSetupComplete()
+    {
+        // 実体化完了後に稼働開始
         StartCoroutine(TrapRule());
     }
     // 落下完了フラグ　 

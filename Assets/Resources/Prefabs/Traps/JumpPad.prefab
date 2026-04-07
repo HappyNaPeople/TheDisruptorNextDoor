@@ -346,6 +346,7 @@ MonoBehaviour:
   isSetup: 0
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
+  setupLagTime: 0.3
   isFallDone: 0
   pushForce: 30
   boxPart: {fileID: 3346834240279448763}
