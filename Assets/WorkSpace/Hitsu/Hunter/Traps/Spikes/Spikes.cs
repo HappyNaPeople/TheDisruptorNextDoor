@@ -17,13 +17,15 @@ public class Spikes : InstallationTrap
         // 設置コスト
         cost = 1;
     }
-    /// <summary>
-    /// Trap 設置処理
-    /// </summary>
     public override void SetUp()
     {
         base.SetUp();
-        // Spikes は壁/床にくっついて落下しないので FallAndSetUp は呼ばず、即座にLayerと物理設定を確定する
+        // フェードイン開始
+    }
+
+    protected override void OnSetupComplete()
+    {
+        // Spikes は壁/床にくっついて落下しないので FallAndSetUp は呼ばず、実体化後にLayerと物理設定を確定する
         gameObject.layer = UseLayerName.trapLayer;
         if (gameObject.transform.childCount > 0)
         {

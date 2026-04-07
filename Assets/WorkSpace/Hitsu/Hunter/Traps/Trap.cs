@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 /// <summary>
@@ -13,7 +13,8 @@ public enum TrapName
     ChaseEnemy,
     BlackHole,
     Shell,
-    FireBar
+    FireBar,
+    SensorBoom
 }
 
 /// <summary>
@@ -43,6 +44,8 @@ public abstract class Trap : MonoBehaviour
     public Vector2Int currentGridPos;
     // 初期の配置座標（上昇処理などで記憶しておく用）
     public Vector2Int originGridPos;
+    // フェードインにかかる時間
+    public float fadeInDuration = 1.0f;
 
     /// <summary>
     /// Trap の初期化処理
@@ -71,6 +74,58 @@ public abstract class Trap : MonoBehaviour
             originGridPos = currentGridPos;
             StageGridManager.Instance.RegisterTrap(currentGridPos);
         }
+
+        // フェードイン開始
+        StartCoroutine(FadeInCoroutine());
+    }
+
+    protected IEnumerator FadeInCoroutine()
+    {
+        SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+        float elapsedTime = 0f;
+
+        // 初期アルファ値を0に設定
+        foreach (var renderer in renderers)
+        {
+            Color color = renderer.color;
+            color.a = 0f;
+            renderer.color = color;
+        }
+
+        // フェードイン処理
+        while (elapsedTime < fadeInDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Clamp01(elapsedTime / fadeInDuration);
+
+            foreach (var renderer in renderers)
+            {
+                Color color = renderer.color;
+                color.a = alpha;
+                renderer.color = color;
+            }
+            yield return null;
+        }
+
+        // アルファ値を1に固定
+        foreach (var renderer in renderers)
+        {
+            Color color = renderer.color;
+            color.a = 1f;
+            renderer.color = color;
+        }
+
+        // フェードイン完了時の処理を呼び出し
+        OnSetupComplete();
+    }
+
+    /// <summary>
+    /// フェードインを含む設置処理が完全に完了した際に呼ばれる
+    /// 各トラップで必要な物理挙動の開始などを実装する
+    /// </summary>
+    protected virtual void OnSetupComplete()
+    {
+        // デフォルトでは何もしない（子クラスでオーバーライド）
     }
 
     protected virtual void Update() { }
@@ -86,7 +141,7 @@ public abstract class Trap : MonoBehaviour
         }
     }
 
-    public virtual void BrakeTheTrap() => InGame.Instance.hunterConTrollerPad.DestroyTrap(this);
+    public virtual void BrakeTheTrap() => Destroy(gameObject);
 
     /// <summary>
     /// 衝突した GameObject が指定した Layer かどうかを判定する

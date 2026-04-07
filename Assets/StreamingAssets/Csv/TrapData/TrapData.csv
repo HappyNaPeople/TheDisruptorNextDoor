@@ -7,3 +7,4 @@ ChaseEnemy,Texture/Traps/ChaseEnemy,5,ChaseEnemy,Prefabs/Traps/ChaseEnemy
 BlackHole,Texture/Traps/BlackHole,6,BlackHole,Prefabs/Traps/BlackHole
 Shell,Texture/Traps/FallRock1,7,Shell(Koura),Prefabs/Traps/Shell
 FireBar,Texture/Traps/FireBar,8,FireBar,Prefabs/Traps/FireBar
+SensorBoom,Texture/Traps/Boom,3,SensorBoom,Prefabs/Traps/SensorBoom

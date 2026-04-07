@@ -63,17 +63,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6115bbfbbcc22488af48fb57107ad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Boom
-  trapName: 0
+  trapName: 2
   cost: 0
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
+  fadeInDuration: 1
+  activationType: 0
   fallSpeed: 8
   waitForBoom: 2
   boomArea: 2
+  detectionRadius: 3
   flame: {fileID: 0}
+  explosionHitboxDelay: 0
 --- !u!212 &9068236169488280652
 SpriteRenderer:
   serializedVersion: 2

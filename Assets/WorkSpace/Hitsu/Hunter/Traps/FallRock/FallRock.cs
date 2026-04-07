@@ -22,12 +22,15 @@ public class FallRock : TiggerTrap
         base.Init();
         trapName = TrapName.FallRock;
     }
-    /// <summary>
-    /// Trap 設置処理
-    /// </summary>
     public override void SetUp()
     {
         base.SetUp();
+        // 設置指示を出す（フェードイン開始）
+    }
+
+    protected override void OnSetupComplete()
+    {
+        // 実体化完了後に稼働開始
         StartCoroutine(TrapRule());
     }
     // 落下完了フラグ
