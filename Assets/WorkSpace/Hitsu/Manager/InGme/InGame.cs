@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// ゲー??の進行管?ク?ス。
@@ -42,7 +43,7 @@ public class InGame : MonoBehaviour
     /// <summary>
     /// タイマー開始値
     /// </summary>
-    public const float timerStart = 5.0f;
+    public const float timerStart = 150.0f;
 
     /// <summary>
     /// 現在の残り?間
@@ -320,6 +321,7 @@ public class InGame : MonoBehaviour
         //
         yield return null;
 
+        SceneManager.LoadScene("Release");
     }
 
     #endregion
@@ -410,15 +412,7 @@ public class InGame : MonoBehaviour
     /// </summary>
     private void TurnSwitch()
     {
-        // --- Turn 更新 ---
-        nowPlayTurn++;
-        Debug.Log($"Turn : {nowPlayTurn}");
-        // --- GameSet 判定 ---
-        if (gameSet)
-        {
-            StartCoroutine(GameSet());
-            return;
-        }
+
         Player.Job job1 = _player01.job;
         Player.Job job2 = _player02.job;
         // --- 安全檢查 ---
@@ -438,6 +432,18 @@ public class InGame : MonoBehaviour
         {
             Debug.LogWarning("Starting Point, Goal, Check Points someone is null");
         }
+
+        // --- Turn 更新 ---
+        nowPlayTurn++;
+        Debug.Log($"Turn : {nowPlayTurn}");
+        // --- GameSet 判定 ---
+        if (gameSet)
+        {
+            StartCoroutine(GameSet());
+            return;
+        }
+
+
         // --- Job 交換 ---
         _player01.SetJob(job2);
         _player02.SetJob(job1);

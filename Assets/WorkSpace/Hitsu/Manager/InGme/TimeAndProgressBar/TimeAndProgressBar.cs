@@ -142,10 +142,10 @@ public class TimeAndProgressBar : MonoBehaviour
         timerUI = StartCoroutine(TimerUI());
 
         // InGameで startingPoint と goal が未設定の場合、進行率が正しく計算できないため使用不可
-        //progressBarUI = StartCoroutine(ProgressBarUI());
+        progressBarUI = StartCoroutine(ProgressBarUI());
 
         // InGameで checkPoints が正しく設定されていない場合、チェックポイントUIが正常に動作しないため使用不可
-        //checkPointUI = StartCoroutine(CheckPointUI());
+        checkPointUI = StartCoroutine(CheckPointUI());
     }
 
 
