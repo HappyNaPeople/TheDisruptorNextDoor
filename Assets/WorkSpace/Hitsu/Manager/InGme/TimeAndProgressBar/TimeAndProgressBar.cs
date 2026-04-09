@@ -20,6 +20,7 @@ public class TimeAndProgressBar : MonoBehaviour
     public Image timerImage;           // タイマーゲージ
     public TMP_Text timerText;         // タイマー数値
     public Slider progressBar;         // 進行度スライダー
+    public TMP_Text passed;         // タイマー数値
 
 
     //==============================
@@ -115,12 +116,24 @@ public class TimeAndProgressBar : MonoBehaviour
     //==============================
     // ProgressBar UI
     //==============================
+
+    private void PassedText()
+    {
+        passed.text = $"Passed : {InGame.Instance.passedDistance} / {InGame.startToGoalMeter}";
+    }
+
     private IEnumerator ProgressBarUI()
     {
+        float progress = 0;
         while (true)
         {
             // 進行率（0〜1）を取得
-            progressBar.value = InGame.Instance.percentOfPassedDistance;
+            if (InGame.Instance.percentOfPassedDistance> progress)
+            {
+                progress = InGame.Instance.percentOfPassedDistance;
+                progressBar.value = progress;
+                PassedText();
+            }
             // 次のフレームへ
             yield return null;
         }

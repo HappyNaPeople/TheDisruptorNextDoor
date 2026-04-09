@@ -113,7 +113,7 @@ public class InGame : MonoBehaviour
     /// ゴール地点
     /// </summary>
     public Transform goal;
-    public const int startToGoalMeter = 300;
+    public const int startToGoalMeter = 400;
     public void SetUpGoal(Transform target) => goal = target;
 
 
@@ -140,6 +140,8 @@ public class InGame : MonoBehaviour
             else return Mathf.Clamp01(1f - (distanceOfPlayerPosToGoal / distanceOfStartToGoal));
         }
     }
+
+    public int passedDistance => Mathf.FloorToInt(percentOfPassedDistance * startToGoalMeter);
     /// <summary>
     /// チェックポイント一覧
     /// </summary>
@@ -243,13 +245,14 @@ public class InGame : MonoBehaviour
     private void TrapListInit()
     {
         // List が存在する場合のみ処理
-        if (allTheTrap != null && allTheTrap.Count == 0)
+        if (allTheTrap != null && allTheTrap.Count != 0)
         {
+            allTheTrap.RemoveAll(trap => trap == null);
             // 既存 Trap をすべて削除
             foreach (GameObject trapGameObject in allTheTrap) if (trapGameObject != null) Destroy(trapGameObject);
         }
         // List を初期化（null の可能性にも対応）
-        if (allTheTrap == null)allTheTrap = new List<GameObject>();
+        else if (allTheTrap == null)allTheTrap = new List<GameObject>();
         else allTheTrap.Clear();
     }
 
@@ -279,6 +282,8 @@ public class InGame : MonoBehaviour
         if (allTheTrap.Contains(trapGameObject)) allTheTrap.Remove(trapGameObject);
         else Debug.LogWarning($"{trapGameObject.name} はリストに追加されていません ");
     }
+
+
 
     #endregion
 
@@ -378,6 +383,7 @@ public class InGame : MonoBehaviour
     /// </summary>
     private void TurnInit()
     {
+        GameManager.Instance.Game_PlayerInputAssign();
 
         hunterConTrollerPad.HunterSwitch((_player01.job == Player.Job.Hunter ? _player01 : _player02));
 
@@ -396,14 +402,9 @@ public class InGame : MonoBehaviour
 
     private void InGame_Init()
     {
-        Player.Job job1 = _player01.job;
-        Player.Job job2 = _player02.job;
+        _player01.SetJob(Player.Job.Runner);
+        _player02.SetJob(Player.Job.Hunter);
 
-        if (job1 == Player.Job.None && job2 == Player.Job.None)
-        {
-            _player01.SetJob(Player.Job.Runner);
-            _player02.SetJob(Player.Job.Hunter);
-        }
         TurnInit();
     }
 
@@ -448,7 +449,6 @@ public class InGame : MonoBehaviour
         _player01.SetJob(job2);
         _player02.SetJob(job1);
 
-        GameManager.Instance.Game_PlayerInputAssign();
         // --- 初始化 ---
         TurnInit();
 
