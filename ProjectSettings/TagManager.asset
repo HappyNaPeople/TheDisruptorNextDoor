@@ -37,7 +37,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - NoPostProcess
   - 
   m_SortingLayers:
   - name: Default
