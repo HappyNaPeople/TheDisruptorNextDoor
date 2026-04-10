@@ -72,8 +72,9 @@ MonoBehaviour:
   originGridPos: {x: 0, y: 0}
   fadeInDuration: 1
   maxPullForce: 200
-  groundResistanceMultiplier: 0.4
+  groundResistanceMultiplier: 0.95
   killRadius: 0.3
+  activeEffectPrefab: {fileID: 7611065387920664106, guid: ff370710a4d938044b4640a65867d8ba, type: 3}
 --- !u!50 &6496700216214343239
 Rigidbody2D:
   serializedVersion: 5
@@ -186,7 +187,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  m_Sprite: {fileID: -3851159526932875425, guid: 25207b60378c63d42bb4b729f8218789, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
