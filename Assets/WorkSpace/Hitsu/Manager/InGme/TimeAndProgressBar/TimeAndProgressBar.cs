@@ -61,6 +61,8 @@ public class TimeAndProgressBar : MonoBehaviour
     //==============================
     private IEnumerator TimerUI()
     {
+        yield return null;
+
         // 初期の秒数を取得
         int recodedTimer = InGame.Instance.NowTimeToInt();
         // 初期表示
@@ -87,6 +89,8 @@ public class TimeAndProgressBar : MonoBehaviour
     //==============================
     private IEnumerator CheckPointUI()
     {
+        yield return null;
+
         // 初期状態：全てのチェックポイントを未達成（false）に設定
         for (int i = 0; i < _checkPoints.Count; i++)
         {
@@ -124,6 +128,8 @@ public class TimeAndProgressBar : MonoBehaviour
 
     private IEnumerator ProgressBarUI()
     {
+        yield return null;
+
         float progress = 0;
         while (true)
         {

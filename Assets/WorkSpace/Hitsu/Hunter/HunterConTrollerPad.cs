@@ -529,6 +529,8 @@ public class HunterConTrollerPad : MonoBehaviour
     public void HunterInit()
     {
         hunterCursor.Init(this);
+        timeAndProgressBar.ProgressBarInit();
+
     }
 
     /// <summary>

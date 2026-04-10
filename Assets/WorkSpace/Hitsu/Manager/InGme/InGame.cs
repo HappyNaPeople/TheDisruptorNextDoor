@@ -90,6 +90,107 @@ public class InGame : MonoBehaviour
 
     #endregion
 
+    #region Map
+
+    public MapBasic useMap; /* {  get; private set; }*/
+
+    public void SettingMap(MapBasic target) => useMap = target;
+    /// <summary>
+    /// スタート地点
+    /// </summary>
+    public Transform startingPoint;
+    public void SetUpStartingPoint(Transform target) => startingPoint = target;
+
+    /// <summary>
+    /// ゴール地点
+    /// </summary>
+    public Transform goal;
+    public void SetUpGoal(Transform target) => goal = target;
+
+    /// <summary>
+    /// チェックポイント一覧
+    /// </summary>
+    public List<Transform> checkPoints;
+
+    public void SetUpCheckPoints(Transform[] target)
+    {
+        if (target == null)
+        {
+            Debug.LogWarning("Cant setup the CheckPoints");
+            return;
+        }
+        checkPoints.Clear();
+        checkPoints.AddRange(target);
+
+        CheckPointsDictInit();
+    }
+
+
+    /// <summary>
+    /// リスポーン地点
+    /// </summary>
+    public Transform playerRespawnTs;
+
+    /// <summary>
+    /// チェックポイント初期化
+    /// ・全て未通過にリセット
+    /// </summary>
+    private void CheckPointsDictInit()
+    {
+        // 既存データをクリア
+        checkPointsDict.Clear();
+        // 全チェックポイントを未通過（false）で登録
+
+        foreach (Transform transform in checkPoints)
+        {
+            checkPointsDict[transform] = false;
+        }
+
+        // 通過数リセット
+        passCheckPoint = 0;
+
+        playerRespawnTs = startingPoint;
+    }
+
+
+    /// <summary>
+    /// チェックポイント通過処理
+    /// </summary>
+    /// <param name="targetPoint">通過したチェックポイント</param>
+    public void PassCheckPoint(Transform targetPoint)
+    {
+        // チェックポイント一覧に存在しない場合は警告
+        if (!checkPoints.Contains(targetPoint))
+        {
+            Debug.LogWarning($"This Point doesn't inside the checkPoint's List" +
+                $"\n {targetPoint.gameObject.name}" +
+                $"\n {targetPoint.position}");
+
+            return;
+        }
+        // Dictionaryに登録（通過済みに設定）
+        checkPointsDict[targetPoint] = true;
+        // リスポーン地点更新
+        playerRespawnTs = targetPoint;
+
+        passCheckPoint = Mathf.Min(passCheckPoint + 1, checkPoints.Count);
+
+    }
+
+
+    private void MapInit()
+    {
+        if (useMap != null)
+        {
+            startingPoint = useMap.startingTs;
+            goal = useMap.goalTs;
+            SetUpCheckPoints(useMap.checkPointsTs);
+        }
+        //StageGridManager.Instance.BuildGridMap();
+    }
+
+    #endregion
+
     #region ProgressBar
 
     /// <summary>
@@ -102,19 +203,8 @@ public class InGame : MonoBehaviour
     /// </summary>
     private Vector2 runningPlayerPos => (Vector2)runner.transform.position;
 
-    /// <summary>
-    /// スタート地点
-    /// </summary>
-    public Transform startingPoint;
 
-    public void SetUpStartingPoint(Transform target) => startingPoint = target;
-
-    /// <summary>
-    /// ゴール地点
-    /// </summary>
-    public Transform goal;
     public const int startToGoalMeter = 400;
-    public void SetUpGoal(Transform target) => goal = target;
 
 
     /// <summary>
@@ -142,24 +232,6 @@ public class InGame : MonoBehaviour
     }
 
     public int passedDistance => Mathf.FloorToInt(percentOfPassedDistance * startToGoalMeter);
-    /// <summary>
-    /// チェックポイント一覧
-    /// </summary>
-    public List<Transform> checkPoints;
-
-    public void SetUpCheckPoints(List<Transform> target)
-    {
-        if (target == null)
-        {
-            Debug.LogWarning("Cant setup the CheckPoints");
-            return;
-        }
-        checkPoints.Clear();
-        checkPoints.AddRange(target);
-        target.Clear();
-
-        CheckPointsDictInit();
-    }
 
     /// <summary>
     /// チェックポイント状態管理
@@ -167,56 +239,10 @@ public class InGame : MonoBehaviour
     /// ・false = 未通過
     /// </summary>
     public Dictionary<Transform, bool> checkPointsDict = new Dictionary<Transform, bool>();
-    /// <summary>
-    /// リスポーン地点
-    /// </summary>
-    public Transform playerRespawnPos { get; private set; }
+
 
     private bool IsPointsNull() => startingPoint == null || goal == null || checkPoints == null;
 
-    /// <summary>
-    /// チェックポイント通過処理
-    /// </summary>
-    /// <param name="targetPoint">通過したチェックポイント</param>
-    public void PassCheckPoint(Transform targetPoint)
-    {
-        // チェックポイント一覧に存在しない場合は警告
-        if (!checkPoints.Contains(targetPoint))
-        {
-            Debug.LogWarning($"This Point doesn't inside the checkPoint's List" +
-                $"\n {targetPoint.gameObject.name}" +
-                $"\n {targetPoint.position}");
-
-            return;
-        }
-        // Dictionaryに登録（通過済みに設定）
-        checkPointsDict[targetPoint] = true;
-        // リスポーン地点更新
-        playerRespawnPos = targetPoint;
-
-        passCheckPoint = Mathf.Min(passCheckPoint + 1, checkPoints.Count);
-
-    }
-    /// <summary>
-    /// チェックポイント初期化
-    /// ・全て未通過にリセット
-    /// </summary>
-    private void CheckPointsDictInit()
-    {
-        // 既存データをクリア
-        checkPointsDict.Clear();
-        // 全チェックポイントを未通過（false）で登録
-
-        foreach (Transform transform in checkPoints)
-        {
-            checkPointsDict[transform] = false;
-        }
-
-        // 通過数リセット
-        passCheckPoint = 0;
-
-        playerRespawnPos = startingPoint;
-    }
 
 
 
@@ -347,6 +373,8 @@ public class InGame : MonoBehaviour
 
     #region Initialization
 
+    public void RunnerRespawn() => runner.gameObject.transform.position = playerRespawnTs.position;
+
     /// <summary>
     /// Runner ?期化??
     /// </summary>
@@ -360,6 +388,8 @@ public class InGame : MonoBehaviour
     {
         hunterConTrollerPad.HunterInit();
     }
+
+
 
     /// <summary>
     /// カメラの表示先ディスプレイを設定する
@@ -392,6 +422,9 @@ public class InGame : MonoBehaviour
         DisPlayInit();
 
         CheckPointsDictInit();
+
+        RunnerRespawn();
+
         // タイマー再スタート
         TimerStart();
 
@@ -400,10 +433,22 @@ public class InGame : MonoBehaviour
 
     #endregion
 
+    /// <summary>
+    /// ゲームの初期化
+    /// 1.マップの初期化
+    /// 2.プレイヤーの仕事の設定
+    /// 3.仕事の初期化
+    /// 4.ターンの初期化
+    /// </summary>
     private void InGame_Init()
     {
+        MapInit();
+
         _player01.SetJob(Player.Job.Runner);
         _player02.SetJob(Player.Job.Hunter);
+
+        RunnerInit();
+        HunterInit();
 
         TurnInit();
     }
@@ -469,8 +514,7 @@ public class InGame : MonoBehaviour
     private void Start()
     {
         InGame_Init();
-        RunnerInit();
-        HunterInit();
+
     }
 
     // デバッグ用
