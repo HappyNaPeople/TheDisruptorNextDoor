@@ -14,7 +14,8 @@ public enum TrapName
     BlackHole,
     Shell,
     FireBar,
-    SensorBoom
+    SensorBoom,
+    WindTrap
 }
 
 /// <summary>
@@ -81,6 +82,14 @@ public abstract class Trap : MonoBehaviour
 
     protected IEnumerator FadeInCoroutine()
     {
+        gameObject.layer = UseLayerName.trapLayer;
+        if (transform.childCount > 0)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.layer = UseLayerName.trapLayer;
+            }
+        }
         SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
         float elapsedTime = 0f;
 

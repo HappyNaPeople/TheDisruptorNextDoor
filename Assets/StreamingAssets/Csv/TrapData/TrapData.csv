@@ -1,10 +1,11 @@
 ﻿罠の名前,写真(Path),コース,説明,プレハブ(Path)
 Spikes,Texture/Traps/Spike,1,Spikes,Prefabs/Traps/Spikes
 FallRock,Texture/Traps/FallRock,2,FallRock,Prefabs/Traps/FallRock
-Boom,Texture/Traps/Boom,3,Boom,Prefabs/Traps/Boom
+Boom,Texture/Traps/SR_Red-Bomb_01,3,Boom,Prefabs/Traps/Boom
 JumpPad,Texture/Traps/JumpPad,4,JumpPad,Prefabs/Traps/JumpPad
 ChaseEnemy,Texture/Traps/ChaseEnemy,5,ChaseEnemy,Prefabs/Traps/ChaseEnemy
-BlackHole,Texture/Traps/BlackHole,6,BlackHole,Prefabs/Traps/BlackHole
+BlackHole,Texture/Traps/SR_BlackHole_01,6,BlackHole,Prefabs/Traps/BlackHole
 Shell,Texture/Traps/FallRock1,7,Shell(Koura),Prefabs/Traps/Shell
 FireBar,Texture/Traps/FireBar,8,FireBar,Prefabs/Traps/FireBar
-SensorBoom,Texture/Traps/Boom,3,SensorBoom,Prefabs/Traps/SensorBoom
+SensorBoom,Texture/Traps/SR_Blue-Bomb_01,3,SensorBoom,Prefabs/Traps/SensorBoom
+WindTrap,Texture/Traps/SR_BlackHole_01,3,Wind,Prefabs/Traps/WindTrap

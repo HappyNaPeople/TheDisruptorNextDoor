@@ -19,6 +19,11 @@ public class BlackHoleTrap : TiggerTrap
     [Tooltip("即死判定となる中心からの距離")]
     public float killRadius = 0.3f;
 
+    [Header("Visual Effects")]
+    [Tooltip("ブラックホールが稼働を開始した時に表示するエフェクト")]
+    public GameObject activeEffectPrefab; // ★追加：発動時のエフェクト
+    private GameObject spawnedEffect;     // ★追加：生成したエフェクトの保持用
+
     // トラップの吸い込み範囲の半径（コライダーから自動取得）
     private float pullRadius;
 
@@ -38,14 +43,14 @@ public class BlackHoleTrap : TiggerTrap
             // 半径を計算
             pullRadius = pullCollider.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.y);
 
-            // ★配置システムに干渉しないように、実体化するまではコライダーをオフにしておく！
+            // 配置システムに干渉しないように、実体化するまではコライダーをオフにしておく！
             pullCollider.enabled = false;
         }
     }
 
     protected override void OnSetupComplete()
     {
-        // ★設置完了（実体化）したら、吸い込み判定をオンにする！
+        // 設置完了（実体化）したら、吸い込み判定をオンにする！
         if (pullCollider != null)
         {
             pullCollider.enabled = true;
@@ -102,6 +107,9 @@ public class BlackHoleTrap : TiggerTrap
             }
         }
         activeVictims.Clear();
+
+        // ★追加：トラップが消える時にエフェクトも確実に消去する
+
     }
 
     /// <summary>
@@ -123,12 +131,27 @@ public class BlackHoleTrap : TiggerTrap
     {
         gameObject.layer = UseLayerName.trapLayer;
 
-        // ★落下を防ぐための最重要ポイント！
+        // 落下を防ぐための最重要ポイント！
         if (rb != null)
         {
             rb.simulated = true;
             // 物理演算はオンにするが、重力の影響を受けない「Static(静的)」状態に変更して空中に固定する
             rb.bodyType = RigidbodyType2D.Static;
+        }
+
+        // --- ★追加：本体のスプライト（画像）をすべて非表示にする ---
+        // 注意：エフェクトを生成・子オブジェクトにする「前」に実行してください！
+        SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+        foreach (var renderer in renderers)
+        {
+            renderer.enabled = false;
+        }
+
+        // --- 発動エフェクトの生成 ---
+        if (activeEffectPrefab != null)
+        {
+            spawnedEffect = Instantiate(activeEffectPrefab, transform.position, Quaternion.identity);
+           
         }
 
         // ブラックホールはモディファイア側で吸い込み処理を行うため、
@@ -142,7 +165,6 @@ public class BlackHoleTrap : TiggerTrap
 
 /// <summary>
 /// ブラックホールの引力を Runner に適用するモディファイア
-/// （BlackHoleTrap.cs の下にそのまま記述してOKです）
 /// </summary>
 public class BlackHoleModifier : IPlayerMovementModifier
 {
@@ -197,11 +219,5 @@ public class BlackHoleModifier : IPlayerMovementModifier
         // 引力ベクトルを計算し、ランナーの移動予定速度(Velocity)に加算する
         Vector2 pullVelocity = toCenter.normalized * currentForce;
         expectedVelocity += pullVelocity * deltaTime;
-
-        /* * ※Tips:
-         * もし吸い込みが弱すぎる（またはフワフワしすぎる）と感じた場合は、
-         * 上の式の `* deltaTime` を外して直接速度を加算するか、
-         * maxPullForce の値を大きく調整してみてください。
-         */
     }
 }
