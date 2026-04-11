@@ -19,7 +19,7 @@ public class Release_Canvas : MonoBehaviour
         BackToTitle
     }
     /// <summary> 現在の選択状態 </summary>
-    public Option option {  get; private set; }
+    public Option option { get; private set; }
 
     /// <summary> 勝敗表示用テキスト </summary>
     public TMP_Text winnerResult;
@@ -45,8 +45,8 @@ public class Release_Canvas : MonoBehaviour
     private void ResultShow()
     {
         // 最新の結果を取得
-        string _player01Result = GameManager.Instance.player01RanValue.ToString("F1"); 
-        string _player02Result = GameManager.Instance.player02RanValue.ToString("F1");
+        string _player01Result = GameManager.Instance.player01.playerData.passDistance.ToString("F1");
+        string _player02Result = GameManager.Instance.player02.playerData.passDistance.ToString("F1");
 
         // Winner 表示
         string result = isWin ? $"{you}" : $"{otherPlayer}";
@@ -89,8 +89,10 @@ public class Release_Canvas : MonoBehaviour
     /// </summary>
     public void Button_BackToTitle()
     {
-        if (option!= Option.None) return;
+        if (option != Option.None) return;
         option = Option.BackToTitle;
+
+        GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.GameTitle));
 
     }
     /// <summary>
@@ -101,6 +103,8 @@ public class Release_Canvas : MonoBehaviour
     {
         if (option != Option.None) return;
         option = Option.Replay;
+
+        GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.InGame));
 
     }
 }
