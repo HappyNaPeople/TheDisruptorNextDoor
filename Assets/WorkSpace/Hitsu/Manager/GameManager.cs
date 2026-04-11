@@ -98,7 +98,7 @@ public class TrapInformation
 //    public static Dictionary<TrapName, TrapInformation> allTrap = new Dictionary<TrapName, TrapInformation>();
 //}
 
-public enum SceneState { GameTitle, InGame, None }
+public enum SceneState { GameTitle, InGame, Release, None }
 
 
 
@@ -424,6 +424,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator ChangeScene(SceneState state)
     {
+        Debug.Log($"ChangeScene: {currentScene} to {state}");
         OnExitScene(currentScene);
 
         var asyncLoad = SceneManager.LoadSceneAsync(state.ToString());
@@ -439,6 +440,7 @@ public class GameManager : MonoBehaviour
 
     private void OnExitScene(SceneState prevScene)
     {
+        Debug.Log($"Exit {prevScene}");
         switch (prevScene)
         {
             case SceneState.GameTitle:
@@ -448,10 +450,14 @@ public class GameManager : MonoBehaviour
             case SceneState.InGame:
 
                 break;
+
+            default:
+                break;
         }
     }
     private void OnEnterScene(SceneState newScene)
     {
+        Debug.Log($"Enter {newScene}");
         switch (newScene)
         {
             case SceneState.GameTitle:
@@ -461,6 +467,10 @@ public class GameManager : MonoBehaviour
 
             case SceneState.InGame:
                 Game_PlayerInputAssign();
+                break;
+
+            case SceneState.Release:
+                Release_PlayerInputAssign();
                 break;
         }
     }
@@ -484,6 +494,7 @@ public class GameManager : MonoBehaviour
 
     public void Game_PlayerInputAssign()
     {
+        Debug.Log("PlayerInputAssign");
         var runnerPlayer = player01.job == Player.Job.Runner ? player01 : player02;
         var hunterPlayer = player01.job == Player.Job.Hunter ? player01 : player02;
 
@@ -496,10 +507,36 @@ public class GameManager : MonoBehaviour
 
         InGame.Instance.runner.inputData = runnerPlayer.inputData;
         InGame.Instance.hunterConTrollerPad.inputData = hunterPlayer.inputData;
+        runnerPlayer.inputData.SetPlayerRoot(null);
+        runnerPlayer.inputData.SetFirstSelect(null);
+
         hunterPlayer.inputData.SetPlayerRoot(InGame.Instance.hunterConTrollerPad.hunterCanvas.gameObject);
         hunterPlayer.inputData.SetFirstSelect(InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject);
+
+        StartCoroutine(SelectButtonWithDelay(runnerPlayer.inputData, null));
         StartCoroutine(SelectButtonWithDelay(hunterPlayer.inputData, InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject));
+
     }
+
+
+    public void Release_PlayerInputAssign()
+    {
+        Debug.Log("PlayerInputAssign");
+        player01.inputData.SetActionMap(PlayOneInputForDebug.isOnDebug ? "Debug" : "UI");
+        player02.inputData.SetActionMap(PlayOneInputForDebug.isOnDebug ? "Debug" : "UI");
+
+        player01.inputData.SetPlayerRoot(Release.Instance.player01Canvas.gameObject);
+        player02.inputData.SetPlayerRoot(Release.Instance.player02Canvas.gameObject);
+
+        var firstSelect01 = Release.Instance.player01FirstSelect.gameObject;
+        var firstSelect02 = Release.Instance.player02FirstSelect.gameObject;
+        player01.inputData.SetFirstSelect(firstSelect01);
+        player02.inputData.SetFirstSelect(firstSelect02);
+        StartCoroutine(SelectButtonWithDelay(player01.inputData, firstSelect01));
+        StartCoroutine(SelectButtonWithDelay(player02.inputData, firstSelect02));
+    }
+
+
 
 
     public static IEnumerator SelectButtonWithDelay(PlayerInputData inputData, GameObject firstButton)

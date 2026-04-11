@@ -358,7 +358,7 @@ public class InGame : MonoBehaviour
         //
         yield return null;
 
-        SceneManager.LoadScene("Release");
+        GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.Release));
     }
 
     #endregion
@@ -426,8 +426,7 @@ public class InGame : MonoBehaviour
         TimerStart();
         TrapListInit();
 
-        if (PlayOneInputForDebug.instance != null) GameManager.Instance.Game_PlayerInputAssign();
-        else Debug.LogWarning("PlayOneInputForDebug.instance == null");
+        GameManager.Instance.Game_PlayerInputAssign();
 
         hunterConTrollerPad.HunterSwitch((_player01.job == Player.Job.Hunter ? _player01 : _player02));
 

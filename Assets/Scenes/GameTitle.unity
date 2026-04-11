@@ -362,7 +362,7 @@ MonoBehaviour:
   player01TitlePlayerCanvas: {fileID: 160810434604588214}
   player02Camera: {fileID: 6818915034254784924}
   player02TitlePlayerCanvas: {fileID: 1216237746}
-  trapSelectTime: 10
+  trapSelectTime: 20
   Titles:
   - {fileID: 1963074490}
   - {fileID: 1216237748}

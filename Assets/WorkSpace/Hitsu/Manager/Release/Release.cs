@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using static Release_Canvas;
+using UnityEngine.UI;
 
 /// <summary>
 /// 勝者の種類
@@ -28,6 +29,9 @@ public class Release : MonoBehaviour
     public Release_Canvas player01Canvas;
     /// <summary> プレイヤー2のUI </summary>
     public Release_Canvas player02Canvas;
+
+    public Button player01FirstSelect;
+    public Button player02FirstSelect;
 
 
     /// <summary>

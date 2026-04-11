@@ -92,6 +92,7 @@ public class Release_Canvas : MonoBehaviour
         if (option!= Option.None) return;
         option = Option.BackToTitle;
 
+        GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.GameTitle));
     }
     /// <summary>
     /// リプレイボタン
@@ -102,5 +103,6 @@ public class Release_Canvas : MonoBehaviour
         if (option != Option.None) return;
         option = Option.Replay;
 
+        GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.InGame));
     }
 }
