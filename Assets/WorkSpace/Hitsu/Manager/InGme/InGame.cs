@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using static Player;
 
 /// <summary>
 /// ゲー??の進行管?ク?ス。
@@ -69,6 +70,7 @@ public class InGame : MonoBehaviour
         if (timerCountDown != null) StopCoroutine(timerCountDown);
         // タイマー?期化
         timer = timerStart;
+        Debug.Log(timer);
         // カウ?トダウ?開始
         timerCountDown = StartCoroutine(TimerCountDown());
     }
@@ -85,7 +87,7 @@ public class InGame : MonoBehaviour
             yield return null;
         }
 
-        test = true;
+        TurnSwitch();
     }
 
     #endregion
@@ -139,8 +141,9 @@ public class InGame : MonoBehaviour
     {
         // 既存データをクリア
         checkPointsDict.Clear();
-        // 全チェックポイントを未通過（false）で登録
 
+        // 全チェックポイントを未通過（false）で登録
+        useMap.ResetCheckPoints();
         foreach (Transform transform in checkPoints)
         {
             checkPointsDict[transform] = false;
@@ -150,6 +153,8 @@ public class InGame : MonoBehaviour
         passCheckPoint = 0;
 
         playerRespawnTs = startingPoint;
+        runner.respawnPoint = playerRespawnTs;
+
     }
 
 
@@ -172,9 +177,10 @@ public class InGame : MonoBehaviour
         checkPointsDict[targetPoint] = true;
         // リスポーン地点更新
         playerRespawnTs = targetPoint;
+        runner.respawnPoint = playerRespawnTs;
 
         passCheckPoint = Mathf.Min(passCheckPoint + 1, checkPoints.Count);
-
+        
     }
 
 
@@ -184,7 +190,7 @@ public class InGame : MonoBehaviour
         {
             startingPoint = useMap.startingTs;
             goal = useMap.goalTs;
-            SetUpCheckPoints(useMap.checkPointsTs);
+            SetUpCheckPoints(useMap.CheckPointsTs());
         }
         //StageGridManager.Instance.BuildGridMap();
     }
@@ -373,7 +379,7 @@ public class InGame : MonoBehaviour
 
     #region Initialization
 
-    public void RunnerRespawn() => runner.gameObject.transform.position = playerRespawnTs.position;
+    public void RunnerRespawn() => runner.Respawn();
 
     /// <summary>
     /// Runner ?期化??
@@ -413,7 +419,15 @@ public class InGame : MonoBehaviour
     /// </summary>
     private void TurnInit()
     {
-        GameManager.Instance.Game_PlayerInputAssign();
+        CheckPointsDictInit();
+        runner.Respawn();
+
+        // タイマー再スタート
+        TimerStart();
+        TrapListInit();
+
+        if (PlayOneInputForDebug.instance != null) GameManager.Instance.Game_PlayerInputAssign();
+        else Debug.LogWarning("PlayOneInputForDebug.instance == null");
 
         hunterConTrollerPad.HunterSwitch((_player01.job == Player.Job.Hunter ? _player01 : _player02));
 
@@ -421,14 +435,6 @@ public class InGame : MonoBehaviour
 
         DisPlayInit();
 
-        CheckPointsDictInit();
-
-        RunnerRespawn();
-
-        // タイマー再スタート
-        TimerStart();
-
-        TrapListInit();
     }
 
     #endregion
@@ -448,6 +454,8 @@ public class InGame : MonoBehaviour
         _player02.SetJob(Player.Job.Hunter);
 
         RunnerInit();
+        
+        //RunnerRespawn();
         HunterInit();
 
         TurnInit();
@@ -461,6 +469,7 @@ public class InGame : MonoBehaviour
 
         Player.Job job1 = _player01.job;
         Player.Job job2 = _player02.job;
+
         // --- 安全檢查 ---
         if (job1 == Player.Job.None || job2 == Player.Job.None)
         {
@@ -499,6 +508,21 @@ public class InGame : MonoBehaviour
 
     }
 
+    public void ThroughGoal()
+    {
+        if (!IsPointsNull())
+        {
+            if (_player01.job == Player.Job.Runner) player01Ran = Mathf.Max(player01Ran, 1);
+            else player02Ran = Mathf.Max(player02Ran, 1);
+        }
+        else
+        {
+            Debug.LogWarning("Starting Point, Goal, Check Points someone is null");
+        }
+
+        TurnSwitch();
+    }
+
 
 
     private void Awake()
@@ -514,7 +538,6 @@ public class InGame : MonoBehaviour
     private void Start()
     {
         InGame_Init();
-
     }
 
     // デバッグ用
