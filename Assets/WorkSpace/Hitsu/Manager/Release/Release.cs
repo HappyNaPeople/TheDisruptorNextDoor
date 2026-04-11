@@ -23,6 +23,11 @@ public class Release : MonoBehaviour
 {
     /// <summary> シングルトンインスタンス </summary>
     public static Release Instance;
+
+    // GameManager から取得するプ?イ?ーイ?スタ?ス
+    public Player _player01 => GameManager.Instance.player01;
+    public Player _player02 => GameManager.Instance.player02;
+
     /// <summary> 勝者 </summary>
     public Winner winner;
     /// <summary> プレイヤー1のUI </summary>
@@ -38,9 +43,24 @@ public class Release : MonoBehaviour
     /// 勝者判定
     /// ・走行距離を比較して決定
     /// </summary>
-    private void FoundWinner() => 
-    winner = GameManager.Instance.player01RanValue > GameManager.Instance.player02RanValue ?
-        Winner.Player01 : Winner.Player02;
+    private void FoundWinner()
+    {
+        PlayerData player01Result = _player01.playerData;
+        PlayerData player02Result = _player02.playerData;
+        bool isValueDiff = _player01.playerData.passDistance != _player02.playerData.passDistance;
+        if (isValueDiff)
+        {
+            winner = _player01.playerData.passDistance > _player02.playerData.passDistance ? Winner.Player01 : Winner.Player02;
+            return;
+        }
+        else
+        {
+            winner = _player01.playerData.passTime < _player02.playerData.passTime ? Winner.Player01 : Winner.Player02;
+
+        }
+
+    }
+
 
     private void Awake()
     {

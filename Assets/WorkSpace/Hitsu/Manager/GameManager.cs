@@ -100,8 +100,6 @@ public class TrapInformation
 
 public enum SceneState { GameTitle, InGame, Release, None }
 
-
-
 /// <summary>
 /// プレイヤーの表示ディスプレイ番号
 /// </summary>
@@ -153,14 +151,6 @@ public class GameManager : MonoBehaviour
     // プレイヤーインスタンス
     public Player player01;
     public Player player02;
-
-    public float player01RanValue { get; private set; }
-    public float player02RanValue { get; private set; }
-    public void PlayerResult(float result01, float result02)
-    {
-        player01RanValue = result01;
-        player02RanValue = result02;
-    }
 
 
     /// <summary>
@@ -518,7 +508,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-
     public void Release_PlayerInputAssign()
     {
         Debug.Log("PlayerInputAssign");
@@ -538,7 +527,6 @@ public class GameManager : MonoBehaviour
 
 
 
-
     public static IEnumerator SelectButtonWithDelay(PlayerInputData inputData, GameObject firstButton)
     {
         // 1フレームだけ待機して、EventSystemやUIの準備が完了するのを待つ
@@ -549,4 +537,3 @@ public class GameManager : MonoBehaviour
         inputData.SetSelect(firstButton);
     }
 }
-

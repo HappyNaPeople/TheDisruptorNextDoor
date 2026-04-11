@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -49,7 +50,7 @@ public class InGame : MonoBehaviour
     /// <summary>
     /// 現在の残り?間
     /// </summary>
-    public float timer { get; private set; }
+    public float timer;
 
     /// <summary>
     /// タイ?アップ判定
@@ -180,9 +181,11 @@ public class InGame : MonoBehaviour
         runner.respawnPoint = playerRespawnTs;
 
         passCheckPoint = Mathf.Min(passCheckPoint + 1, checkPoints.Count);
-        
+
     }
 
+    private Transform _areaLeftTop;
+    private Transform _areaRightDown;
 
     private void MapInit()
     {
@@ -193,7 +196,21 @@ public class InGame : MonoBehaviour
             SetUpCheckPoints(useMap.CheckPointsTs());
         }
         //StageGridManager.Instance.BuildGridMap();
+
+        _areaLeftTop = StageGridManager.Instance.scanAreaLeftTop;
+        _areaRightDown = StageGridManager.Instance.scanAreaRightDown;
     }
+
+    private void WatchRunnerInAreaOut()
+    {
+        Transform runnerPos = runner.transform;
+        bool isOutOfArea = (runnerPos.position.x < _areaLeftTop.position.x) ||
+            (runnerPos.position.x > _areaRightDown.position.x) || (runnerPos.position.y < _areaRightDown.position.y);
+
+        if (isOutOfArea) runner.Respawn();
+
+    }
+
 
     #endregion
 
@@ -216,11 +233,11 @@ public class InGame : MonoBehaviour
     /// <summary>
     /// スタートからゴールまでの距離
     /// </summary>
-    private float distanceOfStartToGoal =>Vector2.Distance(startingPoint.position, goal.position);
+    private float distanceOfStartToGoal => Vector2.Distance(startingPoint.position, goal.position);
     /// <summary>
     /// プレイヤーからゴールまでの距離
     /// </summary>
-    private float distanceOfPlayerPosToGoal =>Vector2.Distance(runningPlayerPos, goal.position);
+    private float distanceOfPlayerPosToGoal => Vector2.Distance(runningPlayerPos, goal.position);
     /// <summary>
     /// 進行率（0～1）
     /// ・0 = スタート地点
@@ -231,7 +248,7 @@ public class InGame : MonoBehaviour
         get
         {
             // 距離が0に近い場合は計算できないため0を返す
-            if (distanceOfStartToGoal <= 0.0001f)return 0f;
+            if (distanceOfStartToGoal <= 0.0001f) return 0f;
             // 「残り距離」から進行率を算出し、 0～1の範囲に制限
             else return Mathf.Clamp01(1f - (distanceOfPlayerPosToGoal / distanceOfStartToGoal));
         }
@@ -284,7 +301,7 @@ public class InGame : MonoBehaviour
             foreach (GameObject trapGameObject in allTheTrap) if (trapGameObject != null) Destroy(trapGameObject);
         }
         // List を初期化（null の可能性にも対応）
-        else if (allTheTrap == null)allTheTrap = new List<GameObject>();
+        else if (allTheTrap == null) allTheTrap = new List<GameObject>();
         else allTheTrap.Clear();
     }
 
@@ -345,12 +362,16 @@ public class InGame : MonoBehaviour
         // Hunter 側のコルーチンも停止
         hunterConTrollerPad.StopAllCoroutines();
 
-        // 結果計算（）
-        float result01 = player01Ran * startToGoalMeter;
-        float result02 = player02Ran * startToGoalMeter;
+        Debug.Log($"Player01 Result : Pass Time : {_player01.playerData.passTime} | Pass Distance : {_player01.playerData.passDistance}");
+        Debug.Log($"Player02 Result : Pass Time : {_player02.playerData.passTime} | Pass Distance : {_player02.playerData.passDistance}");
 
-        Debug.Log($"P1: {result01} | P2: {result02}");
-        GameManager.Instance.PlayerResult(result01, result02);
+
+        //// 結果計算（）
+        //float result01 = player01Ran * startToGoalMeter;
+        //float result02 = player02Ran * startToGoalMeter;
+
+        //Debug.Log($"P1: {result01} | P2: {result02}");
+        //GameManager.Instance.PlayerResult(result01, result02);
 
 
         //
@@ -426,6 +447,9 @@ public class InGame : MonoBehaviour
         TimerStart();
         TrapListInit();
 
+        /*if (PlayOneInputForDebug.instance != null) GameManager.Instance.Game_PlayerInputAssign();
+        else Debug.LogWarning("PlayOneInputForDebug.instance == null");*/
+
         GameManager.Instance.Game_PlayerInputAssign();
 
         hunterConTrollerPad.HunterSwitch((_player01.job == Player.Job.Hunter ? _player01 : _player02));
@@ -453,7 +477,7 @@ public class InGame : MonoBehaviour
         _player02.SetJob(Player.Job.Hunter);
 
         RunnerInit();
-        
+
         //RunnerRespawn();
         HunterInit();
 
@@ -476,11 +500,25 @@ public class InGame : MonoBehaviour
                 $"Player01 : {_player01.job} , Player02 : {_player02.job}");
 
         }
+
+        float timeResult = timerStart - timer;
+
         // --- 距離記錄 ---
         if (!IsPointsNull())
         {
-            if (job1 == Player.Job.Runner) player01Ran = Mathf.Max(player01Ran, percentOfPassedDistance);
-            else player02Ran = Mathf.Max(player02Ran, percentOfPassedDistance);
+            if (job1 == Player.Job.Runner)
+            {
+                player01Ran = Mathf.Max(player01Ran, percentOfPassedDistance);
+                _player01.playerData.WriteData(timeResult, player01Ran * startToGoalMeter);
+                Debug.Log(_player01.playerData.passTime);
+            }
+            else
+            {
+                player02Ran = Mathf.Max(player02Ran, percentOfPassedDistance);
+                _player02.playerData.WriteData(timeResult, player02Ran * startToGoalMeter);
+                Debug.Log(_player02.playerData.passTime);
+
+            }
         }
         else
         {
@@ -533,7 +571,7 @@ public class InGame : MonoBehaviour
         else Destroy(this);
 
     }
-     
+
     private void Start()
     {
         InGame_Init();
@@ -551,6 +589,11 @@ public class InGame : MonoBehaviour
         }
 
 
+    }
+
+    private void FixedUpdate()
+    {
+        WatchRunnerInAreaOut();
     }
 
 }
