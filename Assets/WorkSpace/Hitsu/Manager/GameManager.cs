@@ -182,15 +182,15 @@ public class GameManager : MonoBehaviour
         inputDevice.InputInit();
 
         // Keyboard / Mouse 確認
-        Debug.Log(inputDevice.mouse.name);
-        Debug.Log(inputDevice.keyboard.name);
+        //Debug.Log(inputDevice.mouse.name);
+        //Debug.Log(inputDevice.keyboard.name);
 
         // Gamepad 確認
         if (inputDevice.gamepad.Count > 0)
         {
             for (int i = 0; i < inputDevice.gamepad.Count; i++)
             {
-                Debug.Log(inputDevice.gamepad[i].name);
+                //Debug.Log(inputDevice.gamepad[i].name);
             }
         }
 
@@ -324,7 +324,7 @@ public class GameManager : MonoBehaviour
             }
             // CSV 行をカンマ区切りで分割
             string[] values = csvLines[index].Split(',');
-            Debug.Log(string.Join(",", values));
+            //Debug.Log(string.Join(",", values));
 
             // CSV フォーマットチェック
             if (values.Length < dataIndexMax)
@@ -367,7 +367,7 @@ public class GameManager : MonoBehaviour
         //    prefab = Resources.Load<GameObject>("Prefabs/Traps/JumpPad")
 
         // 読み込み完了ログ
-        Debug.Log(allTrap.Count);
+        //Debug.Log(allTrap.Count);
 
     }
 
@@ -401,7 +401,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this);
         }
-        else Destroy(gameObject);
+        else Destroy(this);
 
         GameManager_Init();
     }

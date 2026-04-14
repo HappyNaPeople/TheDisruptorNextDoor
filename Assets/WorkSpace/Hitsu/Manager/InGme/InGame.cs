@@ -71,7 +71,7 @@ public class InGame : MonoBehaviour
         if (timerCountDown != null) StopCoroutine(timerCountDown);
         // タイマー?期化
         timer = timerStart;
-        Debug.Log(timer);
+        //Debug.Log(timer);
         // カウ?トダウ?開始
         timerCountDown = StartCoroutine(TimerCountDown());
     }
@@ -385,6 +385,8 @@ public class InGame : MonoBehaviour
     #endregion
 
 
+
+
     /// <summary>
     /// 指定された Job に対?する Camera を取得する
     /// </summary>
@@ -430,6 +432,12 @@ public class InGame : MonoBehaviour
         // Player02 の Job に対応するカメラを取得し、表示先を設定
         TargetCamera(_player02.job).targetDisplay = (int)_player02.displayCode;
     }
+
+    private const string bgm = "InGame_Bgm";
+    private const string bgmName = "hurry_up_and_run";
+    private const float bgmValue = 100.0f;
+
+
     /// <summary>
     /// ターン開始時の初期化処理
     /// ・現在の Hunter を判定し、UI/操作対象を切り替える
@@ -440,6 +448,9 @@ public class InGame : MonoBehaviour
     /// </summary>
     private void TurnInit()
     {
+
+        AudioManager.Instance.PlayMusic(bgm, bgmValue);
+
         CheckPointsDictInit();
         runner.Respawn();
 
@@ -481,6 +492,8 @@ public class InGame : MonoBehaviour
         //RunnerRespawn();
         HunterInit();
 
+        //AudioManager.Instance.ChangeCrip(bgm, bgmName);
+
         TurnInit();
     }
 
@@ -489,6 +502,7 @@ public class InGame : MonoBehaviour
     /// </summary>
     private void TurnSwitch()
     {
+        AudioManager.Instance.EndMusic(bgm);
 
         Player.Job job1 = _player01.job;
         Player.Job job2 = _player02.job;
