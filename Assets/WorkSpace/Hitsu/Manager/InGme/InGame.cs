@@ -1,11 +1,118 @@
 ﻿using UnityEngine;
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using System.Linq;
 using UnityEngine.SceneManagement;
 using static Player;
+using Unity.Cinemachine;
+using static InGame;
+using Unity.VisualScripting;
+using static Unity.Collections.Unicode;
+
+
+[System.Serializable]
+public class CameraData
+{
+    // 通常カメラ
+    public Camera camera;
+    // Cinemachineカメラ本体
+    public CinemachineCamera cinemachineCamera;
+    // Followコンポーネント（追従処理）
+    private CinemachineFollow cinemaChineFollow;
+    // 初期のズーム値（Orthographic Size）
+    private float lens;
+    // 初期のFollowオフセット
+    private Vector3 basicFollowOffset;
+    // 初期のDamping値（追従の滑らかさ）
+    private Vector3 basicPositionDamping;
+    // Ready状態で使うDamping
+    private readonly Vector3 readyV3 = new Vector3(0.1f, 0.1f, 0.1f);
+    /// <summary>
+    /// カメラの初期状態を取得・保存
+    /// </summary>
+    public void CameraInit()
+    {
+        // Followコンポーネント取得
+        cinemaChineFollow = cinemachineCamera.GetComponent<CinemachineFollow>();
+        // 現在のズーム値を保存
+        lens = cinemachineCamera.Lens.OrthographicSize;
+        // 現在のFollowオフセットを保存
+        basicFollowOffset = cinemaChineFollow.FollowOffset;
+        // 現在のDampingを保存（Cinemachine 3.x仕様）
+        basicPositionDamping = cinemaChineFollow.TrackerSettings.PositionDamping;
+    }
+
+    /// <summary>
+    /// ゲーム開始前の演出用カメラ状態
+    /// </summary>
+    public void Ready(Transform trackingTarget)
+    {
+        // ズームアウトして全体を見せる
+        cinemachineCamera.Lens.OrthographicSize = 9;
+        // カメラ位置を中央寄せ
+        cinemaChineFollow.FollowOffset = Vector3.one;
+        // 追従対象を設定
+        cinemachineCamera.Target.TrackingTarget = trackingTarget;
+        // Dampingを小さくしてカメラをキビキビ動かす
+        cinemaChineFollow.TrackerSettings.PositionDamping = readyV3;
+
+    }
+
+    /// <summary>
+    /// Dampingのみ初期状態に戻す
+    /// </summary>
+    public void ReSetDamping() => cinemaChineFollow.TrackerSettings.PositionDamping = basicPositionDamping;
+
+    /// <summary>
+    /// ゲーム開始時にカメラを通常状態へ戻す
+    /// </summary>
+    public void GameStart(Transform trackingTarget)
+    {
+        // 初期ズームに戻す
+        cinemachineCamera.Lens.OrthographicSize = lens;
+        // 初期オフセットに戻す
+        cinemaChineFollow.FollowOffset = basicFollowOffset;
+        // 追従対象を設定
+        cinemachineCamera.Target.TrackingTarget = trackingTarget;
+    }
+
+}
+
+/// <summary>
+/// GameStage を定義し、ゲーム全体の進行状態を明確に管理
+/// 初期化 → ラウンド → プレイ → 終了 という流れを段階的に表現
+/// </summary>
+public enum GameStage
+{
+    // =========================
+    // ゲーム初期化フェーズ
+    // =========================
+
+    InGameInitStart, // InGameの初期化開始
+    InGameInitDone,  // 初期化完了
+
+    // =========================
+    // ラウンド進行フェーズ
+    // =========================
+
+    RoundInit,  // ラウンド開始前の準備
+    Ready,      // プレイヤー準備状態（カウントダウンなど）
+    Playing,    // 実際のゲームプレイ中
+    EndRound,   // ラウンド終了処理
+
+    // =========================
+    // ゲーム終了フェーズ
+    // =========================
+
+    GameSet,    // ゲーム終了（結果表示など）
+
+    // =========================
+    // 例外・エラー状態
+    // =========================
+
+    Error       // 想定外の状態
+}
 
 /// <summary>
 /// ゲー??の進行管?ク?ス。
@@ -27,9 +134,33 @@ public class InGame : MonoBehaviour
     /// </summary>
     public static InGame Instance;
 
-    // プ?イ?ーごとのカ??
-    public Camera runnerCamera;
-    public Camera hunterCamera;
+    [Header("Camera")]
+    /// <summary>
+    /// Runner用カメラデータ
+    /// プレイヤー（逃げる側）の視点制御を担当
+    /// </summary>
+    public CameraData runnerCamera;
+
+    /// <summary>
+    /// Hunter用カメラデータ
+    /// 追いかける側の視点制御を担当
+    /// </summary>
+    public CameraData hunterCamera;
+
+    /// <summary>
+    /// 指定された Job に対?する Camera を取得する
+    /// </summary>
+    private Camera TargetCamera(Player.Job targetJob)
+    {
+        switch (targetJob)
+        {
+            case Player.Job.Runner: return runnerCamera.camera;
+            case Player.Job.Hunter: return hunterCamera.camera;
+        }
+        return null;
+    }
+
+    [Header("Player")]
 
     // Hunter 用 GamePad コ?ト?ー?ー
     public HunterConTrollerPad hunterConTrollerPad;
@@ -41,12 +172,16 @@ public class InGame : MonoBehaviour
     public Player _player02 => GameManager.Instance.player02;
 
 
+    public GameStage gameStage;
+
     #region Timer
+
     /// <summary>
     /// タイマー開始値
     /// </summary>
     public const float timerStart = 150.0f;
 
+    [Header("Time")]
     /// <summary>
     /// 現在の残り?間
     /// </summary>
@@ -94,6 +229,8 @@ public class InGame : MonoBehaviour
     #endregion
 
     #region Map
+
+    [Header("Map")]
 
     public MapBasic useMap; /* {  get; private set; }*/
 
@@ -184,29 +321,47 @@ public class InGame : MonoBehaviour
 
     }
 
+    // エリア判定用の左上・右下ポイント
     private Transform _areaLeftTop;
     private Transform _areaRightDown;
 
+    /// <summary>
+    /// マップ初期化
+    /// ・スタート地点、ゴール、チェックポイントを設定
+    /// ・エリア監視用の範囲を取得
+    /// </summary>
     private void MapInit()
     {
         if (useMap != null)
         {
+            // スタート地点設定
             startingPoint = useMap.startingTs;
+            // ゴール地点設定
             goal = useMap.goalTs;
+            // チェックポイント設定
             SetUpCheckPoints(useMap.CheckPointsTs());
         }
         //StageGridManager.Instance.BuildGridMap();
 
+        // スキャンエリアの取得（グリッドマネージャーから）
         _areaLeftTop = StageGridManager.Instance.scanAreaLeftTop;
         _areaRightDown = StageGridManager.Instance.scanAreaRightDown;
     }
 
+    /// <summary>
+    /// Runnerがエリア外に出たか監視
+    /// ・範囲外ならリスポーン
+    /// </summary>
     private void WatchRunnerInAreaOut()
     {
         Transform runnerPos = runner.transform;
-        bool isOutOfArea = (runnerPos.position.x < _areaLeftTop.position.x) ||
-            (runnerPos.position.x > _areaRightDown.position.x) || (runnerPos.position.y < _areaRightDown.position.y);
+        // エリア外判定
+        bool isOutOfArea =
+            (runnerPos.position.x < _areaLeftTop.position.x) ||   // 左に出た
+            (runnerPos.position.x > _areaRightDown.position.x) || // 右に出た
+            (runnerPos.position.y < _areaRightDown.position.y - 5); // 下に落ちた（余裕あり）
 
+        // 範囲外ならリスポーン
         if (isOutOfArea) runner.Respawn();
 
     }
@@ -215,6 +370,8 @@ public class InGame : MonoBehaviour
     #endregion
 
     #region ProgressBar
+
+    [Header("ProgressBar")]
 
     /// <summary>
     /// 通過したチェックポイント数
@@ -356,6 +513,7 @@ public class InGame : MonoBehaviour
     /// </summary>
     private IEnumerator GameSet()
     {
+        gameStage = GameStage.GameSet;
         Debug.Log("Game Set");
         // 自身のコルーチンを全停止
         //StopAllCoroutines();
@@ -364,15 +522,6 @@ public class InGame : MonoBehaviour
 
         Debug.Log($"Player01 Result : Pass Time : {_player01.playerData.passTime} | Pass Distance : {_player01.playerData.passDistance}");
         Debug.Log($"Player02 Result : Pass Time : {_player02.playerData.passTime} | Pass Distance : {_player02.playerData.passDistance}");
-
-
-        //// 結果計算（）
-        //float result01 = player01Ran * startToGoalMeter;
-        //float result02 = player02Ran * startToGoalMeter;
-
-        //Debug.Log($"P1: {result01} | P2: {result02}");
-        //GameManager.Instance.PlayerResult(result01, result02);
-
 
         //
         // ここは終了演出
@@ -384,24 +533,20 @@ public class InGame : MonoBehaviour
 
     #endregion
 
-
-
-
-    /// <summary>
-    /// 指定された Job に対?する Camera を取得する
-    /// </summary>
-    private Camera TargetCamera(Player.Job targetJob)
-    {
-        switch (targetJob)
-        {
-            case Player.Job.Runner: return runnerCamera;
-            case Player.Job.Hunter: return hunterCamera;
-        }
-        return null;
-    }
-
     #region Initialization
+    /// <summary>
+    /// 全カメラの初期化処理
+    /// ・Runner / Hunter 両方のカメラ状態を保存
+    /// ・ゲーム開始前に一度だけ呼ぶ想定
+    /// </summary>
+    private void AllCameraInit()
+    {
+        // Runnerカメラの初期状態を保存
+        runnerCamera.CameraInit();
 
+        // Hunterカメラの初期状態を保存
+        hunterCamera.CameraInit();
+    }
     public void RunnerRespawn() => runner.Respawn();
 
     /// <summary>
@@ -431,43 +576,87 @@ public class InGame : MonoBehaviour
         TargetCamera(_player01.job).targetDisplay = (int)_player01.displayCode;
         // Player02 の Job に対応するカメラを取得し、表示先を設定
         TargetCamera(_player02.job).targetDisplay = (int)_player02.displayCode;
+
     }
 
+    // BGM設定
     private const string bgm = "InGame_Bgm";
-    private const string bgmName = "hurry_up_and_run";
+    //private const string bgmName = "hurry_up_and_run";
     private const float bgmValue = 100.0f;
 
+    [Header("StartingCutScene")]
+    public Transform StartingCutSceneTs; // カットシーン用の注視ポイント
+    private Coroutine startingCutScene;  // 実行中のコルーチン参照
 
     /// <summary>
-    /// ターン開始時の初期化処理
-    /// ・現在の Hunter を判定し、UI/操作対象を切り替える
-    /// ・各プレイヤーのカメラ表示先（ディスプレイ）を更新する
-    /// ・チェックポイント情報を初期化する
-    /// ・タイマーをリスタートする
-    /// ・Trap リストを初期化する
+    /// ゲーム開始前のカットシーン処理
+    /// ・カメラ演出 → Ready待機 → ゲーム開始
+    /// </summary>
+    private IEnumerator StartingCutScene()
+    {
+        // カメラをReady状態（引き・中央寄せ・低Damping）にする
+        runnerCamera.Ready(StartingCutSceneTs);
+        hunterCamera.Ready(StartingCutSceneTs);
+
+        // Ready状態になるまで待機
+        yield return new WaitUntil(() => gameStage == GameStage.Ready);
+
+        // 少し間を取る[演出から]
+
+        yield return new WaitForSeconds(5);
+
+        //[演出まで]
+
+        // カメラをプレイヤー追従に戻す
+        runnerCamera.GameStart(runner.transform);
+        hunterCamera.GameStart(runner.transform);
+
+        // 各種初期化
+        DisPlayInit();      // 表示切替
+        TimerStart();       // タイマー開始
+        TrapListInit();     // 罠初期化
+        // BGM再生
+        AudioManager.Instance.PlayMusic(bgm, bgmValue);
+        // Runnerの初期位置を記録（動いたかチェック用）
+        Vector3 runnerPos = runner.transform.position;
+        // ゲーム開始
+        gameStage = GameStage.Playing;
+        // 1フレーム待機（物理更新）
+        yield return new WaitForFixedUpdate();
+        // Runnerが動くまで待つ
+        yield return new WaitUntil(() => runner.transform.position != runnerPos);
+        // カメラDampingを元に戻す（自然な追従へ）
+        runnerCamera.ReSetDamping();
+        hunterCamera.ReSetDamping();
+    }
+
+    /// <summary>
+    /// ラウンド開始処理
     /// </summary>
     private void TurnInit()
     {
+        // ラウンド初期状態へ
+        gameStage = GameStage.RoundInit;
+        // カットシーン開始（既にあれば停止して再スタート）
+        if (startingCutScene != null)
+        {
+            StopCoroutine(startingCutScene);
+            startingCutScene = StartCoroutine(StartingCutScene());
+        }
+        else startingCutScene = StartCoroutine(StartingCutScene());
 
-        AudioManager.Instance.PlayMusic(bgm, bgmValue);
-
+        // チェックポイント初期化
         CheckPointsDictInit();
+        // プレイヤーをリスポーン
         runner.Respawn();
-
-        // タイマー再スタート
-        TimerStart();
-        TrapListInit();
-
-        /*if (PlayOneInputForDebug.instance != null) GameManager.Instance.Game_PlayerInputAssign();
-        else Debug.LogWarning("PlayOneInputForDebug.instance == null");*/
-
+        // Ready状態へ遷移（カットシーン側が待っている）
+        gameStage = GameStage.Ready;
+        // 入力割り当て
         GameManager.Instance.Game_PlayerInputAssign();
-
+        // Hunterの操作対象を切替
         hunterConTrollerPad.HunterSwitch((_player01.job == Player.Job.Hunter ? _player01 : _player02));
 
         //runner.SwitchController();
-
-        DisPlayInit();
 
     }
 
@@ -482,7 +671,9 @@ public class InGame : MonoBehaviour
     /// </summary>
     private void InGame_Init()
     {
+        gameStage = GameStage.InGameInitStart;
         MapInit();
+        AllCameraInit();
 
         _player01.SetJob(Player.Job.Runner);
         _player02.SetJob(Player.Job.Hunter);
@@ -493,7 +684,7 @@ public class InGame : MonoBehaviour
         HunterInit();
 
         //AudioManager.Instance.ChangeCrip(bgm, bgmName);
-
+        gameStage = GameStage.InGameInitDone;
         TurnInit();
     }
 
@@ -502,6 +693,9 @@ public class InGame : MonoBehaviour
     /// </summary>
     private void TurnSwitch()
     {
+
+        gameStage = GameStage.EndRound;
+
         AudioManager.Instance.EndMusic(bgm);
 
         Player.Job job1 = _player01.job;
@@ -598,7 +792,6 @@ public class InGame : MonoBehaviour
         if (test)
         {
             TurnSwitch();
-            //PassCheckPoint(checkPoints[0]);
             test = false;
         }
 

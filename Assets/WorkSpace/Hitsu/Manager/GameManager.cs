@@ -405,12 +405,6 @@ public class GameManager : MonoBehaviour
 
         GameManager_Init();
     }
-    private void Start()
-    {
-
-    }
-
-
 
     public IEnumerator ChangeScene(SceneState state)
     {
@@ -492,8 +486,8 @@ public class GameManager : MonoBehaviour
         hunterPlayer.inputData.SetActionMap(PlayOneInputForDebug.isOnDebug ? "Debug" : "Hunter");
 
 
-        runnerPlayer.inputData.SetInputCamera(InGame.Instance.runnerCamera);
-        hunterPlayer.inputData.SetInputCamera(InGame.Instance.hunterCamera);
+        runnerPlayer.inputData.SetInputCamera(InGame.Instance.runnerCamera.camera);
+        hunterPlayer.inputData.SetInputCamera(InGame.Instance.hunterCamera.camera);
 
         InGame.Instance.runner.inputData = runnerPlayer.inputData;
         InGame.Instance.hunterConTrollerPad.inputData = hunterPlayer.inputData;
