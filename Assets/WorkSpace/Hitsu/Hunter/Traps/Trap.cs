@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 /// <summary>
 /// Trap の種類を表す列挙型。
 /// </summary>
@@ -18,6 +19,26 @@ public enum TrapName
     WindTrap
 }
 
+[System.Serializable]
+public class TrapSfxData
+{
+    /// <summary>
+    /// 音效の識別用キー
+    /// 将来的には byte や enum による識別に変更することを検討している
+    /// </summary>
+    public string sfxName;
+    /// <summary>
+    /// 再生する効果音のAudioClip
+    /// </summary>
+    public AudioClip clip;
+
+    /// <summary>
+    /// 音量（Inspector上で1～100の範囲で調整可能）
+    /// </summary>
+    [Range(1f, 100f)] public float volume;
+
+}
+
 /// <summary>
 /// すべての Trap の基底クラス。
 /// 
@@ -31,14 +52,19 @@ public enum TrapName
 /// </summary>
 public abstract class Trap : MonoBehaviour
 {
+    [Header("Trap Basic")]
     // Trap の種類
     public TrapName trapName;
     // Trap のコスト
     public int cost;
+    [Header("Trap Sfxs")]
+    public TrapSfxData[] trapSfxDates;
+    [Header("Physics Components")]
     // Rigidbody2D
     public Rigidbody2D rb;
     // Collider
     public Collider2D trapCollider;
+    [Header("Setting Trap")]
     // 設置完了状態
     public bool isSetup = false;
     // 現在のグリッド座標
@@ -173,4 +199,13 @@ public abstract class Trap : MonoBehaviour
             }
         }
     }
+
+
+    public virtual void PlaySfx(string targetSfxName)
+    {
+        TrapSfxData trapSfxData = Array.Find(trapSfxDates, x => x.sfxName == targetSfxName);
+        AudioManager.Instance.PlayTrapSfx(trapSfxData);
+
+    }
+
 }

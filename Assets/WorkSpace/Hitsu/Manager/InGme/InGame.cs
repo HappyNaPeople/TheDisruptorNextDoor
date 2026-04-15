@@ -493,46 +493,6 @@ public class InGame : MonoBehaviour
 
     #endregion
 
-    #region GameSet
-
-    // Player の進行率（最大値を記録）
-    [SerializeField] private float player01Ran;
-    [SerializeField] private float player02Ran;
-
-    // 最大ターン数（この値に到達したらゲーム終了）
-    private const int playTurnMax = 2;
-    // 現在のターン数
-    private int nowPlayTurn = 1;
-    // ゲーム終了判定
-    private bool gameSet => nowPlayTurn > playTurnMax;
-
-    /// <summary>
-    /// ゲーム終了処理
-    /// ・全てのコルーチンを停止
-    /// ・Hunter 側の処理も停止
-    /// </summary>
-    private IEnumerator GameSet()
-    {
-        gameStage = GameStage.GameSet;
-        Debug.Log("Game Set");
-        // 自身のコルーチンを全停止
-        //StopAllCoroutines();
-        // Hunter 側のコルーチンも停止
-        hunterConTrollerPad.StopAllCoroutines();
-
-        Debug.Log($"Player01 Result : Pass Time : {_player01.playerData.passTime} | Pass Distance : {_player01.playerData.passDistance}");
-        Debug.Log($"Player02 Result : Pass Time : {_player02.playerData.passTime} | Pass Distance : {_player02.playerData.passDistance}");
-
-        //
-        // ここは終了演出
-        //
-        yield return null;
-
-        GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.Release));
-    }
-
-    #endregion
-
     #region Initialization
     /// <summary>
     /// 全カメラの初期化処理
@@ -579,11 +539,6 @@ public class InGame : MonoBehaviour
 
     }
 
-    // BGM設定
-    private const string bgm = "InGame_Bgm";
-    //private const string bgmName = "hurry_up_and_run";
-    private const float bgmValue = 100.0f;
-
     [Header("StartingCutScene")]
     public Transform StartingCutSceneTs; // カットシーン用の注視ポイント
     private Coroutine startingCutScene;  // 実行中のコルーチン参照
@@ -616,7 +571,8 @@ public class InGame : MonoBehaviour
         TimerStart();       // タイマー開始
         TrapListInit();     // 罠初期化
         // BGM再生
-        AudioManager.Instance.PlayMusic(bgm, bgmValue);
+        AudioManager.Instance.PlayMusic(BgmData.StageBgm.InGame);
+
         // Runnerの初期位置を記録（動いたかチェック用）
         Vector3 runnerPos = runner.transform.position;
         // ゲーム開始
@@ -662,6 +618,55 @@ public class InGame : MonoBehaviour
 
     #endregion
 
+    #region GameSet
+
+    [Header("GameSet")]
+    public Transform gameSetCutSceneTs;
+
+    // Player の進行率（最大値を記録）
+    [SerializeField] private float player01Ran;
+    [SerializeField] private float player02Ran;
+
+    // 最大ターン数（この値に到達したらゲーム終了）
+    private const int playTurnMax = 2;
+    // 現在のターン数
+    private int nowPlayTurn = 1;
+    // ゲーム終了判定
+    private bool gameSet => nowPlayTurn > playTurnMax;
+
+    /// <summary>
+    /// ゲーム終了処理
+    /// ・全てのコルーチンを停止
+    /// ・Hunter 側の処理も停止
+    /// </summary>
+    private IEnumerator GameSet()
+    {
+        gameStage = GameStage.GameSet;
+        Debug.Log("Game Set");
+        // 自身のコルーチンを全停止
+        //StopAllCoroutines();
+        // Hunter 側のコルーチンも停止
+        hunterConTrollerPad.StopAllCoroutines();
+
+        runnerCamera.Ready(gameSetCutSceneTs);
+        hunterCamera.Ready(gameSetCutSceneTs);
+
+
+        Debug.Log($"Player01 Result : Pass Time : {_player01.playerData.passTime} | Pass Distance : {_player01.playerData.passDistance}");
+        Debug.Log($"Player02 Result : Pass Time : {_player02.playerData.passTime} | Pass Distance : {_player02.playerData.passDistance}");
+
+        // 少し間を取る[演出から]
+
+        yield return new WaitForSeconds(5);
+
+        //[演出まで]
+
+        GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.Release));
+    }
+
+    #endregion
+
+
     /// <summary>
     /// ゲームの初期化
     /// 1.マップの初期化
@@ -696,7 +701,7 @@ public class InGame : MonoBehaviour
 
         gameStage = GameStage.EndRound;
 
-        AudioManager.Instance.EndMusic(bgm);
+        AudioManager.Instance.EndMusic(BgmData.StageBgm.InGame);
 
         Player.Job job1 = _player01.job;
         Player.Job job2 = _player02.job;
