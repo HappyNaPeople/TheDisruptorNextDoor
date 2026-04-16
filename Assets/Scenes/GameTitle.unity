@@ -913,6 +913,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5db2a9865d966f42a0f4233a48c0263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleUIManager
+  bgmData:
+    clip: {fileID: 0}
+    volume: 1
   player01Camera: {fileID: 4553952903396732968}
   player01TitlePlayerCanvas: {fileID: 160810434604588214}
   player02Camera: {fileID: 6818915034254784924}
@@ -1100,10 +1103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46d6532d1aa69a74fb7f599c6ab38eb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  stageBgmDates:
-  - stage: 1
-    clip: {fileID: 8300000, guid: db557ce8c921dfb4985a2d7dad95aca2, type: 3}
-    volume: 45.9
   musicSource: {fileID: 868091574}
   trapSfxSources:
   - {fileID: 667046785}
@@ -2148,7 +2147,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46d6532d1aa69a74fb7f599c6ab38eb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  stageBgmDates: []
   musicSource: {fileID: 0}
   trapSfxSources: []
 --- !u!1 &1819359088

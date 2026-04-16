@@ -2734,10 +2734,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46d6532d1aa69a74fb7f599c6ab38eb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  stageBgmDates:
-  - stage: 1
-    clip: {fileID: 8300000, guid: db557ce8c921dfb4985a2d7dad95aca2, type: 3}
-    volume: 45.9
   musicSource: {fileID: 2004110650}
   trapSfxSources:
   - {fileID: 2090387152}
@@ -32505,6 +32501,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46c4b735f9db3354b8ad3048a7160bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InGame
+  bgmData:
+    clip: {fileID: 8300000, guid: db557ce8c921dfb4985a2d7dad95aca2, type: 3}
+    volume: 29
   runnerCamera:
     camera: {fileID: 584086942}
     cinemachineCamera: {fileID: 886843506}

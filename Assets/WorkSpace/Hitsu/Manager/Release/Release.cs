@@ -23,21 +23,22 @@ public class Release : MonoBehaviour
 {
     /// <summary> シングルトンインスタンス </summary>
     public static Release Instance;
-
-    // GameManager から取得するプ?イ?ーイ?スタ?ス
-    public Player _player01 => GameManager.Instance.player01;
-    public Player _player02 => GameManager.Instance.player02;
-
+    [Header("Audio")]
+    public BgmData bgmData;
+    [Header("Winner")]
     /// <summary> 勝者 </summary>
     public Winner winner;
+    [Header("Player 01 ")]
     /// <summary> プレイヤー1のUI </summary>
     public Release_Canvas player01Canvas;
+    public Button player01FirstSelect;
+    public Player _player01 => GameManager.Instance.player01;
+
+    [Header("Player 02 ")]
     /// <summary> プレイヤー2のUI </summary>
     public Release_Canvas player02Canvas;
-
-    public Button player01FirstSelect;
     public Button player02FirstSelect;
-
+    public Player _player02 => GameManager.Instance.player02;
 
     /// <summary>
     /// 勝者判定

@@ -134,6 +134,9 @@ public class InGame : MonoBehaviour
     /// </summary>
     public static InGame Instance;
 
+    [Header("Audio")]
+    public BgmData bgmData;
+
     [Header("Camera")]
     /// <summary>
     /// Runner用カメラデータ
@@ -571,7 +574,7 @@ public class InGame : MonoBehaviour
         TimerStart();       // タイマー開始
         TrapListInit();     // 罠初期化
         // BGM再生
-        AudioManager.Instance.PlayMusic(BgmData.StageBgm.InGame);
+        AudioManager.Instance.PlayMusic(bgmData);
 
         // Runnerの初期位置を記録（動いたかチェック用）
         Vector3 runnerPos = runner.transform.position;
@@ -701,7 +704,7 @@ public class InGame : MonoBehaviour
 
         gameStage = GameStage.EndRound;
 
-        AudioManager.Instance.EndMusic(BgmData.StageBgm.InGame);
+        AudioManager.Instance.EndMusic(bgmData);
 
         Player.Job job1 = _player01.job;
         Player.Job job2 = _player02.job;
