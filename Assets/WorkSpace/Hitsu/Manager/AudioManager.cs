@@ -9,21 +9,6 @@ using static BgmData;
 public class BgmData
 {
     /// <summary>
-    /// ゲームの各シーン・状態に対応するBGMの種類
-    /// </summary>
-    public enum StageBgm
-    {
-        GameTitle, // タイトル画面
-        InGame,    // ゲームプレイ中
-        Release,   // 解放・クリア時
-        Error      // エラー・異常時
-    };
-
-    /// <summary>
-    /// 現在のBGMが対応するステージ
-    /// </summary>
-    public StageBgm stage;
-    /// <summary>
     /// 再生するBGMのAudioClip
     /// </summary>
     public AudioClip clip;
@@ -50,11 +35,6 @@ public class AudioManager : MonoBehaviour
     /// AudioManager のシングルトンインスタンス。
     /// </summary>
     public static AudioManager Instance;
-
-    /// <summary>
-    /// BGM、SFX 用に登録されたサウンドデータの配列
-    /// </summary>
-    public BgmData[] stageBgmDates;
 
     /// <summary>
     /// BGM / SFX をそれぞれ再生するための AudioSource
@@ -185,15 +165,13 @@ public class AudioManager : MonoBehaviour
     /// 指定されたステージに対応するBGMを再生する
     /// </summary>
     /// <param name="targetStage">再生したいステージBGM</param>
-    public void PlayMusic(StageBgm targetStage)
+    public void PlayMusic(BgmData targetBgm)
     {
-        // 対応するBGMデータを検索
-        BgmData bgmData = Array.Find(stageBgmDates, x => x.stage == targetStage);
         // BGMデータまたはAudioSourceが無効な場合は終了
         Debug.Log("musicSource.clip.name");
 
         // Sound が見つからない場合
-        if (bgmData == null || bgmData.clip == null)
+        if (targetBgm == null || targetBgm.clip == null)
         {
             Debug.LogWarning("BgmData が見つかりません");
             return;
@@ -204,8 +182,8 @@ public class AudioManager : MonoBehaviour
         }
         // BGM設定
 
-        musicSource.clip = bgmData.clip;          
-        musicSource.volume = bgmData.volume / 100;  // 0～1に変換
+        musicSource.clip = targetBgm.clip;          
+        musicSource.volume = targetBgm.volume / 100;  // 0～1に変換
 
         // BGM の再生開始
         musicSource.Play();                 
@@ -265,11 +243,10 @@ public class AudioManager : MonoBehaviour
     /// 一時停止（Pause）ではなく、再生状態をリセットする動作となる。
     /// </summary>
     /// <param name="name">停止したい BGM 名（musicSounds 内の name）</param>
-    public void EndMusic(StageBgm targetStage)
+    public void EndMusic(BgmData targetBgm)
     {
-        BgmData bgmData = Array.Find(stageBgmDates, x => x.stage == targetStage);
         // Sound が見つからない場合
-        if (bgmData == null|| bgmData.clip == null)
+        if (targetBgm == null|| targetBgm.clip == null)
         {
             Debug.LogWarning("bgmData が見つからない");
             return;
@@ -277,7 +254,7 @@ public class AudioManager : MonoBehaviour
         else    // 見つかった場合 → Clip をセットして停止
         {
            
-            musicSource.clip = bgmData.clip;  // 停止対象となる AudioClip を設定
+            musicSource.clip = targetBgm.clip;  // 停止対象となる AudioClip を設定
             musicSource.Stop();         // BGM を完全停止（再生位置は 0 に戻る）
         }
     }

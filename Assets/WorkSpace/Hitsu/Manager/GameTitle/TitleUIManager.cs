@@ -25,6 +25,9 @@ public class TitleUIManager : MonoBehaviour
     /// </summary>
     public static TitleUIManager Instance;
 
+    public BgmData bgmData;
+
+
     // ==============================
     // Player01
     // ==============================
@@ -83,6 +86,8 @@ public class TitleUIManager : MonoBehaviour
         // Player02 Canvas 設定
         player02TitlePlayerCanvas.targetPlayer = _player02;
         player02Camera.targetDisplay = (int)_player02.displayCode;
+
+        //AudioManager.Instance.PlayMusic(bgmData);
 
         // TitleCanvas ?期化
         //player01TitlePlayerCanvas.TitleTrapCanvas_Init();
