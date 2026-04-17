@@ -111,8 +111,7 @@ public class Release : MonoBehaviour
             {
                 Debug.Log("Back To Title");
                 // タイトル画面へ遷移
-                SceneManager.LoadScene("GameTitle");
-
+                GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.GameTitle));
                 yield break;
             }
             // -------------------------
@@ -123,7 +122,7 @@ public class Release : MonoBehaviour
                 Debug.Log("Replay Start");
 
                 // ゲームシーン再読み込み
-                SceneManager.LoadScene("InGame");
+                GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.InGame));
 
                 yield break;
             }

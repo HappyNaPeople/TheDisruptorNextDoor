@@ -18,8 +18,9 @@ public class Release_Canvas : MonoBehaviour
         Replay,
         BackToTitle
     }
+
     /// <summary> 現在の選択状態 </summary>
-    public Option option { get; private set; }
+    public Option option;/* { get; private set; }*/
 
     /// <summary> 勝敗表示用テキスト </summary>
     public TMP_Text winnerResult;
@@ -28,10 +29,27 @@ public class Release_Canvas : MonoBehaviour
     /// <summary> 自分の結果表示用テキスト </summary>
     public TMP_Text yourResult;
 
+    public TMP_Text choice;
+    string color = "red"; // 或 "#FF0000"
+
+
     private const string winnerText = "Winner : ";
     private const string otherPlayer = "Others";
     private const string you = "You";
 
+    private void Choice()
+    {
+        if(option == Option.None)
+        {
+            choice.text = "";
+            return;
+        }
+        choice.text =
+            $"<color=#FFFFFF>Your Choice:</color>" +
+            $"\n<color=#FF0000>{option}</color>" +
+            $"\n<color=#FFFFFF>Wait for The Others</color>\r\n";
+    }
+    
 
     /// <summary> このCanvasが担当するプレイヤー </summary>
     private Winner thisPlayer;
@@ -77,12 +95,16 @@ public class Release_Canvas : MonoBehaviour
         thisPlayer = targetPlayer;
 
         ResultShow();
-
+        Choice();
     }
     /// <summary>
     /// 選択状態をリセット
     /// </summary>
-    public void ResetOption() => option = Option.None;
+    public void ResetOption()
+    {
+        option = Option.None;
+        Choice();
+    }
     /// <summary>
     /// タイトルへ戻るボタン
     /// ・未選択時のみ有効
@@ -91,8 +113,7 @@ public class Release_Canvas : MonoBehaviour
     {
         if (option != Option.None) return;
         option = Option.BackToTitle;
-
-        GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.GameTitle));
+        Choice();
     }
     /// <summary>
     /// リプレイボタン
@@ -102,8 +123,10 @@ public class Release_Canvas : MonoBehaviour
     {
         if (option != Option.None) return;
         option = Option.Replay;
-
-        GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.InGame));
-
+        Choice();
     }
+
+
+
+
 }
