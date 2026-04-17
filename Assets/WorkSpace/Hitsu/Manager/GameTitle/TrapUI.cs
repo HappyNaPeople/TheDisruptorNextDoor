@@ -29,13 +29,26 @@ public class TrapUI : MonoBehaviour
     /// Trap 情報を UI に反映する
     /// </summary>
     /// <param name="data">選択された Trap データ</param>
-    public void SetTrap(ChoseTrapData data)
+    //public void SetTrap(ChoseTrapData data)
+    //{
+    //    // Trap アイコン設定
+    //    icon.sprite = GameManager.allTrap[data.trapName].icon;
+
+    //    // Trap 数量表示
+    //    //count.text = $"x{data.trapCount}";
+    //    count.text = $"";
+
+    //}
+    public void SetTrap(TrapName trapName)
     {
         // Trap アイコン設定
-        icon.sprite = GameManager.allTrap[data.trapName].icon;
+        icon.sprite = GameManager.allTrap[trapName].icon;
 
         // Trap 数量表示
-        count.text = $"x{data.trapCount}";
+        //count.text = $"x{data.trapCount}";
+        count.text = $"";
+
     }
+
 
 }

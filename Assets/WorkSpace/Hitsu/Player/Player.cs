@@ -1,6 +1,19 @@
 ﻿using System.Drawing;
 using UnityEngine;
 
+
+public class PlayerData
+{
+    public float passTime {  get; private set; }
+    public float passDistance {  get; private set; }
+
+    public void WriteData(float time, float distance)
+    {
+        passTime = time;
+        passDistance = distance;
+    }
+}
+
 /// <summary>
 /// プレイヤーを管理するクラス。
 /// 
@@ -19,6 +32,8 @@ public class Player : MonoBehaviour
 
     public ControllerNumber controllerCode = ControllerNumber.None;
     public PlayerInputData inputData;
+
+    public PlayerData playerData = new PlayerData();
 
     /// <summary>
     /// プレイヤーの役職

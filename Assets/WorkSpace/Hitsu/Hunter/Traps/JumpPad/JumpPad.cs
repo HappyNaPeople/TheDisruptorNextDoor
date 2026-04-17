@@ -49,19 +49,22 @@ public class JumpPad : InstallationTrap
 
 
     /// <summary>
-    /// Trap 設置処理
-    /// </summary>
     public override void SetUp()
     {
         base.SetUp();
-        // 落下して設置
+        // 設置指示を出す（フェードイン開始）
+    }
+
+    protected override void OnSetupComplete()
+    {
+        // 実体化完了後に落下開始
         StartCoroutine(FallAndSetUp());
     }
 
     /// <summary>
     /// 衝突判定
     /// </summary>
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isSetup) return;
 
@@ -69,6 +72,10 @@ public class JumpPad : InstallationTrap
         if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
         {
             animator.Play("JumpPad_GotActive");
+            if (collision.TryGetComponent<Runner>(out var runner))
+            {
+                runner.ExecuteJump(direction);
+            }
         }
         // 地面または Trap に当たった場合
         // else if ((IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer)) && !isFallDone)

@@ -192,6 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8647051870133882342}
   - component: {fileID: 5429170871314212027}
+  - component: {fileID: 6537090227952713654}
   - component: {fileID: 149052863065255251}
   - component: {fileID: 162709464551363242}
   m_Layer: 0
@@ -235,6 +236,24 @@ MonoBehaviour:
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
+  currentGridPos: {x: 0, y: 0}
+  originGridPos: {x: 0, y: 0}
+  isFallDone: 0
+--- !u!114 &6537090227952713654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8692603279826432429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a28eaf68e6482148aee42bbfa7e1e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrapHp
+  hp: 15
+  defenseMultiplier: 1
+  broken: 0
 --- !u!61 &149052863065255251
 BoxCollider2D:
   m_ObjectHideFlags: 0

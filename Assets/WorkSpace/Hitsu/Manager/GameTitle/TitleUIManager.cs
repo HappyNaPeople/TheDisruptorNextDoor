@@ -25,6 +25,9 @@ public class TitleUIManager : MonoBehaviour
     /// </summary>
     public static TitleUIManager Instance;
 
+    public BgmData bgmData;
+
+
     // ==============================
     // Player01
     // ==============================
@@ -64,6 +67,7 @@ public class TitleUIManager : MonoBehaviour
     /// </summary>
     public TitlePlayerCanvas player02TitlePlayerCanvas;
 
+    public float trapSelectTime = 10f;
 
     public CanvasGroup[] Titles = new CanvasGroup[2];
     public CanvasGroup[] TurnSelect = new CanvasGroup[2];
@@ -82,6 +86,8 @@ public class TitleUIManager : MonoBehaviour
         // Player02 Canvas 設定
         player02TitlePlayerCanvas.targetPlayer = _player02;
         player02Camera.targetDisplay = (int)_player02.displayCode;
+
+        //AudioManager.Instance.PlayMusic(bgmData);
 
         // TitleCanvas ?期化
         //player01TitlePlayerCanvas.TitleTrapCanvas_Init();
@@ -126,7 +132,7 @@ public class TitleUIManager : MonoBehaviour
         player01TitlePlayerCanvas.ChangeState(TitlePlayerCanvas.TitlePlayerState.SelectingSide);
         player02TitlePlayerCanvas.ChangeState(TitlePlayerCanvas.TitlePlayerState.SelectingSide);
 
-        var rnd = Random.Range(0, 2);
+        var rnd = 0;// Random.Range(0, 2);
         player01TitlePlayerCanvas.sideTmp.text = rnd == 0 ? $"あなたは先行（ゴールを目指す）" : $"あなたは後攻（妨害）";
         player02TitlePlayerCanvas.sideTmp.text = rnd == 1 ? $"あなたは先行（ゴールを目指す）" : $"あなたは後攻（妨害）";
         var player01Job = rnd == 0 ? Job.Runner : Job.Hunter;
@@ -161,15 +167,15 @@ public class TitleUIManager : MonoBehaviour
         if (player01TitlePlayerCanvas.chooseTrapButtons.Count > 0)
         {
             var button = player01TitlePlayerCanvas.chooseTrapButtons[0].gameObject.GetComponentInChildren<Button>();
-            _player01.inputData.multiplayerEventSystem.SetSelectedGameObject(null); // 一度リセット
-            _player01.inputData.multiplayerEventSystem.SetSelectedGameObject(button.gameObject);
+            _player01.inputData.SetSelect(null); // 一度リセット
+            _player01.inputData.SetSelect(button.gameObject);
         }
 
         if (player02TitlePlayerCanvas.chooseTrapButtons.Count > 0)
         {
             var button = player02TitlePlayerCanvas.chooseTrapButtons[0].gameObject.GetComponentInChildren<Button>();
-            _player02.inputData.multiplayerEventSystem.SetSelectedGameObject(null); // 一度リセット
-            _player02.inputData.multiplayerEventSystem.SetSelectedGameObject(button.gameObject);
+            _player02.inputData.SetSelect(null); // 一度リセット
+            _player02.inputData.SetSelect(button.gameObject);
         }
 
         // -----------------

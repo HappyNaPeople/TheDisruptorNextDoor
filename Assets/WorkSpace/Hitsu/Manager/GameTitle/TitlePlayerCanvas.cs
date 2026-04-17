@@ -63,21 +63,18 @@ public class TitlePlayerCanvas : MonoBehaviour
     /// </summary>
     private int nowCost = Backpack.maxTrapCount;
 
-    /// <summary>
-    /// Trap 選択制限?間
-    /// </summary>
-    private const int timerLimit = 15;
 
     /// <summary>
     /// 現在の残り?間
     /// </summary>
-    private float timer = timerLimit;
+    private float timer = 0;
 
     /// <summary>
     /// Trap 選択タイマー Coroutine
     /// </summary>
     private IEnumerator Timer()
     {
+        timer = TitleUIManager.Instance.trapSelectTime;
         while (timer > 0)
         {
             // ?間減少
@@ -103,10 +100,11 @@ public class TitlePlayerCanvas : MonoBehaviour
         }
 
         // Backpack に追加
-        foreach (ChoseTrapData trap in playerTrap)
+        foreach (TrapName trap in playerTrap)
         {
-            targetPlayer.hunter.backpack.AddToBackpack(trap.trapName);
+            targetPlayer.hunter.backpack.AddToBackpack(trap);
         }
+
 
         // 追加完了判定
         isDone = targetPlayer.hunter.backpack.trapsPack.Count == playerTrap.Count;
@@ -128,12 +126,14 @@ public class TitlePlayerCanvas : MonoBehaviour
     /// <summary>
     /// プ?イ?ーが選択した Trap データ
     /// </summary>
-    private List<ChoseTrapData> playerTrap = new List<ChoseTrapData>();
+    //private List<ChoseTrapData> playerTrap = new List<ChoseTrapData>();
+    private List<TrapName> playerTrap = new List<TrapName>();
+
 
     /// <summary>
     /// 選択 Trap UI のページ?
     /// </summary>
-    private int showChoseTrapPageLimit => playerTrap.Count / choseTrap.Count;
+    //private int showChoseTrapPageLimit => playerTrap.Count / choseTrap.Count;
 
     /// <summary>
     /// 現在表示しているページ
@@ -143,58 +143,82 @@ public class TitlePlayerCanvas : MonoBehaviour
     /// <summary>
     /// 選択済み Trap UI 更新
     /// </summary>
+    //private void UpdateChoseTrap()
+    //{
+    //    // 残りコスト表示更新
+    //      costText.text = $"Cost Left : {nowCost:D2}";
+    //      int trapIndex = choseTrapNowPage * showChoseTrapPageLimit;
+    //      int choseTrapMax = playerTrap.Count > choseTrap.Count ? choseTrap.Count : playerTrap.Count;
+
+    //    for (int index = 0; index < choseTrap.Count; index++)
+    //    {
+    //        // UI 非表示
+    //        choseTrap[index].gameObject.SetActive(false);
+
+    //        // Trap が存在する場?表示
+    //        if (trapIndex < playerTrap.Count)
+    //        {
+    //            choseTrap[index].SetTrap(playerTrap[trapIndex]);
+    //            choseTrap[index].gameObject.SetActive(true);
+    //            trapIndex++;
+    //        }
+
+    //    }
+    //}
     private void UpdateChoseTrap()
     {
         // 残りコスト表示更新
         costText.text = $"Cost Left : {nowCost:D2}";
-        int trapIndex = choseTrapNowPage * showChoseTrapPageLimit;
         int choseTrapMax = playerTrap.Count > choseTrap.Count ? choseTrap.Count : playerTrap.Count;
-
         for (int index = 0; index < choseTrap.Count; index++)
         {
             // UI 非表示
             choseTrap[index].gameObject.SetActive(false);
 
             // Trap が存在する場?表示
-            if (trapIndex < playerTrap.Count)
+            if (index < playerTrap.Count)
             {
-                choseTrap[index].SetTrap(playerTrap[trapIndex]);
+                choseTrap[index].SetTrap(playerTrap[index]);
                 choseTrap[index].gameObject.SetActive(true);
-                trapIndex++;
+                //trapIndex++;
             }
 
         }
     }
 
+
+
     /// <summary>
     /// Trap をプ?イ?ー選択?ストに追加
     /// </summary>
-    private void AddToPlayerTrap(TrapName targetTrap)
-    {
-        // コスト計算
-        int checkCost = nowCost - GameManager.allTrap[targetTrap].cost;
-        // コスト不足
-        if (checkCost < 0) return;
-        // コスト更新
-        nowCost = checkCost;
+    //private void AddToPlayerTrap(TrapName targetTrap)
+    //{
+    //    // コスト計算
+    //    int checkCost = nowCost - GameManager.allTrap[targetTrap].cost;
+    //    // コスト不足
+    //    if (checkCost < 0) return;
+    //    // コスト更新
+    //    nowCost = checkCost;
 
-        // 既に選択されている Trap を?索
-        ChoseTrapData trap = playerTrap.Find(t => t.trapName == targetTrap);
-        if (trap == null)
-        {
-            // 新規追加
-            playerTrap.Add(new ChoseTrapData()
-            {
-                trapName = targetTrap,
-                trapCount = 1
-            });
-        }
-        // 個??加
-        else trap.trapCount += 1;
+    //    // 既に選択されている Trap を?索
+    //    ChoseTrapData trap = playerTrap.Find(t => t.trapName == targetTrap);
+    //    if (trap == null)
+    //    {
+    //        // 新規追加
+    //        playerTrap.Add(new ChoseTrapData()
+    //        {
+    //            trapName = targetTrap,
+    //            trapCount = 1
+    //        });
+    //    }
+    //    // 個??加
+    //    else trap.trapCount += 1;
 
-        // UI 更新
-        UpdateChoseTrap();
-    }
+    //    // UI 更新
+    //    UpdateChoseTrap();
+    //}
+
+
 
     //public void Button_ChoseTrapNextPage()
     //{
@@ -211,6 +235,20 @@ public class TitlePlayerCanvas : MonoBehaviour
     //    UpdateChoseTrap();
 
     //}
+
+    private void AddToPlayerTrap(TrapName targetTrap)
+    {
+        // コスト計算
+        int checkCost = nowCost - GameManager.allTrap[targetTrap].cost;
+        // コスト不足
+        if (checkCost < 0 || playerTrap.Contains(targetTrap) || playerTrap.Count == 8) return;
+        // コスト更新
+        nowCost = checkCost;
+        playerTrap.Add(targetTrap);
+
+        // UI 更新
+        UpdateChoseTrap();
+    }
 
     [Header("選べる罠")]
 
@@ -286,29 +324,29 @@ public class TitlePlayerCanvas : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// ?ページへ移動
-    /// </summary>
+    ///// <summary>
+    ///// ?ページへ移動
+    ///// </summary>
     public void Button_CanChooseTrapNextPage()
     {
         int nextPage = canChooseTrapNowPage + 1;
         if (nextPage > showCanChooseTrapPageLimit) return;
         else canChooseTrapNowPage = nextPage;
-        
+
         UpdateCanChooseTrap();
-        StartCoroutine(GameManager.SelectButtonWithDelay(targetPlayer.inputData.multiplayerEventSystem, CanChooseTrapBackPage));
+        StartCoroutine(GameManager.SelectButtonWithDelay(targetPlayer.inputData, CanChooseTrapBackPage));
     }
 
-    /// <summary>
-    /// 前ページへ移動
-    /// </summary>
+    ///// <summary>
+    ///// 前ページへ移動
+    ///// </summary>
     public void Button_CanChooseTrapBackPage()
     {
         int backPage = canChooseTrapNowPage - 1;
         if (backPage < 0) return;
         else canChooseTrapNowPage = backPage;
         UpdateCanChooseTrap();
-        StartCoroutine(GameManager.SelectButtonWithDelay(targetPlayer.inputData.multiplayerEventSystem, CanChooseTrapNextPage));
+        StartCoroutine(GameManager.SelectButtonWithDelay(targetPlayer.inputData, CanChooseTrapNextPage));
     }
 
     public void AddStartButtonListener()

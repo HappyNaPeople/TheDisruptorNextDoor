@@ -1,134 +1,141 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// 爆発トラップ。
-/// 地面に落下し、接触後に一定時間振動してから爆発する Trap。
-/// </summary>
+public enum BombActivationType
+{
+    AfterSetup,
+    AfterLanding,
+    Proximity
+}
+
 public class Boom : TiggerTrap
 {
-    // 落下速度
+    [Header("Bomb Settings")]
+    public BombActivationType activationType = BombActivationType.AfterLanding;
     public float fallSpeed;
-    // 爆発までの待機時間
-    public float waitForBoom;
-    // 爆発範囲
-    public float boomArea;
-    // 爆発エフェクト
-    public GameObject flame;
-    /// <summary>
-    /// Trap 初期化
-    /// </summary>
-    public override void Init()
+    public float waitForBoom = 3.0f;
+    public float boomArea = 2.0f;
+
+    [Header("Proximity Settings")]
+    public float detectionRadius = 3.0f;
+
+    [Header("Visual Effects")]
+    [Tooltip("予兆から爆発までがセットになったエフェクト")]
+    public GameObject explosionEffect; // ★1つにまとめました
+
+    [Tooltip("爆発後、エフェクトの余韻が終わるまでの待機時間（秒）")]
+    public float effectLingerTime = 1.5f;
+
+    public float explosionHitboxDelay = 0.0f;
+
+    private GameObject spawnedEffect; // 生成したエフェクトの保持用
+    private bool fallDone = false;
+    private bool exploded = false;
+
+    public override void Init() => base.Init();
+
+    public override void SetUp() => base.SetUp();
+
+    protected override void OnSetupComplete()
     {
-        cost = 1;
-        base.Init();
-        trapName = TrapName.Boom;
-    }
-    /// <summary>
-    /// Trap 設置処理
-    /// </summary>
-    public override void SetUp()
-    {
-        base.SetUp();
-        gameObject.layer = UseLayerName.trapLayer;
-        // Trap 動作開始
         StartCoroutine(TrapRule());
     }
-    // 落下完了フラグ　 
-    private bool fallDone = false;
-    /// <summary>
-    /// Trap 発動条件
-    /// </summary>
+
     public override bool Condition() => fallDone;
-    /// <summary>
-    /// 爆発前の振動演出
-    /// </summary>
-    private IEnumerator Shaking()
-    {
-        Vector3 originalPos = transform.position;
 
-        float time = 0;
-
-        while (time < waitForBoom)
-        {
-            float x = Random.Range(-1f, 1f) * 0.1f;
-            float y = Random.Range(-1f, 1f) * 0.1f;
-
-            transform.localPosition = originalPos + new Vector3(x, y, 0);
-
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.position = originalPos;
-
-        yield return null;
-
-    }
-    /// <summary>
-    /// 爆発処理
-    /// </summary>
-    private void Explosion()
-    {
-        // 見た目を消す
-        GetComponent<SpriteRenderer>().enabled = false;
-        // 当たり判定を爆発範囲に変更
-        GetComponent<CircleCollider2D>().radius = boomArea;
-
-    }
-    /// <summary>
-    /// Trap の動作ルール
-    /// </summary>
     public override IEnumerator TrapRule()
     {
         gameObject.layer = UseLayerName.trapLayer;
         rb.simulated = true;
-        // 落下処理
-        yield return StartCoroutine(GridFallCoroutine(fallSpeed, () => fallDone = true));
-        // 爆発前演出
-        yield return StartCoroutine(Shaking());
-        // 爆発
-        Explosion();
-        yield return new WaitForEndOfFrame();
 
+        StartCoroutine(GridFallCoroutine(fallSpeed, () => fallDone = true));
+
+        // 起動条件待ち
+        if (activationType == BombActivationType.AfterLanding)
+        {
+            yield return new WaitUntil(() => fallDone);
+        }
+        else if (activationType == BombActivationType.Proximity)
+        {
+            yield return new WaitUntil(() => fallDone);
+            while (true)
+            {
+                Collider2D hit = Physics2D.OverlapCircle(transform.position, detectionRadius, 1 << UseLayerName.runnerLayer);
+                if (hit != null) break;
+                yield return null;
+            }
+        }
+        Debug.Log("ba-ka");
+        // --- カウントダウン＆エフェクト開始 ---
+
+        // ★予兆から爆発までセットになったエフェクトをここで1回だけ生成
+        if (explosionEffect != null)
+        {
+            spawnedEffect = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            spawnedEffect.transform.SetParent(this.transform);
+        }
+
+        // 爆発の瞬間（ダメージ判定）までの待機時間
+        yield return new WaitForSeconds(waitForBoom);
+
+        // 爆発シーケンスへ
+        yield return StartCoroutine(ExplosionSequence());
+    }
+
+    private IEnumerator ExplosionSequence()
+    {
+        exploded = true;
+
+        // ★トラップ本体のスプライト（見た目）だけをオフにする
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.enabled = false;
+        }
+
+        if (explosionHitboxDelay > 0)
+        {
+            yield return new WaitForSeconds(explosionHitboxDelay);
+        }
+
+        // ダメージ判定
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, boomArea, 1 << UseLayerName.runnerLayer);
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.TryGetComponent<Runner>(out var runner))
+            {
+                runner.Death();
+            }
+        }
+
+        // エフェクトの余韻が終わるまで待機
+        if (effectLingerTime > 0)
+        {
+            yield return new WaitForSeconds(effectLingerTime);
+        }
+        else
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        // トラップ本体の破棄（ここで子になっているspawnedEffectも一緒に消滅します）
         BrakeTheTrap();
     }
 
-
-    /// <summary>
-    /// 衝突判定
-    /// </summary>
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (!isSetup) return;
-
-    //    if (!Condition())
-    //    {
-    //        if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
-    //        {
-    //            // Runner に衝突
-
-    //        }
-    //        // 地面に接触 → 落下完了
-    //        else if (IsGameObjectLayer(collision, UseLayerName.platformLayer)) fallDone = true;
-    //    }
-    //}
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isSetup) return;
+        if (exploded) return;
 
         if (!Condition())
         {
             if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
             {
-                // Runner に衝突
-
+                base.OnTriggerEnter2D(collision);
             }
-            //  GridFallCoroutine で着地判定を行っています
-            // else if (IsGameObjectLayer(collision, UseLayerName.platformLayer)) fallDone = true;
         }
     }
 
+    // 万が一、途中でトラップが破壊された時のためのクリーンアップ
 
 }

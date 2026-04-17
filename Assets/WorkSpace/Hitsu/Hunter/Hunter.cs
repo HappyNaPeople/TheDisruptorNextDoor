@@ -22,6 +22,7 @@ public class Backpack
     /// </summary>
     public void AddToBackpack(TrapName targetTrapName) => trapsPack.Add(targetTrapName);
 
+
 }
 
 /// <summary>

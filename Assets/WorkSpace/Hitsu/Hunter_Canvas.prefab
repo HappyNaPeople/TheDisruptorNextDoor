@@ -86,6 +86,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HunterConTrollerPad
   hunterCamera: {fileID: 0}
   hunterCanvas: {fileID: 0}
+  nowCostCanUse: 0
+  recoverTimer: 0
   costImage: {fileID: 5291003618754141555}
   costText: {fileID: 4723978267244364168}
   trapButtonList:
@@ -675,7 +677,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7656271866965684553, guid: 70b05853ed888484593423376a945797, type: 3}
       propertyPath: m_Name
-      value: Tarp Button_1
+      value: Tarp Button_6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -788,7 +790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7656271866965684553, guid: 70b05853ed888484593423376a945797, type: 3}
       propertyPath: m_Name
-      value: Tarp Button_2
+      value: Tarp Button_7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -913,7 +915,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7656271866965684553, guid: 70b05853ed888484593423376a945797, type: 3}
       propertyPath: m_Name
-      value: Tarp Button_7
+      value: Tarp Button_1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1139,7 +1141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7656271866965684553, guid: 70b05853ed888484593423376a945797, type: 3}
       propertyPath: m_Name
-      value: Tarp Button_6
+      value: Tarp Button_4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1252,7 +1254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7656271866965684553, guid: 70b05853ed888484593423376a945797, type: 3}
       propertyPath: m_Name
-      value: Tarp Button_4
+      value: Tarp Button_0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1377,7 +1379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7656271866965684553, guid: 70b05853ed888484593423376a945797, type: 3}
       propertyPath: m_Name
-      value: Tarp Button
+      value: Tarp Button _2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6740670630619363710}
+  - component: {fileID: -9138493806040882192}
   - component: {fileID: 2130280416294361403}
   - component: {fileID: 9068236169488280652}
   - component: {fileID: 4182516379932374407}
@@ -35,6 +36,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-9138493806040882192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2829919237059016199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a28eaf68e6482148aee42bbfa7e1e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrapHp
+  hp: 10
+  defenseMultiplier: 1
+  broken: 0
 --- !u!114 &2130280416294361403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,15 +63,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6115bbfbbcc22488af48fb57107ad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Boom
-  trapName: 0
+  trapName: 2
   cost: 0
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
+  currentGridPos: {x: 0, y: 0}
+  originGridPos: {x: 0, y: 0}
+  fadeInDuration: 1
+  activationType: 0
   fallSpeed: 8
   waitForBoom: 2
   boomArea: 2
-  flame: {fileID: 0}
+  detectionRadius: 3
+  explosionEffect: {fileID: 7772825388523857775, guid: ed2adf86dc9972c448fc684f89a19b9d, type: 3}
+  effectLingerTime: 0.75
+  explosionHitboxDelay: 0
 --- !u!212 &9068236169488280652
 SpriteRenderer:
   serializedVersion: 2
@@ -105,7 +128,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 60e5d93de53da5642a38fce5925c3efa, type: 3}
+  m_Sprite: {fileID: -2599018732422266431, guid: b4281d0309eccb140b019bffc976f052, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

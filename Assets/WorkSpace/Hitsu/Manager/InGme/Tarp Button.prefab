@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ae10d9f4f459d3499640063bffd7248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrapButtonUI
+  trapName: 0
   button: {fileID: 6654212765579639183}
   icon: {fileID: 6696574081760395866}
   cost: {fileID: 8212470877595052250}
@@ -272,7 +273,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 6696574081760395866}
+  m_TargetGraphic: {fileID: 2674677275854203201}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []

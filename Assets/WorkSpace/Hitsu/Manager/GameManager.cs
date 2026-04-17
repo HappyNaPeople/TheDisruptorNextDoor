@@ -98,9 +98,7 @@ public class TrapInformation
 //    public static Dictionary<TrapName, TrapInformation> allTrap = new Dictionary<TrapName, TrapInformation>();
 //}
 
-public enum SceneState { GameTitle, InGame, None }
-
-
+public enum SceneState { GameTitle, InGame, Release, None }
 
 /// <summary>
 /// プレイヤーの表示ディスプレイ番号
@@ -154,6 +152,7 @@ public class GameManager : MonoBehaviour
     public Player player01;
     public Player player02;
 
+
     /// <summary>
     /// 指定された Gamepad を取得する
     /// 接続されていない場合はエラーを出す
@@ -183,15 +182,15 @@ public class GameManager : MonoBehaviour
         inputDevice.InputInit();
 
         // Keyboard / Mouse 確認
-        Debug.Log(inputDevice.mouse.name);
-        Debug.Log(inputDevice.keyboard.name);
+        //Debug.Log(inputDevice.mouse.name);
+        //Debug.Log(inputDevice.keyboard.name);
 
         // Gamepad 確認
         if (inputDevice.gamepad.Count > 0)
         {
             for (int i = 0; i < inputDevice.gamepad.Count; i++)
             {
-                Debug.Log(inputDevice.gamepad[i].name);
+                //Debug.Log(inputDevice.gamepad[i].name);
             }
         }
 
@@ -325,7 +324,7 @@ public class GameManager : MonoBehaviour
             }
             // CSV 行をカンマ区切りで分割
             string[] values = csvLines[index].Split(',');
-            Debug.Log(string.Join(",", values));
+            //Debug.Log(string.Join(",", values));
 
             // CSV フォーマットチェック
             if (values.Length < dataIndexMax)
@@ -368,7 +367,7 @@ public class GameManager : MonoBehaviour
         //    prefab = Resources.Load<GameObject>("Prefabs/Traps/JumpPad")
 
         // 読み込み完了ログ
-        Debug.Log(allTrap.Count);
+        //Debug.Log(allTrap.Count);
 
     }
 
@@ -402,19 +401,14 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this);
         }
-        else Destroy(gameObject);
+        else Destroy(this.gameObject);
 
         GameManager_Init();
     }
-    private void Start()
-    {
-
-    }
-
-
 
     public IEnumerator ChangeScene(SceneState state)
     {
+        Debug.Log($"ChangeScene: {currentScene} to {state}");
         OnExitScene(currentScene);
 
         var asyncLoad = SceneManager.LoadSceneAsync(state.ToString());
@@ -430,6 +424,7 @@ public class GameManager : MonoBehaviour
 
     private void OnExitScene(SceneState prevScene)
     {
+        Debug.Log($"Exit {prevScene}");
         switch (prevScene)
         {
             case SceneState.GameTitle:
@@ -439,81 +434,100 @@ public class GameManager : MonoBehaviour
             case SceneState.InGame:
 
                 break;
+
+            default:
+                break;
         }
     }
     private void OnEnterScene(SceneState newScene)
     {
+        Debug.Log($"Enter {newScene}");
         switch (newScene)
         {
             case SceneState.GameTitle:
-
+                Title_PlayerInputAssign(player01.inputData, player01.inputData.playerIndex);
+                Title_PlayerInputAssign(player02.inputData, player02.inputData.playerIndex);
                 break;
 
             case SceneState.InGame:
                 Game_PlayerInputAssign();
                 break;
+
+            case SceneState.Release:
+                Release_PlayerInputAssign();
+                break;
         }
     }
 
-    public void Title_PlayerInputAssign(PlayerInputData playerInputData)
+    public void Title_PlayerInputAssign(PlayerInputData playerInputData, int index)
     {
         if (TitleUIManager.Instance == null) return;
 
-        switch (playerInputData.playerIndex)
-        {
-            case 0:
-                playerInputData.playerInput.camera = TitleUIManager.Instance.player01Camera;
-                playerInputData.multiplayerEventSystem.playerRoot = TitleUIManager.Instance.player01TitlePlayerCanvas.gameObject;
+        var camera = index == 0 ? TitleUIManager.Instance.player01Camera : TitleUIManager.Instance.player02Camera;
+        var playerRoot = index == 0 ? TitleUIManager.Instance.player01TitlePlayerCanvas.gameObject : TitleUIManager.Instance.player02TitlePlayerCanvas.gameObject;
+        var firstSelect = index == 0 ? TitleUIManager.Instance.player01TitlePlayerCanvas.startButton.gameObject : TitleUIManager.Instance.player02TitlePlayerCanvas.startButton.gameObject;
 
-                var p1StartButton = TitleUIManager.Instance.player01TitlePlayerCanvas.startButton.gameObject;
-                playerInputData.multiplayerEventSystem.firstSelectedGameObject = p1StartButton;
+        playerInputData.SetInputCamera(camera);
+        playerInputData.SetPlayerRoot(playerRoot);
 
-                // ★直接呼ばずに、コルーチンを開始する
-                playerInputData.StartCoroutine(SelectButtonWithDelay(playerInputData.multiplayerEventSystem, p1StartButton));
-                break;
-
-            case 1:
-                playerInputData.playerInput.camera = TitleUIManager.Instance.player02Camera;
-                playerInputData.multiplayerEventSystem.playerRoot = TitleUIManager.Instance.player02TitlePlayerCanvas.gameObject;
-
-                var p2StartButton = TitleUIManager.Instance.player02TitlePlayerCanvas.startButton.gameObject;
-                playerInputData.multiplayerEventSystem.firstSelectedGameObject = p2StartButton;
-
-                // ★直接呼ばずに、コルーチンを開始する
-                StartCoroutine(SelectButtonWithDelay(playerInputData.multiplayerEventSystem, p2StartButton));
-                break;
-        }
+        playerInputData.SetFirstSelect(firstSelect);
+        // ★直接呼ばずに、コルーチンを開始する
+        StartCoroutine(SelectButtonWithDelay(playerInputData, firstSelect));
     }
 
 
     public void Game_PlayerInputAssign()
     {
+        Debug.Log("PlayerInputAssign");
         var runnerPlayer = player01.job == Player.Job.Runner ? player01 : player02;
         var hunterPlayer = player01.job == Player.Job.Hunter ? player01 : player02;
 
-        runnerPlayer.inputData.playerInput.defaultActionMap = "Runner";
-        hunterPlayer.inputData.playerInput.defaultActionMap = "Hunter";
-        runnerPlayer.inputData.playerInput.SwitchCurrentActionMap("Runner");
-        hunterPlayer.inputData.playerInput.SwitchCurrentActionMap("Hunter");
+        runnerPlayer.inputData.SetActionMap(PlayOneInputForDebug.isOnDebug ? "Debug" : "Runner");
+        hunterPlayer.inputData.SetActionMap(PlayOneInputForDebug.isOnDebug ? "Debug" : "Hunter");
 
-        runnerPlayer.inputData.playerInput.camera = InGame.Instance.runnerCamera;
-        hunterPlayer.inputData.playerInput.camera = InGame.Instance.hunterCamera;
+
+        runnerPlayer.inputData.SetInputCamera(InGame.Instance.runnerCamera.camera);
+        hunterPlayer.inputData.SetInputCamera(InGame.Instance.hunterCamera.camera);
 
         InGame.Instance.runner.inputData = runnerPlayer.inputData;
-        hunterPlayer.inputData.multiplayerEventSystem.playerRoot = InGame.Instance.hunterConTrollerPad.hunterCanvas.gameObject;
-        hunterPlayer.inputData.multiplayerEventSystem.firstSelectedGameObject = InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject;
-        StartCoroutine(SelectButtonWithDelay(hunterPlayer.inputData.multiplayerEventSystem, InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject));
+        InGame.Instance.hunterConTrollerPad.inputData = hunterPlayer.inputData;
+        runnerPlayer.inputData.SetPlayerRoot(null);
+        runnerPlayer.inputData.SetFirstSelect(null);
+
+        hunterPlayer.inputData.SetPlayerRoot(InGame.Instance.hunterConTrollerPad.hunterCanvas.gameObject);
+        hunterPlayer.inputData.SetFirstSelect(InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject);
+
+        StartCoroutine(SelectButtonWithDelay(runnerPlayer.inputData, null));
+        StartCoroutine(SelectButtonWithDelay(hunterPlayer.inputData, InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject));
+
+    }
+
+    public void Release_PlayerInputAssign()
+    {
+        Debug.Log("PlayerInputAssign");
+        player01.inputData.SetActionMap(PlayOneInputForDebug.isOnDebug ? "Debug" : "UI");
+        player02.inputData.SetActionMap(PlayOneInputForDebug.isOnDebug ? "Debug" : "UI");
+
+        player01.inputData.SetPlayerRoot(Release.Instance.player01Canvas.gameObject);
+        player02.inputData.SetPlayerRoot(Release.Instance.player02Canvas.gameObject);
+
+        var firstSelect01 = Release.Instance.player01FirstSelect.gameObject;
+        var firstSelect02 = Release.Instance.player02FirstSelect.gameObject;
+        player01.inputData.SetFirstSelect(firstSelect01);
+        player02.inputData.SetFirstSelect(firstSelect02);
+        StartCoroutine(SelectButtonWithDelay(player01.inputData, firstSelect01));
+        StartCoroutine(SelectButtonWithDelay(player02.inputData, firstSelect02));
     }
 
 
-    public static IEnumerator SelectButtonWithDelay(MultiplayerEventSystem eventSystem, GameObject firstButton)
+
+    public static IEnumerator SelectButtonWithDelay(PlayerInputData inputData, GameObject firstButton)
     {
         // 1フレームだけ待機して、EventSystemやUIの準備が完了するのを待つ
         yield return null;
 
         // 確実にフォーカスを当てるための小技（一度nullを入れてリセットしてから指定）
-        eventSystem.SetSelectedGameObject(null);
-        eventSystem.SetSelectedGameObject(firstButton);
+        inputData.SetSelect(null);
+        inputData.SetSelect(firstButton);
     }
 }
-
