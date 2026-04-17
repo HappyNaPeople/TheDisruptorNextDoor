@@ -16,7 +16,8 @@ public class Release_Canvas : MonoBehaviour
     {
         None,
         Replay,
-        BackToTitle
+        BackToTitle,
+        QuitTheGame
     }
 
     /// <summary> åªç›ÇÃëIëèÛë‘ </summary>
@@ -126,7 +127,12 @@ public class Release_Canvas : MonoBehaviour
         Choice();
     }
 
-
+    public void Button_QuitTheGame()
+    {
+        if (option != Option.None) return;
+        option = Option.QuitTheGame;
+        Choice();
+    }
 
 
 }

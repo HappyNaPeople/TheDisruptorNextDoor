@@ -126,6 +126,15 @@ public class Release : MonoBehaviour
 
                 yield break;
             }
+            else if (player01Option == Option.QuitTheGame)
+            {
+                Debug.Log("Quit The Game");
+
+                Application.Quit();
+
+                yield break;
+            }
+
         }
     }
 
