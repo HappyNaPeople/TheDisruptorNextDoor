@@ -1,5 +1,54 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2583336952698038079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2602067108665049378}
+  - component: {fileID: 1167630039909335257}
+  m_Layer: 0
+  m_Name: FootEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2602067108665049378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2583336952698038079}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.07, y: -0.65, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5980710469542844216}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1167630039909335257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2583336952698038079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f6e1a690201784bb83396b0f5a6b19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RunnerEffectController
+  footstepPrefab: {fileID: 0}
+  landEffectPrefab: {fileID: 5432214678602542643, guid: 205264017df41954e925779062fdac3f, type: 3}
+  effectOffset: {x: 0, y: 0, z: 0}
+  isAlwaysFootstepOn: 1
+  forceShowFootstep: 0
 --- !u!1 &5558815207289041061
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,7 +83,8 @@ Transform:
   m_LocalPosition: {x: 2.6439998, y: -2.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2602067108665049378}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5424164377914508438
@@ -49,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 551cdb0cfe6caf44fb61ddbc11ee3697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RunnerController
-  controllerCode: 0
+  inputData: {fileID: 0}
   isInvincible: 1
   isVisibleGizmos: 1
   runSpeed: 6
@@ -59,7 +109,9 @@ MonoBehaviour:
   inAirDamping: 5
   attackBoxOffset: {x: 0.5, y: -0.15}
   attackBoxSize: {x: 1.7, y: 1}
+  punchDamage: 5
   currentState: 1
+  respawnPoint: {fileID: 0}
 --- !u!212 &5205268739818765375
 SpriteRenderer:
   serializedVersion: 2

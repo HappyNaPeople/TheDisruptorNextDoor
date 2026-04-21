@@ -16,7 +16,10 @@ public enum TrapName
     Shell,
     FireBar,
     SensorBoom,
-    WindTrap
+    WindTrap,
+    PowerArea,
+    ReverseArea,
+    InvisibleArea
 }
 
 [System.Serializable]

@@ -19,6 +19,9 @@ public class BlackHoleTrap : TiggerTrap
     [Tooltip("即死判定となる中心からの距離")]
     public float killRadius = 0.3f;
 
+    [Tooltip("エフェクト生成から実際に吸い込み・即死が発動するまでの遅延時間")]
+    public float activationDelay = 1.0f;
+
     [Header("Visual Effects")]
     [Tooltip("ブラックホールが稼働を開始した時に表示するエフェクト")]
     public GameObject activeEffectPrefab; // ★追加：発動時のエフェクト
@@ -50,14 +53,22 @@ public class BlackHoleTrap : TiggerTrap
 
     protected override void OnSetupComplete()
     {
-        // 設置完了（実体化）したら、吸い込み判定をオンにする！
+        // 稼働開始（エフェクト生成など）
+        StartCoroutine(TrapRule());
+
+        // エフェクトが大きくなるまでの遅延待機
+        StartCoroutine(ActivateHitboxWithDelay());
+    }
+
+    private IEnumerator ActivateHitboxWithDelay()
+    {
+        yield return new WaitForSeconds(activationDelay);
+        
+        // 遅延後に吸い込み・即死判定をオンにする！
         if (pullCollider != null)
         {
             pullCollider.enabled = true;
         }
-
-        // 稼働開始
-        StartCoroutine(TrapRule());
     }
 
     public override void OnTriggerEnter2D(Collider2D collision)

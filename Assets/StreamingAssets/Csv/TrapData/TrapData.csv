@@ -9,3 +9,6 @@ Shell,Texture/Traps/FallRock1,7,Shell(Koura),Prefabs/Traps/Shell
 FireBar,Texture/Traps/FireBar,8,FireBar,Prefabs/Traps/FireBar
 SensorBoom,Texture/Traps/SR_Blue-Bomb_01,3,SensorBoom,Prefabs/Traps/SensorBoom
 WindTrap,Texture/Traps/SR_BlackHole_01,3,Wind,Prefabs/Traps/WindTrap
+PowerArea,Texture/Traps/SR_BlackHole_01,3,MaxPower,Prefabs/Traps/PowerArea
+ReverseArea,Texture/Traps/SR_BlackHole_01,3,Reverse,Prefabs/Traps/ReverseArea
+invisibleArea,Texture/Traps/SR_BlackHole_01,3,invisibleArea,Prefabs/Traps/invisibleArea
