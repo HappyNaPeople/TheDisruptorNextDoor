@@ -19,7 +19,12 @@ public enum TrapName
     WindTrap,
     PowerArea,
     ReverseArea,
-    InvisibleArea
+    InvisibleArea,
+    IceArea,
+    StickyArea,
+    ScatterBombSpike,
+    ScatterBombIce,
+    ScatterBombSticky
 }
 
 [System.Serializable]

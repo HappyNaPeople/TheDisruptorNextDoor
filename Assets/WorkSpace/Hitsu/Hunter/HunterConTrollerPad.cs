@@ -419,7 +419,7 @@ public class HunterConTrollerPad : MonoBehaviour
            // if (trapName == TrapName.BlackHole)
            //     placer = targetTrap.AddComponent<WorldTrapPlacer>();
             //else
-            if (trapName == TrapName.Spikes)
+            if (trapName == TrapName.Spikes || trapName == TrapName.IceArea || trapName == TrapName.StickyArea)
                 placer = targetTrap.AddComponent<WallTrapPlacer>();
             else
                 placer = targetTrap.AddComponent<StandardTrapPlacer>();

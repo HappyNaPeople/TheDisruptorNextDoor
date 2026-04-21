@@ -12,3 +12,8 @@ WindTrap,Texture/Traps/SR_BlackHole_01,3,Wind,Prefabs/Traps/WindTrap
 PowerArea,Texture/Traps/SR_BlackHole_01,3,MaxPower,Prefabs/Traps/PowerArea
 ReverseArea,Texture/Traps/SR_BlackHole_01,3,Reverse,Prefabs/Traps/ReverseArea
 invisibleArea,Texture/Traps/SR_BlackHole_01,3,invisibleArea,Prefabs/Traps/invisibleArea
+IceArea,Texture/Traps/Spike,3,Icefloer,Prefabs/Traps/IceArea
+StickyArea,Texture/Traps/Spike,3,Stickyflower,Prefabs/Traps/StickyArea
+ScatterBombSpike,Texture/Traps/SR_Red-Bomb_01,3,ScatterBombSpike,Prefabs/Traps/ScatterBombSpike
+ScatterBombIce,Texture/Traps/SR_Red-Bomb_01,3,ScatterBombIce,Prefabs/Traps/ScatterBombIce
+ScatterBombSticky,Texture/Traps/SR_Red-Bomb_01,3,ScatterBombSticky,Prefabs/Traps/ScatterBombSticky
