@@ -16,6 +16,9 @@ public class WindTrap : TiggerTrap
     [Tooltip("接地時の風の効きやすさ（0.4なら空中の40%の力しか受けない＝踏ん張れる）")]
     public float groundResistanceMultiplier = 0.4f;
 
+    [Tooltip("エフェクト生成から実際に風が吹き始めるまでの遅延時間")]
+    public float activationDelay = 1.0f;
+
     [Header("Visual Effects")]
     [Tooltip("風トラップが稼働を開始した時に表示するエフェクト")]
     public GameObject activeEffectPrefab;
@@ -43,14 +46,22 @@ public class WindTrap : TiggerTrap
 
     protected override void OnSetupComplete()
     {
-        // 設置完了（実体化）したら、風の判定をオンにする！
+        // 稼働開始（エフェクト生成など）
+        StartCoroutine(TrapRule());
+
+        // エフェクトが大きくなるまでの遅延待機
+        StartCoroutine(ActivateHitboxWithDelay());
+    }
+
+    private IEnumerator ActivateHitboxWithDelay()
+    {
+        yield return new WaitForSeconds(activationDelay);
+
+        // 遅延後に風の判定をオンにする！
         if (windAreaCollider != null)
         {
             windAreaCollider.enabled = true;
         }
-
-        // 稼働開始
-        StartCoroutine(TrapRule());
     }
 
     public override void OnTriggerEnter2D(Collider2D collision)

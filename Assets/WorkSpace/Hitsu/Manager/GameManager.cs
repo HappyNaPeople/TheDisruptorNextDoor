@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -371,6 +372,24 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private const int fps = 60;
+    private readonly Vector2Int monitorSize = new Vector2Int(1920, 1080);
+
+    private void MonitorInit()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = fps;
+
+        Screen.fullScreenMode = FullScreenMode.Windowed;
+        Screen.SetResolution(monitorSize.x, monitorSize.y, false);
+
+        if (Display.displays.Length > 1)
+        {
+            Display.displays[1].Activate();
+        }
+    }
+
+
     /// <summary>
     /// GameManager 全体初期化
     /// </summary>
@@ -379,11 +398,7 @@ public class GameManager : MonoBehaviour
         // 入力初期化
         InputInit();
         // デュアルディスプレイ対応
-        if (Display.displays.Length > 1)
-        {
-            Display.displays[1].Activate();
-        }
-
+        MonitorInit();
         // Layer 初期化
         UseLayerName.UseLayerName_Init();
         // Player 初期化

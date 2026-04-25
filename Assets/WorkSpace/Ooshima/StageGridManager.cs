@@ -190,4 +190,41 @@ public class StageGridManager : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// ばらまきボム等のために、指定範囲内で「床や壁に隣接している空のグリッド」のリストを取得する
+    /// </summary>
+    public List<Vector2Int> GetEmptyGridsWithWallOrFloor(Vector2Int centerGrid, int radius)
+    {
+        List<Vector2Int> validGrids = new List<Vector2Int>();
+        int layerMask = 1 << UseLayerName.platformLayer;
+
+        for (int x = centerGrid.x - radius; x <= centerGrid.x + radius; x++)
+        {
+            for (int y = centerGrid.y - radius; y <= centerGrid.y + radius; y++)
+            {
+                Vector2Int gridCoord = new Vector2Int(x, y);
+                // Simple radius check
+                if (Vector2.Distance((Vector2)centerGrid, (Vector2)gridCoord) <= radius)
+                {
+                    if (CanPlaceTrapDataDriven(gridCoord))
+                    {
+                        Vector3 pos = GridToWorld(gridCoord);
+                        // 4方向のどこかにPlatformがあるかチェック
+                        bool hasSurface = Physics2D.OverlapPoint(pos + Vector3.down * gridSize, layerMask) ||
+                                          Physics2D.OverlapPoint(pos + Vector3.up * gridSize, layerMask) ||
+                                          Physics2D.OverlapPoint(pos + Vector3.right * gridSize, layerMask) ||
+                                          Physics2D.OverlapPoint(pos + Vector3.left * gridSize, layerMask);
+
+                        if (hasSurface)
+                        {
+                            validGrids.Add(gridCoord);
+                        }
+                    }
+                }
+            }
+        }
+        return validGrids;
+    }
 }
+

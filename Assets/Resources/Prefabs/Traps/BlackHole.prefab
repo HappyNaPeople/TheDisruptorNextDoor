@@ -65,15 +65,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BlackHoleTrap
   trapName: 5
   cost: 0
+  trapSfxDates: []
   rb: {fileID: 6496700216214343239}
   trapCollider: {fileID: 0}
   isSetup: 0
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
-  fadeInDuration: 1
+  fadeInDuration: 0
   maxPullForce: 200
   groundResistanceMultiplier: 0.95
   killRadius: 0.3
+  activationDelay: 3
   activeEffectPrefab: {fileID: 7611065387920664106, guid: ff370710a4d938044b4640a65867d8ba, type: 3}
 --- !u!50 &6496700216214343239
 Rigidbody2D:

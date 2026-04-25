@@ -41,6 +41,10 @@ public class Runner : MonoBehaviour
     // --- モディファイア（干渉物）リスト ---
     public System.Collections.Generic.List<IPlayerMovementModifier> activeModifiers = new System.Collections.Generic.List<IPlayerMovementModifier>();
 
+    // --- 加工済み入力データ (モディファイアによる変更を適用したもの) ---
+    public Vector2 CurrentMoveInput { get; private set; }
+    public bool CurrentJumpPressed { get; private set; }
+
     public void AddModifier(IPlayerMovementModifier modifier)
     {
         if (!activeModifiers.Contains(modifier))
@@ -176,6 +180,19 @@ public class Runner : MonoBehaviour
         }
         if (currentState == PlayerState.Dead) return;
 
+        // --- 入力の取得とモディファイアの適用 ---
+        CurrentMoveInput = inputData.moveInput;
+        CurrentJumpPressed = inputData.isJumpPressed;
+
+        foreach (var mod in activeModifiers)
+        {
+            Vector2 mMove = CurrentMoveInput;
+            bool mJump = CurrentJumpPressed;
+            mod.ModifyInput(ref mMove, ref mJump);
+            CurrentMoveInput = mMove;
+            CurrentJumpPressed = mJump;
+        }
+
         float dt = Time.deltaTime;
 
         // 1. 接地状態の更新とステート遷移
@@ -257,7 +274,7 @@ public class Runner : MonoBehaviour
     {
         if (_isPhysicsReserved) return;
         if (currentState == PlayerState.Grabbed) return; // 捕獲中はジャンプ不可
-        if (!inputData.isJumpPressed) return;
+        if (!CurrentJumpPressed) return;
         // ジャンプ処理
         if (_controller.isGrounded)
         {
@@ -293,7 +310,7 @@ public class Runner : MonoBehaviour
     void ApplyInputMovement()
     {
         // 入力値（-1, 0, 1）を取得
-        float horizontalInput = inputData.moveInput.x;
+        float horizontalInput = CurrentMoveInput.x;
 
         float currentSpeed = runSpeed;
         float currentDamping = _controller.isGrounded ? groundDamping : inAirDamping;
