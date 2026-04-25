@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
     /// 外部からは参照のみ可能で、
     /// 初期化は GameManager の TrapInit() で行われる。
     /// </summary>
-    public static Dictionary<TrapName, TrapInformation> allTrap { get; }
+    public static Dictionary<TrapName, TrapInformation> allTrap { get; private set; }
         = new Dictionary<TrapName, TrapInformation>();
 
     [Header("シーン")]

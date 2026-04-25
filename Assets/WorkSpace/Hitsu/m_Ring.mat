@@ -160,12 +160,12 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SPECULAR_COLOR: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _color00: {r: 1, g: 1, b: 1, a: 1}
-    - _color01: {r: 0, g: 0, b: 0, a: 1}
+    - _color00: {r: 1, g: 0, b: 0, a: 1}
+    - _color01: {r: 0.68390346, g: 1, b: 0, a: 1}
     - _color02: {r: 1, g: 1, b: 1, a: 1}
     - _color03: {r: 0, g: 0, b: 0, a: 1}
     - _color04: {r: 1, g: 1, b: 1, a: 1}
-    - _color05: {r: 0, g: 0, b: 0, a: 1}
+    - _color05: {r: 1, g: 0, b: 0, a: 1}
     - _color06: {r: 1, g: 1, b: 1, a: 1}
     - _color07: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
