@@ -12,6 +12,7 @@ public class PlayerInputData : MonoBehaviour
     public InputSystemUIInputModule inputSystemUIInputModule;
 
     public Vector2 moveInput;
+    public Vector2 chooseInput;
     public bool isJumpPressed;
     public bool isPunchPressed;
     public bool isPutPressed;
@@ -142,6 +143,10 @@ public class PlayerInputData : MonoBehaviour
         if (context.action.name == "Move")
         {
             moveInput = context.ReadValue<Vector2>();
+        }
+        else if (context.action.name == "Choose")
+        {
+            chooseInput = context.ReadValue<Vector2>();
         }
         else if (context.action.name == "Jump")
         {
