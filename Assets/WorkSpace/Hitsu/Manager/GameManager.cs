@@ -131,6 +131,8 @@ public class GameManager : MonoBehaviour
     // 入力デバイス管理クラス
     public static InputDevice inputDevice;
 
+    public List<Sprite> numberSprites;
+
     /// <summary>
     /// ゲームで使用可能な Trap 情報を保持する Dictionary。
     /// 
@@ -370,6 +372,7 @@ public class GameManager : MonoBehaviour
         // 読み込み完了ログ
         //Debug.Log(allTrap.Count);
 
+        allTrap[TrapName.None].cost = 999;
     }
 
     private const int fps = 60;

@@ -180,7 +180,7 @@ Material:
     - _color04: {r: 0.28813577, g: 1, b: 0, a: 1}
     - _color05: {r: 0.5, g: 0.20518869, b: 0.20518869, a: 1}
     - _color06: {r: 0.7735849, g: 0.14960839, b: 0.14960839, a: 1}
-    - _color07: {r: 1, g: 1, b: 1, a: 1}
+    - _color07: {r: 0.9379643, g: 1, b: 0, a: 1}
     - _lineFrontColor: {r: 0.29057738, g: 1, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
