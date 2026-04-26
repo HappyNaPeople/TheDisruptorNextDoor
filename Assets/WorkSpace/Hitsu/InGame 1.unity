@@ -294,13 +294,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27109417}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: 0.98078537, w: -0.19509031}
+  m_LocalRotation: {x: 0, y: 0, z: 0.19509031, w: 0.98078537}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1952011748}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 202.5}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 22.5}
 --- !u!1 &274003501
 GameObject:
   m_ObjectHideFlags: 0
@@ -1801,7 +1801,7 @@ GameObject:
   - component: {fileID: 1463047653}
   - component: {fileID: 1463047654}
   m_Layer: 0
-  m_Name: Circle_1
+  m_Name: joyStick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1816,7 +1816,7 @@ Transform:
   m_GameObject: {fileID: 1463047652}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 5, y: 0, z: -1}
   m_LocalScale: {x: 1.8, y: 1.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2551,6 +2551,9 @@ MonoBehaviour:
   - {fileID: 422992875}
   - {fileID: 917588165}
   - {fileID: 963250}
+  choseTrap: 0
+  joyStick: {fileID: 1463047652}
+  test: 0
 --- !u!1 &1985700068
 GameObject:
   m_ObjectHideFlags: 0

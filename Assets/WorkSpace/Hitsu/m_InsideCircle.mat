@@ -146,7 +146,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _LineFill: 0.1
+    - _LineFill: 0
     - _LineWidth: 0.09
     - _Metallic: 0
     - _OcclusionStrength: 1
@@ -164,7 +164,7 @@ Material:
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     - _centrol: 0.1
-    - _targetIndex: 0.44
+    - _targetIndex: 0
     m_Colors:
     - White: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
@@ -173,11 +173,11 @@ Material:
     - _LineBackColor: {r: 0, g: 0, b: 0, a: 1}
     - _LineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _color00: {r: 0, g: 0.7014928, b: 1, a: 1}
+    - _color00: {r: 0.15566036, g: 0.38412887, b: 1, a: 0.7490196}
     - _color01: {r: 1, g: 0.042452812, b: 0.042452812, a: 1}
     - _color02: {r: 1, g: 0, b: 0, a: 1}
     - _color03: {r: 0.7735849, g: 0.26637593, b: 0.26637593, a: 1}
-    - _color04: {r: 0.52088195, g: 0.8490566, b: 0.38848346, a: 1}
+    - _color04: {r: 0.28813577, g: 1, b: 0, a: 1}
     - _color05: {r: 0.5, g: 0.20518869, b: 0.20518869, a: 1}
     - _color06: {r: 0.7735849, g: 0.14960839, b: 0.14960839, a: 1}
     - _color07: {r: 1, g: 1, b: 1, a: 1}
