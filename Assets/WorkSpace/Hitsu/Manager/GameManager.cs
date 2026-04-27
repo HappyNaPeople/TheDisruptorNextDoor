@@ -30,6 +30,8 @@ public static class UseLayerName
     // Hunter 用 Layer
     public static int trapLayer;             // Trap の Layer
     public static int runnerCantSeeLayer;    // Runner から見えない Layer
+    public static int hunterCantSeeLayer;
+
     /// <summary>
     /// Layer 名から LayerID を取得する。
     /// 存在しない Layer の場合は Warning を表示する。
@@ -61,7 +63,8 @@ public static class UseLayerName
         triggersLayer = GetLayer("Triggers");
         trapLayer = GetLayer("Trap");
         runnerCantSeeLayer = GetLayer("RunnerCantSee");
-
+        hunterCantSeeLayer = GetLayer("HunterCantSee");
+        
 
         isLayerSetUp = true;
     }
@@ -513,10 +516,10 @@ public class GameManager : MonoBehaviour
         runnerPlayer.inputData.SetFirstSelect(null);
 
         hunterPlayer.inputData.SetPlayerRoot(InGame.Instance.hunterConTrollerPad.hunterCanvas.gameObject);
-        hunterPlayer.inputData.SetFirstSelect(InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject);
+        //hunterPlayer.inputData.SetFirstSelect(InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject);
 
         StartCoroutine(SelectButtonWithDelay(runnerPlayer.inputData, null));
-        StartCoroutine(SelectButtonWithDelay(hunterPlayer.inputData, InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject));
+        //StartCoroutine(SelectButtonWithDelay(hunterPlayer.inputData, InGame.Instance.hunterConTrollerPad.trapButtonList[0].gameObject));
 
     }
 

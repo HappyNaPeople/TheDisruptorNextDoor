@@ -16,7 +16,7 @@ public class RingTrap
     {
         get
         {
-            if (cost <= HunterCanvas.Instance.nowCostCanUse && trap != TrapName.None) return Stage.On;
+            if (cost <= HunterConTrollerPad.Instance.nowCostCanUse && trap != TrapName.None) return Stage.On;
             else return Stage.Off;
         }
     }
@@ -123,7 +123,7 @@ public class TrapRing : MonoBehaviour
 
             if (isInputActive && lastDir != -1 && ringTraps[lastDir].trap != TrapName.None && ringTraps[lastDir].stage == RingTrap.Stage.On)
             {
-                HunterCanvas.Instance.CreateTrap(ringTraps[lastDir].trap);
+                HunterConTrollerPad.Instance.CreateTrap(ringTraps[lastDir].trap);
             }
             else if(isInputActive && lastDir != -1 && (ringTraps[lastDir].trap == TrapName.None|| ringTraps[lastDir].stage == RingTrap.Stage.Off))
             {
@@ -320,14 +320,14 @@ public class TrapRing : MonoBehaviour
     private void Update()
     {
 
-        if (Keyboard.current.aKey.wasPressedThisFrame)
-        {
-            RollTurn(RingTurn.Left);
-        }
-        if (Keyboard.current.dKey.wasPressedThisFrame)
-        {
-            RollTurn(RingTurn.Right);
-        }
+        //if (Keyboard.current.aKey.wasPressedThisFrame)
+        //{
+        //    RollTurn(RingTurn.Left);
+        //}
+        //if (Keyboard.current.dKey.wasPressedThisFrame)
+        //{
+        //    RollTurn(RingTurn.Right);
+        //}
 
         //if (test)
         //{

@@ -17,8 +17,13 @@ public class TimeAndProgressBar : MonoBehaviour
     // UI参照
     //==============================
     public Animator animator;          // 進捗バー用Animator
-    public Image timerImage;           // タイマーゲージ
-    public TMP_Text timerText;         // タイマー数値
+    //public Image timerImage;           // タイマーゲージ
+    //public TMP_Text timerText;         // タイマー数値
+
+    public SpriteRenderer[] timerSpriteRenderers;
+    public SpriteRenderer timeBar;
+    private Material m_timeBar => timeBar.material;
+
     public Slider progressBar;         // 進行度スライダー
     public TMP_Text passed;         // タイマー数値
 
@@ -34,6 +39,12 @@ public class TimeAndProgressBar : MonoBehaviour
     private const float fullImageFill = 0.25f;  // ゲージ最大値（UI設計に依存）
     private const float emptyImageFill = 0.0f;  // ゲージ最小値
 
+    private Color _green = Color.green;
+    private Color _yellow = Color.yellow;
+    private Color _red = Color.red;
+
+
+
     /// <summary>
     /// 現在のタイマーに応じた FillAmountを計算
     /// </summary>
@@ -47,6 +58,26 @@ public class TimeAndProgressBar : MonoBehaviour
 
         // UIの範囲内（min〜max）に制限
         return Mathf.Clamp(value, emptyImageFill, fullImageFill);
+    }
+
+    private void NowTimeImage(int target)
+    {
+        if (timerSpriteRenderers.Length < 3)
+        {
+            Debug.LogError("Timer SpriteRenderers array must have at least 3 elements.");
+            return;
+        }
+        int hun = target / 100;
+        int tens = (target / 10) % 10;
+        int ones = target % 10;
+
+        var numbers = GameManager.Instance.numberSprites;
+
+        timerSpriteRenderers[0].sprite = numbers[hun];
+        timerSpriteRenderers[1].sprite = numbers[tens];
+        timerSpriteRenderers[2].sprite = numbers[ones];
+
+
     }
 
     //==============================
@@ -66,16 +97,20 @@ public class TimeAndProgressBar : MonoBehaviour
         // 初期の秒数を取得
         int recodedTimer = InGame.Instance.NowTimeToInt();
         // 初期表示
-        timerText.text = recodedTimer.ToString("D3");
+        //timerText.text = recodedTimer.ToString("D3");
         while (true)
         {
+            m_timeBar.SetFloat("_ring", NowImageFill());
+
             // 毎フレーム：ゲージ（fillAmount）更新
-            timerImage.fillAmount = NowImageFill();
+            //timerImage.fillAmount = NowImageFill();
+
             // 秒数が変わった場合のみテキスト更新（無駄な更新を防ぐ）
             if (recodedTimer != InGame.Instance.NowTimeToInt())
             {
                 recodedTimer = InGame.Instance.NowTimeToInt();
-                timerText.text = recodedTimer.ToString("D3");
+                //timerText.text = recodedTimer.ToString("D3");
+                NowTimeImage(recodedTimer);
             }
             // 次のフレームまで待機
             yield return null;
@@ -129,8 +164,9 @@ public class TimeAndProgressBar : MonoBehaviour
     private IEnumerator ProgressBarUI()
     {
         yield return null;
-
+        PassedText();
         float progress = 0;
+
         while (true)
         {
             // 進行率（0〜1）を取得
