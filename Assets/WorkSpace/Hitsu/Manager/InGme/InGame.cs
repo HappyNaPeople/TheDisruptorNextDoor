@@ -46,13 +46,22 @@ public class CameraData
     /// <summary>
     /// ゲーム開始前の演出用カメラ状態
     /// </summary>
-    public void Ready() => cinemachineCamera.Lens.OrthographicSize = 9;
+    public void Ready()
+    {
+        cinemachineCamera.Lens.OrthographicSize = 9;
+        cinemaChineFollow.FollowOffset = readyV3;
+    }
 
     /// <summary>
     /// Dampingのみ初期状態に戻す
     /// </summary>
-    public void ReSetLens() => cinemachineCamera.Lens.OrthographicSize = lens;
+    /// </summary>
+    public void ReSetLens()
+    {
+        cinemachineCamera.Lens.OrthographicSize = lens;
+        cinemaChineFollow.FollowOffset = basicFollowOffset;
 
+    }
     /// <summary>
     /// ゲーム開始時にカメラを通常状態へ戻す
     /// </summary>
@@ -155,6 +164,7 @@ public class InGame : MonoBehaviour
     [Header("Player")]
     // Hunter 用 GamePad コ?ト?ー?ー
     public HunterConTrollerPad hunterConTrollerPad;
+    public RunnerConTrollerPad runnerConTrollerPad;
 
     // Runner プ?イ?ー
     public Runner runner;
@@ -507,6 +517,7 @@ public class InGame : MonoBehaviour
     private void RunnerInit()
     {
         runner.RunnerInit();
+        runnerConTrollerPad.Init();
         //runner.ControllerCode = player01.controllerCode;
     }
 
