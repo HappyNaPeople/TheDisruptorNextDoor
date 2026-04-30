@@ -224,7 +224,7 @@ public class HunterConTrollerPad : MonoBehaviour
         choseTrap = targetTrap;
 
         // クリックされるまでマウス追従
-        while (!Mouse.current.rightButton.isPressed)
+        while (!inputData.isPutPressed)
         {
             placer.UpdatePreviewPosition(cursorPos);
             bool canPlacePreview = placer.ValidatePlacement();
@@ -308,11 +308,7 @@ public class HunterConTrollerPad : MonoBehaviour
         //    trapRings.ControllerChoose(inputData.chooseInput);
         //}
 
-        if (Gamepad.current != null)
-        {
-            trapRings.ControllerChoose(Gamepad.current.rightStick.value);
-
-        }
+        trapRings.ControllerChoose(inputData.chooseInput);
 
         //if (test)
         //{
