@@ -72,13 +72,13 @@ MonoBehaviour:
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
   setupDelay: 1
-  setupEffectPrefab: {fileID: 7611065387920664106, guid: ff370710a4d938044b4640a65867d8ba, type: 3}
+  setupEffectPrefab: {fileID: 2165670710305000279, guid: 374b1e7c5a7067a4da622e510b61c206, type: 3}
   activationType: 0
   fallSpeed: 8
   waitForBoom: 2
   boomArea: 2
   detectionRadius: 3
-  explosionEffect: {fileID: 7772825388523857775, guid: ed2adf86dc9972c448fc684f89a19b9d, type: 3}
+  explosionEffect: {fileID: 7772825388523857775, guid: 1fe2f96e80a74334f8ba0ec202661600, type: 3}
   effectLingerTime: 0.75
   explosionHitboxDelay: 0
 --- !u!212 &9068236169488280652

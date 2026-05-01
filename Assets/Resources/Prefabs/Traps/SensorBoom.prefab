@@ -33,8 +33,7 @@ Transform:
   m_LocalPosition: {x: -1.14113, y: 1.86592, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1463747359301171693}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-9138493806040882192
@@ -66,18 +65,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Boom
   trapName: 8
   cost: 0
+  trapSfxDates: []
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
-  fadeInDuration: 1
+  setupDelay: 1
+  setupEffectPrefab: {fileID: 2165670710305000279, guid: 374b1e7c5a7067a4da622e510b61c206, type: 3}
   activationType: 2
   fallSpeed: 8
   waitForBoom: 2
   boomArea: 2
   detectionRadius: 3
-  explosionEffect: {fileID: 1882240928948624866, guid: 06fb2533f3c5ffb4f9165ff757b659ef, type: 3}
+  explosionEffect: {fileID: 1882240928948624866, guid: c067597d7653aab48b7d20711a9ede14, type: 3}
   effectLingerTime: 0.75
   explosionHitboxDelay: 0
 --- !u!212 &9068236169488280652
@@ -202,65 +203,3 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!1001 &391310552005917092
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 6740670630619363710}
-    m_Modifications:
-    - target: {fileID: 1242554415687352393, guid: 1e8e5568bfd744848b9c71b3ad925802, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242554415687352393, guid: 1e8e5568bfd744848b9c71b3ad925802, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242554415687352393, guid: 1e8e5568bfd744848b9c71b3ad925802, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242554415687352393, guid: 1e8e5568bfd744848b9c71b3ad925802, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242554415687352393, guid: 1e8e5568bfd744848b9c71b3ad925802, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242554415687352393, guid: 1e8e5568bfd744848b9c71b3ad925802, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242554415687352393, guid: 1e8e5568bfd744848b9c71b3ad925802, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242554415687352393, guid: 1e8e5568bfd744848b9c71b3ad925802, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242554415687352393, guid: 1e8e5568bfd744848b9c71b3ad925802, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242554415687352393, guid: 1e8e5568bfd744848b9c71b3ad925802, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262204750409804790, guid: 1e8e5568bfd744848b9c71b3ad925802, type: 3}
-      propertyPath: m_Name
-      value: Bomb_01
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1e8e5568bfd744848b9c71b3ad925802, type: 3}
---- !u!4 &1463747359301171693 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1242554415687352393, guid: 1e8e5568bfd744848b9c71b3ad925802, type: 3}
-  m_PrefabInstance: {fileID: 391310552005917092}
-  m_PrefabAsset: {fileID: 0}

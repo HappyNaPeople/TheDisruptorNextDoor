@@ -65,12 +65,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FallRock
   trapName: 1
   cost: 1
+  trapSfxDates: []
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
-  setupLagTime: 0.5
+  setupDelay: 1
+  setupEffectPrefab: {fileID: 8321573023433997581, guid: 62cbd7a11d026c4418c8481ea14c7737, type: 3}
   fallSpeed: 8
   riseSpeed: 3
   stayBottomTime: 1
