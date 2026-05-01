@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 60e5d93de53da5642a38fce5925c3efa, type: 3}
+  m_Sprite: {fileID: -5231492665234917071, guid: b9733b17de1016640907c51075918c12, type: 3}
   m_Color: {r: 0.48567107, g: 0.6744149, b: 0.9622642, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -116,9 +116,11 @@ MonoBehaviour:
   originGridPos: {x: 0, y: 0}
   setupDelay: 1
   setupEffectPrefab: {fileID: 5163571877924149988, guid: 998ae690ede82e64bae87c631b9271ae, type: 3}
+  setupEffectBuffer: 1
   prefabToScatter: {fileID: 8945908065428581523, guid: f870e3bd57cf9974cb25bc0125dbe85b, type: 3}
+  scatterRatio: 1
   maxScatterCount: 5
-  scatterRadius: 3
+  scatterRadius: 2
   waitForBoom: 1
   explosionEffect: {fileID: 7772825388523857775, guid: ed2adf86dc9972c448fc684f89a19b9d, type: 3}
   effectLingerTime: 1
@@ -158,9 +160,9 @@ BoxCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0.033333335, y: 0, z: 0, w: 0.033333335}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.93333334, y: 0.93333334}
+    oldSize: {x: 0.94, y: 1.48}
     newSize: {x: 0.93333334, y: 0.93333334}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

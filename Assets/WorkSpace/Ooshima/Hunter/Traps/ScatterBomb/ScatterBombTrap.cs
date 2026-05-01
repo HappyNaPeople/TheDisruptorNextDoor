@@ -8,6 +8,10 @@ public class ScatterBombTrap : Trap
     [Tooltip("ばらまく対象のプレハブ（氷床など）")]
     public GameObject prefabToScatter;
     
+    [Tooltip("ばらまく対象マスの割合（1.0で範囲内の全マス、0.5で半分）")]
+    [Range(0f, 1f)]
+    public float scatterRatio = 0.5f;
+
     [Tooltip("一度にばらまく最大数")]
     public int maxScatterCount = 5;
 
@@ -50,6 +54,13 @@ public class ScatterBombTrap : Trap
         if (sr != null) sr.enabled = false;
         if (trapCollider != null) trapCollider.enabled = false;
 
+        // ボム自身があるグリッドを先に「空き（登録解除）」にしておくことで、
+        // ボムのあった中心位置にも子トラップを置けるようにする
+        if (StageGridManager.Instance != null)
+        {
+            StageGridManager.Instance.UnregisterTrap(transform.position);
+        }
+
         // グリッドを用いたばらまき処理
         if (StageGridManager.Instance != null && prefabToScatter != null)
         {
@@ -69,8 +80,9 @@ public class ScatterBombTrap : Trap
                     validGrids[rnd] = temp;
                 }
 
-                // 該当マスのうちの半分を対象にしつつ、最大数を制限
-                int targetCount = Mathf.Min(maxScatterCount, Mathf.Max(1, validGrids.Count / 2));
+                // 該当マスのうち指定割合を対象にしつつ、最大数を制限
+                int calculatedCount = Mathf.FloorToInt(validGrids.Count * scatterRatio);
+                int targetCount = Mathf.Min(maxScatterCount, Mathf.Max(1, calculatedCount));
                 int spawnedCount = 0;
 
                 foreach (var grid in validGrids)
@@ -123,4 +135,46 @@ public class ScatterBombTrap : Trap
 
         return Quaternion.identity;
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        StageGridManager gridManager = StageGridManager.Instance;
+        if (gridManager == null)
+        {
+            gridManager = FindObjectOfType<StageGridManager>();
+        }
+
+        if (gridManager != null)
+        {
+            Vector2Int centerGrid = gridManager.WorldToGrid(transform.position);
+
+            for (int x = centerGrid.x - scatterRadius; x <= centerGrid.x + scatterRadius; x++)
+            {
+                for (int y = centerGrid.y - scatterRadius; y <= centerGrid.y + scatterRadius; y++)
+                {
+                    Vector2Int gridCoord = new Vector2Int(x, y);
+                    if (Vector2.Distance((Vector2)centerGrid, (Vector2)gridCoord) <= scatterRadius)
+                    {
+                        Vector3 gridPos = gridManager.GridToWorld(gridCoord);
+                        
+                        // 枠線を描画
+                        Gizmos.color = new Color(1f, 0.5f, 0f, 0.8f);
+                        Gizmos.DrawWireCube(gridPos, new Vector3(gridManager.gridSize, gridManager.gridSize, 0));
+                        
+                        // 塗りつぶしを描画
+                        Gizmos.color = new Color(1f, 0.5f, 0f, 0.2f);
+                        Gizmos.DrawCube(gridPos, new Vector3(gridManager.gridSize, gridManager.gridSize, 0));
+                    }
+                }
+            }
+        }
+        else
+        {
+            // GridManagerがない場合のフォールバック
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, scatterRadius);
+        }
+    }
+#endif
 }
