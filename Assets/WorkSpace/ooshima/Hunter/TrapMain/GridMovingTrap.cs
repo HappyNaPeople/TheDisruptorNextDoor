@@ -52,6 +52,13 @@ public abstract class GridMovingTrap : Trap
             }
             else
             {
+                // もし画面外（最下層のさらに下など）なら消滅させる
+                if (StageGridManager.Instance.IsOutOfBounds(nextGridPos))
+                {
+                    Destroy(gameObject);
+                    yield break;
+                }
+
                 // ここから先は進めないため着地
                 onLanded?.Invoke();
                 break;

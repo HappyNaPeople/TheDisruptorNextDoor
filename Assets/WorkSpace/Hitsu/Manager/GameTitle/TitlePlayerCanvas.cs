@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using TMPro;
@@ -253,6 +253,22 @@ public class TitlePlayerCanvas : MonoBehaviour
     [Header("選べる罠")]
 
     /// <summary>
+    /// 除外する罠のリスト（Inspectorから編集可能）
+    /// </summary>
+    public List<TrapName> excludeTraps = new List<TrapName>()
+    {
+        TrapName.Spikes,
+        TrapName.IceArea,
+        TrapName.StickyArea,
+        TrapName.None
+    };
+
+    /// <summary>
+    /// 実際にUIに表示して選択可能な罠のリスト
+    /// </summary>
+    private List<TrapName> availableTraps = new List<TrapName>();
+
+    /// <summary>
     /// Trap 選択ボタ?
     /// </summary>
     public List<TrapButtonUI> chooseTrapButtons = new List<TrapButtonUI>();
@@ -275,7 +291,7 @@ public class TitlePlayerCanvas : MonoBehaviour
     /// <summary>
     /// 最大ページ?
     /// </summary>
-    private int showCanChooseTrapPageLimit => Mathf.CeilToInt((float)GameManager.allTrap.Count / chooseTrapButtons.Count) - 1;
+    private int showCanChooseTrapPageLimit => Mathf.Max(0, Mathf.CeilToInt((float)availableTraps.Count / chooseTrapButtons.Count) - 1);
 
     /// <summary>
     /// 選択可能な Trap ボタ? UI を更新する。
@@ -298,10 +314,10 @@ public class TitlePlayerCanvas : MonoBehaviour
             chooseTrapButtons[index].button.onClick.RemoveAllListeners();
 
             // 表示できる Trap がまだ?る場?
-            if (trapIndex < GameManager.allTrap.Count)
+            if (trapIndex < availableTraps.Count)
             {
                 // TrapName を取得
-                TrapName targetTrap = (TrapName)trapIndex;
+                TrapName targetTrap = availableTraps[trapIndex];
                 // ボタ??下?に Trap を追加
                 chooseTrapButtons[index].button.onClick.AddListener(() => AddToPlayerTrap(targetTrap));
                 // Trap 情報を UI に設定
@@ -359,6 +375,17 @@ public class TitlePlayerCanvas : MonoBehaviour
     /// </summary>
     public void TitleTrapCanvas_Init()
     {
+        // 選択可能な罠リストを構築（除外リストに含まれないものだけを抽出）
+        availableTraps.Clear();
+        foreach (TrapName trap in System.Enum.GetValues(typeof(TrapName)))
+        {
+            if (excludeTraps.Contains(trap)) continue;
+            if (GameManager.allTrap.ContainsKey(trap))
+            {
+                availableTraps.Add(trap);
+            }
+        }
+
         // UI 更新
         UpdateChoseTrap();
         UpdateCanChooseTrap();

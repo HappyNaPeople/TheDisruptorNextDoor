@@ -65,12 +65,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Boom
   trapName: 2
   cost: 0
+  trapSfxDates: []
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
-  fadeInDuration: 1
+  setupDelay: 1
+  setupEffectPrefab: {fileID: 7611065387920664106, guid: ff370710a4d938044b4640a65867d8ba, type: 3}
   activationType: 0
   fallSpeed: 8
   waitForBoom: 2

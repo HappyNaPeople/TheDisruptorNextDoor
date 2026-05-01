@@ -65,7 +65,7 @@ public class Boom : TiggerTrap
                 yield return null;
             }
         }
-        Debug.Log("ba-ka");
+        
         // --- カウントダウン＆エフェクト開始 ---
 
         // ★予兆から爆発までセットになったエフェクトをここで1回だけ生成

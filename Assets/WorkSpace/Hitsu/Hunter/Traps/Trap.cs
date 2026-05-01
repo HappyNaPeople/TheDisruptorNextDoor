@@ -25,7 +25,7 @@ public enum TrapName
     ScatterBombSpike,
     ScatterBombIce,
     ScatterBombSticky,
-
+    InkTrap,
 
     None = -1
 }
@@ -82,9 +82,13 @@ public abstract class Trap : MonoBehaviour
     public Vector2Int currentGridPos;
     // 初期の配置座標（上昇処理などで記憶しておく用）
     public Vector2Int originGridPos;
-    // フェードインにかかる時間
-    public float fadeInDuration = 1.0f;
+    // 出現から発動までの待機時間（旧：フェードインにかかる時間）
+    [UnityEngine.Serialization.FormerlySerializedAs("fadeInDuration")]
+    public float setupDelay = 1.0f;
 
+    [Header("Setup Effect")]
+    [Tooltip("出現〜発動までの間に表示するエフェクト（任意）")]
+    public GameObject setupEffectPrefab;
     /// <summary>
     /// Trap の初期化処理
     /// </summary>
@@ -113,11 +117,11 @@ public abstract class Trap : MonoBehaviour
             StageGridManager.Instance.RegisterTrap(currentGridPos);
         }
 
-        // フェードイン開始
-        StartCoroutine(FadeInCoroutine());
+        // 発動前ディレイ開始
+        StartCoroutine(SetupDelayCoroutine());
     }
 
-    protected IEnumerator FadeInCoroutine()
+    protected IEnumerator SetupDelayCoroutine()
     {
         gameObject.layer = UseLayerName.trapLayer;
         if (transform.childCount > 0)
@@ -127,41 +131,24 @@ public abstract class Trap : MonoBehaviour
                 transform.GetChild(i).gameObject.layer = UseLayerName.trapLayer;
             }
         }
-        SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
-        float elapsedTime = 0f;
 
-        // 初期アルファ値を0に設定
-        foreach (var renderer in renderers)
+        // セットアップ用エフェクトの生成
+        GameObject spawnedEffect = null;
+        if (setupEffectPrefab != null)
         {
-            Color color = renderer.color;
-            color.a = 0f;
-            renderer.color = color;
+            spawnedEffect = Instantiate(setupEffectPrefab, transform.position, Quaternion.identity, transform);
         }
 
-        // フェードイン処理
-        while (elapsedTime < fadeInDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            float alpha = Mathf.Clamp01(elapsedTime / fadeInDuration);
+        // 指定時間待機
+        yield return new WaitForSeconds(setupDelay);
 
-            foreach (var renderer in renderers)
-            {
-                Color color = renderer.color;
-                color.a = alpha;
-                renderer.color = color;
-            }
-            yield return null;
+        // セットアップ完了時にエフェクトを削除
+        if (spawnedEffect != null)
+        {
+            Destroy(spawnedEffect);
         }
 
-        // アルファ値を1に固定
-        foreach (var renderer in renderers)
-        {
-            Color color = renderer.color;
-            color.a = 1f;
-            renderer.color = color;
-        }
-
-        // フェードイン完了時の処理を呼び出し
+        // セットアップ完了時の処理を呼び出し
         OnSetupComplete();
     }
 
