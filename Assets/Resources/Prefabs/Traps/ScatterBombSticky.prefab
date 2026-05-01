@@ -114,7 +114,8 @@ MonoBehaviour:
   isSetup: 0
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
-  fadeInDuration: 1
+  setupDelay: 1
+  setupEffectPrefab: {fileID: 5163571877924149988, guid: 998ae690ede82e64bae87c631b9271ae, type: 3}
   prefabToScatter: {fileID: 990054088258917440, guid: e62a1854231fe4c4f97a2500fae3ad1c, type: 3}
   maxScatterCount: 5
   scatterRadius: 3

@@ -110,6 +110,9 @@ public class Release : MonoBehaviour
             if (player01Option == Option.BackToTitle)
             {
                 Debug.Log("Back To Title");
+
+
+                GameManager.Instance.WriteInReleaseEnd();
                 // タイトル画面へ遷移
                 GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.GameTitle));
                 yield break;
@@ -157,6 +160,9 @@ public class Release : MonoBehaviour
         player02Canvas.Init(Winner.Player02);
         // 選択処理開始
         releaseProcess = StartCoroutine(ReleaseProcess());
+
+        GameManager.Instance.WriteInReleaseInit(winner);
+
 
     }
 

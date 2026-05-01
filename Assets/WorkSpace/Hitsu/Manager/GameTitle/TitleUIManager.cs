@@ -120,7 +120,9 @@ public class TitleUIManager : MonoBehaviour
             yield return null;
         }
 
-        foreach(var title in Titles)
+        GameManager.Instance.WriteInGameTitleInit();
+        
+        foreach (var title in Titles)
         {
             title.gameObject.SetActive(false);
         }
@@ -195,6 +197,8 @@ public class TitleUIManager : MonoBehaviour
         {
             Debug.LogWarning($"Player01 id chose Trap : {player01Done} , Player01 id chose Trap : {player02Done}");
         }
+
+        GameManager.Instance.WriteInGameTitleEnd();
 
         // ゲー?シー?へ移動(Testing)
         GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.InGame));

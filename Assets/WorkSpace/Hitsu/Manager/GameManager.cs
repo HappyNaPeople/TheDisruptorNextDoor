@@ -153,6 +153,16 @@ public class GameManager : MonoBehaviour
     [Header("シーン")]
     public SceneState currentScene;
 
+    [Header("ゲームデータ保存")]
+    public WriteData writeData;
+
+    public void WriteInGameTitleInit() => writeData.WriteInGameTitleInit();
+    public void WriteInGameTitleEnd() => writeData.WriteInGameTitleEnd();
+    public void WriteInGameSet() => writeData.WriteInGameSet();
+    public void WriteInReleaseInit(Winner winner) => writeData.WriteInReleaseInit(winner);
+    public void WriteInReleaseEnd() => writeData.WriteInReleaseEnd();
+
+
     [Header("プレイヤー")]
     // プレイヤーインスタンス
     public Player player01;
@@ -411,6 +421,7 @@ public class GameManager : MonoBehaviour
         PlayerInit();
         // Trap データ初期化
         TrapInit();
+        writeData.WriteDataInit();
     }
     /// <summary>
     /// シングルトン初期化

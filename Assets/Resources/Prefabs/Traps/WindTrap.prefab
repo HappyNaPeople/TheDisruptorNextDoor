@@ -203,8 +203,9 @@ MonoBehaviour:
   isSetup: 0
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
-  fadeInDuration: 0
+  setupDelay: 0
+  setupEffectPrefab: {fileID: 0}
   windForce: -160
   groundResistanceMultiplier: 0.5
-  activationDelay: 2
-  activeEffectPrefab: {fileID: 8535172308499686518, guid: 7e93b48d125efe645b986a02f755878a, type: 3}
+  activationDelay: 1
+  activeEffectPrefab: {fileID: 8535172308499686518, guid: 726e0cd1ca3460e4eb1a6480ad0c4fdb, type: 3}
