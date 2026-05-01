@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-public class RingTrap
+[System.Serializable]
+class RingTrap
 {
     public enum Stage
     {
@@ -90,7 +91,6 @@ public class RingTrap
     }
 }
 
-
 public class TrapRing : MonoBehaviour
 {
     public enum RingTurn
@@ -108,7 +108,7 @@ public class TrapRing : MonoBehaviour
 
     [Header("Trap Button")]
     public TrapUi[] trapUi;
-    public List<RingTrap> ringTraps = new List<RingTrap>();
+    private List<RingTrap> ringTraps = new List<RingTrap>();
     public int choseTrap;
     public GameObject joyStick;
 

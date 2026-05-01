@@ -252,7 +252,9 @@ MonoBehaviour:
   isSetup: 1
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
-  fadeInDuration: 1
+  setupDelay: 1
+  setupEffectPrefab: {fileID: 0}
+  setupEffectBuffer: 1
   isFallDone: 0
 --- !u!1 &369224262
 GameObject:
@@ -31601,7 +31603,7 @@ GameObject:
   - component: {fileID: 1803831361}
   - component: {fileID: 1803831362}
   m_Layer: 0
-  m_Name: back
+  m_Name: Canvas_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

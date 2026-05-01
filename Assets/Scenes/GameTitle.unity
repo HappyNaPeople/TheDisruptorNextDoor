@@ -1170,16 +1170,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   numberSprites:
-  - {fileID: 21300518, guid: ee1aa8dd1fc49614d89b7eb3f8af788b, type: 3}
-  - {fileID: 21300472, guid: ee1aa8dd1fc49614d89b7eb3f8af788b, type: 3}
-  - {fileID: 21300474, guid: ee1aa8dd1fc49614d89b7eb3f8af788b, type: 3}
-  - {fileID: 21300476, guid: ee1aa8dd1fc49614d89b7eb3f8af788b, type: 3}
-  - {fileID: 21300478, guid: ee1aa8dd1fc49614d89b7eb3f8af788b, type: 3}
-  - {fileID: 21300480, guid: ee1aa8dd1fc49614d89b7eb3f8af788b, type: 3}
-  - {fileID: 21300482, guid: ee1aa8dd1fc49614d89b7eb3f8af788b, type: 3}
-  - {fileID: 21300484, guid: ee1aa8dd1fc49614d89b7eb3f8af788b, type: 3}
-  - {fileID: 21300486, guid: ee1aa8dd1fc49614d89b7eb3f8af788b, type: 3}
-  - {fileID: 21300516, guid: ee1aa8dd1fc49614d89b7eb3f8af788b, type: 3}
+  - {fileID: -6811088617588788393, guid: 44cc69d955db25f4d94959c1c28789b7, type: 3}
+  - {fileID: -8386998760054872347, guid: 44cc69d955db25f4d94959c1c28789b7, type: 3}
+  - {fileID: 1163106107506902244, guid: 44cc69d955db25f4d94959c1c28789b7, type: 3}
+  - {fileID: -2183396429107150212, guid: 44cc69d955db25f4d94959c1c28789b7, type: 3}
+  - {fileID: 7090687577061630159, guid: 44cc69d955db25f4d94959c1c28789b7, type: 3}
+  - {fileID: -818090813379203275, guid: 44cc69d955db25f4d94959c1c28789b7, type: 3}
+  - {fileID: 1881967614159378089, guid: 44cc69d955db25f4d94959c1c28789b7, type: 3}
+  - {fileID: 1811582389900817821, guid: 44cc69d955db25f4d94959c1c28789b7, type: 3}
+  - {fileID: 201054889166755267, guid: 44cc69d955db25f4d94959c1c28789b7, type: 3}
+  - {fileID: -8953777011801322493, guid: 44cc69d955db25f4d94959c1c28789b7, type: 3}
   currentScene: 0
   writeData: {fileID: 759839116}
   player01: {fileID: 0}

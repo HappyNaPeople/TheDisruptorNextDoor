@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5609169778365409869}
   - component: {fileID: 5476919641607610991}
   - component: {fileID: 1653954369146898413}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2024999859623612454}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5411087923865166670}
   - component: {fileID: 809543834139800266}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: one
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300518, guid: ee1aa8dd1fc49614d89b7eb3f8af788b, type: 3}
+  m_Sprite: {fileID: -6811088617588788393, guid: 44cc69d955db25f4d94959c1c28789b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 7934751142796700374}
   - component: {fileID: 4587618346612304557}
   - component: {fileID: 8919404284638515269}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: TimsOfGoal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,7 +350,7 @@ GameObject:
   - component: {fileID: 7360138625422265887}
   - component: {fileID: 7086488630528974929}
   - component: {fileID: 5971598743972286681}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -425,7 +425,7 @@ GameObject:
   - component: {fileID: 5171180599505078577}
   - component: {fileID: 8217432084991661081}
   - component: {fileID: 6737434355504864153}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: checkPoint02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,7 +498,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5172669370554550669}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: CheckPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -538,7 +538,7 @@ GameObject:
   - component: {fileID: 8316878541065903248}
   - component: {fileID: 2786439513839705191}
   - component: {fileID: 3036345358420026380}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: checkPoint03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 805600230578552326}
   - component: {fileID: 7860012563904278852}
   - component: {fileID: 1892544709977804130}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: TimerAndProgresBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -712,7 +712,7 @@ GameObject:
   - component: {fileID: 6323712465116490717}
   - component: {fileID: 4544197118619905936}
   - component: {fileID: 4684188311684557581}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -785,7 +785,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8640146045715732376}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -821,7 +821,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8202798179445868732}
   - component: {fileID: 699187870565956108}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -914,7 +914,7 @@ GameObject:
   - component: {fileID: 6875947901821727114}
   - component: {fileID: 7512104057892004326}
   - component: {fileID: 4867297434859132320}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -988,7 +988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2564173165664749790}
   - component: {fileID: 4459200363601543340}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Hundred
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1004,7 +1004,7 @@ Transform:
   m_GameObject: {fileID: 6137944848012475988}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.253, y: -0.685, z: 0}
+  m_LocalPosition: {x: 0.287, y: -0.685, z: 0}
   m_LocalScale: {x: 1.1580132, y: 1.1580132, z: 1.1580132}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1059,7 +1059,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300472, guid: ee1aa8dd1fc49614d89b7eb3f8af788b, type: 3}
+  m_Sprite: {fileID: -8386998760054872347, guid: 44cc69d955db25f4d94959c1c28789b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1079,7 +1079,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4846317606302334881}
   - component: {fileID: 3059282823365600958}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Circle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1169,7 +1169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1622197633131412600}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: NumberTimer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1204,7 +1204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2647802006360822782}
   - component: {fileID: 1193717080866967390}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ten
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1275,7 +1275,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300480, guid: ee1aa8dd1fc49614d89b7eb3f8af788b, type: 3}
+  m_Sprite: {fileID: -818090813379203275, guid: 44cc69d955db25f4d94959c1c28789b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1295,7 +1295,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4877272310365979475}
   - component: {fileID: 2045555442028896934}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ProgresBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1351,7 +1351,7 @@ GameObject:
   - component: {fileID: 4970536734260736800}
   - component: {fileID: 2556271644398742193}
   - component: {fileID: 4793448655493125732}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: checkPoint01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1425,7 +1425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9016326958584853243}
   - component: {fileID: 8778417215952690872}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Clock_Mark_Part2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1516,7 +1516,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3155903766552995472}
   - component: {fileID: 5293500613949033992}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Clock_Mark_Part1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1606,7 +1606,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5239432379334111390}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
