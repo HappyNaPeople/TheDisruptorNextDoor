@@ -89,6 +89,8 @@ public abstract class Trap : MonoBehaviour
     [Header("Setup Effect")]
     [Tooltip("出現〜発動までの間に表示するエフェクト（任意）")]
     public GameObject setupEffectPrefab;
+    [Tooltip("エフェクト消滅までのバッファ時間")]
+    public float setupEffectBuffer = 1.0f;
     /// <summary>
     /// Trap の初期化処理
     /// </summary>
@@ -132,6 +134,13 @@ public abstract class Trap : MonoBehaviour
             }
         }
 
+        // 召喚中（セットアップ遅延中）はスプライトを非表示にする
+        SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+        foreach (var r in renderers)
+        {
+            r.enabled = false;
+        }
+
         // セットアップ用エフェクトの生成
         GameObject spawnedEffect = null;
         if (setupEffectPrefab != null)
@@ -142,10 +151,19 @@ public abstract class Trap : MonoBehaviour
         // 指定時間待機
         yield return new WaitForSeconds(setupDelay);
 
-        // セットアップ完了時にエフェクトを削除
+        // 待機完了後、スプライトを再表示する
+        foreach (var r in renderers)
+        {
+            if (r != null)
+            {
+                r.enabled = true;
+            }
+        }
+
+        // セットアップ完了時にエフェクトを削除（バッファ時間を設ける）
         if (spawnedEffect != null)
         {
-            Destroy(spawnedEffect);
+            Destroy(spawnedEffect, setupEffectBuffer);
         }
 
         // セットアップ完了時の処理を呼び出し

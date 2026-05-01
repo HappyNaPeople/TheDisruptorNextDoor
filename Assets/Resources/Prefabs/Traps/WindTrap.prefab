@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a28eaf68e6482148aee42bbfa7e1e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrapHp
-  hp: 7
+  hp: 18
   defenseMultiplier: 0
   broken: 0
 --- !u!50 &6496700216214343239
@@ -205,6 +205,7 @@ MonoBehaviour:
   originGridPos: {x: 0, y: 0}
   setupDelay: 0
   setupEffectPrefab: {fileID: 0}
+  setupEffectBuffer: 1
   windForce: -160
   groundResistanceMultiplier: 0.5
   activationDelay: 1
