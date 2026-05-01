@@ -1,34 +1,37 @@
 fileFormatVersion: 2
-guid: 5f1191fbcd6379f44994211695cbaf66
+guid: 5c89096e8a5771a4b9616f659c68f978
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7112505937151442589
-    second: "\u8D64\u3000\u7206\u5F3E_0"
+      213: -633466441579077578
+    second: SR_Frost-Bomb_01_0
   - first:
-      213: -4751332885775607699
-    second: "\u8D64\u3000\u7206\u5F3E_1"
+      213: 3594770504473827545
+    second: SR_Frost-Bomb_01_1
   - first:
-      213: 7231607610946654498
-    second: "\u8D64\u3000\u7206\u5F3E_2"
+      213: -1655246007571081675
+    second: SR_Frost-Bomb_01_2
   - first:
-      213: -631079383061795558
-    second: "\u8D64\u3000\u7206\u5F3E_3"
+      213: -5345228179582688826
+    second: SR_Frost-Bomb_01_3
   - first:
-      213: -1835817952943597155
-    second: "\u8D64\u3000\u7206\u5F3E_4"
+      213: -3797876037711330847
+    second: SR_Frost-Bomb_01_4
   - first:
-      213: 9122897603119748462
-    second: "\u8D64\u3000\u7206\u5F3E_5"
+      213: 4369464739359240052
+    second: SR_Frost-Bomb_01_5
   - first:
-      213: -7000581980898152465
-    second: "\u8D64\u3000\u7206\u5F3E_6"
+      213: -4505632647964258466
+    second: SR_Frost-Bomb_01_6
   - first:
-      213: 7081276643989888933
-    second: "\u8D64\u3000\u7206\u5F3E_7"
+      213: 1079819028772212991
+    second: SR_Frost-Bomb_01_7
   - first:
-      213: 1272836499746967433
-    second: "\u8D64\u3000\u7206\u5F3E_8"
+      213: -7820772302963133546
+    second: SR_Frost-Bomb_01_8
+  - first:
+      213: -977856848669625466
+    second: SR_Frost-Bomb_01_9
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -70,12 +73,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 256
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -120,17 +123,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\u8D64\u3000\u7206\u5F3E_0"
+      name: SR_Frost-Bomb_01_0
       rect:
         serializedVersion: 2
-        x: 127
-        y: 442
-        width: 107
-        height: 102
+        x: 8
+        y: 101
+        width: 40
+        height: 62
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -139,20 +155,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3614b39a88d4b4d90800000000000000
-      internalID: -7112505937151442589
+      spriteID: 6306c8ca0a97537f0800000000000000
+      internalID: -633466441579077578
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u8D64\u3000\u7206\u5F3E_1"
+      name: SR_Frost-Bomb_01_1
       rect:
         serializedVersion: 2
-        x: 194
-        y: 152
-        width: 351
-        height: 536
+        x: 41
+        y: 161
+        width: 37
+        height: 41
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,20 +177,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d6896bdf9efdf0eb0800000000000000
-      internalID: -4751332885775607699
+      spriteID: 9d8d6385ab033e130800000000000000
+      internalID: 3594770504473827545
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u8D64\u3000\u7206\u5F3E_2"
+      name: SR_Frost-Bomb_01_2
       rect:
         serializedVersion: 2
-        x: 514
-        y: 449
-        width: 85
-        height: 93
+        x: 48
+        y: 32
+        width: 155
+        height: 216
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -183,20 +199,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2219c75bec4db5460800000000000000
-      internalID: 7231607610946654498
+      spriteID: 53697d6a6826709e0800000000000000
+      internalID: -1655246007571081675
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u8D64\u3000\u7206\u5F3E_3"
+      name: SR_Frost-Bomb_01_3
       rect:
         serializedVersion: 2
-        x: 83
-        y: 322
-        width: 91
-        height: 82
+        x: 189
+        y: 133
+        width: 48
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,20 +221,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a1d678b05a4fd37f0800000000000000
-      internalID: -631079383061795558
+      spriteID: 6c1e0987a4fe1d5b0800000000000000
+      internalID: -5345228179582688826
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u8D64\u3000\u7206\u5F3E_4"
+      name: SR_Frost-Bomb_01_4
       rect:
         serializedVersion: 2
-        x: 578
-        y: 319
-        width: 100
-        height: 86
+        x: 8
+        y: 60
+        width: 34
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -227,64 +243,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d9913826c4dd586e0800000000000000
-      internalID: -1835817952943597155
+      spriteID: 1e18f3f9ddb3b4bc0800000000000000
+      internalID: -3797876037711330847
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u8D64\u3000\u7206\u5F3E_5"
+      name: SR_Frost-Bomb_01_5
       rect:
         serializedVersion: 2
-        x: 75
-        y: 143
-        width: 118
-        height: 103
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e65173ce80b0b9e70800000000000000
-      internalID: 9122897603119748462
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\u8D64\u3000\u7206\u5F3E_6"
-      rect:
-        serializedVersion: 2
-        x: 538
-        y: 148
-        width: 132
-        height: 118
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fefa09f67cfe8de90800000000000000
-      internalID: -7000581980898152465
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\u8D64\u3000\u7206\u5F3E_7"
-      rect:
-        serializedVersion: 2
-        x: 245
+        x: 199
         y: 86
-        width: 69
-        height: 57
+        width: 43
+        height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -293,20 +265,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5af9949e69fb54260800000000000000
-      internalID: 7081276643989888933
+      spriteID: 47f2a10b70573ac30800000000000000
+      internalID: 4369464739359240052
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u8D64\u3000\u7206\u5F3E_8"
+      name: SR_Frost-Bomb_01_6
       rect:
         serializedVersion: 2
-        x: 449
-        y: 92
-        width: 53
-        height: 54
+        x: 21
+        y: 11
+        width: 58
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -315,8 +287,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 98fc1908d060aa110800000000000000
-      internalID: 1272836499746967433
+      spriteID: e5f00b18af6c871c0800000000000000
+      internalID: -4505632647964258466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SR_Frost-Bomb_01_7
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 8
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff0dcaf7fa94cfe00800000000000000
+      internalID: 1079819028772212991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SR_Frost-Bomb_01_8
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 8
+        width: 23
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6933ba4d609077390800000000000000
+      internalID: -7820772302963133546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SR_Frost-Bomb_01_9
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 18
+        width: 52
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6833dd58064fd62f0800000000000000
+      internalID: -977856848669625466
       vertices: []
       indices: 
       edges: []
@@ -325,7 +363,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -335,15 +373,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\u8D64\u3000\u7206\u5F3E_0": -7112505937151442589
-      "\u8D64\u3000\u7206\u5F3E_1": -4751332885775607699
-      "\u8D64\u3000\u7206\u5F3E_2": 7231607610946654498
-      "\u8D64\u3000\u7206\u5F3E_3": -631079383061795558
-      "\u8D64\u3000\u7206\u5F3E_4": -1835817952943597155
-      "\u8D64\u3000\u7206\u5F3E_5": 9122897603119748462
-      "\u8D64\u3000\u7206\u5F3E_6": -7000581980898152465
-      "\u8D64\u3000\u7206\u5F3E_7": 7081276643989888933
-      "\u8D64\u3000\u7206\u5F3E_8": 1272836499746967433
+      SR_Frost-Bomb_01_0: -633466441579077578
+      SR_Frost-Bomb_01_1: 3594770504473827545
+      SR_Frost-Bomb_01_2: -1655246007571081675
+      SR_Frost-Bomb_01_3: -5345228179582688826
+      SR_Frost-Bomb_01_4: -3797876037711330847
+      SR_Frost-Bomb_01_5: 4369464739359240052
+      SR_Frost-Bomb_01_6: -4505632647964258466
+      SR_Frost-Bomb_01_7: 1079819028772212991
+      SR_Frost-Bomb_01_8: -7820772302963133546
+      SR_Frost-Bomb_01_9: -977856848669625466
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

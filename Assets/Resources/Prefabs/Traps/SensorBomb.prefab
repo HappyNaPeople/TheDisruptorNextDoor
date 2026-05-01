@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4182516379932374407}
   - component: {fileID: 7978946137486456939}
   m_Layer: 0
-  m_Name: SensorBoom
+  m_Name: SensorBomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
