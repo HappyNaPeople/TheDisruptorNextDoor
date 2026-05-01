@@ -24,7 +24,10 @@ public enum TrapName
     StickyArea,
     ScatterBombSpike,
     ScatterBombIce,
-    ScatterBombSticky
+    ScatterBombSticky,
+
+
+    None = -1
 }
 
 [System.Serializable]

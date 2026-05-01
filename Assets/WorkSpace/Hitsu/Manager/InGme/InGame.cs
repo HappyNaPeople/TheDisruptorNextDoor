@@ -46,36 +46,34 @@ public class CameraData
     /// <summary>
     /// ゲーム開始前の演出用カメラ状態
     /// </summary>
-    public void Ready(Transform trackingTarget)
+    public void Ready()
     {
-        // ズームアウトして全体を見せる
         cinemachineCamera.Lens.OrthographicSize = 9;
-        // カメラ位置を中央寄せ
-        cinemaChineFollow.FollowOffset = Vector3.one;
-        // 追従対象を設定
-        cinemachineCamera.Target.TrackingTarget = trackingTarget;
-        // Dampingを小さくしてカメラをキビキビ動かす
-        cinemaChineFollow.TrackerSettings.PositionDamping = readyV3;
-
+        cinemaChineFollow.FollowOffset = readyV3;
     }
 
     /// <summary>
     /// Dampingのみ初期状態に戻す
     /// </summary>
-    public void ReSetDamping() => cinemaChineFollow.TrackerSettings.PositionDamping = basicPositionDamping;
+    /// </summary>
+    public void ReSetLens()
+    {
+        cinemachineCamera.Lens.OrthographicSize = lens;
+        cinemaChineFollow.FollowOffset = basicFollowOffset;
 
+    }
     /// <summary>
     /// ゲーム開始時にカメラを通常状態へ戻す
     /// </summary>
-    public void GameStart(Transform trackingTarget)
-    {
-        // 初期ズームに戻す
-        cinemachineCamera.Lens.OrthographicSize = lens;
-        // 初期オフセットに戻す
-        cinemaChineFollow.FollowOffset = basicFollowOffset;
-        // 追従対象を設定
-        cinemachineCamera.Target.TrackingTarget = trackingTarget;
-    }
+    //public void GameStart(Transform trackingTarget)
+    //{
+    //    // 初期ズームに戻す
+    //    cinemachineCamera.Lens.OrthographicSize = lens;
+    //    // 初期オフセットに戻す
+    //    cinemaChineFollow.FollowOffset = basicFollowOffset;
+    //    // 追従対象を設定
+    //    cinemachineCamera.Target.TrackingTarget = trackingTarget;
+    //}
 
 }
 
@@ -164,9 +162,10 @@ public class InGame : MonoBehaviour
     }
 
     [Header("Player")]
-
     // Hunter 用 GamePad コ?ト?ー?ー
     public HunterConTrollerPad hunterConTrollerPad;
+    public RunnerConTrollerPad runnerConTrollerPad;
+
     // Runner プ?イ?ー
     public Runner runner;
 
@@ -518,6 +517,7 @@ public class InGame : MonoBehaviour
     private void RunnerInit()
     {
         runner.RunnerInit();
+        runnerConTrollerPad.Init();
         //runner.ControllerCode = player01.controllerCode;
     }
 
@@ -543,7 +543,7 @@ public class InGame : MonoBehaviour
     }
 
     [Header("StartingCutScene")]
-    public Transform StartingCutSceneTs; // カットシーン用の注視ポイント
+    public GameObject startingCutSceneOb; // カットシーン用の注視ポイント
     private Coroutine startingCutScene;  // 実行中のコルーチン参照
 
     /// <summary>
@@ -553,9 +553,9 @@ public class InGame : MonoBehaviour
     private IEnumerator StartingCutScene()
     {
         // カメラをReady状態（引き・中央寄せ・低Damping）にする
-        runnerCamera.Ready(StartingCutSceneTs);
-        hunterCamera.Ready(StartingCutSceneTs);
-
+        startingCutSceneOb.SetActive(true);
+        runnerCamera.Ready();
+        hunterCamera.Ready();
         // Ready状態になるまで待機
         yield return new WaitUntil(() => gameStage == GameStage.Ready);
 
@@ -564,10 +564,6 @@ public class InGame : MonoBehaviour
         yield return new WaitForSeconds(5);
 
         //[演出まで]
-
-        // カメラをプレイヤー追従に戻す
-        runnerCamera.GameStart(runner.transform);
-        hunterCamera.GameStart(runner.transform);
 
         // 各種初期化
         DisPlayInit();      // 表示切替
@@ -582,11 +578,11 @@ public class InGame : MonoBehaviour
         gameStage = GameStage.Playing;
         // 1フレーム待機（物理更新）
         yield return new WaitForFixedUpdate();
-        // Runnerが動くまで待つ
-        yield return new WaitUntil(() => runner.transform.position != runnerPos);
-        // カメラDampingを元に戻す（自然な追従へ）
-        runnerCamera.ReSetDamping();
-        hunterCamera.ReSetDamping();
+
+        runnerCamera.ReSetLens();
+        hunterCamera.ReSetLens();
+        startingCutSceneOb.SetActive(false);
+
     }
 
     /// <summary>
@@ -624,7 +620,7 @@ public class InGame : MonoBehaviour
     #region GameSet
 
     [Header("GameSet")]
-    public Transform gameSetCutSceneTs;
+    public GameObject gameSetCutSceneOb;
 
     // Player の進行率（最大値を記録）
     [SerializeField] private float player01Ran;
@@ -651,8 +647,8 @@ public class InGame : MonoBehaviour
         // Hunter 側のコルーチンも停止
         hunterConTrollerPad.StopAllCoroutines();
 
-        runnerCamera.Ready(gameSetCutSceneTs);
-        hunterCamera.Ready(gameSetCutSceneTs);
+
+        gameSetCutSceneOb.SetActive(true);
 
 
         Debug.Log($"Player01 Result : Pass Time : {_player01.playerData.passTime} | Pass Distance : {_player01.playerData.passDistance}");
@@ -682,6 +678,9 @@ public class InGame : MonoBehaviour
         gameStage = GameStage.InGameInitStart;
         MapInit();
         AllCameraInit();
+        gameSetCutSceneOb.SetActive(false);
+        startingCutSceneOb.SetActive(false);
+
 
         _player01.SetJob(Player.Job.Runner);
         _player02.SetJob(Player.Job.Hunter);
@@ -775,8 +774,6 @@ public class InGame : MonoBehaviour
 
         TurnSwitch();
     }
-
-
 
     private void Awake()
     {
