@@ -76,7 +76,7 @@ MonoBehaviour:
   activationType: 0
   fallSpeed: 8
   waitForBoom: 2
-  boomArea: 2
+  boomArea: 4
   detectionRadius: 3
   explosionEffect: {fileID: 7772825388523857775, guid: 1fe2f96e80a74334f8ba0ec202661600, type: 3}
   effectLingerTime: 0.75
