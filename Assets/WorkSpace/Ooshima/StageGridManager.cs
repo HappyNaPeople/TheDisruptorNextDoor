@@ -126,6 +126,11 @@ public class StageGridManager : MonoBehaviour
         return false; // Out of bounds or not scanned
     }
 
+    public bool IsOutOfBounds(Vector2Int gridCoord)
+    {
+        return !gridMap.ContainsKey(gridCoord);
+    }
+
     public void RegisterTrap(Vector3 worldPos)
     {
         Vector2Int gridCoord = WorldToGrid(worldPos);
