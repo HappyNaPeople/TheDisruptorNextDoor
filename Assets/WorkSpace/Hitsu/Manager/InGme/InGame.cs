@@ -657,7 +657,7 @@ public class InGame : MonoBehaviour
         // 少し間を取る[演出から]
 
         yield return new WaitForSeconds(5);
-
+        GameManager.Instance.WriteInGameSet();
         //[演出まで]
 
         GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.Release));
