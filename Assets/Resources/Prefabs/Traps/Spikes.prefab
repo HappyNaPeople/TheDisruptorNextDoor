@@ -233,11 +233,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Spikes
   trapName: 0
   cost: 0
+  trapSfxDates: []
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
+  setupDelay: 0
+  setupEffectPrefab: {fileID: 0}
+  setupEffectBuffer: 1
   isFallDone: 0
 --- !u!114 &6537090227952713654
 MonoBehaviour:

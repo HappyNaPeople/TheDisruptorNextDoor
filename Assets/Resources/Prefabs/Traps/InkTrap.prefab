@@ -117,10 +117,11 @@ MonoBehaviour:
   originGridPos: {x: 0, y: 0}
   setupDelay: 1
   setupEffectPrefab: {fileID: 0}
+  setupEffectBuffer: 1
   fallSpeed: 8
   acceleration: 5
   chaseDuration: 5
-  inkSprite: {fileID: -8867362618951470759, guid: 0799e3ed06d153b47ac2ed2c7981cd00, type: 3}
+  inkSprite: {fileID: -2817813186423584760, guid: 130ec7a71119938439cfd7d8d8b1411b, type: 3}
 --- !u!114 &778524587898957976
 MonoBehaviour:
   m_ObjectHideFlags: 0
