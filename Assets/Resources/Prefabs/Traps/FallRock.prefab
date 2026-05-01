@@ -73,6 +73,9 @@ MonoBehaviour:
   originGridPos: {x: 0, y: 0}
   setupDelay: 1
   setupEffectPrefab: {fileID: 8321573023433997581, guid: 62cbd7a11d026c4418c8481ea14c7737, type: 3}
+  setupEffectBuffer: 1
+  initialFallDelay: 0
+  fallCoolDown: 3
   fallSpeed: 8
   riseSpeed: 3
   stayBottomTime: 1

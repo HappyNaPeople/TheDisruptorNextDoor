@@ -9,8 +9,12 @@ using UnityEngine.UIElements;
 /// </summary>
 public class FallRock : TiggerTrap
 {
-    // 落下開始までの待機時間
-    private const int fallCoolDown = 3;
+    [Header("Fall Settings")]
+    [Tooltip("初回落下までの待機時間")]
+    public float initialFallDelay = 0f;
+    [Tooltip("2回目以降の落下までの待機時間")]
+    public float fallCoolDown = 3f;
+
     // 落下速度　
     public int fallSpeed = 1;
     /// <summary>
@@ -52,18 +56,28 @@ public class FallRock : TiggerTrap
         gameObject.layer = UseLayerName.trapLayer;
         rb.simulated = true;
 
+        bool isFirstFall = true;
+
         while (true)
         {
             fallDone = false;
             
             // 落下まで待機
-            yield return new WaitForSeconds(fallCoolDown);
+            float waitTime = isFirstFall ? initialFallDelay : fallCoolDown;
+            if (waitTime > 0f)
+            {
+                yield return new WaitForSeconds(waitTime);
+            }
+            isFirstFall = false;
 
             // 落下処理
             yield return StartCoroutine(GridFallCoroutine(fallSpeed, () => fallDone = true));
 
             // 着地後の待機
-            yield return new WaitForSeconds(stayBottomTime);
+            if (stayBottomTime > 0f)
+            {
+                yield return new WaitForSeconds(stayBottomTime);
+            }
 
             // 上昇処理 (最初の設置位置 originGridPos へ戻る。上に障害物があれば途中で止まる)
             bool riseDone = false;
@@ -94,22 +108,8 @@ public class FallRock : TiggerTrap
 
     public override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!isSetup) return;
-
-        if (!Condition())
-        {
-            if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
-            {
-                // Runner に衝突
-                base.OnTriggerEnter2D(collision);
-            }
-            // 地面または Trap に衝突
-            // else if (IsGameObjectLayer(collision, UseLayerName.trapLayer) || IsGameObjectLayer(collision, UseLayerName.platformLayer))
-            // {
-            //     fallDone = true;
-            //     rb.bodyType = RigidbodyType2D.Static;
-            // }
-        }
+        // 常にダメージ判定を発生させる（昇っている時も含む）
+        base.OnTriggerEnter2D(collision);
     }
 
 }
