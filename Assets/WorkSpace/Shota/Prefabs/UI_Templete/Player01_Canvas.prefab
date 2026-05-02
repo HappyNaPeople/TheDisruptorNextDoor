@@ -1747,6 +1747,7 @@ MonoBehaviour:
   - {fileID: 4068747159767355269}
   - {fileID: 4926126574694486026}
   - {fileID: 5048512933218882998}
+  excludeTraps: 000000000d0000000e000000ffffffff
   chooseTrapButtons:
   - {fileID: 6599707636077404054}
   - {fileID: 7159254273698306580}

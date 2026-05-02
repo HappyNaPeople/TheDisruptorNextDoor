@@ -26,7 +26,7 @@ public class FillBar : MonoBehaviour
     public void Fill(float distance)
     {
         HeadMove(distance);
-        m_fillBar_Front.SetFloat("_fillUp", distance);
+        m_fillBar_Front.SetFloat("_Fillup", distance);
     }
 
     private void Start()
