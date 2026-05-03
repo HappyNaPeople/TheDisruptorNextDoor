@@ -964,7 +964,7 @@ MonoBehaviour:
   player01TitlePlayerCanvas: {fileID: 160810434604588214}
   player02Camera: {fileID: 6818915034254784924}
   player02TitlePlayerCanvas: {fileID: 1216237746}
-  trapSelectTime: 20
+  trapSelectTime: 5
   Titles:
   - {fileID: 1963074490}
   - {fileID: 1216237748}
@@ -1226,6 +1226,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 412429967513646761, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8e160a2a620644cd6afef9119dad1093, type: 3}
     - target: {fileID: 688930858165990538, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1578,6 +1582,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6102645947218216142, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 6944447031546875295, guid: c0e70d7c6872740409780ca0b9156c8f, type: 3}
     - target: {fileID: 6260422052500037793, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
       propertyPath: m_Camera
       value: 
@@ -2652,6 +2660,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 412429967513646761, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8e160a2a620644cd6afef9119dad1093, type: 3}
     - target: {fileID: 688930858165990538, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2916,6 +2928,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 6102645947218216142, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 6944447031546875295, guid: c0e70d7c6872740409780ca0b9156c8f, type: 3}
     - target: {fileID: 6260422052500037793, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
       propertyPath: m_Camera
       value: 

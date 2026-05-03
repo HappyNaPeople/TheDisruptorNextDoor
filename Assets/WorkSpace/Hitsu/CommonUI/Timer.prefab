@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6661018066575297220}
   - component: {fileID: 2041442056560122688}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: one
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3818347178989248852}
   - component: {fileID: 3065535678513080614}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Hundred
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 138361757068121586}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: NumberTimer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3735272492159842932}
   - component: {fileID: 574301533691832020}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Ten
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +317,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6064430326675052075}
   - component: {fileID: 4403529685815037748}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Circle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,7 +407,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6957863937071939090}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -443,7 +443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4369827196151844634}
   - component: {fileID: 6782123813568194434}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Clock_Mark_Part1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -534,7 +534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7658607521950063473}
   - component: {fileID: 7979121374281414450}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Clock_Mark_Part2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

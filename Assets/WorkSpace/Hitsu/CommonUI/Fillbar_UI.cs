@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FillBar : MonoBehaviour
+public class Fillbar_UI : MonoBehaviour
 {
     public GameObject fillBar_Head;
     public SpriteRenderer fillBar_Front;
@@ -29,17 +29,5 @@ public class FillBar : MonoBehaviour
         m_fillBar_Front.SetFloat("_Fillup", distance);
     }
 
-    private void Start()
-    {
-        Init();
-    }
-
-    private void Update()
-    {
-        Fill(test);
-    }
-
-    
 
 }
-

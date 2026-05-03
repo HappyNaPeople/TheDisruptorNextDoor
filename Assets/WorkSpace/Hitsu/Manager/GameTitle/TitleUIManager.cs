@@ -66,8 +66,12 @@ public class TitleUIManager : MonoBehaviour
     /// Player02 Trap 選択 UI
     /// </summary>
     public TitlePlayerCanvas player02TitlePlayerCanvas;
-
+#if UNITY_EDITOR
     public float trapSelectTime = 10f;
+#else
+    public float trapSelectTime = 60f;
+
+#endif
 
     public CanvasGroup[] Titles = new CanvasGroup[2];
     public CanvasGroup[] TurnSelect = new CanvasGroup[2];
