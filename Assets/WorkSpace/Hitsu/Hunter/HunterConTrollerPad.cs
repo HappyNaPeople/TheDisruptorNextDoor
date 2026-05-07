@@ -276,6 +276,7 @@ public class HunterConTrollerPad : MonoBehaviour
     public void HunterSwitch(Player targetPlayer)
     {
         CanUseTrapInit(targetPlayer.hunter.backpack.trapsPack);
+
         RecoveryInit();
         TrapRingsUpdate();
         //hunterCursor.Init(this);
@@ -284,13 +285,7 @@ public class HunterConTrollerPad : MonoBehaviour
 
     public void HunterInit()
     {
-        //List<TrapName> choseTraps = new List<TrapName>() { TrapName.Spikes, TrapName.FallRock, TrapName.Boom, TrapName.JumpPad, TrapName.Spikes };
-        //CanUseTrapInit(choseTraps);
-        RecoveryInit();
-        TrapRingsUpdate();
         hunterCursor.Init(this);
-
-        timeAndProgressBar.ProgressBarInit();
     }
 
     private void Start()

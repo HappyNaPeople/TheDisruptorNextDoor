@@ -522,10 +522,7 @@ public class InGame : MonoBehaviour
         //runner.ControllerCode = player01.controllerCode;
     }
 
-    private void HunterInit()
-    {
-        hunterConTrollerPad.HunterInit();
-    }
+    private void HunterInit()=> hunterConTrollerPad.HunterInit();
 
 
 
@@ -620,6 +617,7 @@ public class InGame : MonoBehaviour
         hunterConTrollerPad.HunterInit();
         runnerConTrollerPad.Init();
 
+
     }
 
     #endregion
@@ -653,7 +651,8 @@ public class InGame : MonoBehaviour
         //StopAllCoroutines();
         // Hunter 側のコルーチンも停止
         hunterConTrollerPad.StopAllCoroutines();
-
+        runnerCamera.Ready();
+        hunterCamera.Ready();
 
         gameSetCutSceneOb.SetActive(true);
 
