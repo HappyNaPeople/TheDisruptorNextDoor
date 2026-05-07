@@ -39,9 +39,9 @@ public class HunterConTrollerPad : MonoBehaviour
     //public TMP_Text costText;
     public int nowCostCanUse = 0;
 
-    private int maxCostCanUse => 20 + (5 * 1/*InGame.Instance.passCheckPoint*/);
+    private int maxCostCanUse => 20 + (5 * InGame.Instance.passCheckPoint);
     private const int startCostCanUse = 5;
-    private int costRecovery => 1 + 0/*InGame.Instance.passCheckPoint*/;
+    private int costRecovery => 1 + InGame.Instance.passCheckPoint;
     private Coroutine costRecover;
     private const float recoverCountDown = 3;
     private float recoverTimer = 0;
