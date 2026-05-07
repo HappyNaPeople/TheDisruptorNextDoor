@@ -36,7 +36,7 @@ public class HunterConTrollerPad : MonoBehaviour
     [Header("Cost")]
     public Image costImage;
     public SpriteRenderer[] costSpriteRenderers;
-    public TMP_Text costText;
+    //public TMP_Text costText;
     public int nowCostCanUse = 0;
 
     private int maxCostCanUse => 20 + (5 * 1/*InGame.Instance.passCheckPoint*/);
@@ -158,6 +158,9 @@ public class HunterConTrollerPad : MonoBehaviour
     private void CanUseTrapInit(List<TrapName> useTrapName) => trapRings.Init(useTrapName);
     private void TrapRingsUpdate() => trapRings.UIUpdate();
 
+    public TMP_Text trap_Introduce;
+
+
 
     #endregion
 
@@ -191,6 +194,17 @@ public class HunterConTrollerPad : MonoBehaviour
         TrapRingsUpdate();
     }
 
+    private void TrapIntroduce(TrapName trap)
+    {
+        string trapName = $"Trap Name : {trap.ToString()}\n";
+        string cost = $"Need Cost : {GameManager.allTrap[trap].cost}\n";
+        string introduce = $"Introduce : {GameManager.allTrap[trap].information}";
+
+
+        trap_Introduce.text = trapName + cost + introduce;
+
+    }
+
     // プレビュー中の Trap
     private GameObject choseTrap;
     // Trap 設置 Coroutine
@@ -208,6 +222,7 @@ public class HunterConTrollerPad : MonoBehaviour
         GameObject targetTrap = Instantiate(TarpObject(trapName), cursorPos, TarpObject(trapName).transform.rotation);
         // TrapPlacer を取得またはアタッチ
         TrapPlacer placer = targetTrap.GetComponent<TrapPlacer>();
+        TrapIntroduce(trapName);
 
         if (placer == null)
         {
@@ -276,7 +291,7 @@ public class HunterConTrollerPad : MonoBehaviour
     public void HunterSwitch(Player targetPlayer)
     {
         CanUseTrapInit(targetPlayer.hunter.backpack.trapsPack);
-
+        trap_Introduce.text = "";
         RecoveryInit();
         TrapRingsUpdate();
         //hunterCursor.Init(this);
@@ -311,6 +326,11 @@ public class HunterConTrollerPad : MonoBehaviour
         //    UseCost(TrapName.JumpPad);
         //}
 
+        if (test)
+        {
+            CreateTrap(TrapName.FallRock);
+            test = false;
+        }
     }
 
 
