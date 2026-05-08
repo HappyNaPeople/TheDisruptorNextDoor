@@ -99,6 +99,7 @@ public class TitlePlayerCanvas : MonoBehaviour
             return;
         }
 
+        targetPlayer.hunter.backpack.trapsPack.Clear();
         // Backpack に追加
         foreach (TrapName trap in playerTrap)
         {

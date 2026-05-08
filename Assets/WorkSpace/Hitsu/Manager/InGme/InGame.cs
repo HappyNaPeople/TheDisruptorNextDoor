@@ -9,6 +9,7 @@ using Unity.Cinemachine;
 using static InGame;
 using Unity.VisualScripting;
 using static Unity.Collections.Unicode;
+using UnityEngine.InputSystem;
 
 
 [System.Serializable]
@@ -521,10 +522,7 @@ public class InGame : MonoBehaviour
         //runner.ControllerCode = player01.controllerCode;
     }
 
-    private void HunterInit()
-    {
-        hunterConTrollerPad.HunterInit();
-    }
+    private void HunterInit()=> hunterConTrollerPad.HunterInit();
 
 
 
@@ -592,6 +590,10 @@ public class InGame : MonoBehaviour
     {
         // ラウンド初期状態へ
         gameStage = GameStage.RoundInit;
+
+        // チェックポイント初期化
+        CheckPointsDictInit();
+
         // カットシーン開始（既にあれば停止して再スタート）
         if (startingCutScene != null)
         {
@@ -600,8 +602,7 @@ public class InGame : MonoBehaviour
         }
         else startingCutScene = StartCoroutine(StartingCutScene());
 
-        // チェックポイント初期化
-        CheckPointsDictInit();
+
         // プレイヤーをリスポーン
         runner.Respawn();
         // Ready状態へ遷移（カットシーン側が待っている）
@@ -612,6 +613,10 @@ public class InGame : MonoBehaviour
         hunterConTrollerPad.HunterSwitch((_player01.job == Player.Job.Hunter ? _player01 : _player02));
 
         //runner.SwitchController();
+
+        hunterConTrollerPad.HunterInit();
+        runnerConTrollerPad.Init();
+
 
     }
 
@@ -646,7 +651,8 @@ public class InGame : MonoBehaviour
         //StopAllCoroutines();
         // Hunter 側のコルーチンも停止
         hunterConTrollerPad.StopAllCoroutines();
-
+        runnerCamera.Ready();
+        hunterCamera.Ready();
 
         gameSetCutSceneOb.SetActive(true);
 
@@ -794,6 +800,10 @@ public class InGame : MonoBehaviour
     public bool test;
     private void Update()
     {
+        if (Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            test = true;
+        }
         if (test)
         {
             TurnSwitch();

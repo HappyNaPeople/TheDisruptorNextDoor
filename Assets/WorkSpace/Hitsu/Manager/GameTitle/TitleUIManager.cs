@@ -66,8 +66,12 @@ public class TitleUIManager : MonoBehaviour
     /// Player02 Trap 選択 UI
     /// </summary>
     public TitlePlayerCanvas player02TitlePlayerCanvas;
-
+#if UNITY_EDITOR
     public float trapSelectTime = 10f;
+#else
+    public float trapSelectTime = 60f;
+
+#endif
 
     public CanvasGroup[] Titles = new CanvasGroup[2];
     public CanvasGroup[] TurnSelect = new CanvasGroup[2];
@@ -185,6 +189,7 @@ public class TitleUIManager : MonoBehaviour
         // 両プレイヤーが準備完了するまで待つ
         while (!IsEndChooseTrap())
         {
+            if(test)break;
             yield return null;
         }
 
@@ -193,7 +198,7 @@ public class TitleUIManager : MonoBehaviour
         player02TitlePlayerCanvas.ChoseTrapToBackpack(out bool player02Done);
 
         // 登録失敗チェック
-        if (!player01Done|| !player02Done)
+        if (!player01Done || !player02Done)
         {
             Debug.LogWarning($"Player01 id chose Trap : {player01Done} , Player01 id chose Trap : {player02Done}");
         }
@@ -229,5 +234,18 @@ public class TitleUIManager : MonoBehaviour
     private void Start()
     {
         TitleUI_Init();
+    }
+
+    public bool test;
+
+    private void Update()
+    {
+
+        if (UnityEngine.InputSystem.Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            test = true;
+        }
+
+
     }
 }

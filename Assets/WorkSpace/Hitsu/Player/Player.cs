@@ -26,7 +26,7 @@ public class PlayerData
 public class Player : MonoBehaviour
 {
     // Hunter 用クラス
-    public Hunter hunter = new Hunter();
+    public Hunter hunter;
     // 表示するディスプレイ番号
     public DisPlayNumber displayCode = DisPlayNumber.None;
 
@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
     {
         displayCode = targetDisplay;
         controllerCode = targetController;
+        hunter = new Hunter();
     }
     /// <summary>
     /// 役職ごとの処理を更新する

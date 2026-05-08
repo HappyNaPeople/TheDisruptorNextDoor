@@ -36,12 +36,12 @@ public class HunterConTrollerPad : MonoBehaviour
     [Header("Cost")]
     public Image costImage;
     public SpriteRenderer[] costSpriteRenderers;
-    public TMP_Text costText;
+    //public TMP_Text costText;
     public int nowCostCanUse = 0;
 
-    private int maxCostCanUse => 20 + (5 * 1/*InGame.Instance.passCheckPoint*/);
+    private int maxCostCanUse => 20 + (5 * InGame.Instance.passCheckPoint);
     private const int startCostCanUse = 5;
-    private int costRecovery => 1 + 0/*InGame.Instance.passCheckPoint*/;
+    private int costRecovery => 1 + InGame.Instance.passCheckPoint;
     private Coroutine costRecover;
     private const float recoverCountDown = 3;
     private float recoverTimer = 0;
@@ -158,6 +158,9 @@ public class HunterConTrollerPad : MonoBehaviour
     private void CanUseTrapInit(List<TrapName> useTrapName) => trapRings.Init(useTrapName);
     private void TrapRingsUpdate() => trapRings.UIUpdate();
 
+    public TMP_Text trap_Introduce;
+
+
 
     #endregion
 
@@ -191,6 +194,17 @@ public class HunterConTrollerPad : MonoBehaviour
         TrapRingsUpdate();
     }
 
+    private void TrapIntroduce(TrapName trap)
+    {
+        string trapName = $"Trap Name : {trap.ToString()}\n";
+        string cost = $"Need Cost : {GameManager.allTrap[trap].cost}\n";
+        string introduce = $"Introduce : {GameManager.allTrap[trap].information}";
+
+
+        trap_Introduce.text = trapName + cost + introduce;
+
+    }
+
     // プレビュー中の Trap
     private GameObject choseTrap;
     // Trap 設置 Coroutine
@@ -208,6 +222,7 @@ public class HunterConTrollerPad : MonoBehaviour
         GameObject targetTrap = Instantiate(TarpObject(trapName), cursorPos, TarpObject(trapName).transform.rotation);
         // TrapPlacer を取得またはアタッチ
         TrapPlacer placer = targetTrap.GetComponent<TrapPlacer>();
+        TrapIntroduce(trapName);
 
         if (placer == null)
         {
@@ -276,6 +291,7 @@ public class HunterConTrollerPad : MonoBehaviour
     public void HunterSwitch(Player targetPlayer)
     {
         CanUseTrapInit(targetPlayer.hunter.backpack.trapsPack);
+        trap_Introduce.text = "";
         RecoveryInit();
         TrapRingsUpdate();
         //hunterCursor.Init(this);
@@ -284,13 +300,7 @@ public class HunterConTrollerPad : MonoBehaviour
 
     public void HunterInit()
     {
-        //List<TrapName> choseTraps = new List<TrapName>() { TrapName.Spikes, TrapName.FallRock, TrapName.Boom, TrapName.JumpPad, TrapName.Spikes };
-        //CanUseTrapInit(choseTraps);
-        RecoveryInit();
-        TrapRingsUpdate();
         hunterCursor.Init(this);
-
-        timeAndProgressBar.ProgressBarInit();
     }
 
     private void Start()
@@ -316,6 +326,11 @@ public class HunterConTrollerPad : MonoBehaviour
         //    UseCost(TrapName.JumpPad);
         //}
 
+        if (test)
+        {
+            CreateTrap(TrapName.FallRock);
+            test = false;
+        }
     }
 
 

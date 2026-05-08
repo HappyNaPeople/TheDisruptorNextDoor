@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 715b9276345bd734aa2fb767ac6156c3
+guid: cc32fac06fae1254899401281eee43e1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4760391568950499828
-    second: WOODS - Second_0
+      213: 53766330646598468
+    second: "ChatGPT Image 2026\u5E745\u67082\u65E5 \u4E0B\u534803_57_59_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 10
+  spritePixelsToUnits: 800
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -96,30 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WOODS - Second_0
+      name: "ChatGPT Image 2026\u5E745\u67082\u65E5 \u4E0B\u534803_57_59_0"
       rect:
         serializedVersion: 2
-        x: 0
+        x: 11
         y: 0
-        width: 512
-        height: 288
+        width: 1502
+        height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4f91f0b09ee401240800000000000000
-      internalID: 4760391568950499828
+      spriteID: 443111f51340fb000800000000000000
+      internalID: 53766330646598468
       vertices: []
       indices: 
       edges: []
@@ -138,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      WOODS - Second_0: 4760391568950499828
+      "ChatGPT Image 2026\u5E745\u67082\u65E5 \u4E0B\u534803_57_59_0": 53766330646598468
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
