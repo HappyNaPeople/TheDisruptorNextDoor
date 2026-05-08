@@ -1,13 +1,22 @@
 fileFormatVersion: 2
-guid: d950ea8fd19a28a4cb70a331b55377b9
+guid: 53ab122e6e7dd434092c1bfc62150049
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2819053837772908070
-    second: Runner_Punch_0
+      213: -3896374290328277179
+    second: Runner_Jump_0
   - first:
-      213: -9076715453052059103
-    second: Runner_Punch_1
+      213: 7496472619919262101
+    second: Runner_Jump_1
+  - first:
+      213: -4261318085194549502
+    second: Runner_Jump_2
+  - first:
+      213: -4541661875170051600
+    second: Runner_Jump_3
+  - first:
+      213: -2180716739700762395
+    second: Runner_Jump_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,10 +60,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 500
+  spritePixelsToUnits: 300
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -116,13 +125,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Runner_Punch_0
+      name: Runner_Jump_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 593
-        height: 811
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ad918d47875b0e8d0800000000000000
-      internalID: -2819053837772908070
+      spriteID: 54fa4011a3c4de9c0800000000000000
+      internalID: -3896374290328277179
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Runner_Punch_1
+      name: Runner_Jump_1
       rect:
         serializedVersion: 2
-        x: 593
+        x: 512
         y: 0
-        width: 593
-        height: 811
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,8 +162,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 122888dc267090280800000000000000
-      internalID: -9076715453052059103
+      spriteID: 591caba3122d80860800000000000000
+      internalID: 7496472619919262101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Runner_Jump_2
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 207f70967c1ccd4c0800000000000000
+      internalID: -4261318085194549502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Runner_Jump_3
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f9fd885696c8f0c0800000000000000
+      internalID: -4541661875170051600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Runner_Jump_4
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e8536edda98cb1e0800000000000000
+      internalID: -2180716739700762395
       vertices: []
       indices: 
       edges: []
@@ -163,7 +238,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 711fc316f37a0cd40b26beaf035ec6cc
+    spriteID: 7de3fa86bb244dd49814c3d693428873
     internalID: 0
     vertices: []
     indices: 
@@ -173,10 +248,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":1.0},"gridSpriteSize":{"x":593.0,"y":811.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":5.0,"y":1.0},"gridSpriteSize":{"x":512.0,"y":512.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Runner_Punch_0: -2819053837772908070
-      Runner_Punch_1: -9076715453052059103
+      Runner_Jump_0: -3896374290328277179
+      Runner_Jump_1: 7496472619919262101
+      Runner_Jump_2: -4261318085194549502
+      Runner_Jump_3: -4541661875170051600
+      Runner_Jump_4: -2180716739700762395
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

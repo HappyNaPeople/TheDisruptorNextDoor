@@ -1,28 +1,25 @@
 fileFormatVersion: 2
-guid: 79515424a74f2f348ac891713399a121
+guid: 51eee35346e44af4da8bb4f7380df523
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4888822198817224378
-    second: Runner_Damage_0
+      213: 7868043805054042142
+    second: Runner_Die_0
   - first:
-      213: -1024528288895101099
-    second: Runner_Damage_1
+      213: 7821938948722720864
+    second: Runner_Die_1
   - first:
-      213: -5405884807935135338
-    second: Runner_Damage_2
+      213: 8962674288263827611
+    second: Runner_Die_2
   - first:
-      213: -2202286235523893408
-    second: Runner_Damage_3
+      213: -6237851319110204665
+    second: Runner_Die_3
   - first:
-      213: -3447344516164302796
-    second: Runner_Damage_4
+      213: 7424161637879737046
+    second: Runner_Die_4
   - first:
-      213: 1580785758200788690
-    second: Runner_Damage_5
-  - first:
-      213: 7162599326212250524
-    second: Runner_Damage_6
+      213: -6651552971317227242
+    second: Runner_Die_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -66,10 +63,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 500
+  spritePixelsToUnits: 300
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -131,79 +128,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Runner_Damage_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 814
-        width: 582
-        height: 814
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ab67b8243e598d340800000000000000
-      internalID: 4888822198817224378
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Runner_Damage_1
-      rect:
-        serializedVersion: 2
-        x: 582
-        y: 814
-        width: 582
-        height: 814
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 557911e03f428c1f0800000000000000
-      internalID: -1024528288895101099
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Runner_Damage_2
-      rect:
-        serializedVersion: 2
-        x: 1164
-        y: 814
-        width: 582
-        height: 814
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6917856a8607af4b0800000000000000
-      internalID: -5405884807935135338
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Runner_Damage_3
+      name: Runner_Die_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 582
-        height: 814
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -212,20 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 067bdd54658ef61e0800000000000000
-      internalID: -2202286235523893408
+      spriteID: e10857d6728e03d60800000000000000
+      internalID: 7868043805054042142
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Runner_Damage_4
+      name: Runner_Die_1
       rect:
         serializedVersion: 2
-        x: 582
+        x: 512
         y: 0
-        width: 582
-        height: 814
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -234,20 +165,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 438c2a76d629820d0800000000000000
-      internalID: -3447344516164302796
+      spriteID: 060096d080c1d8c60800000000000000
+      internalID: 7821938948722720864
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Runner_Damage_5
+      name: Runner_Die_2
       rect:
         serializedVersion: 2
-        x: 1164
+        x: 1024
         y: 0
-        width: 582
-        height: 814
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -256,8 +187,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2d6fd8f854410f510800000000000000
-      internalID: 1580785758200788690
+      spriteID: b901e7567c0d16c70800000000000000
+      internalID: 8962674288263827611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Runner_Die_3
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7030cba5643be69a0800000000000000
+      internalID: -6237851319110204665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Runner_Die_4
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6da67ecbcabe70760800000000000000
+      internalID: 7424161637879737046
       vertices: []
       indices: 
       edges: []
@@ -266,7 +241,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 0355baf99a7618f43b250c75eb5cf045
+    spriteID: 14190055749cd0c4fb1ab3c3a196e6c3
     internalID: 0
     vertices: []
     indices: 
@@ -276,14 +251,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":2.0},"gridSpriteSize":{"x":582.0,"y":814.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":5.0,"y":1.0},"gridSpriteSize":{"x":512.0,"y":512.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Runner_Damage_0: 4888822198817224378
-      Runner_Damage_1: -1024528288895101099
-      Runner_Damage_2: -5405884807935135338
-      Runner_Damage_3: -2202286235523893408
-      Runner_Damage_4: -3447344516164302796
-      Runner_Damage_5: 1580785758200788690
+      Runner_Die_0: 7868043805054042142
+      Runner_Die_1: 7821938948722720864
+      Runner_Die_2: 8962674288263827611
+      Runner_Die_3: -6237851319110204665
+      Runner_Die_4: 7424161637879737046
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 290f1e879793a1c44b2a3c3a296b2fa0
+guid: 687ec90e19d3dc3459321f9920985910
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7861996746061229693
-    second: Runner_Run_0
-  - first:
-      213: 2163593703166577154
-    second: Runner_Run_1
+      213: -927056687744691198
+    second: Runner_Idle_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 500
+  spritePixelsToUnits: 300
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -116,45 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Runner_Run_0
+      name: Runner_Idle_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 583
-        height: 811
+        x: 166
+        y: 39
+        width: 183
+        height: 440
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d7ea14ac26c6b1d60800000000000000
-      internalID: 7861996746061229693
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Runner_Run_1
-      rect:
-        serializedVersion: 2
-        x: 583
-        y: 0
-        width: 583
-        height: 811
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 20a04838201a60e10800000000000000
-      internalID: 2163593703166577154
+      spriteID: 204d350bade6223f0800000000000000
+      internalID: -927056687744691198
       vertices: []
       indices: 
       edges: []
@@ -163,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 03ed318b1da11b24491956e5c74c8238
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -171,12 +146,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":1.0},"gridSpriteSize":{"x":583.0,"y":811.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      Runner_Run_0: 7861996746061229693
-      Runner_Run_1: 2163593703166577154
+      Runner_Idle_0: -927056687744691198
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
