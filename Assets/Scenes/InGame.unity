@@ -31703,6 +31703,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4617570943559668279, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1.7066667
+      objectReference: {fileID: 0}
+    - target: {fileID: 4617570943559668279, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.7083334
+      objectReference: {fileID: 0}
     - target: {fileID: 4719147811980597759, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -31731,6 +31739,10 @@ PrefabInstance:
       propertyPath: hitFXPrefab
       value: 
       objectReference: {fileID: 6588768198106744831, guid: b743c5f95f78ef746820477e416e77c8, type: 3}
+    - target: {fileID: 5424164377914508438, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
+      propertyPath: dustFXPrefab
+      value: 
+      objectReference: {fileID: 4115224228455460175, guid: 58f00041dd3d4de45a77ace57e3cd728, type: 3}
     - target: {fileID: 5424164377914508438, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
       propertyPath: isInvincible
       value: 0

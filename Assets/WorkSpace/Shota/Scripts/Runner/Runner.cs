@@ -25,11 +25,13 @@ public class Runner : MonoBehaviour
     public float punchDamage = 5f;
 
     [Header("エフェクト")]
+    public GameObject dustFXPrefab;
     public GameObject hitFXPrefab;
     public GameObject dieFXPrefab;
     public Material dissolveMat;
     public float dieFXDuration = 1f;
     public float spawnFXDuration = 1f;
+
 
     public enum PlayerState
     {
@@ -443,5 +445,10 @@ public class Runner : MonoBehaviour
         {
             dissolveMat.SetFloat("_Dissolve", 0f);
         }
+    }
+
+    public void SpawnDustEffect()
+    {
+        Instantiate(dustFXPrefab, transform.position - new Vector3(0f, 0.6f), Quaternion.identity);
     }
 }
