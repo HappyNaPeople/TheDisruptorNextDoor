@@ -19,10 +19,17 @@ public class Runner : MonoBehaviour
     public float inAirDamping = 5f;
     public Vector2 attackBoxOffset = Vector2.zero;
     public Vector2 attackBoxSize = Vector2.zero;
+
     
     [Tooltip("パンチの威力（罠の寿命を何秒削るか）")]
     public float punchDamage = 5f;
 
+    [Header("エフェクト")]
+    public GameObject hitFXPrefab;
+    public GameObject dieFXPrefab;
+    public Material dissolveMat;
+    public float dieFXDuration = 1f;
+    public float spawnFXDuration = 1f;
 
     public enum PlayerState
     {
@@ -146,10 +153,13 @@ public class Runner : MonoBehaviour
         }
     }
 
-    public void Death()
+    public void Death(Vector2? hitPos = null)
     {
         _animator.SetTrigger("Hurt");
         if (isInvincible) return;
+
+        Vector3 spawnPos = hitPos != null ? (Vector3)hitPos : transform.position;
+        Instantiate(hitFXPrefab, spawnPos, Quaternion.identity);
 
         ChangeState(PlayerState.Dead);
         _velocity = Vector2.zero;
@@ -382,5 +392,56 @@ public class Runner : MonoBehaviour
         return offset;
     }
 
-    
+    public void StartDieEffect()
+    {
+        StartCoroutine(DieEffect());
+    }
+
+    IEnumerator DieEffect()
+    {
+        var time = 0f;
+
+        Transform fxTrans = Instantiate(dieFXPrefab, transform.position, Quaternion.identity).transform;
+        fxTrans.Translate(0f, -0.5f, 0f);
+
+        while(time < dieFXDuration)
+        {
+            var dissolve = time / dieFXDuration;
+            dissolveMat.SetFloat("_Dissolve", dissolve);
+            
+            time += Time.deltaTime;
+            yield return null;
+        }
+        dissolveMat.SetFloat("_Dissolve", 1f);
+    }
+
+    public void StartSpawnEffect()
+    {
+        StartCoroutine(SpawnEffect());
+    }
+
+    IEnumerator SpawnEffect()
+    {
+        var time = 0f;
+
+        while (time < spawnFXDuration)
+        {
+            var dissolve = 1f - (time / spawnFXDuration);
+            dissolveMat.SetFloat("_Dissolve", dissolve);
+
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+        dissolveMat.SetFloat("_Dissolve", 0f);
+    }
+
+
+    private void OnDisable()
+    {
+        if(dissolveMat != null)
+        {
+            dissolveMat.SetFloat("_Dissolve", 0f);
+        }
+    }
 }

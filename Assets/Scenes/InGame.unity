@@ -31711,10 +31711,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5205268739818765375, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a5d08cb022f5f4143ae18f3c1be57ffa, type: 2}
     - target: {fileID: 5424164377914508438, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5424164377914508438, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
+      propertyPath: dieFXPrefab
+      value: 
+      objectReference: {fileID: 3549599694512939403, guid: 63606f26ac9b7c64e87da27aff551b2c, type: 3}
+    - target: {fileID: 5424164377914508438, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
+      propertyPath: dissolveMat
+      value: 
+      objectReference: {fileID: 2100000, guid: a5d08cb022f5f4143ae18f3c1be57ffa, type: 2}
+    - target: {fileID: 5424164377914508438, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
+      propertyPath: hitFXPrefab
+      value: 
+      objectReference: {fileID: 6588768198106744831, guid: b743c5f95f78ef746820477e416e77c8, type: 3}
     - target: {fileID: 5424164377914508438, guid: 5b629eb86ecd30a46977946e47c2b273, type: 3}
       propertyPath: isInvincible
       value: 0
@@ -32249,6 +32265,10 @@ PrefabInstance:
       propertyPath: hunterCamera
       value: 
       objectReference: {fileID: 1222703507}
+    - target: {fileID: 7795630294435251359, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
+      propertyPath: trap_Introduce
+      value: 
+      objectReference: {fileID: 2109887613}
     - target: {fileID: 7811065571877270400, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
       propertyPath: m_Layer
       value: 15
@@ -32302,6 +32322,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
+--- !u!114 &2109887613 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1248306803894040466, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
+  m_PrefabInstance: {fileID: 2109887612}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
