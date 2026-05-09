@@ -211,7 +211,7 @@ public abstract class Trap : MonoBehaviour
         {
             if (collision.TryGetComponent<Runner>(out var runner))
             {
-                runner.Death();
+                runner.Death(collision.ClosestPoint(transform.position));
             }
         }
     }
