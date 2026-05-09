@@ -145,7 +145,7 @@ public abstract class Trap : MonoBehaviour
         GameObject spawnedEffect = null;
         if (setupEffectPrefab != null)
         {
-            spawnedEffect = Instantiate(setupEffectPrefab, transform.position, Quaternion.identity, transform);
+            spawnedEffect = Instantiate(setupEffectPrefab, transform.position, Quaternion.identity);
         }
 
         // 指定時間待機
@@ -160,11 +160,7 @@ public abstract class Trap : MonoBehaviour
             }
         }
 
-        // セットアップ完了時にエフェクトを削除（バッファ時間を設ける）
-        if (spawnedEffect != null)
-        {
-            Destroy(spawnedEffect, setupEffectBuffer);
-        }
+        // ※エフェクト自体が自律的に消失するため、ここでのDestroyは削除しました
 
         // セットアップ完了時の処理を呼び出し
         OnSetupComplete();

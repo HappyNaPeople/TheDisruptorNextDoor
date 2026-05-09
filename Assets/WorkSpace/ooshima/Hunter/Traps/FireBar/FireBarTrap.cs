@@ -87,7 +87,7 @@ public class FireBarTrap : Trap // InstallationTrapではなくTrapを継承し�
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isSetup) return;
 
@@ -95,6 +95,10 @@ public class FireBarTrap : Trap // InstallationTrapではなくTrapを継承し�
         if (IsGameObjectLayer(collision, UseLayerName.runnerLayer))
         {
             Debug.Log("FireBar Hit Runner");
+            if (collision.TryGetComponent<Runner>(out var runner))
+            {
+                runner.Death();
+            }
         }
     }
 
