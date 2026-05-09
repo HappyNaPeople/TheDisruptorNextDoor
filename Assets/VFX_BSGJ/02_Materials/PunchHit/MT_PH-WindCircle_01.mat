@@ -20,12 +20,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MT_PH-Hit_01
+  m_Name: MT_PH-WindCircle_01
   m_Shader: {fileID: 4800000, guid: 1bc5c6a70411243779ce486a98012125, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _ALPHA_TRANSITION_BLEND_SECOND_TEX_MULTIPLY
   - _ALPHA_TRANSITION_MAP_MODE_2D
+  - _ALPHA_TRANSITION_MAP_SECOND_TEXTURE_MODE_2D
   - _BASE_MAP_MODE_2D
   - _DISSOLVE_TRANSITION_ENABLED
   - _EMISSION_AREA_ALL
@@ -48,7 +50,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaTransitionMap:
-        m_Texture: {fileID: 2800000, guid: 68fafd8b65b14ad448d1e8b1330aa9cf, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3ec28cf26b7875e48996d9607ad4c560, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AlphaTransitionMap2DArray:
@@ -60,7 +62,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AlphaTransitionMapSecondTexture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 5e916755dacb9894b93949423a772f11, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AlphaTransitionMapSecondTexture2DArray:
@@ -213,7 +215,7 @@ Material:
     - _AlphaTransitionProgressCoord: 1
     - _AlphaTransitionProgressCoordSecondTexture: 0
     - _AlphaTransitionProgressSecondTexture: 0.5
-    - _AlphaTransitionSecondTextureBlendMode: 0
+    - _AlphaTransitionSecondTextureBlendMode: 2
     - _BaseMapChannel: 0
     - _BaseMapMirrorSampling: 0
     - _BaseMapMode: 0
@@ -255,7 +257,7 @@ Material:
     - _DepthFadeWidth: 1
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DissolveSharpness: 0
+    - _DissolveSharpness: 0.5
     - _DissolveSharpnessSecondTexture: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0

@@ -7,18 +7,19 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MT_PH-Glow_03
+  m_Name: MT_H-Hit_01
   m_Shader: {fileID: 4800000, guid: 1bc5c6a70411243779ce486a98012125, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHA_TRANSITION_MAP_MODE_2D
   - _BASE_MAP_MODE_2D
+  - _DISSOLVE_TRANSITION_ENABLED
   - _EMISSION_AREA_ALL
   - _EMISSION_COLOR_BASECOLOR
   - _EMISSION_MAP_MODE_2D
   - _PARALLAX_MAP_MODE_2D
-  - _TINT_COLOR_ENABLED
+  - _TINT_MAP_ENABLED
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -34,7 +35,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaTransitionMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 68fafd8b65b14ad448d1e8b1330aa9cf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AlphaTransitionMap2DArray:
@@ -58,7 +59,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 8d6eb10745c25464d84a0cbd16b0cacd, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap2DArray:
@@ -138,7 +139,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TintMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 7c5fe2ead659140488683c7995c8ffc8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TintMap2DArray:
@@ -170,7 +171,7 @@ Material:
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _AlphaTransitionMapChannelsX: 3
+    - _AlphaTransitionMapChannelsX: 0
     - _AlphaTransitionMapMode: 0
     - _AlphaTransitionMapOffsetXCoord: 0
     - _AlphaTransitionMapOffsetYCoord: 0
@@ -322,9 +323,9 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _TintAreaMode: 0
-    - _TintBlendRate: 1
+    - _TintBlendRate: 0
     - _TintBlendRateCoord: 0
-    - _TintColorMode: 0
+    - _TintColorMode: 1
     - _TintMap3DProgress: 0
     - _TintMap3DProgressCoord: 0
     - _TintMapOffsetXCoord: 0

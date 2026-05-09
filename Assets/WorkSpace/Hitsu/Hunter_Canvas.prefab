@@ -1840,7 +1840,6 @@ RectTransform:
   - {fileID: 4600267848077766800}
   - {fileID: 862520805385838765}
   - {fileID: 2862661269518293164}
-  - {fileID: 2914629994081686507}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1862,16 +1861,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HunterConTrollerPad
   hunterCamera: {fileID: 0}
   hunterCanvas: {fileID: 5889429878693099379}
-  hunterCursor: {fileID: 8003455897183878019}
+  hunterCursor: {fileID: 0}
   inputData: {fileID: 0}
   timeAndProgressBar: {fileID: 5017879408826037683}
   costImage: {fileID: 4543589613447937926}
   costSpriteRenderers:
   - {fileID: 2810099041161613646}
   - {fileID: 6404687373844335171}
-  costText: {fileID: 0}
   nowCostCanUse: 0
   trapRings: {fileID: 2999409494413805645}
+  trap_Introduce: {fileID: 0}
   test: 0
 --- !u!223 &5889429878693099379
 Canvas:
@@ -3841,88 +3840,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681cc26c2a5a14347859f8581da81c70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeAndProgressBar
---- !u!1001 &8041819467333570676
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 592748498099489160}
-    m_Modifications:
-    - target: {fileID: 5181550504975336351, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 5181550504975336351, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 5181550504975336351, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 5181550504975336351, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 288.53757
-      objectReference: {fileID: 0}
-    - target: {fileID: 5181550504975336351, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 88.76343
-      objectReference: {fileID: 0}
-    - target: {fileID: 5181550504975336351, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 180.59998
-      objectReference: {fileID: 0}
-    - target: {fileID: 5181550504975336351, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5181550504975336351, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5181550504975336351, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5181550504975336351, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5181550504975336351, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5181550504975336351, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5181550504975336351, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8563759113342165605, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-      propertyPath: m_Name
-      value: HunterCursor
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
---- !u!4 &2914629994081686507 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5181550504975336351, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-  m_PrefabInstance: {fileID: 8041819467333570676}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8003455897183878019 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 39323523425725431, guid: eea61c68bd4095b429418d24e802e6b5, type: 3}
-  m_PrefabInstance: {fileID: 8041819467333570676}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf95b4ad157ab264ea1414c69e65f19d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HunterCursor

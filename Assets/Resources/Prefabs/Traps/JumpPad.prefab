@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6379295504844528999}
   - component: {fileID: 6843121715872959641}
-  - component: {fileID: 3346834240279448763}
-  m_Layer: 0
+  - component: {fileID: 7494874558258352925}
+  m_Layer: 9
   m_Name: Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,14 +92,14 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!61 &3346834240279448763
+--- !u!61 &7494874558258352925
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6102147184664828741}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -126,7 +126,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0063042194, y: -0.005010605}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -136,7 +136,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.938043, y: 0.81637704}
+  m_Size: {x: 0.9, y: 0.8}
   m_EdgeRadius: 0
 --- !u!1 &8030758842932786858
 GameObject:
@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: -5651943367308466305}
   - component: {fileID: 6128461627673023924}
   - component: {fileID: 2537101781036851832}
+  - component: {fileID: 2655646903785660016}
   - component: {fileID: 131027204574124215}
   m_Layer: 0
   m_Name: JumpPad
@@ -327,6 +328,7 @@ MonoBehaviour:
   hp: 20
   defenseMultiplier: 1
   broken: 0
+  breakFXPrefab: {fileID: 7336312648318818739, guid: 000af903eb869b14baa68d7fb7cbfed1, type: 3}
 --- !u!114 &6128461627673023924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,9 +351,10 @@ MonoBehaviour:
   originGridPos: {x: 0, y: 0}
   setupDelay: 1
   setupEffectPrefab: {fileID: 2084822620439361114, guid: 4f3fa46c4e863b749a2d13d4db5e5231, type: 3}
+  setupEffectBuffer: 1
   isFallDone: 0
   pushForce: 30
-  boxPart: {fileID: 3346834240279448763}
+  boxPart: {fileID: 7494874558258352925}
 --- !u!61 &2537101781036851832
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -397,6 +400,52 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!61 &2655646903785660016
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8397655225760754249}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.0063042194, y: -0.005010605}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.1, y: 1.1}
+    newSize: {x: 0.73333335, y: 0.73333335}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.938043, y: 0.81637704}
   m_EdgeRadius: 0
 --- !u!50 &131027204574124215
 Rigidbody2D:

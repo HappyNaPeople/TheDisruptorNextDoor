@@ -110,6 +110,7 @@ MonoBehaviour:
   hp: 4
   defenseMultiplier: 1
   broken: 0
+  breakFXPrefab: {fileID: 7336312648318818739, guid: 000af903eb869b14baa68d7fb7cbfed1, type: 3}
 --- !u!114 &2098932519225000939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,11 +125,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChaseEnemyTrap
   trapName: 4
   cost: 0
+  trapSfxDates: []
   rb: {fileID: 7624651770658853353}
   trapCollider: {fileID: 1270979435120208615}
   isSetup: 0
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
+  setupDelay: 1
+  setupEffectPrefab: {fileID: 0}
+  setupEffectBuffer: 1
   maxSpeed: 5
   acceleration: 2
   turnSpeed: 90

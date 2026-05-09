@@ -16,13 +16,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: sprite-Bomb_01
       objectReference: {fileID: 0}
+    - target: {fileID: 2559458041739656006, guid: 964d692f0882cc147a3bf9deb09c5804, type: 3}
+      propertyPath: lengthInSec
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3054373836380509974, guid: 964d692f0882cc147a3bf9deb09c5804, type: 3}
       propertyPath: m_Name
       value: FX_Spawn-Bomb_01 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3291441289589147786, guid: 964d692f0882cc147a3bf9deb09c5804, type: 3}
+      propertyPath: stopAction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3291441289589147786, guid: 964d692f0882cc147a3bf9deb09c5804, type: 3}
+      propertyPath: lengthInSec
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5606169921545575084, guid: 964d692f0882cc147a3bf9deb09c5804, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802113734227522557, guid: 964d692f0882cc147a3bf9deb09c5804, type: 3}
+      propertyPath: lengthInSec
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8309040625912652527, guid: 964d692f0882cc147a3bf9deb09c5804, type: 3}
       propertyPath: m_LocalPosition.x

@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3724903025234255631
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
-  version: 10
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,14 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MT_PH-Hit_01
+  m_Name: MT_TB_Smoke_01
   m_Shader: {fileID: 4800000, guid: 1bc5c6a70411243779ce486a98012125, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHA_TRANSITION_MAP_MODE_2D
   - _BASE_MAP_MODE_2D
-  - _DISSOLVE_TRANSITION_ENABLED
+  - _BASE_SAMPLER_STATE_LINEAR_MIRROR
   - _EMISSION_AREA_ALL
   - _EMISSION_COLOR_BASECOLOR
   - _EMISSION_MAP_MODE_2D
@@ -36,7 +23,7 @@ Material:
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 1
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
   stringTagMap:
     RenderType: Transparent
@@ -48,7 +35,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaTransitionMap:
-        m_Texture: {fileID: 2800000, guid: 68fafd8b65b14ad448d1e8b1330aa9cf, type: 3}
+        m_Texture: {fileID: 2800000, guid: 97c0fd938272c4a4bb865fc0fcbc053e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AlphaTransitionMap2DArray:
@@ -72,7 +59,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: ef3bb556819ea1a4bb7ad00f0ab47b54, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap2DArray:
@@ -208,14 +195,14 @@ Material:
     - _AlphaTransitionMapSecondTextureRowCount: 1
     - _AlphaTransitionMapSecondTextureSliceCount: 4
     - _AlphaTransitionMapSliceCount: 4
-    - _AlphaTransitionMode: 2
-    - _AlphaTransitionProgress: 0
-    - _AlphaTransitionProgressCoord: 1
+    - _AlphaTransitionMode: 0
+    - _AlphaTransitionProgress: 0.5
+    - _AlphaTransitionProgressCoord: 0
     - _AlphaTransitionProgressCoordSecondTexture: 0
-    - _AlphaTransitionProgressSecondTexture: 0.5
+    - _AlphaTransitionProgressSecondTexture: 0
     - _AlphaTransitionSecondTextureBlendMode: 0
     - _BaseMapChannel: 0
-    - _BaseMapMirrorSampling: 0
+    - _BaseMapMirrorSampling: 1
     - _BaseMapMode: 0
     - _BaseMapOffsetXCoord: 0
     - _BaseMapOffsetYCoord: 0
@@ -247,7 +234,7 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _ColorCorrectionMode: 0
-    - _Cull: 0
+    - _Cull: 2
     - _Cutoff: 0.5
     - _DepthFadeEnabled: 0
     - _DepthFadeFar: 10
@@ -256,7 +243,7 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DissolveSharpness: 0
-    - _DissolveSharpnessSecondTexture: 0
+    - _DissolveSharpnessSecondTexture: 0.5
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EmissionAreaType: 1
@@ -389,3 +376,16 @@ Material:
     - _TintMapRotationOffsets: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!114 &5195507572644170579
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
+  version: 10

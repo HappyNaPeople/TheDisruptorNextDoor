@@ -25,6 +25,7 @@ public class Runner : MonoBehaviour
     public float punchDamage = 5f;
 
     [Header("エフェクト")]
+    public GameObject punchHitFXPrefab;
     public GameObject dustFXPrefab;
     public GameObject hitFXPrefab;
     public GameObject dieFXPrefab;
@@ -150,7 +151,7 @@ public class Runner : MonoBehaviour
         {
             if (hit.TryGetComponent<TrapHp>(out var trapHp))
             {
-                trapHp.TakeDamage(punchDamage, hit.ClosestPoint(transform.position));
+                trapHp.TakeDamage(punchDamage, hit.ClosestPoint(transform.position), punchHitFXPrefab, transform.localScale.x > 0);
             }
         }
     }

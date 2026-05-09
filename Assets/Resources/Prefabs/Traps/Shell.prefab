@@ -110,6 +110,7 @@ MonoBehaviour:
   hp: 10
   defenseMultiplier: 1
   broken: 0
+  breakFXPrefab: {fileID: 7336312648318818739, guid: 000af903eb869b14baa68d7fb7cbfed1, type: 3}
 --- !u!70 &1270979435120208615
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -161,12 +162,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShellTrap
   trapName: 6
   cost: 0
+  trapSfxDates: []
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
-  fadeInDuration: 1
+  setupDelay: 1
+  setupEffectPrefab: {fileID: 0}
+  setupEffectBuffer: 1
   fallSpeed: 8
   moveSpeed: 3
 --- !u!50 &7624651770658853353

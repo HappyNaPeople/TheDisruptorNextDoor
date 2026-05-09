@@ -20,11 +20,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MT_PH-Hit_01
+  m_Name: MT_PH-Base_01
   m_Shader: {fileID: 4800000, guid: 1bc5c6a70411243779ce486a98012125, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _ALPHAMODULATE_ENABLED
   - _ALPHA_TRANSITION_MAP_MODE_2D
   - _BASE_MAP_MODE_2D
   - _DISSOLVE_TRANSITION_ENABLED
@@ -48,7 +49,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaTransitionMap:
-        m_Texture: {fileID: 2800000, guid: 68fafd8b65b14ad448d1e8b1330aa9cf, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9bce0d9a041b59242b025e05bd8ecf78, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AlphaTransitionMap2DArray:
@@ -209,8 +210,8 @@ Material:
     - _AlphaTransitionMapSecondTextureSliceCount: 4
     - _AlphaTransitionMapSliceCount: 4
     - _AlphaTransitionMode: 2
-    - _AlphaTransitionProgress: 0
-    - _AlphaTransitionProgressCoord: 1
+    - _AlphaTransitionProgress: 0.5
+    - _AlphaTransitionProgressCoord: 0
     - _AlphaTransitionProgressCoordSecondTexture: 0
     - _AlphaTransitionProgressSecondTexture: 0.5
     - _AlphaTransitionSecondTextureBlendMode: 0
@@ -240,9 +241,9 @@ Material:
     - _BaseMapToneShadows: 0.25
     - _BaseMapToneShadowsCoord: 0
     - _Blend: 0
-    - _BlendDst: 10
+    - _BlendDst: 0
     - _BlendModePreserveSpecular: 1
-    - _BlendSrc: 5
+    - _BlendSrc: 2
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -356,7 +357,7 @@ Material:
     - _TintRimProgressCoord: 0
     - _TintRimSharpness: 0.5
     - _TintRimSharpnessCoord: 0
-    - _TransparentBlendMode: 0
+    - _TransparentBlendMode: 2
     - _VertexAlphaMode: 0
     - _VertexDeformationBaseValue: 0
     - _VertexDeformationEnabled: 0

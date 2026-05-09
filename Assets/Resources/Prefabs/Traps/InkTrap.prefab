@@ -137,6 +137,7 @@ MonoBehaviour:
   hp: 10
   defenseMultiplier: 1
   broken: 0
+  breakFXPrefab: {fileID: 7336312648318818739, guid: 000af903eb869b14baa68d7fb7cbfed1, type: 3}
 --- !u!50 &5942580591094505972
 Rigidbody2D:
   serializedVersion: 5

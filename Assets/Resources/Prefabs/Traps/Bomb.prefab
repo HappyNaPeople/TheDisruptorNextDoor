@@ -51,6 +51,7 @@ MonoBehaviour:
   hp: 10
   defenseMultiplier: 1
   broken: 0
+  breakFXPrefab: {fileID: 7336312648318818739, guid: 000af903eb869b14baa68d7fb7cbfed1, type: 3}
 --- !u!114 &2130280416294361403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,6 +74,7 @@ MonoBehaviour:
   originGridPos: {x: 0, y: 0}
   setupDelay: 1
   setupEffectPrefab: {fileID: 2165670710305000279, guid: 374b1e7c5a7067a4da622e510b61c206, type: 3}
+  setupEffectBuffer: 1
   activationType: 0
   fallSpeed: 8
   waitForBoom: 2
