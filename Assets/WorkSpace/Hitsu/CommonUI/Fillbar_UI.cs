@@ -1,4 +1,8 @@
 using UnityEngine;
+using static Runner;
+
+enum HardTrigger { Dead, Punch }
+enum HardBool { IsRun }
 
 public class Fillbar_UI : MonoBehaviour
 {
@@ -22,6 +26,7 @@ public class Fillbar_UI : MonoBehaviour
     public void Init()
     {
         offset = Mathf.Abs(start.localPosition.x - end.localPosition.x);
+        _runner_Animator = _runner.gameObject.GetComponent<Animator>();
     }
     public void Fill(float distance)
     {
@@ -29,5 +34,26 @@ public class Fillbar_UI : MonoBehaviour
         m_fillBar_Front.SetFloat("_Fillup", distance);
     }
 
+
+    public Animator fillBar_Head_Animator;
+    private Runner _runner => InGame.Instance.runner;
+    private Animator _runner_Animator;
+    private bool _isRunning => _runner_Animator.GetBool("IsRunning");
+    private bool isDead = false;
+
+
+    private void Update()
+    {
+        if (fillBar_Head_Animator.GetBool(HardBool.IsRun.ToString()) != _isRunning) fillBar_Head_Animator.SetBool(HardBool.IsRun.ToString(), _isRunning);
+
+        if (_runner.currentState == PlayerState.Dead && !isDead)
+        {
+            isDead = true;
+            fillBar_Head_Animator.SetTrigger(HardTrigger.Dead.ToString());
+        }
+        else if (_runner.currentState != PlayerState.Dead && isDead) isDead = false;
+
+
+    }
 
 }
