@@ -1,16 +1,18 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 public class CommonUI : MonoBehaviour
 {
     [Header("Common Object")]
     public Timer_UI timer;
-    public Fillbar_UI fillbar;
+    public Fillbar_UI fillBar;
     public WalkDistence_UI walkDistence;
 
     [Header("Path Animator")]
     public Animator[] checkPointAnimator;
+    public Animator header;
     private List<Transform> _checkPoints => InGame.Instance.checkPoints;
 
 
@@ -45,7 +47,7 @@ public class CommonUI : MonoBehaviour
             if(fillup < InGame.Instance.percentOfPassedDistance)
             {
                 fillup = InGame.Instance.percentOfPassedDistance;
-                fillbar.Fill(fillup);
+                fillBar.Fill(fillup);
             }
             yield return null;
 
@@ -54,7 +56,11 @@ public class CommonUI : MonoBehaviour
     private IEnumerator WalkDistenceWatcher()
     {
         int distence = 0;
-        yield return new WaitUntil(() => InGame.Instance.startingPoint != null && InGame.Instance.goal != null);
+        if(InGame.Instance.startingPoint == null || InGame.Instance.goal == null)
+        {
+            Debug.LogError($"startingPoint=={InGame.Instance.startingPoint == null}, Goal=={InGame.Instance.goal == null}");
+            yield break;
+        }
 
         while (true)
         {
@@ -67,7 +73,6 @@ public class CommonUI : MonoBehaviour
 
         }
     }
-
     private IEnumerator CheckPointWatcher()
     {
         yield return null;
@@ -97,20 +102,17 @@ public class CommonUI : MonoBehaviour
             yield return null;
         }
     }
-
-
-
     public void CommonUIInit()
     {
-        if(timer==null|| fillbar==null|| walkDistence == null)
+        if(timer==null|| fillBar==null|| walkDistence == null)
         {
-            Debug.Log("Part Lost");
+            Debug.LogError("Part Lost");
         }
 
-        fillbar.Init();
 
-
+        fillBar.Init();
         StopAllCoroutines();
+
         timerWatcher = StartCoroutine(TimerWatcher());
         fillbarWatcher = StartCoroutine(FillbarWatcher());
         walkDistenceWatcher = StartCoroutine(WalkDistenceWatcher());
@@ -131,9 +133,6 @@ public class CommonUI : MonoBehaviour
         {
             test = false;
             checkPointAnimator[1].SetBool($"Through", true);
-
-
-
         }
 
 

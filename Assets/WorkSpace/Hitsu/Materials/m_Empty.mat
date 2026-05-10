@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: m_Slider_Front
-  m_Shader: {fileID: -6465566751694194690, guid: 349502156c11ffc4988c7fd6b7769720, type: 3}
+  m_Name: m_Empty
+  m_Shader: {fileID: -6465566751694194690, guid: fdc3d8cabca38164da94fc89cde14788, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -49,7 +49,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: f05547a31a2bb3a4f9d80ef3a2dafbd9, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -64,39 +64,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_0c815e9212864aa09a93bfdfc2f3c6ef_Texture_1_Texture2D:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_21c4254c3948455a829929f650207868_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: f05547a31a2bb3a4f9d80ef3a2dafbd9, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_80e55cc24c2942f58fbf7582b3e69df6_Texture_1_Texture2D:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_9d8f3b1d91c04aa9bcb984d157cb1ba0_Texture_1_Texture2D:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_a26e007e3c5743388cb0b44fb79b1e95_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: f05547a31a2bb3a4f9d80ef3a2dafbd9, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_a828336531c94c20b3a4c685cc90c5f9_Texture_1_Texture2D:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_c0b6aa8e6b5c4c88bc83019b9b92d824_Texture_1_Texture2D:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_dc774fc2ff4f49f18704b976af7782bd_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: f05547a31a2bb3a4f9d80ef3a2dafbd9, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_f0e0b56e2e4b4a23a323b448ad208930_Texture_1_Texture2D:
         m_Texture: {fileID: 2800000, guid: f05547a31a2bb3a4f9d80ef3a2dafbd9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -133,15 +101,13 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _Fillup: 0
-    - _Fract: 0.5
+    - _Fillup: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
@@ -150,38 +116,19 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _TitleSize: 1
     - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
-    - _centrol: 0.45
-    - _col: 1
-    - _row: 15
-    - _sprictSize: 2.7
-    - _thickness: 0.5
     m_Colors:
     - White: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _TileOffset: {r: 0, g: 0.875, b: 0, a: 0}
-    - _TileSize: {r: 0.125, g: 0.125, b: 0, a: 0}
-    - _Tiling: {r: 15, g: 1, b: 0, a: 0}
-    - _Vector2: {r: 0, g: 0, b: 0, a: 0}
-    - _color00: {r: 0, g: 0, b: 0, a: 1}
-    - _color01: {r: 0, g: 0, b: 0, a: 1}
-    - _color02: {r: 0, g: 0, b: 0, a: 1}
-    - _color03: {r: 0, g: 0, b: 0, a: 1}
-    - _color04: {r: 0, g: 0, b: 0, a: 1}
-    - _color05: {r: 0, g: 0, b: 0, a: 1}
-    - _color06: {r: 0, g: 0, b: 0, a: 1}
-    - _color07: {r: 0, g: 0, b: 0, a: 1}
-    - _color_fill: {r: 1, g: 1, b: 1, a: 1}
-    - _color_nonFill: {r: 1, g: 1, b: 1, a: 1}
+    - _Tiling: {r: 2, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &8534891414032968132
+--- !u!114 &1532924574768702650
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

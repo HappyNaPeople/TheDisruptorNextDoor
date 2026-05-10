@@ -21,7 +21,7 @@ public class Fillbar_UI : MonoBehaviour
 
     public void Init()
     {
-        offset = Mathf.Abs(start.position.x - end.position.x);
+        offset = Mathf.Abs(start.localPosition.x - end.localPosition.x);
     }
     public void Fill(float distance)
     {

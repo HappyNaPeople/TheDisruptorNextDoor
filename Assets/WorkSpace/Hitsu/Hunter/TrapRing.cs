@@ -109,26 +109,35 @@ public class TrapRing : MonoBehaviour
     [Header("Trap Button")]
     public TrapUi[] trapUi;
     private List<RingTrap> ringTraps = new List<RingTrap>();
+
     public int choseTrap;
     public GameObject joyStick;
+    private bool isInputActive = false;
+    private int lastDir = -1;
 
-
-
-    int lastDir = -1;
-    bool isInputActive = false;
     public void ControllerChoose(Vector2 input)
     {
         if (input.magnitude < 0.5f)
         {
-
-            if (isInputActive && lastDir != -1 && ringTraps[lastDir].trap != TrapName.None && ringTraps[lastDir].stage == RingTrap.Stage.On)
+            if (choseTrap != lastDir && lastDir >= 0 && lastDir < ringTraps.Count) 
             {
-                HunterConTrollerPad.Instance.CreateTrap(ringTraps[lastDir].trap);
+                choseTrap = lastDir;
+                UIUpdate();
+                HunterConTrollerPad.Instance.CreateTrap(ringTraps[choseTrap].trap);
             }
-            else if(isInputActive && lastDir != -1 && (ringTraps[lastDir].trap == TrapName.None|| ringTraps[lastDir].stage == RingTrap.Stage.Off))
+            else
             {
                 UIUpdate(-1);
             }
+                //if (isInputActive && lastDir != -1 && ringTraps[lastDir].trap != TrapName.None && ringTraps[lastDir].stage == RingTrap.Stage.On)
+                //{
+                //    HunterConTrollerPad.Instance.CreateTrap(ringTraps[lastDir].trap);
+                //}
+                //else
+                //if (isInputActive && lastDir != -1 && (ringTraps[lastDir].trap == TrapName.None|| ringTraps[lastDir].stage == RingTrap.Stage.Off))
+                //{
+                //    
+                //}
 
             isInputActive = false;
             lastDir = -1;
@@ -152,8 +161,7 @@ public class TrapRing : MonoBehaviour
         {
 
             lastDir = targetNumber;
-            choseTrap = lastDir;
-            UIUpdate();
+            UIUpdate(lastDir);
         }
     }
 
@@ -308,33 +316,5 @@ public class TrapRing : MonoBehaviour
     }
 
     public void RingTurnTo(RingTurn ringTurn) => RollTurn(ringTurn);
-
-
-    public bool test;
-
-    private void Start()
-    {
-       // Init(choseTraps);
-    }
-
-    private void Update()
-    {
-
-        //if (Keyboard.current.aKey.wasPressedThisFrame)
-        //{
-        //    RollTurn(RingTurn.Left);
-        //}
-        //if (Keyboard.current.dKey.wasPressedThisFrame)
-        //{
-        //    RollTurn(RingTurn.Right);
-        //}
-
-        //if (test)
-        //{
-        //    test = false;
-
-        //    RollTurn();
-        //}
-    }
 
 }

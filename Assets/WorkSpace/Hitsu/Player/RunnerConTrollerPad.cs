@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class RunnerConTrollerPad : MonoBehaviour
 {
-    public TimeAndProgressBar timeAndProgressBar;
+    public CommonUI commonUI;
 
     public void Init()
     {
-        timeAndProgressBar.ProgressBarInit();
+        commonUI.CommonUIInit();
     }
 
 

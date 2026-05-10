@@ -557,9 +557,17 @@ public class InGame : MonoBehaviour
         // Ready状態になるまで待機
         yield return new WaitUntil(() => gameStage == GameStage.Ready);
 
-        // 少し間を取る[演出から]
+        float cutSceneTimer = 0;
 
-        yield return new WaitForSeconds(5);
+        while (cutSceneTimer < 5.0f) 
+        {
+            cutSceneTimer += Time.deltaTime;
+            runner.gameObject.transform.position = startingPoint.position;
+            yield return null;
+        }
+
+        // 少し間を取る[演出から]
+        //yield return new WaitForSeconds(5);
 
         //[演出まで]
 
@@ -777,7 +785,6 @@ public class InGame : MonoBehaviour
         {
             Debug.LogWarning("Starting Point, Goal, Check Points someone is null");
         }
-
         TurnSwitch();
     }
 
@@ -797,19 +804,12 @@ public class InGame : MonoBehaviour
     }
 
     // デバッグ用
-    public bool test;
     private void Update()
     {
         if (Keyboard.current.pKey.wasPressedThisFrame)
         {
-            test = true;
-        }
-        if (test)
-        {
             TurnSwitch();
-            test = false;
         }
-
 
     }
 

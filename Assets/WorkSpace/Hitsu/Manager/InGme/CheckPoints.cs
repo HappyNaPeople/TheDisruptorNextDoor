@@ -13,6 +13,8 @@ public enum CheckPointIndex
 public class CheckPoints : MonoBehaviour
 {
     public CheckPointIndex checkPointIndex;
+    public GameObject effectPrefab;
+    private const float effectTime = 1.5f;
     public bool through;
 
     public void AnimationControl(bool isPlay)
@@ -26,6 +28,12 @@ public class CheckPoints : MonoBehaviour
         if (other.gameObject.layer == UseLayerName.runnerLayer && !through)
         {
             AnimationControl(true);
+            if (effectPrefab != null) 
+            {
+                GameObject effect = Instantiate(effectPrefab, transform.position, Quaternion.identity);
+                Destroy(effect, effectTime);
+
+            }
             InGame.Instance.PassCheckPoint(this.transform);
         }
     }
