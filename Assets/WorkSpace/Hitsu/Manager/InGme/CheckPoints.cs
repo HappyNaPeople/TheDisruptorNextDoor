@@ -14,7 +14,7 @@ public class CheckPoints : MonoBehaviour
 {
     public CheckPointIndex checkPointIndex;
     public GameObject effectPrefab;
-    private const float effectTime = 1.5f;
+    public float effectTime = 1.5f;
     public bool through;
 
     public void AnimationControl(bool isPlay)

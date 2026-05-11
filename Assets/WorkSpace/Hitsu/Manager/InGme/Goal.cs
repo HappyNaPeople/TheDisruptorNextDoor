@@ -3,7 +3,7 @@ using UnityEngine;
 public class Goal : MonoBehaviour
 {
     public GameObject effectPrefab;
-    private const float effectTime = 1.5f;
+    public float effectTime = 1.5f;
 
     void OnTriggerEnter2D(Collider2D other)
     {

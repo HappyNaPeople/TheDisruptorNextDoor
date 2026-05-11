@@ -210,58 +210,58 @@ public class HunterConTrollerPad : MonoBehaviour
     // Trap 設置 Coroutine
     private Coroutine createTrap;
 
-    private IEnumerator PutTrap(TrapName trapName)
-    {
-        // Prefab が存在しない場合は終了
-        if (TarpObject(trapName) == null)
-        {
-            Debug.Log("No Trap");
-            yield break;
-        }
-        // Trap を生成
-        GameObject targetTrap = Instantiate(TarpObject(trapName), cursorPos, TarpObject(trapName).transform.rotation);
-        // TrapPlacer を取得またはアタッチ
-        TrapPlacer placer = targetTrap.GetComponent<TrapPlacer>();
-        TrapIntroduce(trapName);
+    //private IEnumerator PutTrap(TrapName trapName)
+    //{
+    //    // Prefab が存在しない場合は終了
+    //    if (TarpObject(trapName) == null)
+    //    {
+    //        Debug.Log("No Trap");
+    //        yield break;
+    //    }
+    //    // Trap を生成
+    //    GameObject targetTrap = Instantiate(TarpObject(trapName), cursorPos, TarpObject(trapName).transform.rotation);
+    //    // TrapPlacer を取得またはアタッチ
+    //    TrapPlacer placer = targetTrap.GetComponent<TrapPlacer>();
+    //    TrapIntroduce(trapName);
 
-        if (placer == null)
-        {
-            // if (trapName == TrapName.BlackHole)
-            //     placer = targetTrap.AddComponent<WorldTrapPlacer>();
-            //else
-            if (trapName == TrapName.Spikes || trapName == TrapName.IceArea || trapName == TrapName.StickyArea)
-                placer = targetTrap.AddComponent<WallTrapPlacer>();
-            else
-                placer = targetTrap.AddComponent<StandardTrapPlacer>();
-        }
+    //    if (placer == null)
+    //    {
+    //        // if (trapName == TrapName.BlackHole)
+    //        //     placer = targetTrap.AddComponent<WorldTrapPlacer>();
+    //        //else
+    //        if (trapName == TrapName.Spikes || trapName == TrapName.IceArea || trapName == TrapName.StickyArea)
+    //            placer = targetTrap.AddComponent<WallTrapPlacer>();
+    //        else
+    //            placer = targetTrap.AddComponent<StandardTrapPlacer>();
+    //    }
 
-        placer.InitializePreview();
-        choseTrap = targetTrap;
+    //    placer.InitializePreview();
+    //    choseTrap = targetTrap;
 
-        // クリックされるまでマウス追従
-        while (!inputData.isPutPressed)
-        {
-            placer.UpdatePreviewPosition(cursorPos);
-            bool canPlacePreview = placer.ValidatePlacement();
-            placer.UpdatePreviewColor(canPlacePreview);
+    //    // クリックされるまでマウス追従
+    //    while (!inputData.isPutPressed)
+    //    {
+    //        placer.UpdatePreviewPosition(cursorPos);
+    //        bool canPlacePreview = placer.ValidatePlacement();
+    //        placer.UpdatePreviewColor(canPlacePreview);
 
-            yield return null;
-        }
+    //        yield return null;
+    //    }
 
-        bool canPlace = placer.ValidatePlacement();
-        if (canPlace)
-        {
-            placer.RestoreVisuals();
-            Trap trap = targetTrap.GetComponent<Trap>();
-            trap.Init();
-            trap.SetUp();
-            UseCost(trap.trapName);
-            Destroy(placer); // 設置後は不要なので削除
-            createTrap = null;
-            choseTrap = null;
-        }
+    //    bool canPlace = placer.ValidatePlacement();
+    //    if (canPlace)
+    //    {
+    //        placer.RestoreVisuals();
+    //        Trap trap = targetTrap.GetComponent<Trap>();
+    //        trap.Init();
+    //        trap.SetUp();
+    //        UseCost(trap.trapName);
+    //        Destroy(placer); // 設置後は不要なので削除
+    //        createTrap = null;
+    //        choseTrap = null;
+    //    }
 
-    }
+    //}
 
     private IEnumerator PuttingTrap(TrapName trapName)
     {
@@ -270,13 +270,14 @@ public class HunterConTrollerPad : MonoBehaviour
             Debug.LogError("TrapRing is Null");
             yield break;
         }
-
+        TrapPlacer placer = null;
+        Trap trap = null;
         while (true)
         {
             if (trapName == TrapName.None|| TarpObject(trapName) == null) yield break;
 
-            GameObject targetTrap = Instantiate(TarpObject(trapName), cursorPos, TarpObject(trapName).transform.rotation);
-            TrapPlacer placer = targetTrap.GetComponent<TrapPlacer>();
+            choseTrap = Instantiate(TarpObject(trapName), cursorPos, TarpObject(trapName).transform.rotation);
+            placer = choseTrap.GetComponent<TrapPlacer>();
 
             TrapIntroduce(trapName);
 
@@ -286,12 +287,12 @@ public class HunterConTrollerPad : MonoBehaviour
                 //     placer = targetTrap.AddComponent<WorldTrapPlacer>();
                 //else
                 if (trapName == TrapName.Spikes || trapName == TrapName.IceArea || trapName == TrapName.StickyArea)
-                    placer = targetTrap.AddComponent<WallTrapPlacer>();
+                    placer = choseTrap.AddComponent<WallTrapPlacer>();
                 else
-                    placer = targetTrap.AddComponent<StandardTrapPlacer>();
+                    placer = choseTrap.AddComponent<StandardTrapPlacer>();
             }
             placer.InitializePreview();
-            choseTrap = targetTrap;
+            //choseTrap = targetTrap;
 
             bool canPlace = false;
 
@@ -311,11 +312,13 @@ public class HunterConTrollerPad : MonoBehaviour
             }
 
             placer.RestoreVisuals();
-            Trap trap = targetTrap.GetComponent<Trap>();
+
+            trap = choseTrap.GetComponent<Trap>();
             trap.Init();
             trap.SetUp();
+
             UseCost(trap.trapName);
-            placer.enabled = false; // 設置後は不要なので削除
+            Destroy(placer); // 設置後は不要なので削除
             createTrap = null;
             choseTrap = null;
 

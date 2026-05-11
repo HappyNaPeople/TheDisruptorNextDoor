@@ -117,51 +117,55 @@ public class TrapRing : MonoBehaviour
 
     public void ControllerChoose(Vector2 input)
     {
-        if (input.magnitude < 0.5f)
+        if (input.magnitude < 0.1f)
         {
-            if (choseTrap != lastDir && lastDir >= 0 && lastDir < ringTraps.Count) 
+            if (choseTrap != lastDir && lastDir >= 0 && lastDir < ringTraps.Count)
             {
                 choseTrap = lastDir;
-                UIUpdate();
+                UIUpdate(choseTrap);
                 HunterConTrollerPad.Instance.CreateTrap(ringTraps[choseTrap].trap);
             }
             else
             {
                 UIUpdate(-1);
             }
-                //if (isInputActive && lastDir != -1 && ringTraps[lastDir].trap != TrapName.None && ringTraps[lastDir].stage == RingTrap.Stage.On)
-                //{
-                //    HunterConTrollerPad.Instance.CreateTrap(ringTraps[lastDir].trap);
-                //}
-                //else
-                //if (isInputActive && lastDir != -1 && (ringTraps[lastDir].trap == TrapName.None|| ringTraps[lastDir].stage == RingTrap.Stage.Off))
-                //{
-                //    
-                //}
+            //if (isInputActive && lastDir != -1 && ringTraps[lastDir].trap != TrapName.None && ringTraps[lastDir].stage == RingTrap.Stage.On)
+            //{
+            //    HunterConTrollerPad.Instance.CreateTrap(ringTraps[lastDir].trap);
+            //}
+            //else
+            //if (isInputActive && lastDir != -1 && (ringTraps[lastDir].trap == TrapName.None|| ringTraps[lastDir].stage == RingTrap.Stage.Off))
+            //{
+            //    
+            //}
 
             isInputActive = false;
             lastDir = -1;
             joyStick.transform.localPosition = Vector3.back;
-            
+
             return;
         }
-        isInputActive = true;
-
-        Vector2 inputLocal = Quaternion.Inverse(transform.rotation) * input;
-        float angle = Mathf.Atan2(inputLocal.x, inputLocal.y) * Mathf.Rad2Deg;
-
-        if (angle < 0) angle += 360;
-
-        int targetNumber = Mathf.RoundToInt(angle / 45f) % 8;
-        joyStick.transform.localPosition = new Vector3(
-            Mathf.Sin(targetNumber * 45f * Mathf.Deg2Rad) * 5,
-            Mathf.Cos(targetNumber * 45f * Mathf.Deg2Rad) * 5, -1);
-
-        if (targetNumber != lastDir)
+        
+        if (input.magnitude > 0.9f)
         {
+            isInputActive = true;
 
-            lastDir = targetNumber;
-            UIUpdate(lastDir);
+            Vector2 inputLocal = Quaternion.Inverse(transform.rotation) * input;
+            float angle = Mathf.Atan2(inputLocal.x, inputLocal.y) * Mathf.Rad2Deg;
+
+            if (angle < 0) angle += 360;
+
+            int targetNumber = Mathf.RoundToInt(angle / 45f) % 8;
+            joyStick.transform.localPosition = new Vector3(
+                Mathf.Sin(targetNumber * 45f * Mathf.Deg2Rad) * 5,
+                Mathf.Cos(targetNumber * 45f * Mathf.Deg2Rad) * 5, -1);
+
+            if (targetNumber != lastDir)
+            {
+
+                lastDir = targetNumber;
+                UIUpdate(lastDir);
+            }
         }
     }
 
