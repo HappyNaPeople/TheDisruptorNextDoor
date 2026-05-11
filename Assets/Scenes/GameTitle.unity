@@ -1263,6 +1263,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1912837662870133377, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
+      propertyPath: excludeTraps.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912837662870133377, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
+      propertyPath: 'excludeTraps.Array.data[3]'
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912837662870133377, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
+      propertyPath: 'excludeTraps.Array.data[4]'
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 2212874159162248351, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2701,6 +2713,18 @@ PrefabInstance:
       propertyPath: 'choseTrap.Array.data[7]'
       value: 
       objectReference: {fileID: 1243467752}
+    - target: {fileID: 1912837662870133377, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
+      propertyPath: excludeTraps.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912837662870133377, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
+      propertyPath: 'excludeTraps.Array.data[3]'
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912837662870133377, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
+      propertyPath: 'excludeTraps.Array.data[4]'
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 2212874159162248351, guid: 7a2d7d26db92c7142b696f17d3d27603, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

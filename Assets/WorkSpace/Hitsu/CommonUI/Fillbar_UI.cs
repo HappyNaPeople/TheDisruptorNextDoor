@@ -38,12 +38,13 @@ public class Fillbar_UI : MonoBehaviour
     public Animator fillBar_Head_Animator;
     private Runner _runner => InGame.Instance.runner;
     private Animator _runner_Animator;
-    private bool _isRunning => _runner_Animator.GetBool("IsRunning");
+    private bool _isRunning => _runner_Animator != null && _runner_Animator.GetBool("IsRunning");
     private bool isDead = false;
 
 
     private void Update()
     {
+        if (fillBar_Head_Animator == null || _runner == null) return;
         if (fillBar_Head_Animator.GetBool(HardBool.IsRun.ToString()) != _isRunning) fillBar_Head_Animator.SetBool(HardBool.IsRun.ToString(), _isRunning);
 
         if (_runner.currentState == PlayerState.Dead && !isDead)

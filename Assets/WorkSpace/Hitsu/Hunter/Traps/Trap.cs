@@ -26,6 +26,7 @@ public enum TrapName
     ScatterBombIce,
     ScatterBombSticky,
     InkTrap,
+    Obstacle,
 
     None = -1
 }

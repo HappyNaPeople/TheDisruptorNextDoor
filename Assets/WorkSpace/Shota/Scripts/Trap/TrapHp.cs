@@ -8,6 +8,9 @@ public class TrapHp : MonoBehaviour
     [Tooltip("防御倍率。1.0で標準ダメージ、0.5でダメージ半減（硬い）、2.0で2倍（脆い）")]
     public float defenseMultiplier = 1.0f;
 
+    [Tooltip("時間経過でHPを消費するかどうか（1秒1HP）")]
+    public bool consumeHpOverTime = true;
+
     [SerializeField] bool broken = false;
 
     [SerializeField] GameObject breakFXPrefab;
@@ -17,6 +20,8 @@ public class TrapHp : MonoBehaviour
     private void Start()
     {
         _trap = GetComponent<Trap>();
+        // 自分のオブジェクトになければ親から探す
+        if (_trap == null) _trap = GetComponentInParent<Trap>();
     }
 
     private void Update()
@@ -26,10 +31,13 @@ public class TrapHp : MonoBehaviour
         // 落下完了などの設置準備が整ってから寿命カウントダウン開始
         if (_trap != null && !_trap.isSetup) return;
 
-        hp -= Time.deltaTime;
-        if (hp <= 0)
+        if (consumeHpOverTime)
         {
-            Break();
+            hp -= Time.deltaTime;
+            if (hp <= 0)
+            {
+                Break();
+            }
         }
     }
 

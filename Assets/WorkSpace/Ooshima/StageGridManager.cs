@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 // Ooshima: Newly added StageGridManager class
 public enum GridState
@@ -25,6 +26,14 @@ public class StageGridManager : MonoBehaviour
     [Tooltip("手動でトラップ配置不可にしたいグリッド座標のリスト")]
     public List<Vector2Int> customNoPutCoords = new List<Vector2Int>();
 
+    [Header("Map Obstacles (Tilemap)")]
+    [Tooltip("エディタ上で木箱を置くためのタイルマップ")]
+    public Tilemap mapObstacleTilemap;
+    [Tooltip("木箱のプレハブ")]
+    public GameObject obstaclePrefab;
+
+    private List<Vector2Int> mapObstacleCoords = new List<Vector2Int>();
+
     private Dictionary<Vector2Int, GridState> gridMap = new Dictionary<Vector2Int, GridState>();
 
     private void Awake()
@@ -35,12 +44,13 @@ public class StageGridManager : MonoBehaviour
 
     private void Start()
     {
-        BuildGridMap();
+        // InGame.MapInit() で呼ばれるためここでは呼ばない
     }
 
-    private void BuildGridMap()
+    public void BuildGridMap()
     {
         gridMap.Clear();
+        mapObstacleCoords.Clear();
         int indexedCount = 0;
 
         if (scanAreaLeftTop == null || scanAreaRightDown == null)
@@ -60,7 +70,7 @@ public class StageGridManager : MonoBehaviour
         int maxGridY = Mathf.CeilToInt((Mathf.Max(startY, endY) - gridOffset.y) / gridSize);
 
         // Uses the newly added layers in GameManager.cs
-        int layerMask = (1 << UseLayerName.platformLayer) | (1 << UseLayerName.noPutAreaLayer);
+        int layerMask = (1 << UseLayerName.platformLayer) | (1 << UseLayerName.noPutAreaLayer) | (1 << UseLayerName.trapLayer);
 
         for (int x = minGridX; x <= maxGridX; x++)
         {
@@ -76,6 +86,18 @@ public class StageGridManager : MonoBehaviour
                     continue;
                 }
 
+                if (mapObstacleTilemap != null)
+                {
+                    // タイルマップのセル座標に変換してチェック
+                    Vector3Int cellPos = mapObstacleTilemap.WorldToCell(worldPos);
+                    if (mapObstacleTilemap.HasTile(cellPos))
+                    {
+                        mapObstacleCoords.Add(gridCoord);
+                        // タイル自体は消去してプレハブに置き換えられるようにする
+                        mapObstacleTilemap.SetTile(cellPos, null);
+                    }
+                }
+
                 Collider2D col = Physics2D.OverlapPoint(worldPos, layerMask);
                 if (col != null)
                 {
@@ -86,6 +108,10 @@ public class StageGridManager : MonoBehaviour
                     else if (col.gameObject.layer == UseLayerName.noPutAreaLayer)
                     {
                         gridMap[gridCoord] = GridState.NoPutArea;
+                    }
+                    else if (col.gameObject.layer == UseLayerName.trapLayer)
+                    {
+                        gridMap[gridCoord] = GridState.Trap;
                     }
                     indexedCount++;
                 }
@@ -230,6 +256,27 @@ public class StageGridManager : MonoBehaviour
             }
         }
         return validGrids;
+    }
+
+    /// <summary>
+    /// ステージデザイン時に配置された木箱を復活させる
+    /// </summary>
+    public void RespawnMapObstacles()
+    {
+        if (obstaclePrefab == null) return;
+
+        foreach (var grid in mapObstacleCoords)
+        {
+            Vector3 worldPos = GridToWorld(grid);
+            GameObject obj = Instantiate(obstaclePrefab, worldPos, Quaternion.identity);
+            if (obj.TryGetComponent<Trap>(out var trap))
+            {
+                trap.Init();
+                trap.SetUp();
+                // InGameのリストに登録（これによってラウンド終了時に自動で消えるようになる）
+                InGame.Instance.AddTrap(obj);
+            }
+        }
     }
 }
 
