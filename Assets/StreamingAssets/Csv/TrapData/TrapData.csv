@@ -18,3 +18,4 @@ ScatterBombSpike,Texture/Traps/SR_Spike-Bomb_01,3,ScatterBombSpike,Prefabs/Traps
 ScatterBombIce,Texture/Traps/SR_Frost-Bomb_01,3,ScatterBombIce,Prefabs/Traps/ScatterBombIce
 ScatterBombSticky,Texture/Traps/SR_Stick-Bomb_01,3,ScatterBombSticky,Prefabs/Traps/ScatterBombSticky
 InkTrap,Texture/Traps/SR_Blue-Bomb_01,3,Ink,Prefabs/Traps/InkTrap
+WoodBox,Texture/Traps/WoodBox,1,WoodBox,Prefabs/Traps/WoodBox

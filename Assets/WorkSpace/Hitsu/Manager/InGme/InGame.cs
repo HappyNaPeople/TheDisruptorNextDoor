@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -344,7 +344,11 @@ public class InGame : MonoBehaviour
             // チェックポイント設定
             SetUpCheckPoints(useMap.CheckPointsTs());
         }
-        //StageGridManager.Instance.BuildGridMap();
+        // マップグリッドのスキャンを実行
+        if (StageGridManager.Instance != null)
+        {
+            StageGridManager.Instance.BuildGridMap();
+        }
 
         // スキャンエリアの取得（グリッドマネージャーから）
         _areaLeftTop = StageGridManager.Instance.scanAreaLeftTop;
@@ -473,6 +477,7 @@ public class InGame : MonoBehaviour
     /// <param name="trapGameObject">追加する Trap</param>
     public void AddTrap(GameObject trapGameObject)
     {
+        if (allTheTrap == null) allTheTrap = new List<GameObject>();
         // 新しい Trap を追加
         allTheTrap.Add(trapGameObject);
         // 最大数を超えた場合、一番古い Trap を削除
@@ -488,6 +493,7 @@ public class InGame : MonoBehaviour
     /// <param name="trapGameObject">削除対象の Trap</param>
     public void RemoveTrap(GameObject trapGameObject)
     {
+        if (allTheTrap == null) return;
         if (allTheTrap.Contains(trapGameObject)) allTheTrap.Remove(trapGameObject);
         else Debug.LogWarning($"{trapGameObject.name} はリストに追加されていません ");
     }
@@ -575,6 +581,12 @@ public class InGame : MonoBehaviour
         DisPlayInit();      // 表示切替
         TimerStart();       // タイマー開始
         TrapListInit();     // 罠初期化
+
+        // タイルマップから設定された木箱を復活させる
+        if (StageGridManager.Instance != null)
+        {
+            StageGridManager.Instance.RespawnMapObstacles();
+        }
         // BGM再生
         AudioManager.Instance.PlayMusic(bgmData);
 
