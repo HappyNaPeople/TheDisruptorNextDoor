@@ -25,4 +25,14 @@ public class MapBasic : MonoBehaviour
             checkPoint.AnimationControl(false);
         }
     }
+
+    public bool CheckAllThePoints(out bool haveStart, out bool haveThreeCheckPoints, out bool haveEnd)
+    {
+        haveStart = startingTs != null;
+        haveThreeCheckPoints = checkPoints.Length == 3;
+        haveEnd = goalTs != null;
+
+        return haveStart && haveThreeCheckPoints && haveEnd;
+    }
+
 }
