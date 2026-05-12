@@ -12,6 +12,12 @@ public class PlayerData
         passTime = time;
         passDistance = distance;
     }
+    public void ResetData()
+    {
+        passTime = 0;
+        passDistance = 0;
+    }
+
 }
 
 /// <summary>

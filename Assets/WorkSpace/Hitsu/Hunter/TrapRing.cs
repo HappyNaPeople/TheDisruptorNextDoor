@@ -110,19 +110,19 @@ public class TrapRing : MonoBehaviour
     public TrapUi[] trapUi;
     private List<RingTrap> ringTraps = new List<RingTrap>();
 
-    public int choseTrap;
     public GameObject joyStick;
     private bool isInputActive = false;
     private int lastDir = -1;
+    public int choseTrap = -1;
 
     public void ControllerChoose(Vector2 input)
     {
-        if (input.magnitude < 0.1f)
+        if (input.magnitude < 0.1f && isInputActive)
         {
             if (choseTrap != lastDir && lastDir >= 0 && lastDir < ringTraps.Count)
             {
                 choseTrap = lastDir;
-                UIUpdate(choseTrap);
+                UIUpdate();
                 HunterConTrollerPad.Instance.CreateTrap(ringTraps[choseTrap].trap);
             }
             else
@@ -145,7 +145,7 @@ public class TrapRing : MonoBehaviour
 
             return;
         }
-        
+
         if (input.magnitude > 0.9f)
         {
             isInputActive = true;
@@ -162,7 +162,6 @@ public class TrapRing : MonoBehaviour
 
             if (targetNumber != lastDir)
             {
-
                 lastDir = targetNumber;
                 UIUpdate(lastDir);
             }
