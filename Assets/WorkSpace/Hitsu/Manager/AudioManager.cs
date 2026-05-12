@@ -285,7 +285,7 @@ public class AudioManager : MonoBehaviour
     /// ・同時再生数を分散して、音切れや競合を防ぐ
     /// </summary>
     /// <param name="targetSfxData">再生するSFXデータ</param>
-    public void PlayTrapSfx(SfxData targetSfxData)
+    public void PlaySfx(SfxData targetSfxData)
     {
         // データまたはClipが存在しない場合は警告を出して終了
         if (targetSfxData == null|| targetSfxData.clip == null)

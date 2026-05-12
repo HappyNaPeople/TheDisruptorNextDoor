@@ -16,6 +16,9 @@ public class CheckPoints : MonoBehaviour
     public GameObject effectPrefab;
     public float effectTime = 1.5f;
     public bool through;
+    public SfxData sfxData;
+
+
 
     public void AnimationControl(bool isPlay)
     {
@@ -32,6 +35,7 @@ public class CheckPoints : MonoBehaviour
             {
                 GameObject effect = Instantiate(effectPrefab, transform.position, Quaternion.identity);
                 Destroy(effect, effectTime);
+                AudioManager.Instance.PlaySfx(sfxData);
 
             }
             InGame.Instance.PassCheckPoint(this.transform);
