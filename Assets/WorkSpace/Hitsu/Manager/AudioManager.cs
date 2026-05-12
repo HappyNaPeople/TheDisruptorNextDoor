@@ -19,6 +19,25 @@ public class BgmData
 
 }
 
+[System.Serializable]
+public class SfxData
+{
+    /// <summary>
+    /// 音效の識別用キー
+    /// 将来的には byte や enum による識別に変更することを検討している
+    /// </summary>
+    public string sfxName;
+    /// <summary>
+    /// 再生する効果音のAudioClip
+    /// </summary>
+    public AudioClip clip;
+
+    /// <summary>
+    /// 音量（Inspector上で1～100の範囲で調整可能）
+    /// </summary>
+    [Range(1f, 100f)] public float volume;
+
+}
 
 
 /// <summary>
@@ -266,7 +285,7 @@ public class AudioManager : MonoBehaviour
     /// ・同時再生数を分散して、音切れや競合を防ぐ
     /// </summary>
     /// <param name="targetSfxData">再生するSFXデータ</param>
-    public void PlayTrapSfx(TrapSfxData targetSfxData)
+    public void PlayTrapSfx(SfxData targetSfxData)
     {
         // データまたはClipが存在しない場合は警告を出して終了
         if (targetSfxData == null|| targetSfxData.clip == null)

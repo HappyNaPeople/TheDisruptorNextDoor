@@ -31,25 +31,7 @@ public enum TrapName
     None = -1
 }
 
-[System.Serializable]
-public class TrapSfxData
-{
-    /// <summary>
-    /// 音效の識別用キー
-    /// 将来的には byte や enum による識別に変更することを検討している
-    /// </summary>
-    public string sfxName;
-    /// <summary>
-    /// 再生する効果音のAudioClip
-    /// </summary>
-    public AudioClip clip;
 
-    /// <summary>
-    /// 音量（Inspector上で1～100の範囲で調整可能）
-    /// </summary>
-    [Range(1f, 100f)] public float volume;
-
-}
 
 /// <summary>
 /// すべての Trap の基底クラス。
@@ -70,7 +52,7 @@ public abstract class Trap : MonoBehaviour
     // Trap のコスト
     public int cost;
     [Header("Trap Sfxs")]
-    public TrapSfxData[] trapSfxDates;
+    public SfxData[] sfxDates;
     [Header("Physics Components")]
     // Rigidbody2D
     public Rigidbody2D rb;
@@ -216,7 +198,7 @@ public abstract class Trap : MonoBehaviour
 
     public virtual void PlaySfx(string targetSfxName)
     {
-        TrapSfxData trapSfxData = Array.Find(trapSfxDates, x => x.sfxName == targetSfxName);
+        SfxData trapSfxData = Array.Find(sfxDates, x => x.sfxName == targetSfxName);
         AudioManager.Instance.PlayTrapSfx(trapSfxData);
 
     }
