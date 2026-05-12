@@ -199,7 +199,7 @@ public abstract class Trap : MonoBehaviour
     public virtual void PlaySfx(string targetSfxName)
     {
         SfxData trapSfxData = Array.Find(sfxDates, x => x.sfxName == targetSfxName);
-        AudioManager.Instance.PlayTrapSfx(trapSfxData);
+        AudioManager.Instance.PlaySfx(trapSfxData);
 
     }
 
