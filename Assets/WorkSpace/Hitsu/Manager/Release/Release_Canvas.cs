@@ -1,17 +1,9 @@
 using UnityEngine;
-using TMPro;
 
-/// <summary>
-/// リザルト画面の各プレイヤー用Canvas制御
-/// ・勝敗表示
-/// ・自分 / 相手の記録表示
-/// ・Replay / Title の選択保持
-/// </summary>
+
+
 public class Release_Canvas : MonoBehaviour
 {
-    /// <summary>
-    /// プレイヤーの選択状態
-    /// </summary>
     public enum Option
     {
         None,
@@ -20,119 +12,111 @@ public class Release_Canvas : MonoBehaviour
         QuitTheGame
     }
 
-    /// <summary> 現在の選択状態 </summary>
-    public Option option;/* { get; private set; }*/
+    public Option option;
 
-    /// <summary> 勝敗表示用テキスト </summary>
-    public TMP_Text winnerResult;
-    /// <summary> 相手の結果表示用テキスト </summary>
-    public TMP_Text othersResult;
-    /// <summary> 自分の結果表示用テキスト </summary>
-    public TMP_Text yourResult;
+    public SpriteRenderer backGround;
+    public SpriteRenderer winnerResult;
 
-    public TMP_Text choice;
-    string color = "red"; // 或 "#FF0000"
+    [Header("Player01 Result")]
+    public SpriteRenderer[] player01_Time;
+    public SpriteRenderer[] player01_Distance;
+    public SpriteRenderer player01_Crown;
+
+    [Header("Player02 Result")]
+    public SpriteRenderer[] player02_Time;
+    public SpriteRenderer[] player02_Distance;
+    public SpriteRenderer player02_Crown;
 
 
-    private const string winnerText = "Winner : ";
-    private const string otherPlayer = "Others";
-    private const string you = "You";
-
-    private void Choice()
-    {
-        if(option == Option.None)
-        {
-            choice.text = "";
-            return;
-        }
-        choice.text =
-            $"<color=#FFFFFF>Your Choice:</color>" +
-            $"\n<color=#FF0000>{option}</color>" +
-            $"\n<color=#FFFFFF>Wait for The Others</color>\r\n";
-    }
-    
-
-    /// <summary> このCanvasが担当するプレイヤー </summary>
     private Winner thisPlayer;
-    /// <summary> このプレイヤーが勝者かどうか </summary>
     private bool isWin => thisPlayer == Release.Instance.winner;
-    /// <summary>
-    /// リザルト表示更新
-    /// ・勝者表示
-    /// ・自分と相手の走行距離表示
-    /// </summary>
+
+    private void Player01DataShow()
+    {
+        PlayerData _player01Result = GameManager.Instance.player01.playerData;
+
+        int min = Mathf.FloorToInt(_player01Result.passTime / 60.0f);
+        int sec = Mathf.FloorToInt(_player01Result.passTime % 60.0f);
+
+        string timeResult = $"{min:00}{sec:00}";
+        for (int i = 0; i < player01_Time.Length; i++)
+        {
+            int number = timeResult[i] - '0';
+            player01_Time[i].sprite = GameManager.Instance.numberSprites[number];
+        }
+
+        int distanceValue = Mathf.RoundToInt(_player01Result.passDistance * 10.0f);
+        string distanceResult = distanceValue.ToString("0000");
+        for (int i = 0; i < player01_Distance.Length; i++)
+        {
+            int number = distanceResult[i] - '0';
+            player01_Distance[i].sprite = GameManager.Instance.numberSprites[number];
+        }
+
+    }
+    private void Player02DataShow()
+    {
+        PlayerData _player02Result = GameManager.Instance.player02.playerData;
+
+        int min = Mathf.FloorToInt(_player02Result.passTime / 60.0f);
+        int sec = Mathf.FloorToInt(_player02Result.passTime % 60.0f);
+
+        string timeResult = $"{min:00}{sec:00}";
+        for (int i = 0; i < player02_Time.Length; i++)
+        {
+            int number = timeResult[i] - '0';
+            player02_Time[i].sprite = GameManager.Instance.numberSprites[number];
+        }
+
+        int distanceValue = Mathf.RoundToInt(_player02Result.passDistance * 10.0f);
+        string distanceResult = distanceValue.ToString("0000");
+        for (int i = 0; i < player02_Distance.Length; i++)
+        {
+            int number = distanceResult[i] - '0';
+            player02_Distance[i].sprite = GameManager.Instance.numberSprites[number];
+        }
+    }
+
     private void ResultShow()
     {
-        // 最新の結果を取得
-        string _player01Result = GameManager.Instance.player01.playerData.passDistance.ToString("F1");
-        string _player02Result = GameManager.Instance.player02.playerData.passDistance.ToString("F1");
+        //winnerResult.sprite = isWin ? Release.Instance.your : Release.Instance.others;
 
-        // Winner 表示
-        string result = isWin ? $"{you}" : $"{otherPlayer}";
-        winnerResult.text = winnerText + result;
+        backGround.sprite = isWin ? Release.Instance.backGround_won : Release.Instance.backGround_lose;
 
-        // このCanvasが Player01 用かどうかで表示内容を切り替える
-        if (thisPlayer == Winner.Player01)
-        {
-            othersResult.text = $"{otherPlayer} : \n {_player02Result} meter";
-            yourResult.text = $"{you} : \n {_player01Result} meter";
-        }
-        else
-        {
-            othersResult.text = $"{otherPlayer} : \n {_player01Result} meter";
-            yourResult.text = $"{you} : \n {_player02Result} meter";
-        }
+        Player01DataShow();
+        Player02DataShow();
+
+        backGround.sprite = isWin ? Release.Instance.backGround_won : Release.Instance.backGround_lose;
+
+        if(Release.Instance.winner == Winner.Player01) player02_Crown.sprite = null;
+        else player01_Crown.sprite = null;
 
     }
 
-    /// <summary>
-    /// 初期化
-    /// ・担当プレイヤー設定
-    /// ・選択リセット
-    /// ・結果表示更新
-    /// </summary>
+
     public void Init(Winner targetPlayer)
     {
         thisPlayer = targetPlayer;
-
         ResultShow();
-        Choice();
     }
-    /// <summary>
-    /// 選択状態をリセット
-    /// </summary>
+
     public void ResetOption()
     {
         option = Option.None;
-        Choice();
     }
-    /// <summary>
-    /// タイトルへ戻るボタン
-    /// ・未選択時のみ有効
-    /// </summary>
     public void Button_BackToTitle()
     {
         if (option != Option.None) return;
         option = Option.BackToTitle;
-        Choice();
     }
-    /// <summary>
-    /// リプレイボタン
-    /// ・未選択時のみ有効
-    /// </summary>
     public void Button_RePlay()
     {
         if (option != Option.None) return;
         option = Option.Replay;
-        Choice();
     }
-
     public void Button_QuitTheGame()
     {
         if (option != Option.None) return;
         option = Option.QuitTheGame;
-        Choice();
     }
-
-
 }

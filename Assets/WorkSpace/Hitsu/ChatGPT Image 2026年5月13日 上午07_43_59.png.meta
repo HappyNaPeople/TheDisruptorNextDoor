@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cc32fac06fae1254899401281eee43e1
+guid: 364203ea129a8b04086389cac7f31daf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 53766330646598468
-    second: "ChatGPT Image 2026\u5E745\u67082\u65E5 \u4E0B\u534803_57_59_0"
+      213: -6711756674789951255
+    second: "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534807_43_59_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 800
+  spritePixelsToUnits: 350
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -96,16 +96,29 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "ChatGPT Image 2026\u5E745\u67082\u65E5 \u4E0B\u534803_57_59_0"
+      name: "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534807_43_59_0"
       rect:
         serializedVersion: 2
         x: 11
         y: 0
-        width: 1502
+        width: 1494
         height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 443111f51340fb000800000000000000
-      internalID: 53766330646598468
+      spriteID: 9e8b94c5ddc0bd2a0800000000000000
+      internalID: -6711756674789951255
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "ChatGPT Image 2026\u5E745\u67082\u65E5 \u4E0B\u534803_57_59_0": 53766330646598468
+      "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534807_43_59_0": -6711756674789951255
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

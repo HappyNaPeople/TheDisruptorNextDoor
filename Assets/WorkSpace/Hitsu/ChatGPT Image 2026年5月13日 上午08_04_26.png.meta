@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: de263b6b020e0b946af9b0b7f928095a
+guid: 4b8001a2ae026d045a8d7ea2053e9c99
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3655219064080014961
-    second: "ChatGPT Image 2026\u5E744\u670827\u65E5 \u4E0B\u534810_48_59_0"
+      213: -134879150385224470
+    second: "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534808_04_26_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 300
+  spritePixelsToUnits: 1000
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Arrow
+      name: "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534808_04_26_0"
       rect:
         serializedVersion: 2
-        x: 256
-        y: 337
-        width: 615
-        height: 416
+        x: 114
+        y: 57
+        width: 797
+        height: 877
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 17e99b26f52f9b230800000000000000
-      internalID: 3655219064080014961
+      spriteID: ae4aea99020d02ef0800000000000000
+      internalID: -134879150385224470
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: cf27c08395906bb4b9eaedb7d48da978
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Arrow: 3655219064080014961
+      "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534808_04_26_0": -134879150385224470
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

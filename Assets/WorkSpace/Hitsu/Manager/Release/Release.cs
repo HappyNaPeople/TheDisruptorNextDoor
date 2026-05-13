@@ -28,6 +28,21 @@ public class Release : MonoBehaviour
     [Header("Winner")]
     /// <summary> 勝者 </summary>
     public Winner winner;
+
+    //[Header("Winner Result Sprite")]
+    //public Sprite your;
+    //public Sprite others;
+
+
+    [Header("BackGround Sprite")]
+    public Sprite backGround_won;
+    public Sprite backGround_lose;
+
+    [Header("Result Logo Sprite")]
+    public Sprite resultLogo_won;
+    public Sprite resultLogo_lose;
+
+
     [Header("Player 01 ")]
     /// <summary> プレイヤー1のUI </summary>
     public Release_Canvas player01Canvas;
