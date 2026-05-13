@@ -246,7 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Spikes
   trapName: 0
   cost: 0
-  trapSfxDates: []
+  sfxDates: []
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 1
@@ -1247,6 +1247,8 @@ MonoBehaviour:
   gridSize: 1
   gridOffset: {x: 0, y: 0.5}
   customNoPutCoords: []
+  mapObstacleTilemap: {fileID: 0}
+  obstaclePrefab: {fileID: 0}
 --- !u!4 &1007089883
 Transform:
   m_ObjectHideFlags: 0
@@ -32019,9 +32021,9 @@ MonoBehaviour:
   hunterCamera:
     camera: {fileID: 1222703507}
     cinemachineCamera: {fileID: 922595552}
+  runner: {fileID: 1859379605}
   hunterConTrollerPad: {fileID: 2071947954}
   runnerConTrollerPad: {fileID: 1025575914}
-  runner: {fileID: 1859379605}
   gameStage: 0
   timer: 0
   useMap: {fileID: 1411465686}
@@ -32034,8 +32036,6 @@ MonoBehaviour:
   passCheckPoint: 0
   startingCutSceneOb: {fileID: 1385843920}
   gameSetCutSceneOb: {fileID: 1024715894}
-  player01Ran: 0
-  player02Ran: 0
 --- !u!4 &1879561073
 Transform:
   m_ObjectHideFlags: 0
@@ -32643,11 +32643,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8875941889188985743, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
       propertyPath: m_LocalScale.x
-      value: 106
+      value: 108.07
       objectReference: {fileID: 0}
     - target: {fileID: 8875941889188985743, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 95.91614
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 8875941889188985743, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 379
       objectReference: {fileID: 0}
     - target: {fileID: 9050288176009411235, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
       propertyPath: m_Layer
