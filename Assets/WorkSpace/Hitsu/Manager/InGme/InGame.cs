@@ -175,6 +175,8 @@ public class InGame : MonoBehaviour
     private void TimerStart()
     {
         if (timerCountDown != null) StopCoroutine(timerCountDown);  // 既存タイマー停止
+        timerCountDown = null;
+
         timer = timerStart;                                         // 初期時間設定
         timerCountDown = StartCoroutine(TimerCountDown());          // カウントダウン開始
     }

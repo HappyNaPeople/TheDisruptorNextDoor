@@ -42,6 +42,9 @@ public class Release : MonoBehaviour
     public Sprite resultLogo_won;
     public Sprite resultLogo_lose;
 
+    public const float gameLimitDistance = 400.0f;
+
+
 
     [Header("Player 01 ")]
     /// <summary> プレイヤー1のUI </summary>

@@ -22,9 +22,10 @@ public class CommonUI : MonoBehaviour
     private Coroutine checkPointWatcher;
     private IEnumerator TimerWatcher()
     {
-        yield return new WaitUntil(() => InGame.Instance.NowTimeToInt() > 0);
+        yield return new WaitUntil(() => InGame.Instance.gameStage==GameStage.Playing);
 
         int timerTime = InGame.Instance.NowTimeToInt();
+        timer.SpriteChange(timerTime);
 
         while (true) 
         {
@@ -39,6 +40,8 @@ public class CommonUI : MonoBehaviour
     private IEnumerator FillbarWatcher()
     {
         float fillup = 0;
+
+        yield return new WaitUntil(() => InGame.Instance.gameStage == GameStage.Playing);
 
         yield return new WaitUntil(() => InGame.Instance.startingPoint != null && InGame.Instance.goal != null);
 
@@ -55,8 +58,12 @@ public class CommonUI : MonoBehaviour
     }
     private IEnumerator WalkDistenceWatcher()
     {
+        yield return new WaitUntil(() => InGame.Instance.gameStage == GameStage.Playing);
+
         int distence = 0;
-        if(InGame.Instance.startingPoint == null || InGame.Instance.goal == null)
+        walkDistence.SpriteChange(distence);
+
+        if (InGame.Instance.startingPoint == null || InGame.Instance.goal == null)
         {
             Debug.LogError($"startingPoint=={InGame.Instance.startingPoint == null}, Goal=={InGame.Instance.goal == null}");
             yield break;
@@ -75,7 +82,7 @@ public class CommonUI : MonoBehaviour
     }
     private IEnumerator CheckPointWatcher()
     {
-        yield return null;
+        yield return new WaitUntil(() => InGame.Instance.gameStage == GameStage.Playing);
 
         // 初期状態：全てのチェックポイントを未達成（false）に設定
         for (int i = 0; i < _checkPoints.Count; i++)
