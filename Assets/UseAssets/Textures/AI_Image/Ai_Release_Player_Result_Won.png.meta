@@ -1,13 +1,16 @@
 fileFormatVersion: 2
-guid: 69ee7455ef25e4c46b1069d9202464ac
+guid: f47c10faae299ad47a9d97cabe7e3201
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8413632925212600412
-    second: "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534809_13_10_0"
+      213: -5973947211542571764
+    second: "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534810_44_03_0"
   - first:
-      213: -7187356709535935467
-    second: "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534809_13_10_1"
+      213: 9194630355391855667
+    second: "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534810_44_03_1"
+  - first:
+      213: 3289029589016495591
+    second: "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534810_44_03_2"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -99,30 +102,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534809_13_10_0"
+      name: "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534810_44_03_0"
       rect:
         serializedVersion: 2
-        x: 40
-        y: 14
-        width: 943
-        height: 249
+        x: 39
+        y: 88
+        width: 954
+        height: 795
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +121,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4a71c2e8e65cc3b80800000000000000
-      internalID: -8413632925212600412
+      spriteID: c05d11599a6481da0800000000000000
+      internalID: -5973947211542571764
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534809_13_10_1"
+      name: "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534810_44_03_1"
       rect:
         serializedVersion: 2
-        x: 919
-        y: 183
-        width: 70
-        height: 41
+        x: 89
+        y: 613
+        width: 54
+        height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,8 +143,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 51417162721614c90800000000000000
-      internalID: -7187356709535935467
+      spriteID: 33cb72ec793e99f70800000000000000
+      internalID: 9194630355391855667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534810_44_03_2"
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 609
+        width: 60
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e5c3153cfaf4ad20800000000000000
+      internalID: 3289029589016495591
       vertices: []
       indices: 
       edges: []
@@ -173,8 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534809_13_10_0": -8413632925212600412
-      "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534809_13_10_1": -7187356709535935467
+      "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534810_44_03_0": -5973947211542571764
+      "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534810_44_03_1": 9194630355391855667
+      "ChatGPT Image 2026\u5E745\u670813\u65E5 \u4E0A\u534810_44_03_2": 3289029589016495591
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

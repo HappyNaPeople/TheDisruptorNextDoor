@@ -401,7 +401,7 @@ public class GameManager : MonoBehaviour
 
         if (Display.displays.Length > 1)
         {
-            Display.displays[1].Activate();
+            Display.displays[1].Activate(1920, 1080, new RefreshRate() { numerator = 60, denominator = 1 });
         }
     }
 

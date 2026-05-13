@@ -79,8 +79,7 @@ public class Release_Canvas : MonoBehaviour
 
     private void ResultShow()
     {
-        //winnerResult.sprite = isWin ? Release.Instance.your : Release.Instance.others;
-
+        winnerResult.sprite = isWin ? Release.Instance.resultLogo_won : Release.Instance.resultLogo_lose;
         backGround.sprite = isWin ? Release.Instance.backGround_won : Release.Instance.backGround_lose;
 
         Player01DataShow();
