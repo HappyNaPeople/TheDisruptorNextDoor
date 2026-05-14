@@ -50,7 +50,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrapHp
   hp: 7
   defenseMultiplier: 0
+  consumeHpOverTime: 1
   broken: 0
+  breakFXPrefab: {fileID: 0}
 --- !u!114 &5667279641130048169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,9 +65,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d250c34082f6c458dfb1fca8f63730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlackHoleTrap
-  trapName: 5
+  trapName: 9
   cost: 0
-  trapSfxDates: []
+  sfxDates: []
   rb: {fileID: 6496700216214343239}
   trapCollider: {fileID: 0}
   isSetup: 0
@@ -73,7 +75,11 @@ MonoBehaviour:
   originGridPos: {x: 0, y: 0}
   setupDelay: 0
   setupEffectPrefab: {fileID: 0}
-  maxPullForce: 200
+  setupEffectBuffer: 1
+  previewPrefab: {fileID: 0}
+  invalidPreviewPrefab: {fileID: 0}
+  maxPullForce: 150
+  minIntensity: 0.25
   groundResistanceMultiplier: 0.95
   killRadius: 0.3
   activationDelay: 1
@@ -140,7 +146,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 4
+  m_Radius: 5
 --- !u!212 &-2930681825708427301
 SpriteRenderer:
   serializedVersion: 2
@@ -198,5 +204,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0

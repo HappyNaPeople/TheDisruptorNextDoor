@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrapHp
   hp: 20
   defenseMultiplier: 1
+  consumeHpOverTime: 1
   broken: 0
   breakFXPrefab: {fileID: 7336312648318818739, guid: 000af903eb869b14baa68d7fb7cbfed1, type: 3}
 --- !u!114 &4399644938475421022
@@ -64,9 +65,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 237147a6b5930044bb5b1e514cb0bf13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallRock
-  trapName: 1
+  trapName: 5
   cost: 1
-  trapSfxDates: []
+  sfxDates: []
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
@@ -75,6 +76,8 @@ MonoBehaviour:
   setupDelay: 1
   setupEffectPrefab: {fileID: 8321573023433997581, guid: 62cbd7a11d026c4418c8481ea14c7737, type: 3}
   setupEffectBuffer: 1
+  previewPrefab: {fileID: 4155413333336870137, guid: e771186eba09d654eba91c855c7f1d0e, type: 3}
+  invalidPreviewPrefab: {fileID: 0}
   initialFallDelay: 0
   fallCoolDown: 3
   fallSpeed: 8

@@ -10,15 +10,15 @@ using UnityEngine;
 /// </summary>
 public class InvisibleAreaTrap : Trap
 {
-    [Header("Invisible Area Settings")]
-    [Tooltip("トラップ自体の持続時間")]
-    public float trapDuration = 8f;
-    
     [Tooltip("エリアから出てからの不可視化継続時間")]
     public float effectDurationAfterExit = 5f;
 
     private float _timer = 0f;
-    
+
+    [Header("Visual Effects")]
+    public GameObject activeEffectPrefab; // ★追加：発動時のエフェクト
+    private GameObject spawnedEffect;     // ★追加：生成したエフェクトの保持用
+
     // エリア内にいるランナーにアタッチしたModifierを保持しておくためのリスト
     private List<InvisibleEffectModifier> activeModifiers = new List<InvisibleEffectModifier>();
 
@@ -31,8 +31,17 @@ public class InvisibleAreaTrap : Trap
         // 当たり判定の設定（幅7、高さ3の長方形）
         if (trapCollider is BoxCollider2D boxCol)
         {
-            boxCol.size = new Vector2(7f, 3f);
             boxCol.isTrigger = true;
+        }
+    }
+
+    public override void SetUp()
+    {
+        base.SetUp();
+        // --- 発動エフェクトの生成 ---
+        if (activeEffectPrefab != null)
+        {
+            spawnedEffect = Instantiate(activeEffectPrefab, transform.position, Quaternion.identity);
         }
     }
 
@@ -56,21 +65,6 @@ public class InvisibleAreaTrap : Trap
             Color c = sr.color;
             c.a = 0.5f; // 仮の半透明でエリア表示
             sr.color = c;
-        }
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-        
-        if (!isSetup) return;
-
-        // トラップの寿命をカウント
-        _timer += Time.deltaTime;
-        if (_timer >= trapDuration)
-        {
-            // 寿命がきたので消滅
-            BrakeTheTrap();
         }
     }
 

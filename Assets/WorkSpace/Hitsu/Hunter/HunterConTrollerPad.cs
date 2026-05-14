@@ -225,7 +225,7 @@ public class HunterConTrollerPad : MonoBehaviour
 
     private void GetTrapPlacer(TrapName trapName, GameObject target, out TrapPlacer trapPlacer)
     {
-        bool targetPlacer = trapName == TrapName.Spikes || trapName == TrapName.IceArea || trapName == TrapName.StickyArea;
+        bool targetPlacer = trapName == TrapName.Spikes || trapName == TrapName.IceArea || trapName == TrapName.GlueArea;
         if (target.GetComponent<TrapPlacer>() == null)
         {
             trapPlacer = targetPlacer ? target.AddComponent<WallTrapPlacer>() : target.AddComponent<StandardTrapPlacer>();

@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrapHp
   hp: 10
   defenseMultiplier: 1
+  consumeHpOverTime: 1
   broken: 0
   breakFXPrefab: {fileID: 7336312648318818739, guid: 000af903eb869b14baa68d7fb7cbfed1, type: 3}
 --- !u!114 &2130280416294361403
@@ -64,9 +65,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6115bbfbbcc22488af48fb57107ad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Boom
-  trapName: 2
+  trapName: 3
   cost: 0
-  trapSfxDates: []
+  sfxDates: []
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
@@ -75,6 +76,8 @@ MonoBehaviour:
   setupDelay: 1
   setupEffectPrefab: {fileID: 2165670710305000279, guid: 374b1e7c5a7067a4da622e510b61c206, type: 3}
   setupEffectBuffer: 1
+  previewPrefab: {fileID: 8206877617744072481, guid: fc6b129ac78ea20418f55de0994d524b, type: 3}
+  invalidPreviewPrefab: {fileID: 0}
   activationType: 0
   fallSpeed: 8
   waitForBoom: 2
@@ -132,7 +135,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2599018732422266431, guid: b4281d0309eccb140b019bffc976f052, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b4281d0309eccb140b019bffc976f052, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

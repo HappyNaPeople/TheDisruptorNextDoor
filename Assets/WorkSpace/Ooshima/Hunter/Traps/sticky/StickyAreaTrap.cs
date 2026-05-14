@@ -8,7 +8,7 @@ public class StickyAreaTrap : InstallationTrap
     public override void Init()
     {
         base.Init();
-        trapName = TrapName.StickyArea;
+        trapName = TrapName.GlueArea;
         cost = 1;
         if (trapCollider != null)
         {

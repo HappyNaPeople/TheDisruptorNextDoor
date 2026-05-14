@@ -29,7 +29,7 @@ public class JumpPad : InstallationTrap
     public override void Init()
     {
         base.Init();
-        trapName = TrapName.JumpPad;
+        trapName = TrapName.PushPad;
         // 設置コスト
         cost = 1;
         animator = GetComponent<Animator>();

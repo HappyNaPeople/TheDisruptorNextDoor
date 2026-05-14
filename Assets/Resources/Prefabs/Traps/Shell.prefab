@@ -109,6 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrapHp
   hp: 10
   defenseMultiplier: 1
+  consumeHpOverTime: 1
   broken: 0
   breakFXPrefab: {fileID: 7336312648318818739, guid: 000af903eb869b14baa68d7fb7cbfed1, type: 3}
 --- !u!70 &1270979435120208615
@@ -160,9 +161,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963f695894d2e034f8120218607f7499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShellTrap
-  trapName: 6
+  trapName: 18
   cost: 0
-  trapSfxDates: []
+  sfxDates: []
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
@@ -171,6 +172,8 @@ MonoBehaviour:
   setupDelay: 1
   setupEffectPrefab: {fileID: 0}
   setupEffectBuffer: 1
+  previewPrefab: {fileID: 0}
+  invalidPreviewPrefab: {fileID: 0}
   fallSpeed: 8
   moveSpeed: 3
 --- !u!50 &7624651770658853353

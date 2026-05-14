@@ -8,24 +8,29 @@ using System;
 public enum TrapName
 {
     Spikes,         // トゲトラップ
-    FallRock,       // 落石トラップ
-    Boom,           // 爆発トラップ
-    JumpPad,
-    ChaseEnemy,
-    BlackHole,
-    Shell,
-    FireBar,
-    SensorBoom,
-    WindTrap,
-    PowerArea,
-    ReverseArea,
-    InvisibleArea,
     IceArea,
-    StickyArea,
-    ScatterBombSpike,
-    ScatterBombIce,
-    ScatterBombSticky,
+    GlueArea,
+
+    Bomb,           // 爆発トラップ
+    SensorBoom,
+    FallRock,       // 落石トラップ
+    PushPad, 
+
+    MagicButterfly,
+    WindBlast,
+    BlackHole,
+    FireBar,
+
+    FrenzyArea,
+    ConfuseArea,
+    InvisibleArea,
     InkTrap,
+
+    SpikeBomb,
+    FrostBomb,
+    GlueBomb,
+    Shell,
+
     Obstacle,
 
     None = -1
@@ -115,12 +120,9 @@ public abstract class Trap : MonoBehaviour
     protected IEnumerator SetupDelayCoroutine()
     {
         gameObject.layer = UseLayerName.trapLayer;
-        if (transform.childCount > 0)
+        foreach (Transform child in GetComponentsInChildren<Transform>(true))
         {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).gameObject.layer = UseLayerName.trapLayer;
-            }
+            child.gameObject.layer = UseLayerName.trapLayer;
         }
 
         // 召喚中（セットアップ遅延中）はスプライトを非表示にする

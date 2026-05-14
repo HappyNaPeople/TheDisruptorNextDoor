@@ -13,6 +13,8 @@ public class BlackHoleTrap : TiggerTrap
     [Tooltip("中心での最大引力（速度に加算される力）")]
     public float maxPullForce = 15f;
 
+    public float minIntensity = 0.1f;
+
     [Tooltip("接地時の引力倍率（0.5にすると空中の半分の強さになる）")]
     public float groundResistanceMultiplier = 0.4f;
 
@@ -83,7 +85,7 @@ public class BlackHoleTrap : TiggerTrap
                 // まだリストにいなければ、専用のモディファイアを生成してRunnerに付与
                 if (!activeVictims.ContainsKey(runner))
                 {
-                    var modifier = new BlackHoleModifier(runner, transform, maxPullForce, groundResistanceMultiplier, killRadius, pullRadius);
+                    var modifier = new BlackHoleModifier(runner, transform, maxPullForce, minIntensity, groundResistanceMultiplier, killRadius, pullRadius);
                     runner.AddModifier(modifier);
                     activeVictims.Add(runner, modifier);
                 }
@@ -182,15 +184,17 @@ public class BlackHoleModifier : IPlayerMovementModifier
     private Runner runner;
     private Transform blackHoleTransform;
     private float maxPullForce;
+    private float minIntensity;
     private float groundResistanceMultiplier;
     private float killRadius;
     private float maxDistance;
 
-    public BlackHoleModifier(Runner runner, Transform blackHoleTransform, float maxPullForce, float groundResistanceMultiplier, float killRadius, float maxDistance)
+    public BlackHoleModifier(Runner runner, Transform blackHoleTransform, float maxPullForce, float minIntensity, float groundResistanceMultiplier, float killRadius, float maxDistance)
     {
         this.runner = runner;
         this.blackHoleTransform = blackHoleTransform;
         this.maxPullForce = maxPullForce;
+        this.minIntensity = minIntensity;
         this.groundResistanceMultiplier = groundResistanceMultiplier;
         this.killRadius = killRadius;
         this.maxDistance = Mathf.Max(maxDistance, 0.1f); // 0除算防止
@@ -212,13 +216,10 @@ public class BlackHoleModifier : IPlayerMovementModifier
             return;
         }
 
-        // 引力の計算: 中心に近いほど1.0に近づき、縁に近いほど0.0に近づく
         float t = Mathf.Clamp01(1f - (distance / maxDistance));
 
-        // 中心付近で急激に引力が強くなるようにカーブをかける（2乗）
-        float intensity = t * t;
+        float intensity = Mathf.Lerp(minIntensity, 1f, t * t);
 
-        // 基準となる引力
         float currentForce = maxPullForce * intensity;
 
         // 接地している場合は引力を弱める（踏ん張っている表現）

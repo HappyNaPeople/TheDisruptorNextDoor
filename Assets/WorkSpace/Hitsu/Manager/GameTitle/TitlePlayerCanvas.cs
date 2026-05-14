@@ -260,7 +260,7 @@ public class TitlePlayerCanvas : MonoBehaviour
     {
         TrapName.Spikes,
         TrapName.IceArea,
-        TrapName.StickyArea,
+        TrapName.GlueArea,
         TrapName.Obstacle,
         TrapName.None
     };
