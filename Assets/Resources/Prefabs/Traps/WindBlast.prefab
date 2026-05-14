@@ -210,7 +210,7 @@ MonoBehaviour:
   setupEffectBuffer: 1
   previewPrefab: {fileID: 0}
   invalidPreviewPrefab: {fileID: 0}
-  windForce: -20
-  groundResistanceMultiplier: 2.5
+  windForce: -15
+  groundResistanceMultiplier: 2.25
   activationDelay: 1
   activeEffectPrefab: {fileID: 8535172308499686518, guid: 726e0cd1ca3460e4eb1a6480ad0c4fdb, type: 3}
