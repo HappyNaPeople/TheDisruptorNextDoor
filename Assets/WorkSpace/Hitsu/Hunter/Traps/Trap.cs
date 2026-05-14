@@ -74,6 +74,12 @@ public abstract class Trap : MonoBehaviour
     public GameObject setupEffectPrefab;
     [Tooltip("エフェクト消滅までのバッファ時間")]
     public float setupEffectBuffer = 1.0f;
+
+    [Header("Preview Effect")]
+    [Tooltip("設置プレビュー時に表示する専用のプレハブ。未指定の場合はトラップ自体のスプライトをプレビューに使用する。")]
+    public GameObject previewPrefab;
+    [Tooltip("設置不可のプレビュー時に表示する専用のプレハブ。未指定の場合は赤く着色される。")]
+    public GameObject invalidPreviewPrefab;
     /// <summary>
     /// Trap の初期化処理
     /// </summary>

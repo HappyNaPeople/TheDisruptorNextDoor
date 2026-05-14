@@ -6,10 +6,41 @@ public abstract class TrapPlacer : MonoBehaviour
     protected SpriteRenderer[] renderers;
     protected Color[] originalColors;
 
+    protected GameObject instantiatedPreview;
+    protected GameObject instantiatedInvalidPreview;
+    protected SpriteRenderer[] originalRenderers;
+
     public virtual void InitializePreview()
     {
         trap = GetComponent<Trap>();
-        renderers = GetComponentsInChildren<SpriteRenderer>();
+        originalRenderers = GetComponentsInChildren<SpriteRenderer>();
+
+        if (trap != null)
+        {
+            if (trap.previewPrefab != null)
+            {
+                instantiatedPreview = Instantiate(trap.previewPrefab, transform.position, transform.rotation, transform);
+                renderers = instantiatedPreview.GetComponentsInChildren<SpriteRenderer>();
+            }
+            if (trap.invalidPreviewPrefab != null)
+            {
+                instantiatedInvalidPreview = Instantiate(trap.invalidPreviewPrefab, transform.position, transform.rotation, transform);
+                instantiatedInvalidPreview.SetActive(false);
+            }
+        }
+
+        if (renderers == null || renderers.Length == 0)
+        {
+            renderers = originalRenderers;
+        }
+        else
+        {
+            foreach (var r in originalRenderers)
+            {
+                r.enabled = false;
+            }
+        }
+
         originalColors = new Color[renderers.Length];
 
         for (int i = 0; i < renderers.Length; i++)
@@ -18,12 +49,10 @@ public abstract class TrapPlacer : MonoBehaviour
         }
 
         gameObject.layer = UseLayerName.runnerCantSeeLayer;
-        if (transform.childCount > 0)
+        Transform[] allChildren = GetComponentsInChildren<Transform>(true);
+        foreach (Transform child in allChildren)
         {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).gameObject.layer = UseLayerName.runnerCantSeeLayer;
-            }
+            child.gameObject.layer = UseLayerName.runnerCantSeeLayer;
         }
     }
 
@@ -33,9 +62,36 @@ public abstract class TrapPlacer : MonoBehaviour
 
     public void UpdatePreviewColor(bool isValid)
     {
-        for (int i = 0; i < renderers.Length; i++)
+        if (instantiatedInvalidPreview != null)
         {
-            renderers[i].color = isValid ? originalColors[i] : new Color(1f, 0f, 0f, 0.5f);
+            if (isValid)
+            {
+                instantiatedInvalidPreview.SetActive(false);
+                if (instantiatedPreview != null) instantiatedPreview.SetActive(true);
+                else 
+                {
+                    foreach (var r in renderers) if (r != null) r.enabled = true;
+                }
+            }
+            else
+            {
+                instantiatedInvalidPreview.SetActive(true);
+                if (instantiatedPreview != null) instantiatedPreview.SetActive(false);
+                else
+                {
+                    foreach (var r in renderers) if (r != null) r.enabled = false;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < renderers.Length; i++)
+            {
+                if (renderers[i] != null)
+                {
+                    renderers[i].color = isValid ? originalColors[i] : new Color(1f, 0f, 0f, 0.5f);
+                }
+            }
         }
     }
 
@@ -43,7 +99,27 @@ public abstract class TrapPlacer : MonoBehaviour
     {
         for (int i = 0; i < renderers.Length; i++)
         {
-            renderers[i].color = originalColors[i];
+            if (renderers[i] != null)
+            {
+                renderers[i].color = originalColors[i];
+            }
+        }
+
+        if (instantiatedPreview != null)
+        {
+            Destroy(instantiatedPreview);
+        }
+        if (instantiatedInvalidPreview != null)
+        {
+            Destroy(instantiatedInvalidPreview);
+        }
+
+        if (originalRenderers != null)
+        {
+            foreach (var r in originalRenderers)
+            {
+                if (r != null) r.enabled = true;
+            }
         }
     }
 
