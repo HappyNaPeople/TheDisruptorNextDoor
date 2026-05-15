@@ -27,6 +27,7 @@ Material:
   m_ValidKeywords:
   - _ALPHA_TRANSITION_BLEND_SECOND_TEX_MULTIPLY
   - _ALPHA_TRANSITION_MAP_MODE_2D
+  - _ALPHA_TRANSITION_MAP_SECOND_TEXTURE_MODE_2D
   - _BASE_MAP_MODE_2D
   - _DISSOLVE_TRANSITION_ENABLED
   - _EMISSION_AREA_ALL
@@ -249,6 +250,7 @@ Material:
     - _AlphaTransitionMapRotationCoord: 0
     - _AlphaTransitionMapRowCount: 1
     - _AlphaTransitionMapSecondTextureChannelsX: 0
+    - _AlphaTransitionMapSecondTextureMapMode: 0
     - _AlphaTransitionMapSecondTextureOffsetXCoord: 0
     - _AlphaTransitionMapSecondTextureOffsetYCoord: 0
     - _AlphaTransitionMapSecondTextureProgress: 0

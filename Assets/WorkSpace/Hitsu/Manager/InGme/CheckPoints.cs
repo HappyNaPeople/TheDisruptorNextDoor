@@ -14,16 +14,16 @@ public class CheckPoints : MonoBehaviour
 {
     public CheckPointIndex checkPointIndex;
     public GameObject effectPrefab;
-    public float effectTime = 1.5f;
+    public Vector2 effectOffset;
     public bool through;
     public SfxData sfxData;
 
-
+    public Animator flagAnimator;
 
     public void AnimationControl(bool isPlay)
     {
         through = isPlay;
-        GetComponent<Animator>().SetBool("Through", through);
+        flagAnimator.SetBool("Through", through);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -33,8 +33,7 @@ public class CheckPoints : MonoBehaviour
             AnimationControl(true);
             if (effectPrefab != null) 
             {
-                GameObject effect = Instantiate(effectPrefab, transform.position, Quaternion.identity);
-                Destroy(effect, effectTime);
+                GameObject effect = Instantiate(effectPrefab, transform.position + (Vector3)effectOffset, Quaternion.identity);
                 AudioManager.Instance.PlaySfx(sfxData);
 
             }
