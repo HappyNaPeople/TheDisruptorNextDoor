@@ -9,14 +9,24 @@ public class ParallaxLayer : MonoBehaviour
     [SerializeField, Range(0f, 1f)]
     private float parallaxFactor = 0.5f;
 
+    [Header("Reference Position")]
+    [SerializeField]
+    private bool useCurrentCameraPositionAsReferenceOnStart = true;
+
+    [SerializeField]
+    private Vector3 referenceCameraPosition;
+
     [Header("Auto Z Position")]
-    [SerializeField] private bool autoSetZ = true;
+    [SerializeField]
+    private bool autoSetZ = true;
 
-    private const float nearZ = 0f;
-    private const float farZ = 50f;
+    [SerializeField]
+    private float nearZ = 0f;
 
-    private Vector3 initialLayerPosition;
-    private Vector3 initialCameraPosition;
+    [SerializeField]
+    private float farZ = 50f;
+
+    private Vector3 placedLayerPosition;
     private bool initialized;
 
     private void OnEnable()
@@ -27,31 +37,27 @@ public class ParallaxLayer : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!Application.isPlaying)
+        {
+            return;
+        }
+
         if (cameraTransform == null)
         {
             Initialize();
-            if (cameraTransform == null) return;
+
+            if (cameraTransform == null)
+            {
+                return;
+            }
         }
 
-        Vector3 cameraOffset = cameraTransform.position - initialCameraPosition;
-
-        Vector3 pos = initialLayerPosition + new Vector3(
-            cameraOffset.x * parallaxFactor,
-            cameraOffset.y * parallaxFactor,
-            0f
-        );
-
-        transform.position = pos;
-
-        ApplyZPosition();
+        ApplyParallax();
     }
 
     private void OnValidate()
     {
-        if (!Application.isPlaying)
-        {
-            ApplyZPosition();
-        }
+        ApplyZPosition();
     }
 
     private void Initialize()
@@ -66,9 +72,39 @@ public class ParallaxLayer : MonoBehaviour
             return;
         }
 
-        initialLayerPosition = transform.position;
-        initialCameraPosition = cameraTransform.position;
+        placedLayerPosition = transform.position;
+
+        if (useCurrentCameraPositionAsReferenceOnStart)
+        {
+            referenceCameraPosition = cameraTransform.position;
+        }
+
         initialized = true;
+    }
+
+    private void ApplyParallax()
+    {
+        if (!initialized)
+        {
+            Initialize();
+
+            if (!initialized)
+            {
+                return;
+            }
+        }
+
+        Vector3 cameraOffset = cameraTransform.position - referenceCameraPosition;
+
+        Vector3 pos = placedLayerPosition + new Vector3(
+            cameraOffset.x * parallaxFactor,
+            cameraOffset.y * parallaxFactor,
+            0f
+        );
+
+        transform.position = pos;
+
+        ApplyZPosition();
     }
 
     private void ApplyZPosition()
@@ -81,5 +117,22 @@ public class ParallaxLayer : MonoBehaviour
         Vector3 pos = transform.position;
         pos.z = Mathf.Lerp(nearZ, farZ, parallaxFactor);
         transform.position = pos;
+    }
+
+    [ContextMenu("Set Current Camera Position As Reference")]
+    private void SetCurrentCameraPositionAsReference()
+    {
+        if (cameraTransform == null && Camera.main != null)
+        {
+            cameraTransform = Camera.main.transform;
+        }
+
+        if (cameraTransform == null)
+        {
+            return;
+        }
+
+        referenceCameraPosition = cameraTransform.position;
+        placedLayerPosition = transform.position;
     }
 }
