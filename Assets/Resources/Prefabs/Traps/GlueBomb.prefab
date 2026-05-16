@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScatterBombTrap
   trapName: 17
   cost: 0
-  trapSfxDates: []
+  sfxDates: []
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
@@ -117,10 +117,12 @@ MonoBehaviour:
   setupDelay: 1
   setupEffectPrefab: {fileID: 5163571877924149988, guid: 998ae690ede82e64bae87c631b9271ae, type: 3}
   setupEffectBuffer: 2
+  previewPrefab: {fileID: 0}
+  invalidPreviewPrefab: {fileID: 0}
   prefabToScatter: {fileID: 990054088258917440, guid: e62a1854231fe4c4f97a2500fae3ad1c, type: 3}
   scatterRatio: 1
-  maxScatterCount: 5
-  scatterRadius: 2
+  maxScatterCount: 7
+  scatterRadius: 3
   waitForBoom: 1
   explosionEffect: {fileID: 7772825388523857775, guid: ed2adf86dc9972c448fc684f89a19b9d, type: 3}
   effectLingerTime: 1

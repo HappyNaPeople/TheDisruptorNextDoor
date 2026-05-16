@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -98,7 +98,7 @@ public class InkTrap : TiggerTrap
 
         // --- 着地・準備（SetupWait） ---
         currentState = State.SetupWait;
-        float waitTimer = 2.0f; // 着地から2秒待機（元の仕様通り）
+        float waitTimer = 0.1f; // 着地から2秒待機（元の仕様通り）
         while (waitTimer > 0f)
         {
             if (CheckGroundAndFall()) 
