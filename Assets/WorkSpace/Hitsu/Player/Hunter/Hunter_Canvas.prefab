@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7654548669916034495}
   - component: {fileID: 3332211192184172084}
-  - component: {fileID: 1400436780036911947}
+  - component: {fileID: 6685938771541209838}
   m_Layer: 12
   m_Name: Trap04
   m_TagString: Untagged
@@ -93,7 +93,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &1400436780036911947
+--- !u!114 &6685938771541209838
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,9 +102,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 343141326056422029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd1727fb34b092842995877e2dca8f54, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bb7f662b3ce8db458a8666ef23e1059, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TrapUi
+  m_EditorClassIdentifier: Assembly-CSharp::RingPartUi
   trapIcon: {fileID: 3332211192184172084}
   trapCost_Number: {fileID: 6943494377626250456}
 --- !u!1 &532530549592075846
@@ -484,7 +484,7 @@ GameObject:
   m_Component:
   - component: {fileID: 762954192100747374}
   - component: {fileID: 4545092096898821920}
-  - component: {fileID: 6757885847122446992}
+  - component: {fileID: 3813703436980697917}
   m_Layer: 12
   m_Name: Trap03
   m_TagString: Untagged
@@ -567,7 +567,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &6757885847122446992
+--- !u!114 &3813703436980697917
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -576,9 +576,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1329035054803609764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd1727fb34b092842995877e2dca8f54, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bb7f662b3ce8db458a8666ef23e1059, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TrapUi
+  m_EditorClassIdentifier: Assembly-CSharp::RingPartUi
   trapIcon: {fileID: 4545092096898821920}
   trapCost_Number: {fileID: 2661670114539461108}
 --- !u!1 &1763996862586309142
@@ -1027,7 +1027,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5003654949869094180}
   - component: {fileID: 6634921126740223345}
-  - component: {fileID: 5280809233158189996}
+  - component: {fileID: 8065263052386558930}
   m_Layer: 12
   m_Name: Trap06
   m_TagString: Untagged
@@ -1110,7 +1110,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &5280809233158189996
+--- !u!114 &8065263052386558930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1119,9 +1119,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2944689095789217082}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd1727fb34b092842995877e2dca8f54, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bb7f662b3ce8db458a8666ef23e1059, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TrapUi
+  m_EditorClassIdentifier: Assembly-CSharp::RingPartUi
   trapIcon: {fileID: 6634921126740223345}
   trapCost_Number: {fileID: 5150045750502418796}
 --- !u!1 &3305143365991457948
@@ -1134,7 +1134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5808918596817488934}
   - component: {fileID: 587343699246592103}
-  - component: {fileID: 3597194717182648622}
+  - component: {fileID: 3503912856083640227}
   m_Layer: 12
   m_Name: Trap02
   m_TagString: Untagged
@@ -1217,7 +1217,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &3597194717182648622
+--- !u!114 &3503912856083640227
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1226,9 +1226,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3305143365991457948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd1727fb34b092842995877e2dca8f54, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bb7f662b3ce8db458a8666ef23e1059, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TrapUi
+  m_EditorClassIdentifier: Assembly-CSharp::RingPartUi
   trapIcon: {fileID: 587343699246592103}
   trapCost_Number: {fileID: 9207977510889249971}
 --- !u!1 &3337779413513281051
@@ -1791,18 +1791,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrapRing
   ring: {fileID: 3337779413513281051}
   insideCircle: {fileID: 6993453793122302483}
-  trapUi:
-  - {fileID: 5673007503417176420}
-  - {fileID: 7071998920667416246}
-  - {fileID: 3597194717182648622}
-  - {fileID: 6757885847122446992}
-  - {fileID: 1400436780036911947}
-  - {fileID: 6480502350722772704}
-  - {fileID: 5280809233158189996}
-  - {fileID: 4986059637121438462}
-  choseTrap: 0
+  ringPartUis:
+  - {fileID: 1375567595470609289}
+  - {fileID: 3418705650554369727}
+  - {fileID: 3503912856083640227}
+  - {fileID: 3813703436980697917}
+  - {fileID: 6685938771541209838}
+  - {fileID: 5223827022479796894}
+  - {fileID: 8065263052386558930}
+  - {fileID: 523023546745083657}
   joyStick: {fileID: 3477680570814158426}
-  test: 0
+  choseTrap: 0
 --- !u!1 &4814559355329520346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1868,10 +1867,8 @@ MonoBehaviour:
   costSpriteRenderers:
   - {fileID: 2810099041161613646}
   - {fileID: 6404687373844335171}
-  nowCostCanUse: 0
   trapRings: {fileID: 2999409494413805645}
   trap_Introduce: {fileID: 0}
-  test: 0
 --- !u!223 &5889429878693099379
 Canvas:
   m_ObjectHideFlags: 0
@@ -2036,7 +2033,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5431547547901245686}
   - component: {fileID: 3455082591572943538}
-  - component: {fileID: 7071998920667416246}
+  - component: {fileID: 3418705650554369727}
   m_Layer: 12
   m_Name: Trap01
   m_TagString: Untagged
@@ -2119,7 +2116,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &7071998920667416246
+--- !u!114 &3418705650554369727
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2128,9 +2125,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5183269735444771385}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd1727fb34b092842995877e2dca8f54, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bb7f662b3ce8db458a8666ef23e1059, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TrapUi
+  m_EditorClassIdentifier: Assembly-CSharp::RingPartUi
   trapIcon: {fileID: 3455082591572943538}
   trapCost_Number: {fileID: 1846915819239273502}
 --- !u!1 &5346929749745966839
@@ -2234,7 +2231,7 @@ GameObject:
   m_Component:
   - component: {fileID: 83879268065069390}
   - component: {fileID: 769948172144366072}
-  - component: {fileID: 5673007503417176420}
+  - component: {fileID: 1375567595470609289}
   m_Layer: 12
   m_Name: Trap00
   m_TagString: Untagged
@@ -2317,7 +2314,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &5673007503417176420
+--- !u!114 &1375567595470609289
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2326,9 +2323,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5528164433225288279}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd1727fb34b092842995877e2dca8f54, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bb7f662b3ce8db458a8666ef23e1059, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TrapUi
+  m_EditorClassIdentifier: Assembly-CSharp::RingPartUi
   trapIcon: {fileID: 769948172144366072}
   trapCost_Number: {fileID: 7589636806241192141}
 --- !u!1 &6352826680538036702
@@ -2432,7 +2429,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8052270867222576115}
   - component: {fileID: 7066354144726572133}
-  - component: {fileID: 6480502350722772704}
+  - component: {fileID: 5223827022479796894}
   m_Layer: 12
   m_Name: Trap05
   m_TagString: Untagged
@@ -2515,7 +2512,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &6480502350722772704
+--- !u!114 &5223827022479796894
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2524,9 +2521,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6645981927672653261}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd1727fb34b092842995877e2dca8f54, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bb7f662b3ce8db458a8666ef23e1059, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TrapUi
+  m_EditorClassIdentifier: Assembly-CSharp::RingPartUi
   trapIcon: {fileID: 7066354144726572133}
   trapCost_Number: {fileID: 1132760584694718094}
 --- !u!1 &6750910978275146343
@@ -2539,7 +2536,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5818546598221237695}
   - component: {fileID: 5011148863821216579}
-  - component: {fileID: 4986059637121438462}
+  - component: {fileID: 523023546745083657}
   m_Layer: 12
   m_Name: Trap07
   m_TagString: Untagged
@@ -2622,7 +2619,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &4986059637121438462
+--- !u!114 &523023546745083657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2631,9 +2628,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6750910978275146343}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd1727fb34b092842995877e2dca8f54, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bb7f662b3ce8db458a8666ef23e1059, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TrapUi
+  m_EditorClassIdentifier: Assembly-CSharp::RingPartUi
   trapIcon: {fileID: 5011148863821216579}
   trapCost_Number: {fileID: 7424286761839152128}
 --- !u!1 &6845950069043102422
