@@ -75,9 +75,9 @@ class RingTrap
         code = targetCode;                      // 色変更用番号設定
         m_ringPart = ring;                      // マテリアル設定
         m_insidePart = inside;
-        ringPartUi = targetTrapUi;                  // UI参照設定
+        ringPartUi = targetTrapUi;              // UI参照設定
 
-        ringPartUi.Init(trap);                      // 罠アイコンUI初期化
+        ringPartUi.Init(trap);                  // 罠アイコンUI初期化
         Init();                                 // 色設定初期化
 
     }
