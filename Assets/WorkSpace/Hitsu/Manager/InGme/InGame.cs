@@ -217,19 +217,19 @@ public class InGame : MonoBehaviour
     /// <summary>
     /// マップに必要なポイントが存在するか確認する
     /// </summary>
-    private bool IsPointsNull(out bool haveStart, out bool haveThreeCheckPoints, out bool haveEnd)
+    private bool IsPointsNull(out bool haveStart, out bool haveTargetNumberCheckPoints, out bool haveEnd)
     {
         // useMap未設定
         if (useMap == null)
         {
             haveStart = false;
-            haveThreeCheckPoints = false;
+            haveTargetNumberCheckPoints = false;
             haveEnd = false;
             return false;
         }
 
         // マップ内ポイント確認
-        return useMap.CheckAllThePoints(out haveStart, out haveThreeCheckPoints, out haveEnd);
+        return useMap.CheckAllThePoints(out haveStart, out haveTargetNumberCheckPoints, out haveEnd);
     }
 
     /// <summary>
@@ -250,13 +250,13 @@ public class InGame : MonoBehaviour
             return;
         }
         // 必須ポイント存在確認
-        bool checkTheMap = IsPointsNull(out bool haveStart, out bool haveThreeCheckPoints, out bool haveEnd);
+        bool checkTheMap = IsPointsNull(out bool haveStart, out bool haveTargetNumberCheckPoints, out bool haveEnd);
         // 必須ポイント不足
         if (!checkTheMap)
         {
             Debug.LogError(
             $"Points Error: Start : {haveStart} ," +
-            $" CheckPoints : {haveThreeCheckPoints} ," +
+            $" CheckPoints : {haveTargetNumberCheckPoints} ," +
             $" Goal : {haveEnd}");
             return;
         }
@@ -616,13 +616,13 @@ public class InGame : MonoBehaviour
         // 現在Runnerのプレイヤーを取得
         Player targetPlayer = _player01.job == Player.Job.Runner ? _player01 : _player02;
         // マップ情報確認
-        bool checkTheMap = IsPointsNull(out bool haveStart, out bool haveThreeCheckPoints, out bool haveEnd);
+        bool checkTheMap = IsPointsNull(out bool haveStart, out bool haveTargetNumberCheckPoints, out bool haveEnd);
         // 必須ポイント不足
         if (!checkTheMap)
         {
             Debug.LogError(
             $"Points Error: Start : {haveStart} ," +
-            $" CheckPoints : {haveThreeCheckPoints} ," +
+            $" CheckPoints : {haveTargetNumberCheckPoints} ," +
             $" Goal : {haveEnd}");
             return;
         }

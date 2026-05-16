@@ -26,13 +26,13 @@ public class MapBasic : MonoBehaviour
         }
     }
 
-    public bool CheckAllThePoints(out bool haveStart, out bool haveThreeCheckPoints, out bool haveEnd)
+    public bool CheckAllThePoints(out bool haveStart, out bool haveTargetNumberCheckPoints, out bool haveEnd)
     {
         haveStart = startingTs != null;
-        haveThreeCheckPoints = checkPoints.Length == 3;
+        haveTargetNumberCheckPoints = checkPoints.Length == 2;
         haveEnd = goalTs != null;
 
-        return haveStart && haveThreeCheckPoints && haveEnd;
+        return haveStart && haveTargetNumberCheckPoints && haveEnd;
     }
 
 }
