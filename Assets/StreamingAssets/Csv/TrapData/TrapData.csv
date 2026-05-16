@@ -15,7 +15,7 @@ ConfuseArea,Texture/Traps/SR_Confuse_01,3,ConfuseArea,Prefabs/Traps/ConfuseArea
 InvisibleArea,Texture/Traps/SR_Invisible_01,3,InvisibleArea,Prefabs/Traps/InvisibleArea
 InkTrap,Texture/Traps/SR_Ink_01,3,Ink,Prefabs/Traps/InkTrap
 SpikeBomb,Texture/Traps/SR_Spike-Bomb_01,3,SpikeBomb,Prefabs/Traps/SpikeBomb
-FrostBomb,Texture/Traps/SR_Frost-Bomb_01,3,FrostBomb,Prefabs/Traps/IceBomb
+FrostBomb,Texture/Traps/SR_Frost-Bomb_01,3,FrostBomb,Prefabs/Traps/FrostBomb
 GlueBomb,Texture/Traps/SR_Glue-Bomb_01,3,GlueBomb,Prefabs/Traps/GlueBomb
 Shell,Texture/Traps/FallRock1,7,Shell(Koura),Prefabs/Traps/Shell
 WoodBox,Texture/Traps/WoodBox,1,WoodBox,Prefabs/Traps/WoodBox
