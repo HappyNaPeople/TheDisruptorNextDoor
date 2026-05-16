@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8354471789010782203}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -426.158, y: -1.837, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScatterBombTrap
   trapName: 16
   cost: 0
-  trapSfxDates: []
+  sfxDates: []
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
@@ -117,10 +117,12 @@ MonoBehaviour:
   setupDelay: 1
   setupEffectPrefab: {fileID: 5163571877924149988, guid: 998ae690ede82e64bae87c631b9271ae, type: 3}
   setupEffectBuffer: 1
+  previewPrefab: {fileID: 0}
+  invalidPreviewPrefab: {fileID: 0}
   prefabToScatter: {fileID: 8945908065428581523, guid: f870e3bd57cf9974cb25bc0125dbe85b, type: 3}
   scatterRatio: 1
-  maxScatterCount: 5
-  scatterRadius: 2
+  maxScatterCount: 10
+  scatterRadius: 4
   waitForBoom: 1
   explosionEffect: {fileID: 7772825388523857775, guid: ed2adf86dc9972c448fc684f89a19b9d, type: 3}
   effectLingerTime: 1

@@ -233,7 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Spikes
   trapName: 0
   cost: 0
-  trapSfxDates: []
+  sfxDates: []
   rb: {fileID: 0}
   trapCollider: {fileID: 0}
   isSetup: 0
@@ -242,6 +242,8 @@ MonoBehaviour:
   setupDelay: 0
   setupEffectPrefab: {fileID: 0}
   setupEffectBuffer: 1
+  previewPrefab: {fileID: 0}
+  invalidPreviewPrefab: {fileID: 0}
   isFallDone: 0
 --- !u!114 &6537090227952713654
 MonoBehaviour:
@@ -255,9 +257,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a28eaf68e6482148aee42bbfa7e1e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrapHp
-  hp: 15
+  hp: 8
   defenseMultiplier: 1
+  consumeHpOverTime: 1
   broken: 0
+  breakFXPrefab: {fileID: 0}
 --- !u!61 &149052863065255251
 BoxCollider2D:
   m_ObjectHideFlags: 0

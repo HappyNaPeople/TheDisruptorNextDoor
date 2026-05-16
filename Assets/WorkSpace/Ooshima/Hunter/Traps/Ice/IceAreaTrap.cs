@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 public class IceAreaTrap : InstallationTrap
@@ -140,6 +140,6 @@ public class IceAreaEffect : MonoBehaviour, IPlayerMovementModifier
     {
         // 摩擦を 0.3 相当などに設定（通常の groundDamping が 20 なら 0.3 は非常に滑る）
         // ユーザー指定「床面の摩擦係数を0.3に設定する」
-        return 0.3f;
+        return 0f;
     }
 }

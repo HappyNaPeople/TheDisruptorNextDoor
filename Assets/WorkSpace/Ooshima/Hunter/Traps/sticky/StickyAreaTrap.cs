@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 public class StickyAreaTrap : InstallationTrap
@@ -135,11 +135,11 @@ public class StickyAreaEffect : MonoBehaviour, IPlayerMovementModifier
 
     public float ModifyJumpHeight(float baseJumpHeight)
     {
-        return baseJumpHeight * 0.5f;
+        return baseJumpHeight * 0.25f;
     }
 
     public float ModifyRunSpeed(float baseSpeed)
     {
-        return baseSpeed * 0.7f;
+        return baseSpeed * 0.1f;
     }
 }

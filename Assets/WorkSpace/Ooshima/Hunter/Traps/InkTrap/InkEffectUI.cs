@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -38,7 +38,7 @@ public class InkEffectUI : MonoBehaviour
         
         // 指定された「縦横比 1:1」を再現するため正方形のサイズを設定
         // 画面高さなどを基準にしてもよいですが、固定で十分大きめにします
-        rt.sizeDelta = new Vector2(800f, 800f);
+        rt.sizeDelta = new Vector2(1600f, 1600f);
     }
 
     /// <summary>
