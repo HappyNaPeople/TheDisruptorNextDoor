@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrapHp
   hp: 8
-  defenseMultiplier: 1
+  defenseMultiplier: 5
   consumeHpOverTime: 1
   broken: 0
   breakFXPrefab: {fileID: 0}
