@@ -20,6 +20,13 @@ public class InkEffectUI : MonoBehaviour
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.sortingOrder = 999; // 最前面に表示
 
+        // Runnerのディスプレイを取得して設定する
+        if (InGame.Instance != null)
+        {
+            Player runnerPlayer = InGame.Instance._player01.job == Player.Job.Runner ? InGame.Instance._player01 : InGame.Instance._player02;
+            canvas.targetDisplay = (int)runnerPlayer.displayCode;
+        }
+
         // UIイベントブロッカーとして機能させない場合はRaycasterは不要ですが、念のため
         // gameObject.AddComponent<GraphicRaycaster>(); 
 
