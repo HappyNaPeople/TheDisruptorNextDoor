@@ -332,6 +332,7 @@ public class HunterConTrollerPad : MonoBehaviour
         trap_Introduce.text = "";                                       // 罠説明UIリセット
         Cost_RecoveryInit();                                            // コスト回復処理初期化
         TrapRingsUpdate();                                              // 罠UI更新
+        TrapIntroduce(trapRings.chooseTrapName);
         commonUI.CommonUIInit();                                        // 共通UI初期化
         Reject();                                                       // 現在の設置処理をキャンセル
     }

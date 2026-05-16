@@ -109,6 +109,15 @@ public class TrapRing : MonoBehaviour
     [Header("Trap Button")]
     public TrapUi[] trapUi;
     private List<RingTrap> ringTraps = new List<RingTrap>();
+    public TrapName chooseTrapName
+    {
+        get
+        {
+            if(choseTrap<0|| choseTrap> ringTraps.Count)return TrapName.None;
+
+            return ringTraps[choseTrap].trap;
+        }
+    }
 
     public GameObject joyStick;
     private bool isInputActive = false;
@@ -181,6 +190,8 @@ public class TrapRing : MonoBehaviour
 
 
         UISetUp(choseTraps);
+
+
     }
 
     private void UISetUp(List<TrapName> choseTraps)

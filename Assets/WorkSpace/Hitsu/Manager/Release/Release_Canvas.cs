@@ -11,6 +11,9 @@ public class Release_PlayerResultData
     public void Init(PlayerData targetData)
     {
         playerData = targetData;
+
+        distanceShow.SetActive(false);
+
     }
 
     public SpriteRenderer[] time;
@@ -72,7 +75,6 @@ public class Release_PlayerResultData
 
     public IEnumerator DistanceResult()
     {
-        distanceShow.SetActive(false);
 
         float endDistance = playerData.passDistance;
 
@@ -152,8 +154,9 @@ public class Release_Canvas : MonoBehaviour
         yield return StartCoroutine(player02Result.TimeResult());
         yield return null;
         yield return StartCoroutine(player02Result.DistanceResult());
-        yield return null;
 
+
+        yield return new WaitForSeconds(2);
 
         winnerResult.sprite = isWin ? Release.Instance.resultLogo_won : Release.Instance.resultLogo_lose;
         backGround.sprite = isWin ? Release.Instance.backGround_won : Release.Instance.backGround_lose;
