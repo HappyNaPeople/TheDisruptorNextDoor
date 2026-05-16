@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a28eaf68e6482148aee42bbfa7e1e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrapHp
-  hp: 20
+  hp: 10
   defenseMultiplier: 1
   consumeHpOverTime: 1
   broken: 0
