@@ -3106,6 +3106,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 4019651769621054439, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4027543197791277459, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.42781115
@@ -3450,6 +3454,14 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 584086943}
+    - target: {fileID: 2880749126587178196, guid: 2740380ba213d6740944ddc70f9c0fa6, type: 3}
+      propertyPath: sfxData.volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768554645325549267, guid: 2740380ba213d6740944ddc70f9c0fa6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5266525681248835867, guid: 2740380ba213d6740944ddc70f9c0fa6, type: 3}
       propertyPath: cameraTransform
       value: 
@@ -3502,6 +3514,14 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 584086943}
+    - target: {fileID: 7308729059640126371, guid: 2740380ba213d6740944ddc70f9c0fa6, type: 3}
+      propertyPath: checkPoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7573559696712394252, guid: 2740380ba213d6740944ddc70f9c0fa6, type: 3}
+      propertyPath: sfxData.volume
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
