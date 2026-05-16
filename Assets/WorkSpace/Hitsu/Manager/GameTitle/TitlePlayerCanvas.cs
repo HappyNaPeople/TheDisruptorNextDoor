@@ -61,7 +61,7 @@ public class TitlePlayerCanvas : MonoBehaviour
     /// <summary>
     /// 現在使用可能なコスト
     /// </summary>
-    private int nowCost = Backpack.maxTrapCount;
+    //private int nowCost = Backpack.maxTrapCount;
 
 
     /// <summary>
@@ -169,7 +169,8 @@ public class TitlePlayerCanvas : MonoBehaviour
     private void UpdateChoseTrap()
     {
         // 残りコスト表示更新
-        costText.text = $"Cost Left : {nowCost:D2}";
+        //costText.text = $"Cost Left : {nowCost:D2}";
+        costText.text = "";
         int choseTrapMax = playerTrap.Count > choseTrap.Count ? choseTrap.Count : playerTrap.Count;
         for (int index = 0; index < choseTrap.Count; index++)
         {
@@ -239,12 +240,14 @@ public class TitlePlayerCanvas : MonoBehaviour
 
     private void AddToPlayerTrap(TrapName targetTrap)
     {
-        // コスト計算
-        int checkCost = nowCost - GameManager.allTrap[targetTrap].cost;
-        // コスト不足
-        if (checkCost < 0 || playerTrap.Contains(targetTrap) || playerTrap.Count == 8) return;
-        // コスト更新
-        nowCost = checkCost;
+        //// コスト計算
+        //int checkCost = nowCost - GameManager.allTrap[targetTrap].cost;
+        //// コスト不足
+        //if (checkCost < 0 || playerTrap.Contains(targetTrap) || playerTrap.Count == 8) return;
+        //// コスト更新
+        //nowCost = checkCost;
+
+        if(playerTrap.Contains(targetTrap) || playerTrap.Count == 8) return;
         playerTrap.Add(targetTrap);
 
         // UI 更新
