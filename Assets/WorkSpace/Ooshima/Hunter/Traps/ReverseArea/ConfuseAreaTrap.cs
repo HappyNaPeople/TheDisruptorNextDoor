@@ -187,26 +187,6 @@ public class ReverseAreaEffect : MonoBehaviour, IPlayerMovementModifier
         // 左右移動反転
         moveInput.x = -moveInput.x;
 
-        // -------------------------------------------------------------
-        // ジャンプとしゃがみの反転
-        // 注: 現在Runner.cs側に「しゃがみ(Crouch)処理」は存在しませんが、
-        // 将来的に moveInput.y の下入力などで実装された場合に備え、入力を入れ替えます。
-        // -------------------------------------------------------------
-        bool originalJump = isJumpPressed;
-        bool originalCrouch = moveInput.y < -0.5f;
-
-        // しゃがみ入力されていたならジャンプにする
-        isJumpPressed = originalCrouch;
-        
-        // ジャンプ入力されていたならしゃがみ（下入力）にする
-        if (originalJump)
-        {
-            moveInput.y = -1.0f;
-        }
-        else if (originalCrouch)
-        {
-            // ジャンプに変換したので、元のしゃがみ(下入力)は打ち消す
-            moveInput.y = 0f;
-        }
+        // ジャンプ・しゃがみの反転は廃止されたため、ジャンプはそのまま（普通にジャンプ）とします。
     }
 }

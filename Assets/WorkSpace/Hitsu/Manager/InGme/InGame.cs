@@ -411,6 +411,7 @@ public class InGame : MonoBehaviour
             allTheTrap.RemoveAll(trap => trap == null);
             // 既存 Trap をすべて削除
             foreach (GameObject trapGameObject in allTheTrap) if (trapGameObject != null) Destroy(trapGameObject);
+            allTheTrap.Clear();
         }
         // List を初期化（null の可能性にも対応）
         else if (allTheTrap == null) allTheTrap = new List<GameObject>();
@@ -442,7 +443,7 @@ public class InGame : MonoBehaviour
     {
         if (allTheTrap == null) return;
         if (allTheTrap.Contains(trapGameObject)) allTheTrap.Remove(trapGameObject);
-        else Debug.LogWarning($"{trapGameObject.name} はリストに追加されていません ");
+        // else Debug.LogWarning($"{trapGameObject.name} はリストに追加されていません ");
     }
     #endregion
 

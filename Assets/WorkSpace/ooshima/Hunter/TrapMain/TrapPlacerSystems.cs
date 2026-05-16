@@ -54,6 +54,12 @@ public abstract class TrapPlacer : MonoBehaviour
         {
             child.gameObject.layer = UseLayerName.runnerCantSeeLayer;
         }
+
+        Collider2D[] cols = GetComponentsInChildren<Collider2D>(true);
+        foreach (var c in cols) c.enabled = false;
+
+        Rigidbody2D[] rbs = GetComponentsInChildren<Rigidbody2D>(true);
+        foreach (var r in rbs) r.simulated = false;
     }
 
     public abstract void UpdatePreviewPosition(Vector3 mouseWorldPos);
@@ -121,6 +127,9 @@ public abstract class TrapPlacer : MonoBehaviour
                 if (r != null) r.enabled = true;
             }
         }
+
+        Collider2D[] cols = GetComponentsInChildren<Collider2D>(true);
+        foreach (var c in cols) c.enabled = true;
     }
 
 

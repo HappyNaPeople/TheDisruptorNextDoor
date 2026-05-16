@@ -281,6 +281,8 @@ public class HunterConTrollerPad : MonoBehaviour
             trap.Init();                                
             trap.SetUp();
 
+            InGame.Instance.AddTrap(choseTrap);             // 生成した罠をリストに登録する
+
             // 現在の設置情報をリセット
             createTrap = null;
             choseTrap = null;
