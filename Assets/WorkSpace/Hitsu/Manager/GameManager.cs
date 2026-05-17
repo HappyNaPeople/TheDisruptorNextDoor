@@ -499,6 +499,10 @@ public class GameManager : MonoBehaviour
         var playerRoot = index == 0 ? TitleUIManager.Instance.player01TitlePlayerCanvas.gameObject : TitleUIManager.Instance.player02TitlePlayerCanvas.gameObject;
         var firstSelect = index == 0 ? TitleUIManager.Instance.player01TitlePlayerCanvas.startButton.gameObject : TitleUIManager.Instance.player02TitlePlayerCanvas.startButton.gameObject;
 
+        var canvas = index == 0 ? TitleUIManager.Instance.player01TitlePlayerCanvas : TitleUIManager.Instance.player02TitlePlayerCanvas;
+
+        canvas.inputData = playerInputData;
+
         playerInputData.SetInputCamera(camera);
         playerInputData.SetPlayerRoot(playerRoot);
 
