@@ -47,7 +47,7 @@ public class CameraData
     /// </summary>
     public void Ready()
     {
-        cinemachineCamera.Lens.OrthographicSize = 9;            // 演出用ズーム値
+        cinemachineCamera.Lens.OrthographicSize = 8;            // 演出用ズーム値
         cinemaChineFollow.FollowOffset = readyV3;               // 演出用FollowOffset
     }
 
@@ -430,7 +430,7 @@ public class InGame : MonoBehaviour
         // 新しい Trap を追加
         allTheTrap.Add(trapGameObject);
         // 最大数を超えた場合、一番古い Trap を削除
-        if (allTheTrap.Count > trapMax) Destroy(allTheTrap[0]);
+        //if (allTheTrap.Count > trapMax) Destroy(allTheTrap[0]);
     }
     /// <summary>
     /// Trap をリストから削除
@@ -450,7 +450,9 @@ public class InGame : MonoBehaviour
     #region TurnInit
     [Header("StartingCutScene")]
     /// <summary> 開始演出用オブジェクト </summary>
-    public GameObject startingCutSceneOb;
+    public GameObject hunterInform;
+    public GameObject runnerInform;
+
     /// <summary> 開始演出Coroutine </summary>
     private Coroutine startingCutScene;
     /// <summary>
@@ -503,11 +505,14 @@ public class InGame : MonoBehaviour
     /// </summary>
     private IEnumerator StartingCutScene()
     {
-        // 開始演出表示
-        startingCutSceneOb.SetActive(true);
+
         // カメラをReady演出状態へ変更
         runnerCamera.Ready();
         hunterCamera.Ready();
+        yield return null;
+
+        runnerInform.SetActive(true);
+        hunterInform.SetActive(true);
 
         // 演出時間初期化
         float cutSceneTimer = 0;
@@ -526,8 +531,8 @@ public class InGame : MonoBehaviour
         hunterCamera.ReSetLens();
 
         // 開始演出非表示
-        startingCutSceneOb.SetActive(false);
-
+        runnerInform.SetActive(false);
+        hunterInform.SetActive(false);
         // ゲーム開始
         StartGame();
     }
@@ -687,8 +692,9 @@ public class InGame : MonoBehaviour
     /// <summary>
     /// Runnerがゴールに到達した時の処理
     /// </summary>
-    public void ThroughGoal()
+    public IEnumerator ThroughGoal()
     {
+        yield return new WaitForSeconds(2.5f);
         RecordPlayerData(true);         // ゴール到達として結果記録
         TurnSwitch();                   // ターン切り替え
     }

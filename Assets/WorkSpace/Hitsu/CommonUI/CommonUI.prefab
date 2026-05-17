@@ -54,7 +54,7 @@ MonoBehaviour:
   checkPointAnimator:
   - {fileID: 8949318874520176556}
   - {fileID: 5066147709672341691}
-  - {fileID: 2256370917172112818}
+  - {fileID: 0}
   header: {fileID: 6486681496575063408}
   test: 0
 --- !u!212 &4124247957595668633
@@ -355,6 +355,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7383880100661541591}
     m_Modifications:
+    - target: {fileID: 2696883143555604324, guid: a5320f3b2c5c82f45ba5c26519d02a5a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.910441
+      objectReference: {fileID: 0}
     - target: {fileID: 3280797053980180735, guid: a5320f3b2c5c82f45ba5c26519d02a5a, type: 3}
       propertyPath: fillBar_Head_Animator
       value: 
@@ -399,6 +403,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7042215924172968382, guid: a5320f3b2c5c82f45ba5c26519d02a5a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.0810003
+      objectReference: {fileID: 0}
     - target: {fileID: 8559654803364369719, guid: a5320f3b2c5c82f45ba5c26519d02a5a, type: 3}
       propertyPath: m_Name
       value: FillBar
@@ -408,11 +416,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5320f3b2c5c82f45ba5c26519d02a5a, type: 3}
---- !u!95 &2256370917172112818 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9005489202219117648, guid: a5320f3b2c5c82f45ba5c26519d02a5a, type: 3}
-  m_PrefabInstance: {fileID: 7181501787830092258}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &5066147709672341691 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2731225726003954009, guid: a5320f3b2c5c82f45ba5c26519d02a5a, type: 3}

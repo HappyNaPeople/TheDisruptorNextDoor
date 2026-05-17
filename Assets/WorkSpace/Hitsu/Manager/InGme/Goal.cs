@@ -13,7 +13,7 @@ public class Goal : MonoBehaviour
                 GameObject effect = Instantiate(effectPrefab, transform.position, Quaternion.identity);
                 AudioManager.Instance.PlaySfx(sfxData);
             }
-            InGame.Instance.ThroughGoal();
+            StartCoroutine(InGame.Instance.ThroughGoal());
         }
     }
 }
