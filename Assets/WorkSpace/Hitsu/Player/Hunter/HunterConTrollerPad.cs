@@ -266,7 +266,7 @@ public class HunterConTrollerPad : MonoBehaviour
                 // プレビュー色更新
                 placer.UpdatePreviewColor(canPlacePreview);
                 // 設置・入力検知
-                if (inputData.wasPutPressedThisFrame && canPlacePreview)
+                if (inputData.isPutPressed && canPlacePreview)
                 {
                     break;
                 }
