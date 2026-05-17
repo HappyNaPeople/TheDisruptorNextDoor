@@ -430,7 +430,7 @@ public class InGame : MonoBehaviour
         // 新しい Trap を追加
         allTheTrap.Add(trapGameObject);
         // 最大数を超えた場合、一番古い Trap を削除
-        if (allTheTrap.Count > trapMax) Destroy(allTheTrap[0]);
+        // if (allTheTrap.Count > trapMax) Destroy(allTheTrap[0]);
     }
     /// <summary>
     /// Trap をリストから削除
