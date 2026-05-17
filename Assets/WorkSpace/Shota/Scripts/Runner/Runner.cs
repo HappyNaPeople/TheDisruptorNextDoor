@@ -14,13 +14,19 @@ public class Runner : MonoBehaviour
     [Header("プレイヤーのステータス")]
     public float runSpeed = 10f;
     public float jumpHeight = 2f;
+    public float jumpCutMultiplier = 0.5f;
     public float gravity = -9.8f;
     public float groundDamping = 20f;
     public float inAirDamping = 5f;
     public Vector2 attackBoxOffset = Vector2.zero;
     public Vector2 attackBoxSize = Vector2.zero;
 
-    
+    [Header("リスポーン設定")]
+    public Transform respawnPoint = null;
+    public float respawnInvincibleDuration = 3f;
+
+    Coroutine _invincibleCoroutine;
+
     [Tooltip("パンチの威力（罠の寿命を何秒削るか）")]
     public float punchDamage = 5f;
 
@@ -72,10 +78,6 @@ public class Runner : MonoBehaviour
     }
 
 
-    [Header("リスポーン設定")]
-    public Transform respawnPoint = null;
-
-
     // private
     InputDevice _inputDevice;
     CharacterController2D _controller;
@@ -103,7 +105,7 @@ public class Runner : MonoBehaviour
         _controller = GetComponent<CharacterController2D>();
         _inputDevice = GameManager.inputDevice;
         _animator = GetComponent<Animator>();
-        
+
         activeModifiers.Clear();
 
         _controller.onTriggerEnterEvent += OnControllerTriggerEnter;
@@ -171,16 +173,45 @@ public class Runner : MonoBehaviour
 
     public void Respawn()
     {
-        if (isInvincible) return;
-
         ChangeState(PlayerState.Normal);
         _animator.SetTrigger("Respawn");
-        if (respawnPoint != null) transform.position = respawnPoint.position;
-        else transform.position = Vector2.zero;
+
+        if (respawnPoint != null)
+        {
+            transform.position = respawnPoint.position;
+        }
+        else
+        {
+            transform.position = Vector2.zero;
+        }
 
         var scale = transform.localScale;
         transform.localScale = new Vector2(Mathf.Abs(scale.x), scale.y);
+
+        _velocity = Vector2.zero;
         activeModifiers.Clear();
+
+        StartRespawnInvincible();
+    }
+
+    void StartRespawnInvincible()
+    {
+        if (_invincibleCoroutine != null)
+        {
+            StopCoroutine(_invincibleCoroutine);
+        }
+
+        _invincibleCoroutine = StartCoroutine(RespawnInvincibleCoroutine());
+    }
+
+    IEnumerator RespawnInvincibleCoroutine()
+    {
+        isInvincible = true;
+
+        yield return new WaitForSeconds(respawnInvincibleDuration);
+
+        isInvincible = false;
+        _invincibleCoroutine = null;
     }
 
     #region move
@@ -214,6 +245,7 @@ public class Runner : MonoBehaviour
         // 2. 現在のステートに基づいて X 速度を決定する
         CheckMoveX(dt);
         CheckJump();
+        CheckVariableJumpHeight();
         CheckPunch();
 
         // 3. 重力を適用
@@ -243,12 +275,14 @@ public class Runner : MonoBehaviour
     void HandleGroundedState()
     {
         if (_isPhysicsReserved) return;
+
         if (_controller.isGrounded)
         {
-            // ノックバック中なら通常状態に戻す
-            if (currentState == PlayerState.Knockback || currentState == PlayerState.Jumping)
+            if (currentState == PlayerState.Knockback ||
+                currentState == PlayerState.Jumping)
             {
                 currentState = PlayerState.Normal;
+                _velocity.y = 0f;
                 return;
             }
 
@@ -273,10 +307,16 @@ public class Runner : MonoBehaviour
                 break;
 
             case PlayerState.Attacking:
-                // 攻撃中は急に止まるか、少しだけ滑らせるか
-                ApplyFriction(dt);
+                if (_controller.isGrounded)
+                {
+                    ApplyFriction(dt);
+                }
+                else
+                {
+                    ApplyInputMovement();
+                }
                 break;
-                
+
             case PlayerState.Grabbed:
                 // 捕獲中（自力移動不可・モディファイアが勝手に velocity を書き換える）
                 break;
@@ -304,20 +344,36 @@ public class Runner : MonoBehaviour
         }
     }
 
+    void CheckVariableJumpHeight()
+    {
+        if (currentState != PlayerState.Jumping &&
+            currentState != PlayerState.Attacking)
+        {
+            return;
+        }
+
+        if (!inputData.wasJumpReleasedThisFrame) return;
+
+        // 上昇中にジャンプボタンを離したら、上昇速度を削る
+        if (_velocity.y > 0f)
+        {
+            _velocity.y *= jumpCutMultiplier;
+        }
+    }
+
     void CheckPunch()
     {
         if (_isPhysicsReserved) return;
         if (currentState == PlayerState.Grabbed) return; // 捕獲中はパンチ不可
-        if (!inputData.isPunchPressed) return;
+        if (currentState == PlayerState.Dead) return;
+        if (currentState == PlayerState.Knockback) return;
+        if (!inputData.wasPunchPressedThisFrame) return;
         if (currentState == PlayerState.Attacking) return;
 
-        // パンチ処理
-        if (_controller.isGrounded)
-        {
-            _animator.SetTrigger("Punch");
+        // 地上でも空中でもパンチ可能
+        _animator.SetTrigger("Punch");
 
-            ChangeState(PlayerState.Attacking);
-        }
+        ChangeState(PlayerState.Attacking);
     }
 
     void ApplyInputMovement()
@@ -407,11 +463,11 @@ public class Runner : MonoBehaviour
         Transform fxTrans = Instantiate(dieFXPrefab, transform.position, Quaternion.identity).transform;
         fxTrans.Translate(0f, -0.5f, 0f);
 
-        while(time < dieFXDuration)
+        while (time < dieFXDuration)
         {
             var dissolve = time / dieFXDuration;
             dissolveMat.SetFloat("_Dissolve", dissolve);
-            
+
             time += Time.deltaTime;
             yield return null;
         }
@@ -442,7 +498,7 @@ public class Runner : MonoBehaviour
 
     private void OnDisable()
     {
-        if(dissolveMat != null)
+        if (dissolveMat != null)
         {
             dissolveMat.SetFloat("_Dissolve", 0f);
         }

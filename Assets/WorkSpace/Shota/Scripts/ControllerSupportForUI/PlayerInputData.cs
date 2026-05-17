@@ -15,7 +15,9 @@ public class PlayerInputData : MonoBehaviour
     public Vector2 chooseInput;
     public float switchPageInput;
     public bool isJumpPressed;
+    public bool wasJumpReleasedThisFrame;
     public bool isPunchPressed;
+    public bool wasPunchPressedThisFrame;
     public bool isPutPressed;              // 押している間 true
     public bool wasPutPressedThisFrame;    // 押された瞬間だけ true
 
@@ -52,6 +54,8 @@ public class PlayerInputData : MonoBehaviour
     private void LateUpdate()
     {
         wasPutPressedThisFrame = false;
+        wasPunchPressedThisFrame = false;
+        wasJumpReleasedThisFrame = false;
     }
 
     void Assign()
@@ -164,12 +168,24 @@ public class PlayerInputData : MonoBehaviour
         else if (context.action.name == "Jump")
         {
             if (context.phase == InputActionPhase.Performed) isJumpPressed = true;
-            if (context.phase == InputActionPhase.Canceled) isJumpPressed = false;
+            if (context.phase == InputActionPhase.Canceled)
+            {
+                isJumpPressed = false;
+                wasJumpReleasedThisFrame = true;
+            }
         }
         else if (context.action.name == "Punch")
         {
-            if (context.phase == InputActionPhase.Performed) isPunchPressed = true;
-            if (context.phase == InputActionPhase.Canceled) isPunchPressed = false;
+            if (context.phase == InputActionPhase.Performed)
+            {
+                isPunchPressed = true;
+                wasPunchPressedThisFrame = true;
+            }
+
+            if (context.phase == InputActionPhase.Canceled)
+            {
+                isPunchPressed = false;
+            }
         }
         else if (context.action.name == "Put")
         {
