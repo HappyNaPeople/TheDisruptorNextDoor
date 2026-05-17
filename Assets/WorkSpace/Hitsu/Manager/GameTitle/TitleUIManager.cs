@@ -46,8 +46,6 @@ public class TitleUIManager : MonoBehaviour
     /// Player01 Trap 選択 UI
     /// </summary>
     public TitlePlayerCanvas player01TitlePlayerCanvas;
-
-
     // ==============================
     // Player02
     // ==============================
@@ -135,6 +133,7 @@ public class TitleUIManager : MonoBehaviour
         {
             turn.gameObject.SetActive(true);
         }
+
         player01TitlePlayerCanvas.ChangeState(TitlePlayerCanvas.TitlePlayerState.SelectingSide);
         player02TitlePlayerCanvas.ChangeState(TitlePlayerCanvas.TitlePlayerState.SelectingSide);
 
@@ -163,8 +162,8 @@ public class TitleUIManager : MonoBehaviour
         // --- 修正後 ---
 
         // 1. まずUIの初期化（ボタンの中身の生成や表示設定）を先に行う
-        player01TitlePlayerCanvas.TitleTrapCanvas_Init();
-        player02TitlePlayerCanvas.TitleTrapCanvas_Init();
+        player01TitlePlayerCanvas.TitleTrapCanvas_Init(_player01.inputData);
+        player02TitlePlayerCanvas.TitleTrapCanvas_Init(_player02.inputData);
 
         // 2. UIの生成完了を1フレームだけ待つ（超重要）
         yield return null;

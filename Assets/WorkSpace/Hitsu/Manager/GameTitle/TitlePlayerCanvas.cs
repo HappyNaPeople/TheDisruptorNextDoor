@@ -380,7 +380,7 @@ public class TitlePlayerCanvas : MonoBehaviour
     /// <summary>
     /// TitleCanvas ?期化
     /// </summary>
-    public void TitleTrapCanvas_Init()
+    public void TitleTrapCanvas_Init(PlayerInputData playerInputData)
     {
         // 選択可能な罠リストを構築（除外リストに含まれないものだけを抽出）
         availableTraps.Clear();
@@ -392,13 +392,11 @@ public class TitlePlayerCanvas : MonoBehaviour
                 availableTraps.Add(trap);
             }
         }
+        inputData = playerInputData;
 
         // UI 更新
         UpdateChoseTrap();
         UpdateCanChooseTrap();
-
-
-
 
         StartCoroutine(Timer());
     }
@@ -461,8 +459,6 @@ public class TitlePlayerCanvas : MonoBehaviour
     private void Update()
     {
         SwitchPage();
-
-
     }
 
 
