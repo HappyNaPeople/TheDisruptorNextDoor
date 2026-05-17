@@ -35,6 +35,8 @@ public class TitlePlayerCanvas : MonoBehaviour
     /// </summary>
     public Player targetPlayer;
 
+    public PlayerInputData inputData;
+
     /// <summary>
     /// 残りコスト表示
     /// </summary>
@@ -395,6 +397,9 @@ public class TitlePlayerCanvas : MonoBehaviour
         UpdateChoseTrap();
         UpdateCanChooseTrap();
 
+
+
+
         StartCoroutine(Timer());
     }
 
@@ -425,13 +430,25 @@ public class TitlePlayerCanvas : MonoBehaviour
         }
     }
 
-    private void SwitchPage(float inputValue)
+    public bool switchPage = false;
+    private void SwitchPage()
     {
+        if (inputData == null) return;
+        float inputValue = inputData.switchPageInput;
         float testValue = Mathf.Abs(inputValue);
-        if(testValue<0.9f) return;
+
+        if(testValue<0.9f)
+        {
+            if (switchPage) switchPage = false;
+            return;
+        }
+
+        if (switchPage) return;
+        switchPage = true;
 
         int useValue = inputValue < 0 ? -1 : 1;
         int nextPage = canChooseTrapNowPage + useValue;
+
         if (nextPage > showCanChooseTrapPageLimit || nextPage < 0) return;
 
         canChooseTrapNowPage = nextPage;
@@ -443,12 +460,9 @@ public class TitlePlayerCanvas : MonoBehaviour
 
     private void Update()
     {
-        if (test)
-        {
-            test = false;
-            SwitchPage(testInputValue);
-        }
-        
+        SwitchPage();
+
+
     }
 
 
