@@ -424,4 +424,32 @@ public class TitlePlayerCanvas : MonoBehaviour
                 break;
         }
     }
+
+    private void SwitchPage(float inputValue)
+    {
+        float testValue = Mathf.Abs(inputValue);
+        if(testValue<0.9f) return;
+
+        int useValue = inputValue < 0 ? -1 : 1;
+        int nextPage = canChooseTrapNowPage + useValue;
+        if (nextPage > showCanChooseTrapPageLimit || nextPage < 0) return;
+
+        canChooseTrapNowPage = nextPage;
+        UpdateCanChooseTrap();
+    }
+
+    public bool test = false;
+    public float testInputValue;
+
+    private void Update()
+    {
+        if (test)
+        {
+            test = false;
+            SwitchPage(testInputValue);
+        }
+        
+    }
+
+
 }
