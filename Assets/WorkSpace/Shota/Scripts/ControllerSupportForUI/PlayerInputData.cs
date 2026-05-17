@@ -13,10 +13,13 @@ public class PlayerInputData : MonoBehaviour
 
     public Vector2 moveInput;
     public Vector2 chooseInput;
+    public float switchPageInput;
     public bool isJumpPressed;
     public bool isPunchPressed;
     public bool isPutPressed;              // 押している間 true
     public bool wasPutPressedThisFrame;    // 押された瞬間だけ true
+
+
 
     private void Awake()
     {
@@ -153,6 +156,10 @@ public class PlayerInputData : MonoBehaviour
         else if (context.action.name == "Choose")
         {
             chooseInput = context.ReadValue<Vector2>();
+        }
+        else if (context.action.name == "SwitchPage")
+        {
+            switchPageInput = context.ReadValue<float>();
         }
         else if (context.action.name == "Jump")
         {

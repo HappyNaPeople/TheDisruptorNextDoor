@@ -35,6 +35,8 @@ public class TitlePlayerCanvas : MonoBehaviour
     /// </summary>
     public Player targetPlayer;
 
+    public PlayerInputData inputData;
+
     /// <summary>
     /// 残りコスト表示
     /// </summary>
@@ -61,7 +63,7 @@ public class TitlePlayerCanvas : MonoBehaviour
     /// <summary>
     /// 現在使用可能なコスト
     /// </summary>
-    private int nowCost = Backpack.maxTrapCount;
+    //private int nowCost = Backpack.maxTrapCount;
 
 
     /// <summary>
@@ -169,7 +171,8 @@ public class TitlePlayerCanvas : MonoBehaviour
     private void UpdateChoseTrap()
     {
         // 残りコスト表示更新
-        costText.text = $"Cost Left : {nowCost:D2}";
+        //costText.text = $"Cost Left : {nowCost:D2}";
+        costText.text = "";
         int choseTrapMax = playerTrap.Count > choseTrap.Count ? choseTrap.Count : playerTrap.Count;
         for (int index = 0; index < choseTrap.Count; index++)
         {
@@ -239,12 +242,14 @@ public class TitlePlayerCanvas : MonoBehaviour
 
     private void AddToPlayerTrap(TrapName targetTrap)
     {
-        // コスト計算
-        int checkCost = nowCost - GameManager.allTrap[targetTrap].cost;
-        // コスト不足
-        if (checkCost < 0 || playerTrap.Contains(targetTrap) || playerTrap.Count == 8) return;
-        // コスト更新
-        nowCost = checkCost;
+        //// コスト計算
+        //int checkCost = nowCost - GameManager.allTrap[targetTrap].cost;
+        //// コスト不足
+        //if (checkCost < 0 || playerTrap.Contains(targetTrap) || playerTrap.Count == 8) return;
+        //// コスト更新
+        //nowCost = checkCost;
+
+        if(playerTrap.Contains(targetTrap) || playerTrap.Count == 8) return;
         playerTrap.Add(targetTrap);
 
         // UI 更新
@@ -392,6 +397,9 @@ public class TitlePlayerCanvas : MonoBehaviour
         UpdateChoseTrap();
         UpdateCanChooseTrap();
 
+
+
+
         StartCoroutine(Timer());
     }
 
@@ -421,4 +429,41 @@ public class TitlePlayerCanvas : MonoBehaviour
                 break;
         }
     }
+
+    public bool switchPage = false;
+    private void SwitchPage()
+    {
+        if (inputData == null) return;
+        float inputValue = inputData.switchPageInput;
+        float testValue = Mathf.Abs(inputValue);
+
+        if(testValue<0.9f)
+        {
+            if (switchPage) switchPage = false;
+            return;
+        }
+
+        if (switchPage) return;
+        switchPage = true;
+
+        int useValue = inputValue < 0 ? -1 : 1;
+        int nextPage = canChooseTrapNowPage + useValue;
+
+        if (nextPage > showCanChooseTrapPageLimit || nextPage < 0) return;
+
+        canChooseTrapNowPage = nextPage;
+        UpdateCanChooseTrap();
+    }
+
+    public bool test = false;
+    public float testInputValue;
+
+    private void Update()
+    {
+        SwitchPage();
+
+
+    }
+
+
 }
