@@ -8,7 +8,7 @@ FallRock,Texture/Traps/SR_FallRock_01,2,FallRock,Prefabs/Traps/FallRock
 PushPad,Texture/Traps/SR_PushPad_01,1,Push,Prefabs/Traps/PushPad
 MagicButterfly,Texture/Traps/SR_Butterfly_01,4,MagicButterfly,Prefabs/Traps/MagicButterfly
 WindBlast,Texture/Traps/SR_WindBlast_01,4,Wind,Prefabs/Traps/WindBlast
-BlackHole,Texture/Traps/SR_BlackHole_01,6,BlackHole,Prefabs/Traps/BlackHole
+BlackHole,Texture/Traps/SR_BlackHole_01,8,BlackHole,Prefabs/Traps/BlackHole
 FireBar,Texture/Traps/FireBar,5,FireBar,Prefabs/Traps/FireBar
 FrenzyArea,Texture/Traps/SR_Frenzy_01,1,FrenzyArea,Prefabs/Traps/FrenzyArea
 ConfuseArea,Texture/Traps/SR_Confuse_01,3,ConfuseArea,Prefabs/Traps/ConfuseArea
