@@ -564,7 +564,9 @@ public class InGame : MonoBehaviour
     #region GameSet
     [Header("GameSet")]
     /// <summary> ゲーム終了演出用オブジェクト </summary>
-    public GameObject gameSetCutSceneOb;
+    public GameObject hunter_gameSetCutScene;
+    public GameObject runner_gameSetCutScene;
+
 
     /// <summary>
     /// ゲーム終了時の演出処理
@@ -576,7 +578,8 @@ public class InGame : MonoBehaviour
         hunterCamera.Ready();
 
         // 終了演出表示
-        gameSetCutSceneOb.SetActive(true);
+        hunter_gameSetCutScene.SetActive(true);
+        runner_gameSetCutScene.SetActive(true);
 
         float timer = 0;
         // 一定時間待機
@@ -585,6 +588,9 @@ public class InGame : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
+
+        hunter_gameSetCutScene.SetActive(false);
+        runner_gameSetCutScene.SetActive(false);
         // リザルトシーンへ遷移
         GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene(SceneState.Release));
 
@@ -744,6 +750,8 @@ public class InGame : MonoBehaviour
         MapInit();                              // マップ初期化
         AllCameraInit();                        // カメラ初期化
         PlayerInit();                           // プレイヤー初期化
+        hunter_gameSetCutScene.SetActive(false);
+        runner_gameSetCutScene.SetActive(false);
         gameStage = GameStage.InGameInitDone;   // 初期化完了状態へ変更
         TurnInit();                             // 最初のターン開始
     }
