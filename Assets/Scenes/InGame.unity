@@ -471,11 +471,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7476a592872cd524c9c31a35ffa1c8f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputData
---- !u!1 &464867135 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7140603524145596402, guid: d558b946d057a3941b690cd269b82dd8, type: 3}
-  m_PrefabInstance: {fileID: 1247325655}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &567552818
 GameObject:
   m_ObjectHideFlags: 0
@@ -2349,11 +2344,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8575781566275455498, guid: d558b946d057a3941b690cd269b82dd8, type: 3}
   m_PrefabInstance: {fileID: 1561220292}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1561220294 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7140603524145596402, guid: d558b946d057a3941b690cd269b82dd8, type: 3}
-  m_PrefabInstance: {fileID: 1561220292}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1581944928
 GameObject:
   m_ObjectHideFlags: 0
@@ -2698,8 +2688,7 @@ MonoBehaviour:
   passCheckPoint: 0
   hunterInform: {fileID: 1716118394}
   runnerInform: {fileID: 1673841814}
-  hunter_gameSetCutScene: {fileID: 1561220294}
-  runner_gameSetCutScene: {fileID: 464867135}
+  gameSetCutSceneOb: {fileID: 0}
 --- !u!4 &1879561073
 Transform:
   m_ObjectHideFlags: 0
@@ -10779,13 +10768,21 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 584086943}
+    - target: {fileID: 8174422333046900074, guid: 2740380ba213d6740944ddc70f9c0fa6, type: 3}
+      propertyPath: m_ChunkCullingBounds.x
+      value: 0.0031446815
+      objectReference: {fileID: 0}
+    - target: {fileID: 8174422333046900074, guid: 2740380ba213d6740944ddc70f9c0fa6, type: 3}
+      propertyPath: m_ChunkCullingBounds.y
+      value: 0.0031446815
+      objectReference: {fileID: 0}
     - target: {fileID: 8363095009917348581, guid: 2740380ba213d6740944ddc70f9c0fa6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.58
+      value: -1.12
       objectReference: {fileID: 0}
     - target: {fileID: 8608415927546750354, guid: 2740380ba213d6740944ddc70f9c0fa6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.72
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
