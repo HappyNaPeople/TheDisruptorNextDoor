@@ -182,11 +182,13 @@ public class HunterConTrollerPad : MonoBehaviour
     /// </summary>
     private void TrapIntroduce(TrapName trap)
     {
-        string trapName = $"Trap Name : {trap.ToString()}\n";                           // 罠名
-        string cost = $"Need Cost : {GameManager.allTrap[trap].cost}\n";                // 必要コスト
-        string introduce = $"Introduce : {GameManager.allTrap[trap].information}";      // 罠説明
+        string trapName = $"Trap Name : {trap.ToString()}\n";                               // 罠名
+        string cost = $"Need Cost : {GameManager.allTrap[trap].cost}\n";                    // 必要コスト
+        string introduce = $"Introduce : {GameManager.allTrap[trap].inGame_information}";   // 罠説明
 
-        trap_Introduce.text = trapName + cost + introduce;                              // UIへ反映
+        trap_Introduce.text = trapName + cost + introduce;                                  // UIへ反映
+
+        Debug.Log(trap_Introduce.text);
     }
     #endregion
 

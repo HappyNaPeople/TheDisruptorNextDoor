@@ -1,27 +1,21 @@
-﻿罠の名前,写真(Path),コース,説明,プレハブ(Path)
-Spikes,Texture/Traps/SR_Spike_01,1,床や天井に設置できて当たると死ぬ,Prefabs/Traps/Spikes
-FrostArea,Texture/Traps/SR_Stick-Floor_01,1,FrostArea,Prefabs/Traps/FrostArea
-GlueArea,Texture/Traps/SR_Frost-Floor_01,1,GlueArea,Prefabs/Traps/GlueArea
-Bomb,Texture/Traps/SR_Red-Bomb_01,3,爆破して周囲のPlayerを倒す,Prefabs/Traps/Bomb
-SensorBomb,Texture/Traps/SR_Blue-Bomb_01,2,爆弾の周囲に入ると発動して周囲のプレイヤーを倒す,Prefabs/Traps/SensorBomb
-FallRock,Texture/Traps/SR_FallRock_01,2,"上下に動く岩
-当たると死ぬ",Prefabs/Traps/FallRock
-PushPad,Texture/Traps/SR_PushPad_01,1,当たったら後方に吹き飛ぶ,Prefabs/Traps/PushPad
-MagicButterfly,Texture/Traps/SR_Butterfly_01,4,"一定時間プレイヤーーのことを自動追尾する
-当たったら死ぬ",Prefabs/Traps/MagicButterfly
-WindBlast,Texture/Traps/SR_WindBlast_01,4,"進行方向と逆向きに風を吹かせる
-進行の妨げをする",Prefabs/Traps/WindBlast
-BlackHole,Texture/Traps/SR_BlackHole_01,8,近くのプレイヤーを吸い込み倒す,Prefabs/Traps/BlackHole
-FireBar,Texture/Traps/FireBar,5,"火の棒が回転している
-当たると死ぬ",Prefabs/Traps/FireBar
-FrenzyArea,Texture/Traps/SR_Frenzy_01,1,エリアに入ると一定時間、異常パワーアップする,Prefabs/Traps/FrenzyArea
-ConfuseArea,Texture/Traps/SR_Confuse_01,3,エリアに入ると操作が一定時間逆転する,Prefabs/Traps/ConfuseArea
-InvisibleArea,Texture/Traps/SR_Invisible_01,1,"エリア内に入ると一定時間透明化する
-※妨害側は見える",Prefabs/Traps/InvisibleArea
-InkTrap,Texture/Traps/SR_Ink_01,3,"イカをステージ上に設置して、プレイヤーが近づくと追いかける
-追いつくとランナー側の画面中央にスミを吐く",Prefabs/Traps/InkTrap
-SpikeBomb,Texture/Traps/SR_Spike-Bomb_01,3,周囲にとげをまき散らす,Prefabs/Traps/SpikeBomb
-FrostBomb,Texture/Traps/SR_Frost-Bomb_01,1,周囲に氷の床をまき散らす,Prefabs/Traps/FrostBomb
-GlueBomb,Texture/Traps/SR_Glue-Bomb_01,1,周囲に粘着床をまき散らす,Prefabs/Traps/GlueBomb
-Shell,Texture/Traps/FallRock1,4,Shell(Koura),Prefabs/Traps/Shell
-WoodBox,Texture/Traps/WoodBox,1,WoodBox,Prefabs/Traps/WoodBox
+﻿罠の名前,写真(Path),コース,説明,プレハブ(Path),インゲーム内の説明
+Spikes,Texture/Traps/SR_Spike_01,1,Place on floors\nor ceilings.\nKills Runner\non contact.,Prefabs/Traps/Spikes,Can be placed on floors or ceilings.\nKills the Runner on contact.
+FrostArea,Texture/Traps/SR_Stick-Floor_01,1,FrostArea,Prefabs/Traps/FrostArea,FrostArea
+GlueArea,Texture/Traps/SR_Frost-Floor_01,1,GlueArea,Prefabs/Traps/GlueArea,GlueArea
+Bomb,Texture/Traps/SR_Red-Bomb_01,3,Explodes after\n3 seconds.\nDefeats nearby\nRunner.,Prefabs/Traps/Bomb,Explodes 3 seconds after being placed.\nDefeats nearby Runner.
+SensorBomb,Texture/Traps/SR_Blue-Bomb_01,2,Triggers on\nnearby player.\nExplodes and\ndefeats Runners.,Prefabs/Traps/SensorBomb,Triggers when a player enters its range.\nExplodes and defeats nearby Runner.
+FallRock,Texture/Traps/SR_FallRock_01,2,Moves up\nand down.\nKills Runner\non contact.,Prefabs/Traps/FallRock,A rock that moves up and down.\nKills the Runner on contact.
+PushPad,Texture/Traps/SR_PushPad_01,1,Knocks Runner\nback on contact.,Prefabs/Traps/PushPad,Knocks the Runner backward on contact.
+MagicButterfly,Texture/Traps/SR_Butterfly_01,4,Chases Runner\nafter placement\nuntil it fades.\nKills on contact.,Prefabs/Traps/MagicButterfly,After being placed\nit automatically chases the Runner\nuntil it disappears and Kills the Runner on contact.
+WindBlast,Texture/Traps/SR_WindBlast_01,4,Blows headwind\nagainst Runner.\nSlows progress.,Prefabs/Traps/WindBlast,Blows wind against the Runner’s movement direction.\nSlows their progress.
+BlackHole,Texture/Traps/SR_BlackHole_01,8,Pulls in Runner\nand defeats them.,Prefabs/Traps/BlackHole,Pulls in nearby Runner and defeats them.
+FireBar,Texture/Traps/FireBar,5,Rotating\nflaming bar.\nKills Runner\non contact.,Prefabs/Traps/FireBar,A flaming bar rotates around.\nKills the Runner on contact.
+FrenzyArea,Texture/Traps/SR_Frenzy_01,1,Enter area\nto gain abnormal\npower-up\nfor limited time.,Prefabs/Traps/FrenzyArea,Enter the area to gain an abnormal power-up for a limited time.
+ConfuseArea,Texture/Traps/SR_Confuse_01,3,Reverses Runner\ncontrols when\nentering area.\nLimited time.,Prefabs/Traps/ConfuseArea,Reverses Runnner  controls for a limited time \nwhen entering the area.
+InvisibleArea,Texture/Traps/SR_Invisible_01,1,Makes Runner\ninvisible.\nLimited time.\nHunter can\nstill see them.,Prefabs/Traps/InvisibleArea,Entering the area makes the Runner invisible for a limited time.\nThe Hunter can still see them.
+InkTrap,Texture/Traps/SR_Ink_01,3,Places squid.\nChases Runner.\nSprays ink\non screen.,Prefabs/Traps/InkTrap,Places a squid on the stage.\nChases the Runner when they get close.\nSprays ink on the Runner's screen if it catches them.
+SpikeBomb,Texture/Traps/SR_Spike-Bomb_01,3,Spreads spikes\nnearby.,Prefabs/Traps/SpikeBomb,Scatters spikes in the surrounding area.
+FrostBomb,Texture/Traps/SR_Frost-Bomb_01,1,Scatters ice\npatches nearby.,Prefabs/Traps/FrostBomb,Scatters ice patches in the surrounding area.
+GlueBomb,Texture/Traps/SR_Glue-Bomb_01,1,Scatters sticky\npatches nearby.,Prefabs/Traps/GlueBomb,Scatters sticky patches in the surrounding area.
+Shell,Texture/Traps/FallRock1,4,Shell(Koura),Prefabs/Traps/Shell,Shell(Koura)
+WoodBox,Texture/Traps/WoodBox,1,WoodBox,Prefabs/Traps/WoodBox,WoodBox

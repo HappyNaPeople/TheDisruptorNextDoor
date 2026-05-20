@@ -727,6 +727,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hunter_Inform
       objectReference: {fileID: 0}
+    - target: {fileID: 6216080737789243336, guid: 222051d27470c944a86c531f9d4a6f6b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2052,6 +2056,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8575781566275455498, guid: d558b946d057a3941b690cd269b82dd8, type: 3}
   m_PrefabInstance: {fileID: 1247325655}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1247325657 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7140603524145596402, guid: d558b946d057a3941b690cd269b82dd8, type: 3}
+  m_PrefabInstance: {fileID: 1247325655}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1285212542
 GameObject:
   m_ObjectHideFlags: 0
@@ -2142,7 +2151,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1964789921996323474, guid: 24f4a72e9ce130b42beafe4d97307f9c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3109064141350933614, guid: 24f4a72e9ce130b42beafe4d97307f9c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2342,6 +2351,11 @@ PrefabInstance:
 --- !u!4 &1561220293 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8575781566275455498, guid: d558b946d057a3941b690cd269b82dd8, type: 3}
+  m_PrefabInstance: {fileID: 1561220292}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1561220294 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7140603524145596402, guid: d558b946d057a3941b690cd269b82dd8, type: 3}
   m_PrefabInstance: {fileID: 1561220292}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1581944928
@@ -2688,7 +2702,8 @@ MonoBehaviour:
   passCheckPoint: 0
   hunterInform: {fileID: 1716118394}
   runnerInform: {fileID: 1673841814}
-  gameSetCutSceneOb: {fileID: 0}
+  hunter_gameSetCutScene: {fileID: 1561220294}
+  runner_gameSetCutScene: {fileID: 1247325657}
 --- !u!4 &1879561073
 Transform:
   m_ObjectHideFlags: 0
@@ -2885,6 +2900,19 @@ PrefabInstance:
     - target: {fileID: 1165553870702450526, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1248306803894040466, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
+      propertyPath: m_text
+      value: "Trap Name :  Trap\nCost: \nInformation: After being placed, \\nit automatically
+        chases the Runner\\nuntil it disappears and Kills the Runner on contact.\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1248306803894040466, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
+      propertyPath: m_fontSize
+      value: 39.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 1248306803894040466, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 39.34
       objectReference: {fileID: 0}
     - target: {fileID: 1329035054803609764, guid: 3093485f6302e2f4d9b7e534ced9a0b0, type: 3}
       propertyPath: m_Layer
@@ -3519,6 +3547,14 @@ PrefabInstance:
     - target: {fileID: 6465115938904278150, guid: 2740380ba213d6740944ddc70f9c0fa6, type: 3}
       propertyPath: m_Offset.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528134699037386764, guid: 2740380ba213d6740944ddc70f9c0fa6, type: 3}
+      propertyPath: m_ChunkCullingBounds.x
+      value: 0.0714286
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528134699037386764, guid: 2740380ba213d6740944ddc70f9c0fa6, type: 3}
+      propertyPath: m_ChunkCullingBounds.y
+      value: 0.0714286
       objectReference: {fileID: 0}
     - target: {fileID: 6715205879932888373, guid: 2740380ba213d6740944ddc70f9c0fa6, type: 3}
       propertyPath: m_Tiles.Array.size

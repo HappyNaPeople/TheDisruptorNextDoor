@@ -138,8 +138,9 @@ public class TitleUIManager : MonoBehaviour
         player02TitlePlayerCanvas.ChangeState(TitlePlayerCanvas.TitlePlayerState.SelectingSide);
 
         var rnd = 0;// Random.Range(0, 2);
-        player01TitlePlayerCanvas.sideTmp.text = rnd == 0 ? $"あなたは先行（ゴールを目指す）" : $"あなたは後攻（妨害）";
-        player02TitlePlayerCanvas.sideTmp.text = rnd == 1 ? $"あなたは先行（ゴールを目指す）" : $"あなたは後攻（妨害）";
+        player01TitlePlayerCanvas.sideTmp.text = rnd == 0 ? $"You are the Runner. Reach the goal!!" : $"You are the Hunter. Stop the Runner!!";
+        player02TitlePlayerCanvas.sideTmp.text = rnd == 1 ? $"You are the Runner. Reach the goal!!" : $"You are the Hunter. Stop the Runner!!";
+        //player02TitlePlayerCanvas.sideTmp.text = rnd == 1 ? $"あなたは先行（ゴールを目指す）" : $"あなたは後攻（妨害）";
         var player01Job = rnd == 0 ? Job.Runner : Job.Hunter;
         var player02Job = rnd == 1 ? Job.Runner : Job.Hunter;
         _player01.SetJob(player01Job);

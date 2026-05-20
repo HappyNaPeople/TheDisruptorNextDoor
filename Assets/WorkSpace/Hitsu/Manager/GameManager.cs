@@ -63,7 +63,7 @@ public static class UseLayerName
         triggersLayer = GetLayer("Triggers");
         trapLayer = GetLayer("Trap");
         runnerCantSeeLayer = GetLayer("RunnerCantSee");
-        hunterCantSeeLayer = GetLayer("HunterCantSee");
+        hunterCantSeeLayer = GetLayer("Water");
         
 
         isLayerSetUp = true;
@@ -86,6 +86,7 @@ public class TrapInformation
     public int cost;             // 設置コスト
     public string information;   // Trap 説明
     public GameObject prefab;    // Trap プレハブ
+    public string inGame_information;
 }
 
 ///// <summary>
@@ -376,6 +377,9 @@ public class GameManager : MonoBehaviour
             GameObject prefab = Resources.Load<GameObject>(values[4].Trim());
             if (prefab != null) allTrap[trapName].prefab = prefab;
             else Debug.LogWarning($"{trapName} No Prefab Data, Path:{values[4]}");
+
+            if (!string.IsNullOrWhiteSpace(values[5])) allTrap[trapName].inGame_information = values[5];
+
         }
         //    icon = Resources.Load<Sprite>("Texture/Traps/JumpPad"),
         //    cost = 5,
