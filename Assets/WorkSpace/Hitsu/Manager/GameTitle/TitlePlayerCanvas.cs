@@ -47,6 +47,10 @@ public class TitlePlayerCanvas : MonoBehaviour
     /// </summary>
     public TMP_Text timerText;
 
+    public Image timer_ten;
+    public Image timer_one;
+
+
     /// <summary>
     /// プ?イ?ーが?備完了したか
     /// </summary>
@@ -71,18 +75,38 @@ public class TitlePlayerCanvas : MonoBehaviour
     /// </summary>
     private float timer = 0;
 
+
+    private void TimerUi(int timer)
+    {
+        int ten = timer / 10;
+        int one = timer % 10;
+        timer_ten.sprite = GameManager.Instance.numberSprites[ten];
+        timer_one.sprite = GameManager.Instance.numberSprites[one];
+
+    }
+
     /// <summary>
     /// Trap 選択タイマー Coroutine
     /// </summary>
     private IEnumerator Timer()
     {
         timer = TitleUIManager.Instance.trapSelectTime;
+        int timer_Index = Mathf.FloorToInt(timer);
+        TimerUi(timer_Index);
         while (timer > 0)
         {
             // ?間減少
             timer -= Time.deltaTime;
+            int newTimerIndex = Mathf.FloorToInt(timer);
+            if (newTimerIndex != timer_Index) 
+            {
+                timer_Index = newTimerIndex;
+                TimerUi(timer_Index);
+            }
+
+
             // UI 更新
-            timerText.text = $"{(int)timer:D2}";
+            //timerText.text = $"{(int)timer:D2}";
             yield return null;
         }
         // ?間切れで?備完了

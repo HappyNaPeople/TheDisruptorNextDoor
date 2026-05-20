@@ -17,5 +17,5 @@ InkTrap,Texture/Traps/SR_Ink_01,3,Places squid.\nChases Runner.\nSprays ink\non 
 SpikeBomb,Texture/Traps/SR_Spike-Bomb_01,3,Spreads spikes\nnearby.,Prefabs/Traps/SpikeBomb,Scatters spikes in the surrounding area.
 FrostBomb,Texture/Traps/SR_Frost-Bomb_01,1,Scatters ice\npatches nearby.,Prefabs/Traps/FrostBomb,Scatters ice patches in the surrounding area.
 GlueBomb,Texture/Traps/SR_Glue-Bomb_01,1,Scatters sticky\npatches nearby.,Prefabs/Traps/GlueBomb,Scatters sticky patches in the surrounding area.
-Shell,Texture/Traps/FallRock1,4,Shell(Koura),Prefabs/Traps/Shell,Shell(Koura)
+Shell,Texture/Traps/Shell,4,Shell(Koura),Prefabs/Traps/Shell,Shell(Koura)
 WoodBox,Texture/Traps/WoodBox,1,WoodBox,Prefabs/Traps/WoodBox,WoodBox
