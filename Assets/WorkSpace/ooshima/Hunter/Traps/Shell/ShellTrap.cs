@@ -87,10 +87,8 @@ public class ShellTrap : GridMovingTrap
 
     protected override void Update()
     {
-        // currentGridPos の更新
-        base.Update();
-
         if (!isSetupFinished) return;
+        base.Update();
 
         if (!isFalling)
         {
@@ -120,10 +118,19 @@ public class ShellTrap : GridMovingTrap
                         direction *= -1; // 進行方向を反転
                     }
                 }
-
+                UpdateFacing();
                 // 左右連続移動
                 transform.position += Vector3.right * direction * moveSpeed * Time.deltaTime;
             }
         }
+    }
+
+    private void UpdateFacing()
+    {
+        if (direction == 0) return;
+
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x) * direction;
+        transform.localScale = scale;
     }
 }

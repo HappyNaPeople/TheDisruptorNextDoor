@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5035210420668669555
+--- !u!1 &2548098400291101977
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4440677689254905480}
-  - component: {fileID: 7377751932399009394}
-  - component: {fileID: -166139883674898479}
-  - component: {fileID: 1270979435120208615}
-  - component: {fileID: -1061156403143304860}
-  - component: {fileID: 7624651770658853353}
+  - component: {fileID: 7165172213438354902}
+  - component: {fileID: 2050692973862010795}
   m_Layer: 0
-  m_Name: Shell
+  m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4440677689254905480
+--- !u!4 &7165172213438354902
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5035210420668669555}
+  m_GameObject: {fileID: 2548098400291101977}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.6981, y: 0.15081, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.043, y: -0.121, z: 0}
+  m_LocalScale: {x: 1.4346249, y: 1.4346249, z: 1.4346249}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 4440677689254905480}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &7377751932399009394
+--- !u!212 &2050692973862010795
 SpriteRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5035210420668669555}
+  m_GameObject: {fileID: 2548098400291101977}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -85,8 +81,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.13369322, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 0f2deb8b80baebb4d9441fa89099c726, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -95,6 +91,42 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &5035210420668669555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4440677689254905480}
+  - component: {fileID: -166139883674898479}
+  - component: {fileID: 1270979435120208615}
+  - component: {fileID: -1061156403143304860}
+  - component: {fileID: 7624651770658853353}
+  m_Layer: 0
+  m_Name: Shell
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4440677689254905480
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5035210420668669555}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.6981, y: 0.15081, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7165172213438354902}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-166139883674898479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,9 +202,9 @@ MonoBehaviour:
   currentGridPos: {x: 0, y: 0}
   originGridPos: {x: 0, y: 0}
   setupDelay: 1
-  setupEffectPrefab: {fileID: 0}
+  setupEffectPrefab: {fileID: 2945323043375941124, guid: 0fe2de5dfb617d743aeec9f2684eba78, type: 3}
   setupEffectBuffer: 1
-  previewPrefab: {fileID: 0}
+  previewPrefab: {fileID: 8869104229802800394, guid: 9bd8ce5b2f178584d8457f3e7c52825f, type: 3}
   invalidPreviewPrefab: {fileID: 0}
   fallSpeed: 8
   moveSpeed: 3

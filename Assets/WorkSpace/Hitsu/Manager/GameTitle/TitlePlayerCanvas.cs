@@ -80,8 +80,8 @@ public class TitlePlayerCanvas : MonoBehaviour
     {
         int ten = timer / 10;
         int one = timer % 10;
-        timer_ten.sprite = GameManager.Instance.numberSprites[ten];
-        timer_one.sprite = GameManager.Instance.numberSprites[one];
+        timer_ten.sprite = GameManager.Instance.numberSprites[Mathf.Clamp(ten, 0, 9)];
+        timer_one.sprite = GameManager.Instance.numberSprites[Mathf.Clamp(one, 0, 9)];
 
     }
 

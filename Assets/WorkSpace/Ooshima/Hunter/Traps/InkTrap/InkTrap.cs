@@ -265,7 +265,9 @@ public class InkTrap : TiggerTrap
                 ui.Setup(inkSprite);
 
                 // 発動後は自身を破棄
-                Destroy(gameObject);
+                var hp = GetComponent<TrapHp>();
+                if (hp != null) hp.Break();
+                else Destroy(gameObject);
             }
         }
     }

@@ -76,7 +76,7 @@ MonoBehaviour:
   setupDelay: 0
   setupEffectPrefab: {fileID: 0}
   setupEffectBuffer: 1
-  previewPrefab: {fileID: 0}
+  previewPrefab: {fileID: 7611065387920664106, guid: d4555996fbad1694793293cb5901434a, type: 3}
   invalidPreviewPrefab: {fileID: 0}
   maxPullForce: 150
   minIntensity: 0.25

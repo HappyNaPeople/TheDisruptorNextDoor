@@ -139,11 +139,13 @@ public class StandardTrapPlacer : TrapPlacer
 {
     public override void UpdatePreviewPosition(Vector3 mouseWorldPos)
     {
+        if (this == null) return;
         transform.position = mouseWorldPos;
     }
 
     public override bool ValidatePlacement()
     {
+        if (this == null) return false;
         if (StageGridManager.Instance == null) return false;
         return StageGridManager.Instance.CanPlaceTrapDataDriven(transform.position);
     }

@@ -261,17 +261,20 @@ public class HunterConTrollerPad : MonoBehaviour
 
             while (true)
             {
-                placer.UpdatePreviewPosition(cursorPos);
-
-                // 設置可能判定
-                bool canPlacePreview = placer.ValidatePlacement() && nowCostCanUse >= GameManager.allTrap[trapName].cost;
-                // プレビュー色更新
-                placer.UpdatePreviewColor(canPlacePreview);
-                // 設置・入力検知
-                if (inputData.wasPutPressedThisFrame && canPlacePreview)
+                if (placer != null)
                 {
-                    break;
+                    placer.UpdatePreviewPosition(cursorPos);
+
+                    // 設置可能判定
+                    bool canPlacePreview = placer.ValidatePlacement() && nowCostCanUse >= GameManager.allTrap[trapName].cost;
+                    // プレビュー色更新
+                    placer.UpdatePreviewColor(canPlacePreview);
+                    if (inputData.wasPutPressedThisFrame && canPlacePreview)
+                    {
+                        break;
+                    }
                 }
+                // 設置・入力検知
                 yield return null;
             }
 
@@ -280,7 +283,7 @@ public class HunterConTrollerPad : MonoBehaviour
 
             UseCost(trapName);                              // コスト消費
             Trap trap = choseTrap.GetComponent<Trap>();     // Trap初期化
-            trap.Init();                                
+            trap.Init();
             trap.SetUp();
 
             InGame.Instance.AddTrap(choseTrap);             // 生成した罠をリストに登録する
